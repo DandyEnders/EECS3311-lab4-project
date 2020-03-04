@@ -35,7 +35,7 @@ feature -- Attributes
 
 feature -- Queries
 
-	is_less alias "<" (other: COORDINATE): BOOLEAN
+	is_less alias "<" (other: like Current): BOOLEAN
 			-- Compare by row first, then by column. Is Current less than other?
 		do
 			if Current.row < other.row then
@@ -49,7 +49,7 @@ feature -- Queries
 			end
 		end
 
-	is_equal (other: COORDINATE): BOOLEAN
+	is_equal (other: like Current): BOOLEAN
 			-- is Current equal to other?
 		do
 			if Current.row ~ other.row and Current.col ~ other.col then
@@ -57,6 +57,12 @@ feature -- Queries
 			else
 				Result := False
 			end
+		end
+
+	add alias "+" (other: like Current): COORDINATE
+			-- coord1 + coord2
+		do
+			create Result.make([row + other.row, col + other.col])
 		end
 
 end
