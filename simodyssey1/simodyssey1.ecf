@@ -37,9 +37,9 @@
 		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
 		<library name="vision2" location="$ISE_LIBRARY\library\vision2\vision2.ecf"/>
 		<cluster name="generated_code" location=".\generated_code\" recursive="true"/>
-		<cluster name="graph" location="\cs\home\howden2\3y2sem\EECS3311\EECS3311-lab4-project\simodyssey1\graph\" recursive="true"/>
+		<cluster name="graph" location=".\graph\" recursive="true"/>
 		<cluster name="root" location=".\root\" recursive="true"/>
 		<cluster name="simodyssey1" location=".\simodyssey1\" recursive="true"/>
-		<cluster name="starter" location="\eecs\home\howden2\3y2sem\EECS3311\EECS3311-lab4-project\simodyssey1\starter\" recursive="true"/>
+		<cluster name="starter" location=".\starter\" recursive="true"/>
 	</target>
 </system>
