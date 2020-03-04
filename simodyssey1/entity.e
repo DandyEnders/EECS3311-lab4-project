@@ -7,12 +7,23 @@ note
 deferred class
 	ENTITY
 
-feature
+feature -- Attributes
 
 	character: STRING
 		deferred
 		end
 
 	coordinate: COORDINATE
+
+feature -- Queries
+
+
+
+feature -- Commands
+
+	set_coordinate(c: COORDINATE)
+		do
+
+		end
 
 end

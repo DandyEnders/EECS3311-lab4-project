@@ -11,6 +11,6 @@ inherit
 	ENTITY
 
 feature
-	ID: INTEGER
+	id: INTEGER
 
 end
