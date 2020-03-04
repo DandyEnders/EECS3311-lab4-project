@@ -1,0 +1,3 @@
+  State: 0 -> ok
+->solve
+  State: 1 -> Error! Not in a game.
