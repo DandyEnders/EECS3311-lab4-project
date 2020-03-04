@@ -1,3 +1,0 @@
-  State: 0 -> ok
-->abort
-  State: 1 -> Error! Not in a game.
