@@ -5,7 +5,7 @@ note
 	revision: "$Revision$"
 
 class
-	SECTOR
+	STARTER_SECTOR
 
 create
 	make, make_dummy

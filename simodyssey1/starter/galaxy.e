@@ -17,7 +17,7 @@ create
 
 feature -- attributes
 
-	grid: ARRAY2 [SECTOR]
+	grid: ARRAY2 [STARTER_SECTOR]
 			-- the board
 
 	gen: RANDOM_GENERATOR_ACCESS
@@ -37,7 +37,7 @@ feature --constructor
 			row : INTEGER
 			column : INTEGER
 		do
-			create grid.make_filled (create {SECTOR}.make_dummy, shared_info.number_rows, shared_info.number_columns)
+			create grid.make_filled (create {STARTER_SECTOR}.make_dummy, shared_info.number_rows, shared_info.number_columns)
 			from
 				row := 1
 			until
@@ -49,7 +49,7 @@ feature --constructor
 				until
 					column > shared_info.number_columns
 				loop
-					grid[row,column] := create {SECTOR}.make(row,column,create{ENTITY_ALPHABET}.make ('E'))
+					grid[row,column] := create {STARTER_SECTOR}.make(row,column,create{ENTITY_ALPHABET}.make ('E'))
 					column:= column + 1;
 				end
 				row := row + 1
@@ -64,7 +64,7 @@ feature --commands
 			-- There can be only one stationary item in a sector
 		local
 			loop_counter: INTEGER
-			check_sector: SECTOR
+			check_sector: STARTER_SECTOR
 			temp_row: INTEGER
 			temp_column: INTEGER
 		do
@@ -111,7 +111,7 @@ feature -- query
 		row_counter: INTEGER
 		column_counter: INTEGER
 		contents_counter: INTEGER
-		temp_sector: SECTOR
+		temp_sector: STARTER_SECTOR
 		temp_component: ENTITY_ALPHABET
 		printed_symbols_counter: INTEGER
 	do

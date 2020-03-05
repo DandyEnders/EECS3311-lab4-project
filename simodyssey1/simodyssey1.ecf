@@ -40,6 +40,7 @@
 		<cluster name="entity" location=".\"/>
 		<cluster name="generated_code" location=".\generated_code\" recursive="true"/>
 		<cluster name="graph" location=".\graph\" recursive="true"/>
+		<cluster name="grid" location="..\"/>
 		<cluster name="root" location=".\root\" recursive="true"/>
 		<cluster name="simodyssey1" location=".\simodyssey1\" recursive="true"/>
 		<cluster name="starter" location=".\starter\" recursive="true">

@@ -22,23 +22,17 @@ inherit
 create
 	make
 
-feature -- constructor
-	make(c: COORDINATE)
-		do
-			coordinate := c
-		end
-
-feature -- attributes
+feature -- Attributes
 
 	character: STRING = "-"
 
-feature -- queries
+feature -- Queries
 
 	is_equal (other: like current): BOOLEAN
 		do
 			Result := other.conforms_to (current)
 		end
 
-feature -- commands
+feature -- Commands
 
 end
