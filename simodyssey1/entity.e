@@ -7,6 +7,15 @@ note
 deferred class
 	ENTITY
 
+feature {NONE} -- Initialization
+
+	make(a_coordinate:COORDINATE)
+			-- Initialization for `Current'.
+		do
+			coordinate := a_coordinate
+		end
+
+
 feature -- Attributes
 
 	character: STRING
@@ -21,9 +30,9 @@ feature -- Queries
 
 feature -- Commands
 
-	set_coordinate(c: COORDINATE)
+	set_coordinate(a_coordinate: COORDINATE)
 		do
-
+			coordinate := a_coordinate
 		end
 
 end

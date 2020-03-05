@@ -19,13 +19,6 @@ feature -- Attribute
 
 	character: STRING = "*"
 
-feature {NONE} -- Initialization
 
-	make(a_id: INTEGER; a_coordinate:COORDINATE)
-			-- Initialization for `Current'.
-		do
-			id := a_id
-			coordinate := a_coordinate
-		end
 
 end

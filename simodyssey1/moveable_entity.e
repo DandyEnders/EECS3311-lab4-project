@@ -8,11 +8,13 @@ deferred class
 	MOVEABLE_ENTITY
 
 inherit
+
 	ID_ENTITY
 
 feature -- queries
 
 	death_message: STRING
-		deferred end
+		deferred
+		end
 
 end
