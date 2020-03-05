@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {BLUE_GIANT}."
-	author: ""
+	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"
 

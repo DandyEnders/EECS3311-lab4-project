@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {MOVEABLE_ENTITY}."
-	author: ""
+	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"
 

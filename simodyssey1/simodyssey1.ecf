@@ -37,10 +37,10 @@
 		<library name="parse_skl" location="$ISE_LIBRARY\contrib\library\gobo\library\parse\src\library_skl.ecf"/>
 		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
 		<library name="vision2" location="$ISE_LIBRARY\library\vision2\vision2.ecf"/>
-		<cluster name="entity" location=".\"/>
+		<cluster name="entity" location=".\entity\"/>
 		<cluster name="generated_code" location=".\generated_code\" recursive="true"/>
 		<cluster name="graph" location=".\graph\" recursive="true"/>
-		<cluster name="grid" location="..\"/>
+		<cluster name="grid" location=".\grid\"/>
 		<cluster name="root" location=".\root\" recursive="true"/>
 		<cluster name="simodyssey1" location=".\simodyssey1\" recursive="true"/>
 		<cluster name="starter" location=".\starter\" recursive="true">

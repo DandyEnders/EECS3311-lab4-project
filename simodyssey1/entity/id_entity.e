@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {ID_ENTITY}."
-	author: ""
+	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"
 
