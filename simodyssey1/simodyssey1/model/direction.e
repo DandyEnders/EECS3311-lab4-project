@@ -4,50 +4,47 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
+expanded class
 	DIRECTION
-
-inherit
-	COORDINATE
 
 feature
 	N: COORDINATE
-		once
+		do
 			create Result.make([-1, 0])
 		end
 
 	E: COORDINATE
-		once
+		do
 			create Result.make([0, 1])
 		end
 
 	S: COORDINATE
-		once
+		do
 			create Result.make([1, 0])
 		end
 
 	W: COORDINATE
-		once
+		do
 			create Result.make([0, -1])
 		end
 
 	NE: COORDINATE
-		once
+		do
 			Result := N + E
 		end
 
 	SE: COORDINATE
-		once
+		do
 			Result := S + E
 		end
 
 	SW: COORDINATE
-		once
+		do
 			Result := S + W
 		end
 
 	NW: COORDINATE
-		once
+		do
 			Result := N + W
 		end
 

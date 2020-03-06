@@ -61,7 +61,19 @@ feature -- Model input
 		end
 
 	move(d: INTEGER)
+		local
+			direction: COORDINATE
+			dir_cls: DIRECTION
 		do
+			inspect d
+			when {ETF_TYPE_CONSTRAINTS}.N 	then direction := dir_cls.N
+			when {ETF_TYPE_CONSTRAINTS}.NE 	then direction := dir_cls.NE
+			when {ETF_TYPE_CONSTRAINTS}.E 	then direction := dir_cls.E
+			when {ETF_TYPE_CONSTRAINTS}.SE 	then direction := dir_cls.SE
+			when {ETF_TYPE_CONSTRAINTS}.S 	then direction := dir_cls.S
+			when {ETF_TYPE_CONSTRAINTS}.SW 	then direction := dir_cls.SW
+			when {ETF_TYPE_CONSTRAINTS}.W 	then direction := dir_cls.W
+			else direction := dir_cls.NW end -- when {ETF_TYPE_CONSTRAINTS}.NW
 			-- TODO
 		end
 
