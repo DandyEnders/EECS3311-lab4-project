@@ -36,7 +36,7 @@ feature -- Command
 
 feature -- Queries
 
-	get_id: INTEGER
+	get_id: INTEGER -- command query seperation principle is broken
 		do
 			Result := count
 			if count_up then

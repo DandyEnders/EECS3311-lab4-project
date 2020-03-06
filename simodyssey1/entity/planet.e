@@ -23,11 +23,17 @@ feature -- Attributes
 
 	support_life: BOOLEAN
 
+feature -- Command
+set_turns_left(value:INTEGER)
+	require
+		valid_value: 0 <= value and value <= 2
+	do
+		turns_left:=value
+	end
+
 feature -- Queries
 
 	death_message: STRING = "SET THIS TO DEATH MESSAGE"
 
 	character: STRING = "P"
-
-
 end

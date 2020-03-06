@@ -13,7 +13,10 @@ inherit
 		redefine
 			out
 		end
-
+	ITERABLE[SECTOR]
+		redefine
+			out
+		end
 create
 	make
 
@@ -104,7 +107,11 @@ feature -- Queries
 					i_s.has(ie)
 				end
 		end
-
+feature -- Traversal
+new_cursor:ARRAY_ITERATION_CURSOR[SECTOR]
+	do
+		Result:=sectors.new_cursor
+	end
 feature -- Out
 
 	out: STRING
