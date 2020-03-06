@@ -14,13 +14,9 @@ feature {NONE} -- Constructor
 
 	make
 		local
-			r, c, n_quadrant: INTEGER
 		do
 			planet_threshold := 0
-			r := shared_info.number_rows
-			c := shared_info.number_columns
-			n_quadrant := shared_info.quadrants_per_sector
-			create galaxy.make(r, c, n_quadrant)
+			create galaxy.make (0, 0, 0)
 		end
 
 feature -- Attribute
@@ -40,27 +36,21 @@ feature {NONE} -- Private Attribute
 
 	planet_threshold: INTEGER
 
-
-
 feature -- Command
 
-	new_game(th: INTEGER)
+	new_game (th: INTEGER)
 		require
-			valid_threshold:
-				1 <= th and th <= 101
+			valid_threshold: 1 <= th and th <= 101
 		local
 			r, c, n_quadrant: INTEGER
 		do
 			planet_threshold := th
-
 			r := shared_info.number_rows
 			c := shared_info.number_columns
 			n_quadrant := shared_info.quadrants_per_sector
-			create galaxy.make(r, c, n_quadrant)
+			create galaxy.make (r, c, n_quadrant)
 		end
 
 feature -- Queries
-
-
 
 end

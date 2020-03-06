@@ -20,6 +20,10 @@ create
 feature {NONE} -- Contstructor
 
 	make (r, c, n_quadrant: INTEGER)
+		require
+			correct_row: r >= 0
+			correct_col: c >= 0
+			correct_quadrant: n_quadrant >= 0
 		local
 			sect: SECTOR
 		do
@@ -68,9 +72,13 @@ feature -- Commands
 		end
 
 	move (ie: MOVEABLE_ENTITY; to_c: COORDINATE)
+		require
+			has(ie)
 		do
 			remove (ie)
 			add (ie, to_c)
+		ensure
+			at(to_c).has (ie)
 		end
 
 feature -- Queries

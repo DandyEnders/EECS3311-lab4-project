@@ -70,20 +70,12 @@ feature -- tests
 --			print("%N%N")
 			g.add (p, [3,3])
 			g.move (e, [3,3])
-			print(g.out)
-			print("%N%N")
+--			print(g.out)
+--			print("%N%N")
 			g.remove (p)	-- PE-- => remove P => -E--
-			print(g.out)
-			print("%N%N")
-
-
-
-
-
-
-
-
-
+--			print(g.out)
+--			print("%N%N")
+		Result := true
 		end
 
 	t2: BOOLEAN
