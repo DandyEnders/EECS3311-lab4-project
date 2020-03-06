@@ -15,6 +15,8 @@ inherit
 		end
 
 	ANY
+		undefine
+			out
 		redefine
 			is_equal
 		end

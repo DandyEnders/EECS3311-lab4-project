@@ -10,7 +10,14 @@ inherit
 
 	COMPARABLE
 		redefine
-			is_equal
+			is_equal,
+			out
+		end
+
+	ANY
+		redefine
+			is_equal,
+			out
 		end
 
 create
@@ -63,6 +70,16 @@ feature -- Queries
 			-- coord1 + coord2
 		do
 			create Result.make([row + other.row, col + other.col])
+		end
+
+	out: STRING -- "(row:column)"
+		do
+			create Result.make_empty
+			Result.append("(")
+			Result.append(row.out)
+			Result.append(":")
+			Result.append(col.out)
+			Result.append(")")
 		end
 
 end

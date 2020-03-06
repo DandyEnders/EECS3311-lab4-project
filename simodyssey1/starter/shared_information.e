@@ -30,22 +30,26 @@ feature
 	number_of_stationary_items: INTEGER = 10
 			-- The number of stationary_items in the grid
 
-    planet_threshold: INTEGER
-		-- used to determine the chance of a planet being put in a location
-		attribute
-			Result := 50
-		end
+--    planet_threshold: INTEGER
+--		-- used to determine the chance of a planet being put in a location
+--		attribute
+--			Result := 50
+--		end
 
-	max_capacity: INTEGER = 4
-		 -- max number of objects that can be stored in a location
+--	max_capacity: INTEGER = 4
+--		 -- max number of objects that can be stored in a location
 
-feature --commands
-	set_planet_threshold(threshold:INTEGER)
-		require
-			valid_threshold:
-				0 < threshold and threshold <= 101
-		do
-			planet_threshold:=threshold
-		end
+feature -- Ours
+
+	quadrants_per_sector: INTEGER = 4
+
+--feature --commands
+--	set_planet_threshold(threshold:INTEGER)
+--		require
+--			valid_threshold:
+--				0 < threshold and threshold <= 101
+--		do
+--			planet_threshold:=threshold
+--		end
 
 end

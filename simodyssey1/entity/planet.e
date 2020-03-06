@@ -15,7 +15,7 @@ create
 
 feature -- Attributes
 
-	turns_left: INTEGER -- TODO: might make it a class
+	turns_left: INTEGER -- TODO: might make it a class, and means of modification
 
 	visited: BOOLEAN
 

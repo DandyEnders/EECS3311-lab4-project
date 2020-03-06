@@ -10,7 +10,8 @@ deferred class
 inherit
 	ENTITY
 		rename
-			make as make_entity
+			make as make_entity,
+			is_equal as entity_is_equal
 		end
 
 feature {NONE} -- Initialization
@@ -22,7 +23,16 @@ feature {NONE} -- Initialization
 			id := a_id
 		end
 
-feature
+feature -- Attribute
 	id: INTEGER
+
+feature -- Queries
+
+	is_equal (other: like current): BOOLEAN
+		do
+			Result := entity_is_equal(other)
+			and
+			 id ~ other.id
+		end
 
 end

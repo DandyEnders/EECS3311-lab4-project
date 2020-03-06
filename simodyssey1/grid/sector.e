@@ -7,49 +7,89 @@ note
 class
 	SECTOR
 
+inherit
+	ANY
+		redefine
+			out
+		end
+
 create
-	make,
 	make_empty
-
-feature -- Constants
-
-	num_quadrants: INTEGER = 4
 
 feature {NONE} -- Constructor
 
-	make_empty(a_coordinate: COORDINATE)
+	make_empty(a_coordinate: COORDINATE; num_quadrants: INTEGER)
+		local
+			i: INTEGER
 		do
 			coordinate := a_coordinate
+			max_num_quadrants := num_quadrants
+
+			create quadrants.make (max_num_quadrants)
+			from
+				i := 1
+			until
+				i > max_num_quadrants
+			loop
+				quadrants.force (create {QUADRANT}.make_empty (coordinate))
+				i := i + 1
+			end
 		end
+
+
 
 feature  -- Attribute
 
 	quadrants: ARRAYED_LIST[QUADRANT] -- SEQ[QUADRANT]
 	coordinate: COORDINATE
+	max_num_quadrants: INTEGER
 
 feature -- Command
 
 	remove(me: MOVEABLE_ENTITY)
 		local
-			i: INTEGER
+			removed: BOOLEAN
 		do
-			from
-				i := quadrants.lower
+			removed := false
+			across
+				quadrants is i_q
 			until
-				i := quadrants.upper + 1
+				removed
 			loop
-				if quadrants then
-
+				if
+					i_q.has(me)
+				then
+					i_q.remove_entity
+					removed := true
 				end
-				i := i + 1
 			end
+		ensure
+			not has(me)
 		end
 
-	add (e: ENTITY)
+	add (e: ID_ENTITY)
 		require
-			not is_full
+			not_full: not is_full
+			not_has_already: not has(e)
+		local
+			added: BOOLEAN
 		do
-			-- TODO
+			added := false
+			across
+				quadrants is i_q
+			until
+				added
+			loop
+				if
+					i_q.is_empty
+				then
+					i_q.set_entity(e)
+					added := true
+				end
+			end
+--		ensure
+--			old contents are not affected except one we are adding. TODO
+--			(old quadrants.deep_twin).
 		end
 
 feature -- Queries
@@ -57,7 +97,7 @@ feature -- Queries
 	is_full: BOOLEAN
 			-- Return true if quadrants is full.
 		do
-			Result := quadrants.count == num_quadrants
+			Result := count = max_num_quadrants
 		end
 
 	count: INTEGER
@@ -72,16 +112,26 @@ feature -- Queries
 			end
 		end
 
-	has(me: MOVEABLE_ENTITY): BOOLEAN
+	has(me: ID_ENTITY): BOOLEAN
 		do
-			Result := quadrants.has(me)
+			Result :=
+				across
+					quadrants is i_q
+				some
+					i_q.has(me)
+				end
 		end
 
 feature -- Output
 
-	out: STRING
+	out_coordinate: STRING -- "(row:column)"
 		do
-			Result.make_empty
+			Result := coordinate.out
+		end
+
+	out_quadrants: STRING -- "E--*", "----"
+		do
+			create Result.make_empty
 			across
 				quadrants is i_q
 			loop
@@ -89,9 +139,23 @@ feature -- Output
 			end
 		end
 
+	out: STRING -- for debugging "(row:column) ----"
+		do
+			create Result.make_empty
+			Result.append(out_coordinate)
+			Result.append(" ")
+			Result.append(out_quadrants)
+		end
+
 invariant
 	min_max_count:
-	0 <= count <= num_quadrants
+		0 <= count and  count <= max_num_quadrants
+--	unique_entities: TODO
+--		across quadrants is i_q all
+--			if not i_q.is_empty then
+--				not has(i_q.entity)
+--			end -- AA-C
+--		end
 
 
 end

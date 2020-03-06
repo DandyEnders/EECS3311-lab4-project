@@ -32,7 +32,7 @@ feature -- Tests
 			-- add your tests here
 			-- add cluster for tests
 			-- add_test (create {MY_TEST}.make)
-			add_test(create {STARTER_TESTS}.make)
+			add_test(create {UNIT_TEST}.make)
 			show_browser
 			run_espec
 		end
