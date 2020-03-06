@@ -22,11 +22,13 @@ feature {NONE} -- Initialization
 		do
 			create s.make_empty
 			i := 0
+			create game_model.make
 		end
 
 feature -- model attributes
 	s : STRING
 	i : INTEGER
+	game_model: SIMODYSSEY
 
 feature -- model operations
 	default_update
