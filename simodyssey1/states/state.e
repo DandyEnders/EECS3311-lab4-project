@@ -4,10 +4,29 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
+deferred class
 	STATE
 
-feature -- Attribute
+feature -- Constructor
 
+	make(c: like context)
+		do
+			context := c
+		end
+
+feature {STATE} -- Attribute
+
+	context: SIMODYSSEY
+
+feature -- Commands
+
+feature -- Queries
+
+	read
+		deferred end
+
+--	answer TODO
+
+	choice
 
 end
