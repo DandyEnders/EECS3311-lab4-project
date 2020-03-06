@@ -49,6 +49,7 @@ feature -- Command
 			c := shared_info.number_columns
 			n_quadrant := shared_info.quadrants_per_sector
 			create galaxy.make (r, c, n_quadrant)
+			
 		end
 
 feature -- Queries
