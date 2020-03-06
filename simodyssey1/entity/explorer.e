@@ -17,8 +17,14 @@ create
 feature -- Attributes
 
 	life: INTEGER -- TODO: might make it a class
+		attribute
+			Result := 3
+		end
 
 	fuel: INTEGER -- TODO: might make it a class
+		attribute
+			Result := 3
+		end
 
 	landed: BOOLEAN
 

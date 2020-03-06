@@ -56,5 +56,6 @@
 				<exclude>^entity$</exclude>
 			</file_rule>
 		</cluster>
+		<cluster name="tests" location=".\tests\" recursive="true"/>
 	</target>
 </system>

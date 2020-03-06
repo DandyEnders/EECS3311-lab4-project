@@ -21,8 +21,8 @@ feature -- Queries
 			-- Running mode of ETF application
 		do
 --			Result := etf_gui_show_history 	-- GUI mode
-			Result := etf_cl_show_history
---			Result := unit_test 				-- Unit Testing mode
+--			Result := etf_cl_show_history
+			Result := unit_test 				-- Unit Testing mode
 		end
 
 feature -- Tests
@@ -32,6 +32,9 @@ feature -- Tests
 			-- add your tests here
 			-- add cluster for tests
 			-- add_test (create {MY_TEST}.make)
+			add_test(create {STARTER_TESTS}.make)
+			show_browser
+			run_espec
 		end
 
 invariant
