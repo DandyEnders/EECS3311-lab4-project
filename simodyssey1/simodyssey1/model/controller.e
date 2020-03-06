@@ -1,6 +1,6 @@
 note
-	description: "A default business model."
-	author: "Jackie Wang"
+	description: "Controller"
+	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -40,6 +40,54 @@ feature -- model operations
 		do
 			make
 		end
+
+feature -- Model input
+
+	abort
+		do
+			-- TODO
+		end
+
+	land
+		do
+			-- TODO
+		end
+
+	liftoff
+		do
+			-- TODO
+		end
+
+	move(d: INTEGER)
+		do
+			-- TODO
+		end
+
+	pass
+		do
+			-- TODO
+		end
+
+	play
+		do
+			-- TODO
+		end
+
+	status
+		do
+			-- TODO
+		end
+
+	test(th: INTEGER)
+		do
+			-- TODO
+		end
+
+	wormhole
+		do
+			-- TODO
+		end
+
 
 feature -- queries
 	out : STRING
