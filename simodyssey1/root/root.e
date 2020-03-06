@@ -33,8 +33,8 @@ feature -- Tests
 			-- add cluster for tests
 			-- add_test (create {MY_TEST}.make)
 			add_test(create {UNIT_TEST}.make)
-			show_browser
-			run_espec
+--			show_browser
+--			run_espec
 		end
 
 invariant

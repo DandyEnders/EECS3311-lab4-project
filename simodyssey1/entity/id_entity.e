@@ -10,8 +10,9 @@ deferred class
 inherit
 	ENTITY
 		rename
-			make as make_entity,
-			is_equal as entity_is_equal
+			make as make_entity
+		redefine
+			is_equal
 		end
 
 feature {NONE} -- Initialization
@@ -30,7 +31,7 @@ feature -- Queries
 
 	is_equal (other: like current): BOOLEAN
 		do
-			Result := entity_is_equal(other)
+			Result := coordinate ~ other.coordinate and character ~ other.character
 			and
 			 id ~ other.id
 		end
