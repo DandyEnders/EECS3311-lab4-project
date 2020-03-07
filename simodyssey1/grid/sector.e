@@ -121,7 +121,26 @@ feature -- Queries
 					i_q.has(me)
 				end
 		end
-
+	stationary_entity_count:INTEGER
+		do
+			Result:=0
+			across quadrants is i_q
+			loop
+				if i_q.entity.character /~ "E" and i_q.entity.character /~ "P" and i_q.entity.character /~ "-"then
+					Result:=Result+1
+				end
+			end
+		end
+	moveable_entity_count:INTEGER
+		do
+			Result:=0
+			across quadrants is i_q
+			loop
+				if i_q.entity.character ~ "E" or i_q.entity.character ~ "P" then
+					Result:=Result+1
+				end
+			end
+		end
 feature -- Output
 
 	out_coordinate: STRING -- "(row:column)"

@@ -29,22 +29,22 @@ feature -- tests
 	t4: BOOLEAN
 		local
 			s_o:SIMODYSSEY
-			p,p1:PLANET
-			rng: RANDOM_GENERATOR_ACCESS
 		do
 			comment ("t4: Testing SIMODYSSEY make and new_game()")
 			create s_o.make
-			s_o.new_game (100)
-			print(s_o.out)
-			create p.make ([1,1], 2)
-			create p1.make ([1,1], 3)
-			Result:=p/~p1
-			print("%N")
-			print("%N")
+			-- testing new_game with multiple threshold values.
 			s_o.new_game (30)
-			print(s_o.out)
+--			print(s_o.out)
+--			print("%N")
+--			print("%N")
+			s_o.new_game (60)
+--			print(s_o.out)
+--			print("%N")
+--			print("%N")
+			s_o.new_game (100)
+--			print(s_o.out)
 
-
+		Result:=TRUE
 		end
 	t3: BOOLEAN
 		local

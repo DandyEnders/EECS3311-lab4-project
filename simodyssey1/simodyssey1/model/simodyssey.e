@@ -24,7 +24,7 @@ feature {NONE} -- Constructor
 			create galaxy.make (0, 0, 0)
 			--initializing global id object
 			create moveable_id.make(0,TRUE)
-			create stationary_id.make(0,FALSE)
+			create stationary_id.make(-1,FALSE)
 		end
 
 feature -- Attribute
@@ -63,7 +63,23 @@ feature -- Command
 			c := shared_info.number_columns
 			n_quadrant := shared_info.quadrants_per_sector
 			create galaxy.make (r, c, n_quadrant)
-			--adding explorer and blackhole
+
+			populate_galaxy
+		end
+
+feature{NONE} -- Private Helper Commands
+	populate_galaxy
+		local
+			explorer:EXPLORER
+			blackhole:BLACKHOLE
+			p:PLANET
+			numb_of_entity:INTEGER
+			row:INTEGER
+			col:INTEGER
+			s_entity_num:INTEGER
+			loop_counter:INTEGER
+		do
+			-- adding explorer and blackhole
 			create explorer.make([1,1],moveable_id.get_id) --
 			galaxy.add (explorer, explorer.coordinate) --
 			create blackhole.make([3,3],stationary_id.get_id)--
@@ -84,7 +100,23 @@ feature -- Command
 					end
 				end
 			end
-			-- tod - populate stationary objects
+			-- populating stationary objects
+			from loop_counter:=1 until loop_counter > 10
+			loop
+				row:=rng.rchoose(1,5)
+				col:=rng.rchoose(1,5)
+				if galaxy.at ([row,col]).stationary_entity_count~0 and not galaxy.at ([row,col]).is_full then
+					s_entity_num:=rng.rchoose(1,3)
+					if s_entity_num ~ 1 then
+						galaxy.at ([row,col]).add (create {YELLOW_DWARF}.make([row,col],stationary_id.get_id))
+					elseif s_entity_num ~ 2   then
+						galaxy.at ([row,col]).add (create {BLUE_GIANT}.make([row,col],stationary_id.get_id))
+					elseif s_entity_num ~ 3  then
+						galaxy.at ([row,col]).add (create {WORMHOLE}.make([row,col],stationary_id.get_id))
+					end
+					loop_counter:=loop_counter+1
+				end
+			end
 		end
 
 feature -- Queries
