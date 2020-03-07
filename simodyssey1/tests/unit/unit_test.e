@@ -17,9 +17,9 @@ feature {NONE} -- Initialization
 
 	make
 		do
---			add_boolean_case (agent t1)
---			add_boolean_case (agent t2)
---			add_boolean_case (agent t3)
+			add_boolean_case (agent t1)
+			add_boolean_case (agent t2)
+			add_boolean_case (agent t3)
 			add_boolean_case (agent t4)
 --			add_boolean_case (agent t5)
 		end
@@ -29,6 +29,7 @@ feature -- tests
 	t4: BOOLEAN
 		local
 			s_o:SIMODYSSEY
+			d:DIRECTION
 		do
 			comment ("t4: Testing SIMODYSSEY make and new_game()")
 			create s_o.make
@@ -43,7 +44,45 @@ feature -- tests
 --			print("%N")
 			s_o.new_game (100)
 --			print(s_o.out)
-
+			s_o.move_explorer (d.n) --moving the explorer S
+			print(s_o.out)
+			print("%N")
+			print("%N")
+			s_o.move_explorer (d.s) --moving the explorer N
+			print(s_o.out)
+			print("%N")
+			print("%N")
+			s_o.move_explorer (d.w) --moving the explorer E
+			print(s_o.out)
+			print("%N")
+			print("%N")
+			s_o.move_explorer (d.e) --moving the explorer W
+			print(s_o.out)
+			print("%N")
+			print("%N")
+			s_o.move_explorer (d.nw) --moving the explorer NE
+			print(s_o.out)
+			print("%N")
+			print("%N")
+			s_o.move_explorer (d.ne) --moving the explorer NW
+			print(s_o.out)
+			print("%N")
+			print("%N")
+			s_o.move_explorer (d.sw) --moving the explorer SE
+			print(s_o.out)
+			print("%N")
+			print("%N")
+			s_o.move_explorer (d.se) --moving the explorer SW
+			print(s_o.out)
+			print("%N")
+			print("%N")
+			s_o.move_explorer (d.s) --moving the explorer S
+			s_o.move_explorer (d.s) --moving the explorer S
+			s_o.move_explorer (d.s) --moving the explorer S
+			s_o.move_explorer (d.e) --moving the explorer W
+			print(s_o.out)
+--			s_o.move_explorer (d.e) --moving the explorer W -- add VIOLATION CASE. The premise is that this will cause an error because the sector at such location is full.
+--			print(s_o.out)
 		Result:=TRUE
 		end
 	t3: BOOLEAN

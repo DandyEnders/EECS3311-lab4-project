@@ -19,28 +19,34 @@ feature {NONE} -- Constructor
 
 	make
 		local
+			r, c, n_quadrant: INTEGER
 		do
-			planet_threshold := 0
-			create galaxy.make (0, 0, 0)
 			--initializing global id object
 			create moveable_id.make(0,TRUE)
 			create stationary_id.make(-1,FALSE)
+			-- creating the board
+			r := shared_info.number_rows
+			c := shared_info.number_columns
+			n_quadrant := shared_info.quadrants_per_sector
+			create galaxy.make (r, c, n_quadrant)
+			--creating the explorer
+			create explorer.make([1,1],moveable_id.get_id) --
+			--setting the threshold of a planet to some default value
+			planet_threshold := 0
 		end
 
 feature -- Attribute
 
 	galaxy: GRID
-
-feature {NONE} -- Private Attribute
-
-	rng: RANDOM_GENERATOR_ACCESS
-
+	explorer: EXPLORER
 	info_access: SHARED_INFORMATION_ACCESS
-
 	shared_info: SHARED_INFORMATION
 		attribute
 			Result := info_access.shared_info
 		end
+feature {NONE} -- Private Attribute
+
+	rng: RANDOM_GENERATOR_ACCESS
 
 	planet_threshold: INTEGER
 	moveable_id:ID_DISPATCHER
@@ -51,26 +57,31 @@ feature -- Command
 		require
 			valid_threshold: 1 <= th and th <= 101
 		local
-			r, c, n_quadrant: INTEGER
-			explorer:EXPLORER --
-			blackhole:BLACKHOLE --
 			p:PLANET
 			numb_of_entity:INTEGER
 		do
-			make --calling make in order to initialize global ids every new game
+			make --calling make in order to initialize global ids and the board every new game
+			-- initializing the planet threshold
 			planet_threshold := th
-			r := shared_info.number_rows
-			c := shared_info.number_columns
-			n_quadrant := shared_info.quadrants_per_sector
-			create galaxy.make (r, c, n_quadrant)
-
+			-- populating the galaxy randomly
 			populate_galaxy
 		end
-
+	move_explorer(d:COORDINATE)
+		require
+			not sector_in_direction_is_full(d)
+		local
+			destination_coord:COORDINATE
+		do
+			destination_coord:=explorer.coordinate + d
+			destination_coord:=destination_coord.wrap_coordinate (destination_coord, [1,1], [shared_info.number_rows,shared_info.number_columns])
+			galaxy.move (explorer, destination_coord)
+		ensure
+			-- Explorer should now exist in the sector that he wanted to go to
+			galaxy.at((old explorer.coordinate+d).wrap_coordinate((old explorer.coordinate+d),[1,1], [shared_info.number_rows,shared_info.number_columns])).has (explorer)
+		end
 feature{NONE} -- Private Helper Commands
 	populate_galaxy
 		local
-			explorer:EXPLORER
 			blackhole:BLACKHOLE
 			p:PLANET
 			numb_of_entity:INTEGER
@@ -80,7 +91,6 @@ feature{NONE} -- Private Helper Commands
 			loop_counter:INTEGER
 		do
 			-- adding explorer and blackhole
-			create explorer.make([1,1],moveable_id.get_id) --
 			galaxy.add (explorer, explorer.coordinate) --
 			create blackhole.make([3,3],stationary_id.get_id)--
 			galaxy.add (blackhole, blackhole.coordinate)--
@@ -118,11 +128,17 @@ feature{NONE} -- Private Helper Commands
 				end
 			end
 		end
-
 feature -- Queries
 	out:STRING
-	do
-		create Result.make_empty
-		Result.append(galaxy.out)
-	end
+		do
+			create Result.make_empty
+			Result.append(galaxy.out)
+		end
+	sector_in_direction_is_full(d:COORDINATE):BOOLEAN
+		--Returns true if the sector in the direction specified is full.
+		require
+			is_a_direction: d.is_direction
+		do
+			Result:= galaxy.at((explorer.coordinate+d).wrap_coordinate((explorer.coordinate+d),[1,1], [shared_info.number_rows,shared_info.number_columns])).is_full
+		end
 end

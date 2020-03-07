@@ -61,6 +61,7 @@ feature -- Commands
 		require
 			valid_coordinate (c)
 			not has(ie)
+			not at(c).is_full
 		do
 			at (c).add (ie)
 		ensure
@@ -77,6 +78,7 @@ feature -- Commands
 	move (ie: MOVEABLE_ENTITY; to_c: COORDINATE)
 		require
 			has(ie)
+			not at(to_c).is_full
 		do
 			remove (ie)
 			add (ie, to_c)
@@ -85,7 +87,6 @@ feature -- Commands
 		end
 
 feature -- Queries
-
 	at (c: COORDINATE): SECTOR
 		require
 			valid_coordinate (c)
