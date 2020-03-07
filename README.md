@@ -10,5 +10,5 @@ Jinho will currently work on...
 1. [ ] States
 
 Ato will currently work on...
-1. [ ] Given a threshold, new_game() command of GRID will initialize the game.
+1. [ ] Given a threshold, new_game() command of GRID will populate the game board with planets and stationary entities
  
