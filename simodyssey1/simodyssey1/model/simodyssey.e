@@ -98,19 +98,19 @@ feature -- Command
 
 						-- if explorer encountered a blackhole, he should lose his life and be removed from the galaxy
 				elseif attached {BLACKHOLE} galaxy.at (explorer.coordinate).get_stationary_entity then
-					explorer.lose_life
-					galaxy.at (explorer.coordinate).remove (explorer)
+					explorer.kill_by_blackhole
+					galaxy.remove (explorer)
 				end
 			end
 
 				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
-			if explorer.life > 0 and explorer.fuel ~ 0 then
-				explorer.lose_life
-				galaxy.at (explorer.coordinate).remove (explorer)
+			if explorer.is_out_of_fuel then
+				explorer.kill_by_out_of_fuel
+				galaxy.remove (explorer)
 			end
 		ensure
 				-- If the explorer did not move to a black hole, Explorer should now exist in the sector that he wanted to go to
-			If_not_lost_the_explorer_is_in_new_position: (explorer.life /~ 0) implies galaxy.at ((old explorer.coordinate + d).wrap_coordinate ((old explorer.coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer)
+			If_not_lost_the_explorer_is_in_new_position: (explorer.is_alive) implies galaxy.at ((old explorer.coordinate + d).wrap_coordinate ((old explorer.coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer)
 		end
 
 	wormhole
@@ -152,9 +152,9 @@ feature {NONE} -- Private Helper Commands
 			loop_counter: INTEGER
 		do
 				-- adding explorer and blackhole
-			galaxy.add (explorer, explorer.coordinate) --
+			galaxy.add (explorer) --
 			create blackhole.make ([3, 3], stationary_id.get_id) --
-			galaxy.add (blackhole, blackhole.coordinate) --
+			galaxy.add (blackhole) --
 				-- populating planets based on threshold
 			across
 				galaxy is i_g
@@ -167,7 +167,7 @@ feature {NONE} -- Private Helper Commands
 						if rng.rchoose (1, 100) < planet_threshold then
 							create p.make (i_g.coordinate, moveable_id.get_id)
 							p.set_turns_left (rng.rchoose (0, 2)) -- changed the order of this instruction. It used to be below galaxy.add
-							galaxy.add (p, p.coordinate)
+							galaxy.add (p)
 						end
 					end
 				end
@@ -213,7 +213,7 @@ feature -- Queries
 	game_in_session: BOOLEAN
 			-- a game is in session if neither (the explorer's life or his fuel is equal to 0), the game was aborted and the explorer has not found life
 		do
-			Result := explorer.life /~ 0 and explorer.fuel /~ 0 and not game_aborted and not explorer.found_life
+			Result := explorer.is_alive and explorer.fuel /~ 0 and not game_aborted and not explorer.found_life
 		end
 
 end

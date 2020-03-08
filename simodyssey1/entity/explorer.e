@@ -23,15 +23,16 @@ feature {NONE} -- Constructor
 	make (a_coordinate: COORDINATE; a_id: INTEGER)
 		do
 			moveable_make (a_coordinate, a_id)
-			life := 3
+			killable_make (3)
 			fuel := 3
 			landed := false
 			found_life := FALSE
+
+			add_death_cause_type("BLACKHOLE")
+			add_death_cause_type("OUT_OF_FUEL")
 		end
 
 feature -- Attributes
-
-	life: INTEGER -- TODO: might make it a class
 
 	fuel: INTEGER -- TODO: might make it a class
 
@@ -41,9 +42,22 @@ feature -- Attributes
 
 feature -- Queries
 
-	death_message: STRING = "SET THIS TO DEATH MESSAGE"
-
 	character: STRING = "E"
+
+	is_out_of_fuel: BOOLEAN
+		do
+			Result := fuel = 0
+		end
+
+	is_dead_by_out_of_fuel: BOOLEAN
+		do
+			Result := is_dead and then get_death_cause ~ "OUT_OF_FUEL"
+		end
+
+	is_dead_by_blackhole: BOOLEAN
+		do
+			Result := is_dead and then get_death_cause ~ "BLACKHOLE"
+		end
 
 feature -- Commands
 
@@ -53,7 +67,7 @@ feature -- Commands
 			fuel := fuel - 1
 		end
 
-	set_found_life
+	set_found_life_true
 		require
 			landed
 		do
@@ -70,10 +84,19 @@ feature -- Commands
 			end
 		end
 
-	lose_life
+	kill_by_blackhole
 		do
-			life := 0
+			kill_by("BLACKHOLE")
 		end
+
+	kill_by_out_of_fuel
+		require
+			fuel = 0
+		do
+			kill_by("OUT_OF_FUEL")
+		end
+
+
 
 feature -- Out
 

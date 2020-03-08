@@ -36,11 +36,11 @@ feature -- tests
 			create s_o.make
 			s_o.new_game (50)
 			s_o.move_explorer ([1, 1])
-			print (s_o.explorer.life.out)
+			print (s_o.explorer.current_life.out)
 			print (s_o.explorer.fuel.out)
 			print ("%N")
 			s_o.move_explorer ([1, 1])
-			print (s_o.explorer.life.out)
+			print (s_o.explorer.current_life.out)
 			print (s_o.explorer.fuel.out)
 			print ("%N")
 			print (s_o.out)
@@ -159,7 +159,7 @@ feature -- tests
 	t4: BOOLEAN
 		local
 			s_o: SIMODYSSEY
-			d: DIRECTION
+			d: DIRECTION_UTILITY
 		do
 			comment ("t4: Testing SIMODYSSEY make and new_game() and partially move_explorer")
 			create s_o.make
@@ -231,7 +231,7 @@ feature -- tests
 			create g.make (5, 5, 4)
 			create e.make ([1, 1], 0)
 			create p.make ([1, 1], 1)
-			g.add (e, [2, 2])
+			g.add_at (e, [2, 2])
 				--			print(g.out)
 				--			expected :=  "[
 				--    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)
@@ -252,11 +252,11 @@ feature -- tests
 				--			print("%N")
 				--			print(g.out)
 
-			g.add (e, [1, 1])
+			g.add_at (e, [1, 1])
 
 				--			print(g.out)
 				--			print("%N%N")
-			g.add (p, [3, 3])
+			g.add_at (p, [3, 3])
 			g.move (e, [3, 3])
 				--			print(g.out)
 				--			print("%N%N")
@@ -282,7 +282,7 @@ feature -- tests
 				Result
 			end
 			create e.make (c, id)
-			Result := e.life = 3
+			Result := e.current_life = 3
 			check
 				Result
 			end
@@ -336,7 +336,7 @@ feature -- tests
 				Result
 			end
 			create e.make (c, id)
-			Result := e.life = 3
+			Result := e.current_life = 3
 			check
 				Result
 			end

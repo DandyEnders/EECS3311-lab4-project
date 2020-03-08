@@ -11,10 +11,12 @@ inherit
 
 	ID_ENTITY
 
-feature -- queries
-
-	death_message: STRING
-		deferred
-		end
+	KILLABLE
+			rename
+				make as killable_make
+			undefine
+				out,
+				is_equal
+			end
 
 end

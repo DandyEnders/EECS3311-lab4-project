@@ -74,7 +74,7 @@ feature -- Model input
 	move (d: INTEGER)
 		local
 			direction: COORDINATE
-			dir_cls: DIRECTION
+			dir_cls: DIRECTION_UTILITY
 		do
 			inspect d
 			when {ETF_TYPE_CONSTRAINTS}.N then

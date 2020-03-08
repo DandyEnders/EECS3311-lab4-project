@@ -65,7 +65,20 @@ feature {NONE} -- Attribute
 
 feature -- commands
 
-	add (ie: ID_ENTITY; c: COORDINATE)
+	add (ie: ID_ENTITY)
+			-- Add an ID_ENTITY to a sector with entity's coordinate.
+		require
+			valid_coordinate (ie.coordinate)
+			not has (ie)
+			not at (ie.coordinate).is_full
+		do
+			add_at(ie, ie.coordinate)
+		ensure
+			at (ie.coordinate).has (ie)
+		end
+
+	add_at (ie: ID_ENTITY; c: COORDINATE)
+			-- Add an ID_ENTITY to a sector with specified coordinate c. (c overrides entitie's coordinate)
 		require
 			valid_coordinate (c)
 			not has (ie)
@@ -83,24 +96,23 @@ feature -- commands
 			at (c).has (ie)
 		end
 
-	remove (ie: MOVEABLE_ENTITY)
+	remove (me: MOVEABLE_ENTITY)
+			-- Removes moveable entity in me.coordinate.
 		do
-			at (ie.coordinate).remove (ie)
-
-			if attached {MOVEABLE_ENTITY} ie as me then
-				moveable_entities.force (me, me.id)
-			end
+			at (me.coordinate).remove (me)
+			moveable_entities.force (me, me.id)
 		ensure
-			not at (ie.coordinate).has (ie)
+			not at (me.coordinate).has (me)
 		end
 
 	move (ie: MOVEABLE_ENTITY; to_c: COORDINATE)
+			-- Moves entity ie to to_c coordinate.
 		require
 			has (ie)
 			not at (to_c).is_full
 		do
 			remove (ie)
-			add (ie, to_c)
+			add_at (ie, to_c)
 		ensure
 			at (to_c).has (ie)
 		end
@@ -120,6 +132,7 @@ feature -- Queries
 		end
 
 	has (ie: ID_ENTITY): BOOLEAN
+			-- Check if ie is in grid by comparing its unique id.
 		do
 			Result := across sectors is i_s some i_s.has (ie) end
 		end
@@ -165,7 +178,26 @@ feature -- Out
 		do
 			create Result.make_empty
 			Result.append("  Descriptions:")
-			-- TODO do the iteration through moveable_entities and stationary_entities
+
+			across -- stationary, negative id out
+				-- counting inversely
+				stationary_entities.count |..| 1  is i
+			loop
+				if attached stationary_entities[i] as i_se then
+					Result.append("    ")
+					Result.append(i_se.out_description)
+				end
+			end
+
+			across -- stationary, zero or psotivie id out
+				-- counting inversely
+				0 |..| moveable_entities.count  is i
+			loop
+				if attached moveable_entities[i] as i_me then
+					Result.append("    ")
+					Result.append(i_me.out_description)
+				end
+			end
 		end
 
 	out: STRING

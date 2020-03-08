@@ -1,52 +1,40 @@
 note
 	description: "Summary description for {DIRECTION}."
-	author: "Jinho Hwang"
+	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
-expanded class
+class
 	DIRECTION
 
-feature
-
-	N: COORDINATE
-		do
-			create Result.make ([-1, 0])
+inherit
+	COORDINATE
+		rename
+			make as coordinate_make
 		end
 
-	E: COORDINATE
+create
+	make
+
+feature {NONE} -- Initialization
+
+	make (c: TUPLE [row: INTEGER; col: INTEGER])
+			-- Initialization for `Current'.
+		require
+			is_unit_coordinate(c)
 		do
-			create Result.make ([0, 1])
+			coordinate_make(c)
 		end
 
-	S: COORDINATE
+feature -- Queries
+
+	is_unit_coordinate(c: COORDINATE): BOOLEAN
 		do
-			create Result.make ([1, 0])
+			Result := -1 <= c.row and c.row <= 1 and -1 <= c.col and c.col <= 1 and not (c.row = 0 and c.col ~ 0)
 		end
 
-	W: COORDINATE
-		do
-			create Result.make ([0, -1])
-		end
-
-	NE: COORDINATE
-		do
-			Result := N + E
-		end
-
-	SE: COORDINATE
-		do
-			Result := S + E
-		end
-
-	SW: COORDINATE
-		do
-			Result := S + W
-		end
-
-	NW: COORDINATE
-		do
-			Result := N + W
-		end
+invariant
+	unit_coordinate: -1 <= row and row <= 1 and -1 <= col and col <= 1
+	not_empty: not (row = 0 and col ~ 0)
 
 end
