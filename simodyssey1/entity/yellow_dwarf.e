@@ -8,6 +8,7 @@ class
 	YELLOW_DWARF
 
 inherit
+
 	STAR
 
 create

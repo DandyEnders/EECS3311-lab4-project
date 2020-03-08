@@ -8,6 +8,7 @@ class
 	WORMHOLE
 
 inherit
+
 	STATIONARY_ENTITY
 
 create

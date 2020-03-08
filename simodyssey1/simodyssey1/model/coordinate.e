@@ -69,56 +69,49 @@ feature -- Queries
 	add alias "+" (other: like Current): COORDINATE
 			-- coord1 + coord2
 		do
-			create Result.make([row + other.row, col + other.col])
+			create Result.make ([row + other.row, col + other.col])
 		end
+
 	subtract alias "-" (other: like Current): COORDINATE
 			-- coord1 - coord2
 		do
-			create Result.make([row - other.row, col - other.col])
+			create Result.make ([row - other.row, col - other.col])
 		end
-	is_direction:BOOLEAN
-	--return true if current is a DIRECTION
-	local
-		d:DIRECTION
-	do
-		Result:= current ~ d.n or current  ~ d.s or current ~ d.w or current ~ d.e or current  ~ d.nw or  current  ~ d.ne or  current  ~ d.sw or current  ~ d.se
-	end
-	wrap_coordinate(c,lower_bound,upper_bound:COORDINATE):COORDINATE
-	--given a coordinate, returns a coordinate that lies between lower_bound and upper_bound
-	do
-		Result:=c
-		if c.row ~ (lower_bound.row - 1) then
-			Result:=Result + create {COORDINATE}.make([upper_bound.row,0])
-		elseif c.row ~ upper_bound.row + 1  then
-			Result:=Result - create {COORDINATE}.make([upper_bound.row,0])
-		end
-		if c.col ~ lower_bound.col - 1 then
-			Result:=Result + create {COORDINATE}.make([0,upper_bound.col])
-		elseif c.col ~ upper_bound.col + 1 then
-			Result:=Result - create {COORDINATE}.make([0,upper_bound.col])
-		end
-	ensure
-		((c).row ~ lower_bound.row - 1 implies Result.row ~upper_bound.row)
-		and
-		((c).row ~ upper_bound.row + 1 implies Result.row ~lower_bound.row)
-		and
-		((c).col ~ lower_bound.col - 1 implies Result.col ~upper_bound.col)
-		and
-		((c).col ~ upper_bound.col + 1 implies Result.col ~lower_bound.col)
-		and
-		(((c).col /~ upper_bound.col + 1 and (c).col /~ lower_bound.col - 1) implies (Result.col ~ (c.col)))
-		and
-		(((c).row /~upper_bound.row + 1 and (c).row /~ lower_bound.row - 1) implies (Result.row ~ (c.row)))
 
-	end
+	is_direction: BOOLEAN
+			--return true if current is a DIRECTION
+		local
+			d: DIRECTION
+		do
+			Result := current ~ d.n or current ~ d.s or current ~ d.w or current ~ d.e or current ~ d.nw or current ~ d.ne or current ~ d.sw or current ~ d.se
+		end
+
+	wrap_coordinate (c, lower_bound, upper_bound: COORDINATE): COORDINATE
+			--given a coordinate, returns a coordinate that lies between lower_bound and upper_bound
+		do
+			Result := c
+			if c.row ~ (lower_bound.row - 1) then
+				Result := Result + create {COORDINATE}.make ([upper_bound.row, 0])
+			elseif c.row ~ upper_bound.row + 1 then
+				Result := Result - create {COORDINATE}.make ([upper_bound.row, 0])
+			end
+			if c.col ~ lower_bound.col - 1 then
+				Result := Result + create {COORDINATE}.make ([0, upper_bound.col])
+			elseif c.col ~ upper_bound.col + 1 then
+				Result := Result - create {COORDINATE}.make ([0, upper_bound.col])
+			end
+		ensure
+			((c).row ~ lower_bound.row - 1 implies Result.row ~ upper_bound.row) and ((c).row ~ upper_bound.row + 1 implies Result.row ~ lower_bound.row) and ((c).col ~ lower_bound.col - 1 implies Result.col ~ upper_bound.col) and ((c).col ~ upper_bound.col + 1 implies Result.col ~ lower_bound.col) and (((c).col /~ upper_bound.col + 1 and (c).col /~ lower_bound.col - 1) implies (Result.col ~ (c.col))) and (((c).row /~ upper_bound.row + 1 and (c).row /~ lower_bound.row - 1) implies (Result.row ~ (c.row)))
+		end
+
 	out: STRING -- "(row:column)"
 		do
 			create Result.make_empty
-			Result.append("(")
-			Result.append(row.out)
-			Result.append(":")
-			Result.append(col.out)
-			Result.append(")")
+			Result.append ("(")
+			Result.append (row.out)
+			Result.append (":")
+			Result.append (col.out)
+			Result.append (")")
 		end
 
 end

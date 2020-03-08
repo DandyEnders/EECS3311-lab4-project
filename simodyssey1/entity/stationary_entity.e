@@ -8,6 +8,7 @@ deferred class
 	STATIONARY_ENTITY
 
 inherit
+
 	ID_ENTITY
 
 end
