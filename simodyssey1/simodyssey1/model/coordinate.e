@@ -104,14 +104,29 @@ feature -- Queries
 			((c).row ~ lower_bound.row - 1 implies Result.row ~ upper_bound.row) and ((c).row ~ upper_bound.row + 1 implies Result.row ~ lower_bound.row) and ((c).col ~ lower_bound.col - 1 implies Result.col ~ upper_bound.col) and ((c).col ~ upper_bound.col + 1 implies Result.col ~ lower_bound.col) and (((c).col /~ upper_bound.col + 1 and (c).col /~ lower_bound.col - 1) implies (Result.col ~ (c.col))) and (((c).row /~ upper_bound.row + 1 and (c).row /~ lower_bound.row - 1) implies (Result.row ~ (c.row)))
 		end
 
+feature -- out
+
 	out: STRING -- "(row:column)"
 		do
 			create Result.make_empty
 			Result.append ("(")
-			Result.append (row.out)
-			Result.append (":")
-			Result.append (col.out)
+			Result.append (out_colon)
 			Result.append (")")
 		end
 
+	out_sqr_bracket: STRING -- "[row:colum]"
+		do
+			create Result.make_empty
+			Result.append ("[")
+			Result.append (out_colon)
+			Result.append ("]")
+		end
+
+	out_colon: STRING -- "row:column"
+		do
+			create Result.make_empty
+			Result.append (row.out)
+			Result.append (":")
+			Result.append (col.out)
+		end
 end

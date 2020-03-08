@@ -34,6 +34,9 @@ feature {NONE} -- Contstructor
 		do
 			create sect.make_empty ([1, 1], 0)
 			create sectors.make_filled (sect, r, c)
+			create moveable_entities.make (100)
+			create stationary_entities.make (100)
+
 			across
 				1 |..| r is i
 			loop
@@ -56,7 +59,11 @@ feature {NONE} -- Attribute
 
 	col: INTEGER
 
-feature -- Commands
+	moveable_entities: HASH_TABLE[MOVEABLE_ENTITY, INTEGER]
+
+	stationary_entities: HASH_TABLE[STATIONARY_ENTITY, INTEGER]
+
+feature -- commands
 
 	add (ie: ID_ENTITY; c: COORDINATE)
 		require
@@ -65,6 +72,13 @@ feature -- Commands
 			not at (c).is_full
 		do
 			at (c).add (ie)
+
+			if attached {MOVEABLE_ENTITY} ie as me then
+				moveable_entities.force (me, me.id)
+			elseif attached {STATIONARY_ENTITY} ie as se then
+				stationary_entities.force (se, se.id)
+			end
+
 		ensure
 			at (c).has (ie)
 		end
@@ -72,6 +86,13 @@ feature -- Commands
 	remove (ie: MOVEABLE_ENTITY)
 		do
 			at (ie.coordinate).remove (ie)
+
+			if attached {MOVEABLE_ENTITY} ie as me then
+				moveable_entities.force (me, me.id)
+			elseif attached {STATIONARY_ENTITY} ie as se then
+				stationary_entities.remove (se.id)
+			end
+
 		ensure
 			not at (ie.coordinate).has (ie)
 		end
@@ -114,6 +135,41 @@ feature -- Traversal
 		end
 
 feature -- Out
+
+	out_abstract_sectors:STRING -- Abstract Sectors out
+			--   Sectors:
+    		-- 		[1,1]->[0,E],[36,P],[40,P],-
+    		--		[1,2]->[3,P],-,[4,P],-
+			--		..
+			-- 		[5,5]->[48,P],[32,P],[47,P],[15,P]
+		do
+			create Result.make_empty
+			Result.append("  Sectors:")
+			across
+				1 |..| row is i
+			loop
+				across
+					1 |..| col is j
+				loop
+					Result.append("    ")
+					Result.append(sectors[i, j].out_abstract_sector)
+				end
+			end
+		end
+
+	out_abstract_description:STRING -- Abstract Description out
+		--  Descriptions:
+		--    [-11,*]->Luminosity:5
+		--		..
+		--    [-1,O]->
+		--    [0,E]->fuel:3/3, life:3/3, landed?:F
+		--    [1,P]->attached?:F, support_life?:F, visited?:F, turns_left:0
+		-- 		..
+		do
+			create Result.make_empty
+			Result.append("  Descriptions:")
+			-- TODO do the iteration through moveable_entities and stationary_entities
+		end
 
 	out: STRING
 		do

@@ -137,6 +137,22 @@ feature -- Queries
 			Result := across quadrants is i_q some i_q.has (me) end
 		end
 
+	quadrant_at (me: ID_ENTITY): INTEGER
+		require
+			has(me)
+		do
+			Result := 1
+			across
+				1 |..| quadrants.count is i
+			loop
+				if attached {ID_ENTITY} quadrants[i].entity as id_entity then
+					if me ~ id_entity then
+						Result := i
+					end
+				end
+			end
+		end
+
 	stationary_entity_count: INTEGER
 		do
 			Result := 0
@@ -162,6 +178,35 @@ feature -- Queries
 		end
 
 feature -- Output
+
+	out_abstract_full_coordinate (me: MOVEABLE_ENTITY): STRING -- "[x, y, q]" -> "[2, 2, 4]"
+		require
+			has(me)
+		do
+			create Result.make_empty
+			Result.append ("[")
+			Result.append (coordinate.row.out)
+			Result.append (", ")
+			Result.append (coordinate.col.out)
+			Result.append (", ")
+			Result.append (quadrant_at(me).out)
+			Result.append ("]")
+		end
+
+	out_abstract_sector: STRING -- "[x, y]->[0, E],-,-,[2,P]"
+		do
+			create Result.make_empty
+			Result.append (coordinate.out_sqr_bracket)
+			Result.append ("->")
+			across
+				1 |..| quadrants.count is i
+			loop
+				Result.append (quadrants[i].out_abstract)
+				if i < quadrants.count then
+					Result.append (",")
+				end
+			end
+		end
 
 	out_coordinate: STRING -- "(row:column)"
 		do

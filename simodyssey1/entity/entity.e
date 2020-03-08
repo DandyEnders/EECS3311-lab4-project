@@ -33,6 +33,11 @@ feature -- Attributes
 
 feature -- Queries
 
+	is_equal (other: like current): BOOLEAN
+		do
+			Result := character ~ other.character and coordinate ~ other.coordinate
+		end
+
 feature -- Commands
 
 	set_coordinate (a_coordinate: COORDINATE)
@@ -48,9 +53,6 @@ feature -- out
 			Result.append (character);
 		end
 
-	is_equal (other: like current): BOOLEAN
-		do
-			Result := character ~ other.character and coordinate ~ other.coordinate
-		end
+
 
 end

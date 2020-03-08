@@ -64,7 +64,7 @@ feature -- Queries
 			-- Return true if entity in quadrant is null entity.
 			-- Return false otherwise.
 		do
-			Result := (create {NULL_ENTITY}.make (coordinate)) ~ (entity)
+			Result := attached {NULL_ENTITY} entity -- (create {NULL_ENTITY}.make (coordinate)) ~ (entity)
 		end
 
 	has (ie: ID_ENTITY): BOOLEAN
@@ -80,6 +80,17 @@ feature {NONE} -- private attributes
 	e_id: INTEGER
 
 feature -- Out
+
+	out_abstract: STRING -- "[id, character]" -> "[2, P]", "-"
+		do
+			create Result.make_empty
+
+			if attached {ID_ENTITY} entity as id_entity then -- "[2, P]"
+				Result.append (id_entity.out_sqr_bracket)
+			else -- "-"
+				Result.append(entity.out)
+			end
+		end
 
 	out: STRING
 		do

@@ -36,4 +36,23 @@ feature -- Queries
 			Result := coordinate ~ other.coordinate and character ~ other.character and id ~ other.id
 		end
 
+feature -- out
+
+	out_sqr_bracket:STRING -- "[id, character]" -> "[0, E]"
+		do
+			create Result.make_empty
+			Result.append ("[")
+			Result.append (id.out)
+			Result.append (":")
+			Result.append (character)
+			Result.append ("]")
+		end
+
+	out_description:STRING -- "[id, character]->" -> "[0, E]->"
+		do
+			create Result.make_empty
+			Result.append (out_sqr_bracket)
+			Result.append ("->")
+		end
+
 end

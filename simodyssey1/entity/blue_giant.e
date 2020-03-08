@@ -19,6 +19,4 @@ feature -- Attribute
 
 	character: STRING = "*"
 
-
-
 end
