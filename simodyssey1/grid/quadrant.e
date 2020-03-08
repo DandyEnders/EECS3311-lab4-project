@@ -74,6 +74,7 @@ feature -- Queries
 			Result := ie ~ entity
 		end
 
+
 feature {NONE} -- private attributes
 
 	e_id: INTEGER

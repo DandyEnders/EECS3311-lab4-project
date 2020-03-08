@@ -110,21 +110,24 @@ feature -- Queries
 
 	has_star: BOOLEAN
 		do
-			Result := across quadrants is i_q some i_q.entity.character ~ "*" or i_q.entity.character ~ "Y" end
+			Result :=
+				across
+					quadrants is i_q
+				some
+					attached {STAR} i_q.entity
+				end
 		end
 
 	get_star: STAR
 		require
 			has_star
 		do
-			Result := create {YELLOW_DWARF}.make ([1, 1], 30) --creating random star. Note, this will never get returned
+			Result := create {YELLOW_DWARF}.make ([1, 1], 0) --creating random star. Note, this will never get returned
 			across
 				quadrants is i_q
 			loop
-				if i_q.entity.character ~ "*" then
-					Result := create {BLUE_GIANT}.make (coordinate, i_q.entity_id)
-				elseif i_q.entity.character ~ "Y" then
-					Result := create {YELLOW_DWARF}.make (coordinate, i_q.entity_id)
+				if attached {STAR} i_q.entity as i_star then
+					Result := i_star
 				end
 			end
 		end
@@ -140,7 +143,7 @@ feature -- Queries
 			across
 				quadrants is i_q
 			loop
-				if i_q.entity.character /~ "E" and i_q.entity.character /~ "P" and i_q.entity.character /~ "-" then
+				if attached {STATIONARY_ENTITY} i_q.entity then
 					Result := Result + 1
 				end
 			end
@@ -152,7 +155,7 @@ feature -- Queries
 			across
 				quadrants is i_q
 			loop
-				if i_q.entity.character ~ "E" or i_q.entity.character ~ "P" then
+				if attached {MOVEABLE_ENTITY} i_q.entity then
 					Result := Result + 1
 				end
 			end
