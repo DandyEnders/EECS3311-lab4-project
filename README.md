@@ -12,6 +12,8 @@ Jinho will currently work on...
 Ato will currently work on...
 1. [x] Given a threshold, new_game() command of GRID will populate the game board with planets and stationary entities
 1. [x] added move_explorer() command to SIMODYSSEY. 
+
+
        1. EDIT 1:
               1. This command fulfills the requirement that "If the explorer is in any sector, it can travel to any of the 8 adjacent sector normally"
               1. It also fufills the requirement that "The grid wraps along its boundaries meaning if we go north from a sector in the first row, we will move into the fifth row at the bottom of the grid" 
