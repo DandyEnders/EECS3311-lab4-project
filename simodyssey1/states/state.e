@@ -7,26 +7,77 @@ note
 deferred class
 	STATE
 
+inherit
+
+	ANY
+		undefine
+			out
+		end
+
 feature -- Constructor
 
-	make(c: like context)
+	make (c: SIMODYSSEY)
 		do
-			context := c
+			set_context (c)
 		end
 
 feature {STATE} -- Attribute
 
 	context: SIMODYSSEY
 
+	msg: MESSAGE
+
 feature -- Commands
+
+	set_context (c: SIMODYSSEY)
+		do
+			context := c
+		end
 
 feature -- Queries
 
-	read
-		deferred end
+feature -- Controller command / queries
 
---	answer TODO
+	abort
+		deferred
+		end
 
-	choice
+	land
+		deferred
+		end
+
+	liftoff
+		deferred
+		end
+
+	move (d: INTEGER)
+		deferred
+		end
+
+	pass
+		deferred
+		end
+
+	play
+		deferred
+		end
+
+	status
+		deferred
+		end
+
+	test (th: INTEGER)
+		deferred
+		end
+
+	wormhole
+		deferred
+		end
+
+feature -- Out
+
+	out: STRING
+		deferred
+		end
 
 end

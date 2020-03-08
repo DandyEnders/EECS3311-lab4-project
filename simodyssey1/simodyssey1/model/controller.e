@@ -25,6 +25,9 @@ feature {NONE} -- Initialization
 			create s.make_empty
 			i := 0
 			create game_model.make
+
+			-- initial state = main menu state
+			create {MAIN_MENU_STATE} game_state.make(game_model)
 		end
 
 feature -- model attributes
@@ -34,6 +37,8 @@ feature -- model attributes
 	i: INTEGER
 
 	game_model: SIMODYSSEY
+
+	game_state: STATE
 
 feature -- model operations
 
@@ -53,17 +58,17 @@ feature -- Model input
 
 	abort
 		do
-				-- TODO
+			game_state.abort
 		end
 
 	land
 		do
-				-- TODO
+			game_state.land
 		end
 
 	liftoff
 		do
-				-- TODO
+			game_state.liftoff
 		end
 
 	move (d: INTEGER)
@@ -89,43 +94,45 @@ feature -- Model input
 			else
 				direction := dir_cls.NW
 			end -- when {ETF_TYPE_CONSTRAINTS}.NW
-				-- TODO
+			game_state.move(d)
 		end
 
 	pass
 		do
-				-- TODO
+			game_state.pass
 		end
 
 	play
 		do
-				-- TODO
+			game_state.play
 		end
 
 	status
 		do
-				-- TODO
+			game_state.status
 		end
 
 	test (th: INTEGER)
+			-- 1 <= th and th <= 101
 		do
-				-- TODO
+			game_state.test(th)
 		end
 
 	wormhole
 		do
-				-- TODO
+			game_state.wormhole
 		end
 
 feature -- queries
 
 	out: STRING
 		do
-			create Result.make_from_string ("  ")
-			Result.append ("System State: default model state ")
-			Result.append ("(")
-			Result.append (i.out)
-			Result.append (")")
+--			create Result.make_from_string ("  ")
+--			Result.append ("System State: default model state ")
+--			Result.append ("(")
+--			Result.append (i.out)
+--			Result.append (")")
+			create Result.make_from_string (game_state.out)
 		end
 
 end
