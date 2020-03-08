@@ -35,6 +35,9 @@ feature -- Commands
 			not is_dead
 		do
 			value := a_value
+			if value = 0 then
+				is_dead := true
+			end
 		end
 
 	add_life(a_value: INTEGER)
@@ -73,6 +76,6 @@ feature -- Queries
 invariant
 	min_0: value >= 0 and max >= 0
 	value_max: value <= max
-	no_revive: is_dead implies value = 0
+	no_revive: (is_dead) = (value = 0)
 
 end

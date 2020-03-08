@@ -39,7 +39,7 @@ feature {KILLABLE} -- Killable Queries
 
 	has_death_cause_type(a_death_cause_type: STRING): BOOLEAN
 		do
-			Result := attached death_cause_type[a_death_cause_type]
+			Result := death_cause_type.has (a_death_cause_type)
 		end
 
 feature -- Attribute
