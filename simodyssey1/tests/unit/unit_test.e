@@ -20,18 +20,144 @@ feature {NONE} -- Initialization
 			add_boolean_case (agent t1)
 			add_boolean_case (agent t2)
 			add_boolean_case (agent t3)
-			add_boolean_case (agent t4)
+--			add_boolean_case (agent t4)
 --			add_boolean_case (agent t5)
+			add_boolean_case (agent t6)
 		end
 
 feature -- tests
+	t6: BOOLEAN
+		local
+			s_o:SIMODYSSEY
+		do
+			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move?, does fuel recharge if you move into a sector with a star?, does explorer die if he goes into a sector with a blackhole")
+			create s_o.make
+			s_o.new_game (50)
+			s_o.move_explorer ([1,1])
+			print(s_o.explorer.life.out)
+			print(s_o.explorer.fuel.out)
+			print("%N")
+			s_o.move_explorer ([1,1])
+			print(s_o.explorer.life.out)
+			print(s_o.explorer.fuel.out)
+			print("%N")
+			print(s_o.out)
+			print("%N")
+			s_o.move_explorer ([1,1])
+		end
+	t5: BOOLEAN
+		local
+			s_o:SIMODYSSEY
+		do
+			comment ("t5: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move?, does fuel recharge if you move into a sector with a star?")
+			create s_o.make
+			s_o.new_game (50)
 
+			-- Testing fuel exact filling fuel over flow
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			print("%N")
+--			print("%N")
+--			s_o.move_explorer ([1,0])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			s_o.move_explorer ([1,0])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			s_o.move_explorer ([-1,0])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			s_o.move_explorer ([0,1])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			
+			-- Testing Fuel Under fill and fuel run out
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			print("%N")
+--			print("%N")
+--			s_o.move_explorer ([1,0])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			s_o.move_explorer ([1,0])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			s_o.move_explorer ([-1,0])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			s_o.move_explorer ([0,-1])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			s_o.move_explorer ([0,-1])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			s_o.move_explorer ([0,-1])
+--			print(s_o.explorer.fuel.out)
+--			print("%N")
+--			print("%N")
+--			print(s_o.out)
+--			
+			print(s_o.explorer.fuel.out)
+			print("%N")
+			print("%N")
+			print(s_o.out)
+			print("%N")
+			print("%N")
+			s_o.move_explorer ([1,0])
+			print(s_o.explorer.fuel.out)
+			print("%N")
+			print("%N")
+			print(s_o.out)
+			s_o.move_explorer ([1,0])
+			print(s_o.explorer.fuel.out)
+			print("%N")
+			print("%N")
+			print(s_o.out)
+			s_o.move_explorer ([0,-1])
+			print(s_o.explorer.fuel.out)
+			print("%N")
+			print("%N")
+			print(s_o.out)
+			s_o.move_explorer ([1,1])
+			print(s_o.explorer.fuel.out)
+			print("%N")
+			print("%N")
+			print(s_o.out)
+			s_o.move_explorer ([1,0])
+			print(s_o.explorer.fuel.out)
+			print("%N")
+			print("%N")
+			print(s_o.out)
+			Result:=TRUE
+		end
 	t4: BOOLEAN
 		local
 			s_o:SIMODYSSEY
 			d:DIRECTION
 		do
-			comment ("t4: Testing SIMODYSSEY make and new_game()")
+			comment ("t4: Testing SIMODYSSEY make and new_game() and partially move_explorer")
 			create s_o.make
 			-- testing new_game with multiple threshold values.
 			s_o.new_game (30)

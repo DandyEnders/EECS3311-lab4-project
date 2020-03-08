@@ -111,7 +111,30 @@ feature -- Queries
 				end
 			end
 		end
-
+	has_star:BOOLEAN
+		do
+			Result :=
+					across
+						quadrants is i_q
+					some
+						i_q.entity.character ~ "*" or i_q.entity.character ~ "Y"
+					end
+		end
+	get_star: STAR
+		require
+			has_star
+		do
+			Result:=create {YELLOW_DWARF}.make ([1,1], 30) --creating random star. Note, this will never get returned
+				across
+					quadrants is i_q
+				loop
+					if  i_q.entity.character ~ "*" then
+						Result:= create {BLUE_GIANT}.make (coordinate, i_q.entity_id)
+					elseif  i_q.entity.character ~ "Y" then
+						Result:= create {YELLOW_DWARF}.make (coordinate, i_q.entity_id)
+					end
+				end
+		end
 	has(me: ID_ENTITY): BOOLEAN
 		do
 			Result :=
