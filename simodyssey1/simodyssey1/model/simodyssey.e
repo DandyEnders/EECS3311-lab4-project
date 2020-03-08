@@ -71,9 +71,6 @@ feature -- Command
 		require
 			valid_threshold: 1 <= th and th <= 101
 			not game_in_session
-		local
-			p: PLANET
-			numb_of_entity: INTEGER
 		do
 			make --calling make in order to initialize global ids and the board every new game
 				-- initializing the planet threshold

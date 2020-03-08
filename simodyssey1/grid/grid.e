@@ -89,10 +89,7 @@ feature -- commands
 
 			if attached {MOVEABLE_ENTITY} ie as me then
 				moveable_entities.force (me, me.id)
-			elseif attached {STATIONARY_ENTITY} ie as se then
-				stationary_entities.remove (se.id)
 			end
-
 		ensure
 			not at (ie.coordinate).has (ie)
 		end
