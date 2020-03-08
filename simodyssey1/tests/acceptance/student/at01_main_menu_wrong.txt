@@ -1,7 +1,16 @@
-# test
+test(30)
+abort
 play
 abort
-# move
+abort
+move(N)
+move(NE)
+move(E)
+move(SE)
+move(S)
+move(SW)
+move(W)
+move(NW)
 land
 liftoff
 pass

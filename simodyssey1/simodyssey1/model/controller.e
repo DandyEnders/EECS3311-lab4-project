@@ -132,7 +132,8 @@ feature -- queries
 --			Result.append ("(")
 --			Result.append (i.out)
 --			Result.append (")")
-			create Result.make_from_string (game_state.out)
+			Result := game_state.out
+--			create Result.make_from_string (game_state.out)
 		end
 
 end

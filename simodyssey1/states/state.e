@@ -19,6 +19,7 @@ feature -- Constructor
 	make (c: SIMODYSSEY)
 		do
 			set_context (c)
+			create abstract_state.make
 		end
 
 feature {STATE} -- Attribute
@@ -26,6 +27,8 @@ feature {STATE} -- Attribute
 	context: SIMODYSSEY
 
 	msg: MESSAGE
+
+	abstract_state: ABSTRACT_STATE
 
 feature -- Commands
 

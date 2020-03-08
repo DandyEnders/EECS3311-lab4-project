@@ -56,7 +56,7 @@ feature -- Out
 	out: STRING
 		do
 			create Result.make_from_string ("  ")
-			Result.append ("state:0.0, ok")
+			Result.append ("state:0., ok")
 			Result.append ("%N")
 			Result.append ("  ")
 			Result.append (msg.initial_message)
