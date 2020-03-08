@@ -62,7 +62,7 @@ feature -- Commands
 	charge_fuel (s: STAR)
 			--given a star, can recharge fuel.
 		do
-			if (fuel + s.luminosity) > fuel then
+			if (fuel + s.luminosity) > 3 then
 				fuel := 3
 			else
 				fuel := (fuel + s.luminosity)

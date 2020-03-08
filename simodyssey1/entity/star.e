@@ -8,10 +8,13 @@ deferred class
 	STAR
 
 inherit
+
 	STATIONARY_ENTITY
 
 feature
+
 	luminosity: INTEGER
-		deferred end
+		deferred
+		end
 
 end

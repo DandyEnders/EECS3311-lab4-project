@@ -8,24 +8,25 @@ expanded class
 	DIRECTION
 
 feature
+
 	N: COORDINATE
 		do
-			create Result.make([-1, 0])
+			create Result.make ([-1, 0])
 		end
 
 	E: COORDINATE
 		do
-			create Result.make([0, 1])
+			create Result.make ([0, 1])
 		end
 
 	S: COORDINATE
 		do
-			create Result.make([1, 0])
+			create Result.make ([1, 0])
 		end
 
 	W: COORDINATE
 		do
-			create Result.make([0, -1])
+			create Result.make ([0, -1])
 		end
 
 	NE: COORDINATE

@@ -50,9 +50,7 @@ feature -- out
 
 	is_equal (other: like current): BOOLEAN
 		do
-			Result := character ~ other.character
-			and
-			 coordinate ~ other.coordinate
+			Result := character ~ other.character and coordinate ~ other.coordinate
 		end
 
 end

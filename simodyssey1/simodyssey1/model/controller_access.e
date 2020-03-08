@@ -8,6 +8,7 @@ expanded class
 	CONTROLLER_ACCESS
 
 feature
+
 	m: CONTROLLER
 		once
 			create Result.make
@@ -15,8 +16,5 @@ feature
 
 invariant
 	m = m
+
 end
-
-
-
-
