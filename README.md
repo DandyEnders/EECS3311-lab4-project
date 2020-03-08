@@ -55,22 +55,22 @@ GRID CHANGES
 Changes #2
 ----------
 EXPLORER CHANGES
-found_life is an attribute of EXPLORER
-set_found_life is a commmand in EXPLORER that asserts found_life to true
-added spend_fuel_unit command to EXPLORER
-added charge_fuel() command to EXPLORER
+1. found_life is an attribute of EXPLORER
+1. set_found_life is a commmand in EXPLORER that asserts found_life to true
+1. added spend_fuel_unit command to EXPLORER
+1. added charge_fuel() command to EXPLORER
 
 QUADRANT CHANGES
-set_entity() command of QUADRANT now only accepts id entites
-remove_entity command of QUADRANT no longer calls set_enetity
-added entity_id() query of QUADRANT -> it is to be called only if the quadrant is not empty
-has() query now only accepts ID_ENTITY now.
-added e_id as a private attribute that holds the id of an id_entity if the QUADRANT is not empty.
+1. set_entity() command of QUADRANT now only accepts id entites
+1. remove_entity command of QUADRANT no longer calls set_enetity
+1. added entity_id() query of QUADRANT -> it is to be called only if the quadrant is not empty
+1. has() query now only accepts ID_ENTITY now.
+1. added e_id as a private attribute that holds the id of an id_entity if the QUADRANT is not empty.
 
 SECTOR CHANGES
-added has_star():BOOLEAN query to SECTOR -> it returns true if the sector has a star
-added get_star to SECTOR -> it requires that has_star():BOOLEAN is true and if so, returns the STAR of that SECTOR
+1. added has_star():BOOLEAN query to SECTOR -> it returns true if the sector has a star
+1. added get_star to SECTOR -> it requires that has_star():BOOLEAN is true and if so, returns the STAR of that SECTOR
 
 UNIT_TEST CHANGES
-added t6 boolean tests
+1. added t6 boolean tests
 
