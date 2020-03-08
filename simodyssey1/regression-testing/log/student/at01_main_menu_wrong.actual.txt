@@ -1,2 +1,56 @@
-Type Error: specification of command executions is not type-correct
-Error: unknown event name toggle_RNG_out
+  state:0.0, ok
+  Welcome! Try test(30)
+->test(30)
+  state:1.0, ok
+  Welcome! Try test(30)
+->abort
+  state:1.1, error
+  Negative on that request:no mission in progress.
+->play
+  state:2.0, ok
+  Welcome! Try test(30)
+->abort
+  state:2.1, error
+  Negative on that request:no mission in progress.
+->abort
+  state:2.2, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:2.3, error
+  Negative on that request:no mission in progress.
+->move(NE)
+  state:2.4, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:2.5, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:2.6, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:2.7, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:2.8, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:2.9, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:2.10, error
+  Negative on that request:no mission in progress.
+->land
+  state:2.11, error
+  Negative on that request:no mission in progress.
+->liftoff
+  state:2.12, error
+  Negative on that request:no mission in progress.
+->pass
+  state:2.13, error
+  Negative on that request:no mission in progress.
+->wormhole
+  state:2.14, error
+  Negative on that request:no mission in progress.
+->status
+  state:2.15, error
+  Negative on that request:no mission in progress.

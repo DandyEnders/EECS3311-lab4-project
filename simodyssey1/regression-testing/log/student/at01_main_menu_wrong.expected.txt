@@ -122,9 +122,6 @@
 ->wormhole
   state:2.14, error
   Negative on that request:no mission in progress.
-->toggle_RNG_out
-  state:2.15, ok
-  RNG output flag: True
 ->status
-  state:2.16, error
+  state:2.15, error
   Negative on that request:no mission in progress.

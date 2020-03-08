@@ -13,53 +13,39 @@ inherit
 create
 	make
 
+
 feature -- Controller command / queries
 
-	abort
+	initialization
 		do
+			msg_command_validity := "ok"
+			msg_content := "  " + msg.initial_message
 		end
 
-	land
+	abort, land, liftoff, pass, status, wormhole
 		do
-		end
-
-	liftoff
-		do
+			executed_invalid_command
+			msg_content := "  " + msg.abort_error_no_mission
 		end
 
 	move (d: INTEGER)
 		do
-		end
-
-	pass
-		do
+			executed_invalid_command
+			msg_content := "  " + msg.abort_error_no_mission
 		end
 
 	play
 		do
-		end
-
-	status
-		do
+			executed_turn_command
+			create {MAIN_MENU_STATE} next_state.make(model)
+			-- TODO
 		end
 
 	test (th: INTEGER)
 		do
-		end
-
-	wormhole
-		do
-		end
-
-feature -- Out
-
-	out: STRING
-		do
-			create Result.make_from_string ("  ")
-			Result.append ("state:0., ok")
-			Result.append ("%N")
-			Result.append ("  ")
-			Result.append (msg.initial_message)
+			executed_turn_command
+			--context.set_state (create {TEST_STATE}.make)
+			-- TODO
 		end
 
 end

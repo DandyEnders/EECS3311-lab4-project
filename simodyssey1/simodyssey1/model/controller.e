@@ -22,31 +22,27 @@ feature {NONE} -- Initialization
 	make
 			-- Initialization for `Current'.
 		do
-			create s.make_empty
-			i := 0
 			create game_model.make
 
 			-- initial state = main menu state
 			create {MAIN_MENU_STATE} game_state.make(game_model)
+
 		end
 
 feature -- model attributes
-
-	s: STRING
-
-	i: INTEGER
 
 	game_model: SIMODYSSEY
 
 	game_state: STATE
 
-feature -- model operations
+feature -- state operation
 
-	default_update
-			-- Perform update to the model state.
+	move_to_next_state
 		do
-			i := i + 1
+			game_state := game_state.next_state
 		end
+
+feature -- model operations
 
 	reset
 			-- Reset model state.
@@ -59,16 +55,19 @@ feature -- Model input
 	abort
 		do
 			game_state.abort
+			move_to_next_state
 		end
 
 	land
 		do
 			game_state.land
+			move_to_next_state
 		end
 
 	liftoff
 		do
 			game_state.liftoff
+			move_to_next_state
 		end
 
 	move (d: INTEGER)
@@ -95,32 +94,38 @@ feature -- Model input
 				direction := dir_cls.NW
 			end -- when {ETF_TYPE_CONSTRAINTS}.NW
 			game_state.move(d)
+			move_to_next_state
 		end
 
 	pass
 		do
 			game_state.pass
+			move_to_next_state
 		end
 
 	play
 		do
 			game_state.play
+			move_to_next_state
 		end
 
 	status
 		do
 			game_state.status
+			move_to_next_state
 		end
 
 	test (th: INTEGER)
 			-- 1 <= th and th <= 101
 		do
 			game_state.test(th)
+			move_to_next_state
 		end
 
 	wormhole
 		do
 			game_state.wormhole
+			move_to_next_state
 		end
 
 feature -- queries

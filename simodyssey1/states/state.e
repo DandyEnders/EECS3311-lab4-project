@@ -16,30 +16,74 @@ inherit
 
 feature -- Constructor
 
-	make (c: SIMODYSSEY)
+	make(m: SIMODYSSEY)
 		do
-			set_context (c)
-			create abstract_state.make
+			model := m
+			abstract_state := model.abstract_state
+
+			create msg_mode.make_empty
+			create msg_command_validity.make_empty
+			create msg_content.make_empty
+
+			next_state := current
+			initialization
 		end
 
 feature {STATE} -- Attribute
 
-	context: SIMODYSSEY
+	model: SIMODYSSEY
 
 	msg: MESSAGE
 
 	abstract_state: ABSTRACT_STATE
 
+feature {STATE} -- Message attribute
+
+	-- "  {abstract_state.out}{, msg_mode}{, msg_command_validity}{%Nmsg_content}
+	-- example
+	--
+
+	msg_mode: STRING
+
+	msg_command_validity: STRING
+
+	msg_content: STRING
+
 feature -- Commands
 
-	set_context (c: SIMODYSSEY)
+	executed_valid_command
 		do
-			context := c
+			abstract_state.executed_valid_command
+			msg_command_validity := "ok"
+		end
+
+	executed_turn_command
+		do
+			abstract_state.executed_turn_command
+			msg_command_validity := "ok"
+		end
+
+	executed_invalid_command
+		do
+			abstract_state.executed_invalid_command
+			msg_command_validity := "error"
+		end
+
+	executed_no_turn_command
+		do
+			abstract_state.executed_no_turn_command
+			msg_command_validity := "error"
 		end
 
 feature -- Queries
 
+	next_state: STATE
+
 feature -- Controller command / queries
+
+	initialization
+		deferred
+		end
 
 	abort
 		deferred
@@ -80,7 +124,17 @@ feature -- Controller command / queries
 feature -- Out
 
 	out: STRING
-		deferred
+		do
+			create Result.make_from_string ("  ")
+			Result.append (abstract_state.out)
+			if not msg_mode.is_empty then
+				Result.append (", ")
+				Result.append (msg_mode)
+			end
+			Result.append (", ")
+			Result.append (msg_command_validity)
+			Result.append ("%N")
+			Result.append (msg_content)
 		end
 
 end

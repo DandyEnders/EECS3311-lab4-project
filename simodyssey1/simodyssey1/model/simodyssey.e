@@ -37,6 +37,9 @@ feature {NONE} -- Constructor
 			planet_threshold := 0
 				-- setting the game to be in an aborted state so game_in_session is false
 			game_aborted := TRUE
+
+			-- Abstract state. (state:x.y)
+			create abstract_state.make
 		end
 
 feature -- Attribute
@@ -54,6 +57,8 @@ feature -- Attribute
 			--attributes that might be bad design. It works for now so dont change it until you have a solid solution to implement.
 
 	game_aborted: BOOLEAN -- set to true when the game is aborted using abort command.
+
+	abstract_state: ABSTRACT_STATE
 
 feature {NONE} -- Private Attribute
 

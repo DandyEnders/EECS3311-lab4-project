@@ -34,7 +34,7 @@ feature -- Attibute
 	-- constitudes a turn.
 	second_number: INTEGER
 
-feature -- Command
+feature {NONE} -- Private Command
 
 	increment_first_number
 		do
@@ -45,6 +45,28 @@ feature -- Command
 	increment_second_number
 		do
 			second_number := second_number + 1
+		end
+
+feature -- Command
+
+	executed_valid_command
+		do
+			increment_first_number
+		end
+
+	executed_turn_command
+		do
+			increment_first_number
+		end
+
+	executed_invalid_command
+		do
+			increment_second_number
+		end
+
+	executed_no_turn_command
+		do
+			increment_second_number
 		end
 
 feature -- Queries
