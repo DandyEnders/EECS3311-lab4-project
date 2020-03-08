@@ -16,23 +16,23 @@ Ato will currently work on...
 
        1. EDIT 1:
               1. This command fulfills the requirement that "If the explorer is in any sector, it can travel to any of the 8 adjacent sector normally"
-              1. It also fufills the requirement that "The grid wraps along its boundaries meaning if we go north from a sector in the first row, we will move into the fifth row at the bottom of the grid" 
-              1. To acheive this I added more features to the project. LOOK BELOW TO SEE THE CHANGES I MADE.
+              2. It also fufills the requirement that "The grid wraps along its boundaries meaning if we go north from a sector in the first row, we will move into the fifth row at the bottom of the grid" 
+          To acheive this I added more features to the project. LOOK BELOW TO SEE THE CHANGES I MADE.
        1. EDIT 2:
               SIMODYSSEY CHANGES
               1. To fulfill the command that "The game is over when the explorer’s life runs out, the explorer’s fuel runs out, a planet with life is found, or the game is aborted."
                      added game_in_session query to SIMODYSSEY
                      added game_aborted attribute to SIMODYSSEY
-              1. To fulfill "a new game can be started when the game is over"
+              2. To fulfill "a new game can be started when the game is over"
                      new_game() now requries a not game_in_session. 
                      new_game also sets game_aborted to FALSE. Note: game_aborted is TRUE when SIMODYSSEY object is first created
-              1. To fulfill "Fuel decrease by 1 each time the explorer uses the move command successfully"
+              3. To fulfill "Fuel decrease by 1 each time the explorer uses the move command successfully"
                      move_explorer() now calls explorer.spend_fuel_unit
-              1. To fulfill "Fuel is gained when in a sector with a star based on the star’s luminosity intensity."
+              4. To fulfill "Fuel is gained when in a sector with a star based on the star’s luminosity intensity."
                      move_explorer() now recharges the explorer's fuel if he is in a sector with a star by calling explorer.charge_fuel().
-              1. To fulfill "Explorer has a life value of three, which is reduced to zero when running out of fuel or entering a region with a black hole)"
+              5. To fulfill "Explorer has a life value of three, which is reduced to zero when running out of fuel or entering a region with a black hole)"
                      move_explorer() now calls explorer.lose_life given the if-statement conditions.
-               To acheive this I added more features to the project. LOOK BELOW TO SEE THE CHANGES I MADE.
+           To acheive this I added more features to the project. LOOK BELOW TO SEE THE CHANGES I MADE.
        
        
 
