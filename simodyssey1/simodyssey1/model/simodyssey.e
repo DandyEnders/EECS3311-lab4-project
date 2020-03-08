@@ -91,18 +91,52 @@ feature -- Command
 			destination_coord := destination_coord.wrap_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 			galaxy.move (explorer, destination_coord)
 			explorer.spend_fuel_unit
-				-- if the explorer's new sector has a star, then recharge.
-			if galaxy.at (explorer.coordinate).has_star then
-				explorer.charge_fuel (galaxy.at (explorer.coordinate).get_star)
+			if galaxy.at (explorer.coordinate).has_stationary_entity then
+					-- if the explorer's new sector has a star, then recharge.
+				if attached {STAR} galaxy.at (explorer.coordinate).get_stationary_entity as i_star then
+					explorer.charge_fuel (i_star)
+
+						-- if explorer encountered a blackhole, he should lose his life and be removed from the galaxy
+				elseif attached {BLACKHOLE} galaxy.at (explorer.coordinate).get_stationary_entity then
+					explorer.lose_life
+					galaxy.at (explorer.coordinate).remove (explorer)
+				end
 			end
-				-- if the explorer ran out of fuel or he encountered a blackhole, he should lose his life and be removed from the galaxy
-			if galaxy.at (explorer.coordinate).has (create {BLACKHOLE}.make ([3, 3], -1)) or explorer.fuel ~ 0 then
+
+				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
+			if explorer.life > 0 and explorer.fuel ~ 0 then
 				explorer.lose_life
 				galaxy.at (explorer.coordinate).remove (explorer)
 			end
 		ensure
 				-- If the explorer did not move to a black hole, Explorer should now exist in the sector that he wanted to go to
-			(explorer.life /~ 0) implies galaxy.at ((old explorer.coordinate + d).wrap_coordinate ((old explorer.coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer)
+			If_not_lost_the_explorer_is_in_new_position: (explorer.life /~ 0) implies galaxy.at ((old explorer.coordinate + d).wrap_coordinate ((old explorer.coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer)
+		end
+
+	wormhole
+		require
+			game_in_session
+			stationary_entity_exists_at_location: galaxy.at (explorer.coordinate).has_stationary_entity
+			stationar_entity_is_wormhole: attached {WORMHOLE} galaxy.at (explorer.coordinate).get_stationary_entity
+		do
+		end
+
+	land
+		require
+			game_in_session
+		do
+		end
+
+	liftoff
+		require
+			game_in_session
+		do
+		end
+
+	pass
+		require
+			game_in_session
+		do
 		end
 
 feature {NONE} -- Private Helper Commands
@@ -146,7 +180,7 @@ feature {NONE} -- Private Helper Commands
 			loop
 				row := rng.rchoose (1, 5)
 				col := rng.rchoose (1, 5)
-				if galaxy.at ([row, col]).stationary_entity_count ~ 0 and not galaxy.at ([row, col]).is_full then
+				if not galaxy.at ([row, col]).has_stationary_entity and not galaxy.at ([row, col]).is_full then
 					s_entity_num := rng.rchoose (1, 3)
 					if s_entity_num ~ 1 then
 						galaxy.at ([row, col]).add (create {YELLOW_DWARF}.make ([row, col], stationary_id.get_id))

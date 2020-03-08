@@ -45,7 +45,7 @@ feature -- tests
 			print ("%N")
 			print (s_o.out)
 			print ("%N")
-			s_o.move_explorer ([1, 1])
+				--			s_o.move_explorer ([1, 1]) -- If this line is executed, a violation will occur because the player has died.
 		end
 
 	t5: BOOLEAN

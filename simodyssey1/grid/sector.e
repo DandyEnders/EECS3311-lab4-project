@@ -108,26 +108,16 @@ feature -- Queries
 			end
 		end
 
-	has_star: BOOLEAN
-		do
-			Result :=
-				across
-					quadrants is i_q
-				some
-					attached {STAR} i_q.entity
-				end
-		end
-
-	get_star: STAR
+	get_stationary_entity: STATIONARY_ENTITY
 		require
-			has_star
+			has_stationary_entity
 		do
 			Result := create {YELLOW_DWARF}.make ([1, 1], 0) --creating random star. Note, this will never get returned
 			across
 				quadrants is i_q
 			loop
-				if attached {STAR} i_q.entity as i_star then
-					Result := i_star
+				if attached {STATIONARY_ENTITY} i_q.entity as i_stat then
+					Result := i_stat
 				end
 			end
 		end
@@ -139,13 +129,13 @@ feature -- Queries
 
 	quadrant_at (me: ID_ENTITY): INTEGER
 		require
-			has(me)
+			has (me)
 		do
 			Result := 1
 			across
 				1 |..| quadrants.count is i
 			loop
-				if attached {ID_ENTITY} quadrants[i].entity as id_entity then
+				if attached {ID_ENTITY} quadrants [i].entity as id_entity then
 					if me ~ id_entity then
 						Result := i
 					end
@@ -153,14 +143,14 @@ feature -- Queries
 			end
 		end
 
-	stationary_entity_count: INTEGER
+	has_stationary_entity: BOOLEAN
 		do
-			Result := 0
+			Result := FALSE
 			across
 				quadrants is i_q
 			loop
 				if attached {STATIONARY_ENTITY} i_q.entity then
-					Result := Result + 1
+					Result := TRUE
 				end
 			end
 		end
@@ -181,7 +171,7 @@ feature -- Output
 
 	out_abstract_full_coordinate (me: MOVEABLE_ENTITY): STRING -- "[x, y, q]" -> "[2, 2, 4]"
 		require
-			has(me)
+			has (me)
 		do
 			create Result.make_empty
 			Result.append ("[")
@@ -189,7 +179,7 @@ feature -- Output
 			Result.append (", ")
 			Result.append (coordinate.col.out)
 			Result.append (", ")
-			Result.append (quadrant_at(me).out)
+			Result.append (quadrant_at (me).out)
 			Result.append ("]")
 		end
 
@@ -201,7 +191,7 @@ feature -- Output
 			across
 				1 |..| quadrants.count is i
 			loop
-				Result.append (quadrants[i].out_abstract)
+				Result.append (quadrants [i].out_abstract)
 				if i < quadrants.count then
 					Result.append (",")
 				end
