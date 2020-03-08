@@ -8,6 +8,7 @@ class
 	CONTROLLER
 
 inherit
+
 	ANY
 		redefine
 			out
@@ -17,6 +18,7 @@ create {CONTROLLER_ACCESS}
 	make
 
 feature {NONE} -- Initialization
+
 	make
 			-- Initialization for `Current'.
 		do
@@ -26,11 +28,15 @@ feature {NONE} -- Initialization
 		end
 
 feature -- model attributes
-	s : STRING
-	i : INTEGER
+
+	s: STRING
+
+	i: INTEGER
+
 	game_model: SIMODYSSEY
 
 feature -- model operations
+
 	default_update
 			-- Perform update to the model state.
 		do
@@ -47,64 +53,73 @@ feature -- Model input
 
 	abort
 		do
-			-- TODO
+				-- TODO
 		end
 
 	land
 		do
-			-- TODO
+				-- TODO
 		end
 
 	liftoff
 		do
-			-- TODO
+				-- TODO
 		end
 
-	move(d: INTEGER)
+	move (d: INTEGER)
 		local
 			direction: COORDINATE
 			dir_cls: DIRECTION
 		do
 			inspect d
-			when {ETF_TYPE_CONSTRAINTS}.N 	then direction := dir_cls.N
-			when {ETF_TYPE_CONSTRAINTS}.NE 	then direction := dir_cls.NE
-			when {ETF_TYPE_CONSTRAINTS}.E 	then direction := dir_cls.E
-			when {ETF_TYPE_CONSTRAINTS}.SE 	then direction := dir_cls.SE
-			when {ETF_TYPE_CONSTRAINTS}.S 	then direction := dir_cls.S
-			when {ETF_TYPE_CONSTRAINTS}.SW 	then direction := dir_cls.SW
-			when {ETF_TYPE_CONSTRAINTS}.W 	then direction := dir_cls.W
-			else direction := dir_cls.NW end -- when {ETF_TYPE_CONSTRAINTS}.NW
-			-- TODO
+			when {ETF_TYPE_CONSTRAINTS}.N then
+				direction := dir_cls.N
+			when {ETF_TYPE_CONSTRAINTS}.NE then
+				direction := dir_cls.NE
+			when {ETF_TYPE_CONSTRAINTS}.E then
+				direction := dir_cls.E
+			when {ETF_TYPE_CONSTRAINTS}.SE then
+				direction := dir_cls.SE
+			when {ETF_TYPE_CONSTRAINTS}.S then
+				direction := dir_cls.S
+			when {ETF_TYPE_CONSTRAINTS}.SW then
+				direction := dir_cls.SW
+			when {ETF_TYPE_CONSTRAINTS}.W then
+				direction := dir_cls.W
+			else
+				direction := dir_cls.NW
+			end -- when {ETF_TYPE_CONSTRAINTS}.NW
+				-- TODO
 		end
 
 	pass
 		do
-			-- TODO
+				-- TODO
 		end
 
 	play
 		do
-			-- TODO
+				-- TODO
 		end
 
 	status
 		do
-			-- TODO
+				-- TODO
 		end
 
-	test(th: INTEGER)
+	test (th: INTEGER)
 		do
-			-- TODO
+				-- TODO
 		end
 
 	wormhole
 		do
-			-- TODO
+				-- TODO
 		end
 
-
 feature -- queries
-	out : STRING
+
+	out: STRING
 		do
 			create Result.make_from_string ("  ")
 			Result.append ("System State: default model state ")
@@ -114,7 +129,3 @@ feature -- queries
 		end
 
 end
-
-
-
-

@@ -8,6 +8,7 @@ class
 	SECTOR
 
 inherit
+
 	ANY
 		redefine
 			out
@@ -18,13 +19,12 @@ create
 
 feature {NONE} -- Constructor
 
-	make_empty(a_coordinate: COORDINATE; num_quadrants: INTEGER)
+	make_empty (a_coordinate: COORDINATE; num_quadrants: INTEGER)
 		local
 			i: INTEGER
 		do
 			coordinate := a_coordinate
 			max_num_quadrants := num_quadrants
-
 			create quadrants.make (max_num_quadrants)
 			from
 				i := 1
@@ -36,17 +36,17 @@ feature {NONE} -- Constructor
 			end
 		end
 
+feature -- Attribute
 
+	quadrants: ARRAYED_LIST [QUADRANT] -- SEQ[QUADRANT]
 
-feature  -- Attribute
-
-	quadrants: ARRAYED_LIST[QUADRANT] -- SEQ[QUADRANT]
 	coordinate: COORDINATE
+
 	max_num_quadrants: INTEGER
 
 feature -- Command
 
-	remove(me: MOVEABLE_ENTITY)
+	remove (me: MOVEABLE_ENTITY)
 		local
 			removed: BOOLEAN
 		do
@@ -56,21 +56,19 @@ feature -- Command
 			until
 				removed
 			loop
-				if
-					i_q.has(me)
-				then
+				if i_q.has (me) then
 					i_q.remove_entity
 					removed := true
 				end
 			end
 		ensure
-			not has(me)
+			not has (me)
 		end
 
 	add (e: ID_ENTITY)
 		require
 			not_full: not is_full
-			not_has_already: not has(e)
+			not_has_already: not has (e)
 		local
 			added: BOOLEAN
 		do
@@ -80,16 +78,14 @@ feature -- Command
 			until
 				added
 			loop
-				if
-					i_q.is_empty
-				then
-					i_q.set_entity(e)
+				if i_q.is_empty then
+					i_q.set_entity (e)
 					added := true
 				end
 			end
---		ensure
---			old contents are not affected except one we are adding. TODO
---			(old quadrants.deep_twin).
+				--		ensure
+				--			old contents are not affected except one we are adding. TODO
+				--			(old quadrants.deep_twin).
 		end
 
 feature -- Queries
@@ -111,59 +107,57 @@ feature -- Queries
 				end
 			end
 		end
-	has_star:BOOLEAN
+
+	has_star: BOOLEAN
 		do
-			Result :=
-					across
-						quadrants is i_q
-					some
-						i_q.entity.character ~ "*" or i_q.entity.character ~ "Y"
-					end
+			Result := across quadrants is i_q some i_q.entity.character ~ "*" or i_q.entity.character ~ "Y" end
 		end
+
 	get_star: STAR
 		require
 			has_star
 		do
-			Result:=create {YELLOW_DWARF}.make ([1,1], 30) --creating random star. Note, this will never get returned
-				across
-					quadrants is i_q
-				loop
-					if  i_q.entity.character ~ "*" then
-						Result:= create {BLUE_GIANT}.make (coordinate, i_q.entity_id)
-					elseif  i_q.entity.character ~ "Y" then
-						Result:= create {YELLOW_DWARF}.make (coordinate, i_q.entity_id)
-					end
-				end
-		end
-	has(me: ID_ENTITY): BOOLEAN
-		do
-			Result :=
-				across
-					quadrants is i_q
-				some
-					i_q.has(me)
-				end
-		end
-	stationary_entity_count:INTEGER
-		do
-			Result:=0
-			across quadrants is i_q
+			Result := create {YELLOW_DWARF}.make ([1, 1], 30) --creating random star. Note, this will never get returned
+			across
+				quadrants is i_q
 			loop
-				if i_q.entity.character /~ "E" and i_q.entity.character /~ "P" and i_q.entity.character /~ "-"then
-					Result:=Result+1
+				if i_q.entity.character ~ "*" then
+					Result := create {BLUE_GIANT}.make (coordinate, i_q.entity_id)
+				elseif i_q.entity.character ~ "Y" then
+					Result := create {YELLOW_DWARF}.make (coordinate, i_q.entity_id)
 				end
 			end
 		end
-	moveable_entity_count:INTEGER
+
+	has (me: ID_ENTITY): BOOLEAN
 		do
-			Result:=0
-			across quadrants is i_q
+			Result := across quadrants is i_q some i_q.has (me) end
+		end
+
+	stationary_entity_count: INTEGER
+		do
+			Result := 0
+			across
+				quadrants is i_q
+			loop
+				if i_q.entity.character /~ "E" and i_q.entity.character /~ "P" and i_q.entity.character /~ "-" then
+					Result := Result + 1
+				end
+			end
+		end
+
+	moveable_entity_count: INTEGER
+		do
+			Result := 0
+			across
+				quadrants is i_q
 			loop
 				if i_q.entity.character ~ "E" or i_q.entity.character ~ "P" then
-					Result:=Result+1
+					Result := Result + 1
 				end
 			end
 		end
+
 feature -- Output
 
 	out_coordinate: STRING -- "(row:column)"
@@ -177,27 +171,25 @@ feature -- Output
 			across
 				quadrants is i_q
 			loop
-				Result.append(i_q.out)
+				Result.append (i_q.out)
 			end
 		end
 
 	out: STRING -- for debugging "(row:column) ----"
 		do
 			create Result.make_empty
-			Result.append(out_coordinate)
-			Result.append(" ")
-			Result.append(out_quadrants)
+			Result.append (out_coordinate)
+			Result.append (" ")
+			Result.append (out_quadrants)
 		end
 
 invariant
-	min_max_count:
-		0 <= count and  count <= max_num_quadrants
---	unique_entities: TODO
---		across quadrants is i_q all
---			if not i_q.is_empty then
---				not has(i_q.entity)
---			end -- AA-C
---		end
-
+	min_max_count: 0 <= count and count <= max_num_quadrants
+	--	unique_entities: TODO
+	--		across quadrants is i_q all
+	--			if not i_q.is_empty then
+	--				not has(i_q.entity)
+	--			end -- AA-C
+	--		end
 
 end

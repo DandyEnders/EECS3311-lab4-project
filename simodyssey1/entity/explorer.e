@@ -19,13 +19,13 @@ create
 
 feature {NONE} -- Constructor
 
-	make(a_coordinate:COORDINATE; a_id: INTEGER)
+	make (a_coordinate: COORDINATE; a_id: INTEGER)
 		do
-			moveable_make(a_coordinate, a_id)
+			moveable_make (a_coordinate, a_id)
 			life := 3
 			fuel := 3
 			landed := false
-			found_life:=FALSE
+			found_life := FALSE
 		end
 
 feature -- Attributes
@@ -37,33 +37,41 @@ feature -- Attributes
 	landed: BOOLEAN
 
 	found_life: BOOLEAN
+
 feature -- Queries
+
 	death_message: STRING = "SET THIS TO DEATH MESSAGE"
 
 	character: STRING = "E"
+
 feature -- Commands
+
 	spend_fuel_unit
-		-- calling this will cause fuel to decrease by 1
+			-- calling this will cause fuel to decrease by 1
 		do
-			fuel:=fuel-1
+			fuel := fuel - 1
 		end
+
 	set_found_life
 		require
 			landed
 		do
-			found_life:=TRUE
+			found_life := TRUE
 		end
-	charge_fuel(s:STAR)
-	--given a star, can recharge fuel.
-	do
-		if (fuel + s.luminosity) > fuel then
-			fuel:=3
-		else
-			fuel:= (fuel + s.luminosity)
+
+	charge_fuel (s: STAR)
+			--given a star, can recharge fuel.
+		do
+			if (fuel + s.luminosity) > fuel then
+				fuel := 3
+			else
+				fuel := (fuel + s.luminosity)
+			end
 		end
-	end
+
 	lose_life
-	do
-		life:=0
-	end
+		do
+			life := 0
+		end
+
 end

@@ -8,6 +8,7 @@ class
 	QUADRANT
 
 inherit
+
 	ANY
 		redefine
 			out
@@ -18,11 +19,11 @@ create
 
 feature {NONE} -- Constructor
 
-	make_empty(c: COORDINATE)
+	make_empty (c: COORDINATE)
 		do
 			coordinate := c
 			remove_entity
-			e_id:=0
+			e_id := 0
 		end
 
 feature -- Attribute
@@ -38,44 +39,47 @@ feature -- Command
 		local
 			ne: NULL_ENTITY
 		do
-			create ne.make(coordinate)
+			create ne.make (coordinate)
 			entity := ne
-			e_id:=0
+			e_id := 0
 		end
 
 	set_entity (e: ID_ENTITY)
 		do
 			e.set_coordinate (coordinate)
 			entity := e
-			e_id:=e.id
+			e_id := e.id
 		end
 
 feature -- Queries
-	entity_id:INTEGER
+
+	entity_id: INTEGER
 		require
 			not is_empty
 		do
-			Result:=e_id
+			Result := e_id
 		end
 
 	is_empty: BOOLEAN
 			-- Return true if entity in quadrant is null entity.
 			-- Return false otherwise.
 		do
-			Result := (create {NULL_ENTITY}.make(coordinate)) ~ (entity)
+			Result := (create {NULL_ENTITY}.make (coordinate)) ~ (entity)
 		end
 
-	has(ie: ID_ENTITY): BOOLEAN
+	has (ie: ID_ENTITY): BOOLEAN
 			-- Return true if "ie" is entity.
 			-- Return false otherwise.
 		do
 			Result := ie ~ entity
 		end
 
-feature{NONE} -- private attributes
-	e_id:INTEGER
+feature {NONE} -- private attributes
+
+	e_id: INTEGER
 
 feature -- Out
+
 	out: STRING
 		do
 			Result := entity.out

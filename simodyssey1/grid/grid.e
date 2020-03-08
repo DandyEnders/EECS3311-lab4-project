@@ -13,10 +13,12 @@ inherit
 		redefine
 			out
 		end
-	ITERABLE[SECTOR]
+
+	ITERABLE [SECTOR]
 		redefine
 			out
 		end
+
 create
 	make
 
@@ -32,7 +34,6 @@ feature {NONE} -- Contstructor
 		do
 			create sect.make_empty ([1, 1], 0)
 			create sectors.make_filled (sect, r, c)
-
 			across
 				1 |..| r is i
 			loop
@@ -60,8 +61,8 @@ feature -- Commands
 	add (ie: ID_ENTITY; c: COORDINATE)
 		require
 			valid_coordinate (c)
-			not has(ie)
-			not at(c).is_full
+			not has (ie)
+			not at (c).is_full
 		do
 			at (c).add (ie)
 		ensure
@@ -77,16 +78,17 @@ feature -- Commands
 
 	move (ie: MOVEABLE_ENTITY; to_c: COORDINATE)
 		require
-			has(ie)
-			not at(to_c).is_full
+			has (ie)
+			not at (to_c).is_full
 		do
 			remove (ie)
 			add (ie, to_c)
 		ensure
-			at(to_c).has (ie)
+			at (to_c).has (ie)
 		end
 
 feature -- Queries
+
 	at (c: COORDINATE): SECTOR
 		require
 			valid_coordinate (c)
@@ -101,18 +103,16 @@ feature -- Queries
 
 	has (ie: ID_ENTITY): BOOLEAN
 		do
-			Result :=
-				across
-					sectors is i_s
-				some
-					i_s.has(ie)
-				end
+			Result := across sectors is i_s some i_s.has (ie) end
 		end
+
 feature -- Traversal
-new_cursor:ARRAY_ITERATION_CURSOR[SECTOR]
-	do
-		Result:=sectors.new_cursor
-	end
+
+	new_cursor: ARRAY_ITERATION_CURSOR [SECTOR]
+		do
+			Result := sectors.new_cursor
+		end
+
 feature -- Out
 
 	out: STRING
