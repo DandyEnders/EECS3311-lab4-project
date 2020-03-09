@@ -24,8 +24,11 @@ feature {NONE} -- Initialization
 		do
 			create game_model.make
 
+			-- Abstract state. (state:x.y)
+			create abstract_state.make
+
 			-- initial state = main menu state
-			create {MAIN_MENU_STATE} game_state.make(game_model)
+			create {MAIN_MENU_STATE} game_state.make(game_model, abstract_state)
 
 		end
 
@@ -34,6 +37,8 @@ feature -- model attributes
 	game_model: SIMODYSSEY
 
 	game_state: STATE
+
+	abstract_state: ABSTRACT_STATE
 
 feature -- state operation
 

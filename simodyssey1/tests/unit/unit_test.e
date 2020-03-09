@@ -225,7 +225,7 @@ feature -- tests
 				--			s: SECTOR
 				--			id: INTEGER
 			g: GRID
-			expected: STRING
+--			expected: STRING
 		do
 			comment ("t3: grid make")
 			create g.make (5, 5, 4)

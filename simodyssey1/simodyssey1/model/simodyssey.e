@@ -7,13 +7,6 @@ note
 class
 	SIMODYSSEY
 
-inherit
-
-	ANY
-		redefine
-			out
-		end
-
 create
 	make
 
@@ -38,8 +31,7 @@ feature {NONE} -- Constructor
 				-- setting the game to be in an aborted state so game_in_session is false
 			game_aborted := TRUE
 
-			-- Abstract state. (state:x.y)
-			create abstract_state.make
+
 		end
 
 feature -- Attribute
@@ -57,8 +49,6 @@ feature -- Attribute
 			--attributes that might be bad design. It works for now so dont change it until you have a solid solution to implement.
 
 	game_aborted: BOOLEAN -- set to true when the game is aborted using abort command.
-
-	abstract_state: ABSTRACT_STATE
 
 feature {NONE} -- Private Attribute
 
@@ -201,12 +191,6 @@ feature {NONE} -- Private Helper Commands
 
 feature -- Queries
 
-	out: STRING
-		do
-			create Result.make_empty
-			Result.append (galaxy.out)
-		end
-
 	sector_in_direction_is_full (d: COORDINATE): BOOLEAN
 			--Returns true if the sector in the direction specified is full.
 		require
@@ -219,6 +203,34 @@ feature -- Queries
 			-- a game is in session if neither (the explorer's life or his fuel is equal to 0), the game was aborted and the explorer has not found life
 		do
 			Result := explorer.is_alive and explorer.fuel /~ 0 and not game_aborted and not explorer.found_life
+		end
+
+feature -- Out
+
+	out_grid: STRING
+		do
+			create Result.make_empty
+			Result.append (galaxy.out)
+		end
+
+	out_movement: STRING -- TODO@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		do
+			create Result.make_from_string ("  ")
+		end
+
+	out_sectors: STRING
+		do
+			create Result.make_from_string ("  ")
+		end
+
+	out_descriptions: STRING
+		do
+			create Result.make_from_string ("  ")
+		end
+
+	out_deaths_this_turn: STRING
+		do
+			create Result.make_from_string ("  ")
 		end
 
 end

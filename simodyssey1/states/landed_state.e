@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {PLAY_STATE}."
+	description: "Summary description for {LANDED_STATE}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	PLAY_STATE
+	LANDED_STATE
 
 inherit
 	STATE
@@ -17,24 +17,17 @@ feature -- Controller command / queries
 
 	initialization
 		do
-			model.new_game (30)
-
-			msg_mode := "play"
-			msg_command_validity := "ok"
-			msg_content := model.out_movement
-			msg_content.append("%N")
-			msg_content.append(model.out_grid)
+			msg_content := "  " + msg.initial_message
 		end
 
 	abort
 		do
-			executed_turn_command
-			create {MAIN_MENU_STATE} next_state.make(model, abstract_state)
+
 		end
 
 	land
 		do
-			-- TODO
+
 		end
 
 	liftoff

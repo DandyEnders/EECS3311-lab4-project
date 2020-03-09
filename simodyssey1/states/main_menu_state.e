@@ -37,14 +37,14 @@ feature -- Controller command / queries
 	play
 		do
 			executed_turn_command
-			create {MAIN_MENU_STATE} next_state.make(model)
+			create {PLAY_STATE} next_state.make(model, abstract_state)
 			-- TODO
 		end
 
 	test (th: INTEGER)
 		do
 			executed_turn_command
-			--context.set_state (create {TEST_STATE}.make)
+--			create {TEST_STATE} next_state.make(model)
 			-- TODO
 		end
 

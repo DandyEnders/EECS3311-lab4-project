@@ -16,10 +16,10 @@ inherit
 
 feature -- Constructor
 
-	make(m: SIMODYSSEY)
+	make(m: SIMODYSSEY; abs_s: ABSTRACT_STATE)
 		do
 			model := m
-			abstract_state := model.abstract_state
+			abstract_state := abs_s
 
 			create msg_mode.make_empty
 			create msg_command_validity.make_empty
@@ -128,7 +128,7 @@ feature -- Out
 			create Result.make_from_string ("  ")
 			Result.append (abstract_state.out)
 			if not msg_mode.is_empty then
-				Result.append (", ")
+				Result.append (", mode:")
 				Result.append (msg_mode)
 			end
 			Result.append (", ")
