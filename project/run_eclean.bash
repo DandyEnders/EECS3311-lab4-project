@@ -1,1 +1,3 @@
-eclean /tmp/EECS3311/lab4
+eclean /tmp/EECS3311/project
+
+rm -rf /tmp/EECS3311/project

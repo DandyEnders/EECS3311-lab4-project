@@ -28,7 +28,7 @@ is_expected = False
 oracle = "../../oracle.exe"
 
 # Specify the path of the executable built from your project.
-executable = "/tmp/EECS3311/lab4/EIFGENs/simodyssey1/F_code/simodyssey1"
+executable = "/tmp/EECS3311/project/EIFGENs/simodyssey2/F_code/simodyssey2"
 # Should the program only print tests that do not pass
 print_only_errors = True
 

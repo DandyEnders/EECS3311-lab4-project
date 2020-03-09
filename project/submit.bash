@@ -1,1 +1,2 @@
-submit 3311 Lab4 simodyssey1
+echo "DID NOT SUBMIT: WE DON'T KNOW WHICH DIRECTORY TO SUBMIT."
+#submit 3311 project simodyssey2
