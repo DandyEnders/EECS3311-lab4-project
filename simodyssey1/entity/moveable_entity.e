@@ -19,4 +19,13 @@ inherit
 				is_equal
 			end
 
+feature -- out
+	out_death_description: STRING
+		do
+			create Result.make_from_string ("    ")
+			Result.append (out_description)
+			Result.append (",%N")
+			Result.append ("      ")
+		end
+
 end

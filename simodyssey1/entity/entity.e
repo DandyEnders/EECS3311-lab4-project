@@ -31,6 +31,10 @@ feature -- Attributes
 
 	coordinate: COORDINATE
 
+feature {ENTITY} -- Attribute
+
+	msg: MESSAGE
+
 feature -- Queries
 
 	is_equal (other: like current): BOOLEAN

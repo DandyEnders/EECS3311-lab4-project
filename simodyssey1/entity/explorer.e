@@ -13,7 +13,8 @@ inherit
 		rename
 			make as moveable_make
 		redefine
-			out_description
+			out_description,
+			out_death_description
 		end
 
 create
@@ -104,6 +105,16 @@ feature -- Commands
 
 
 feature -- Out
+
+	out_death_description: STRING -- "[0,E]->fuel:2/3, life:3/3, landed?:F,%N{DEATH_MESSAGE}"
+		do
+			Result := precursor
+			if is_dead_by_out_of_fuel then
+				Result.append(msg.explorer_death_out_of_fuel (coordinate.row, coordinate.col))
+			elseif is_dead_by_blackhole then
+				Result.append(msg.explorer_death_blackhole (coordinate.row, coordinate.col, -1))
+			end
+		end
 
 	out_description:STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean"
 		-- "[0,E]->fuel:2/3, life:3/3, landed?:F"

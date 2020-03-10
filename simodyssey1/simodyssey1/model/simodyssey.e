@@ -41,6 +41,7 @@ feature {NONE} -- Constructor
 			is_test_game := False
 
 			create moved_enities.make_empty
+			create dead_entity.make_empty
 		end
 
 feature -- Attribute
@@ -72,6 +73,8 @@ feature {NONE} -- Private Attribute
 	stationary_id: ID_DISPATCHER
 
 	moved_enities: ARRAY[STRING]
+
+	dead_entity: ARRAY[MOVEABLE_ENTITY]
 
 feature {NONE} -- private queries
 
@@ -114,6 +117,7 @@ feature -- Command
 		do
 			-- reset list of "moved" entities
 			create moved_enities.make_empty
+			create dead_entity.make_empty
 
 			destination_coord := explorer.coordinate + d
 			destination_coord := destination_coord.wrap_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
@@ -145,12 +149,13 @@ feature -- Command
 				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
 				explorer.kill_by_out_of_fuel
 				galaxy.remove (explorer)
-			end
+				dead_entity.force (explorer, dead_entity.count + 1)
 
 			-- check if explorer dies out of blackhole
-			if galaxy.at (explorer.coordinate).has_blackhole then
+			elseif galaxy.at (explorer.coordinate).has_blackhole then
 				explorer.kill_by_blackhole
 				galaxy.remove (explorer)
+				dead_entity.force (explorer, dead_entity.count + 1)
 			end
 
 			npc_action
@@ -251,6 +256,7 @@ feature {NONE} -- Private Helper Commands
 							if galaxy.at (p.coordinate).has_blackhole then
 								p.kill_by_blackhole
 								galaxy.remove (p)
+								dead_entity.force (p, dead_entity.count + 1)
 							end
 								-- If the planet did not encounter a blackhole
 							if galaxy.has (p) then -- behave (pg 30)
@@ -461,7 +467,17 @@ feature -- Out
 
 	out_deaths_this_turn: STRING
 		do
-			Result := "  Deaths This Turn:none" -- TODO
+			create Result.make_from_string ("  Deaths This Turn:")
+			if dead_entity.is_empty then
+				Result.append ("none")
+			else
+				across
+					dead_entity is i_me
+				loop
+					Result.append ("%N")
+					Result.append (i_me.out_death_description)
+				end
+			end
 		end
 
 end

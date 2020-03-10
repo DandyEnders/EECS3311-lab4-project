@@ -13,7 +13,8 @@ inherit
 		rename
 			make as moveable_make
 		redefine
-			out_description
+			out_description,
+			out_death_description
 		end
 
 create
@@ -71,7 +72,20 @@ feature -- Queries
 
 	character: STRING = "P"
 
+	is_dead_by_blackhole: BOOLEAN -- TODO put this in moveable entity by inheritance
+		do
+			Result := is_dead and then get_death_cause ~ "BLACKHOLE"
+		end
+
 feature -- Out
+
+	out_death_description: STRING -- "[0,E]->fuel:2/3, life:3/3, landed?:F,%N{DEATH_MESSAGE}"
+		do
+			Result := precursor
+			if is_dead_by_blackhole then
+				Result.append(msg.planet_death_blackhole (coordinate.row, coordinate.col, -1))
+			end
+		end
 
 	out_description: STRING -- "[id, character]->Luminosity:2" -> "[0, E]->"
 		do
