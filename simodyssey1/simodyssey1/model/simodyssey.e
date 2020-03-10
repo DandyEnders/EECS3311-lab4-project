@@ -207,6 +207,11 @@ feature {NONE} -- Private Helper Commands
 				s.append (galaxy.at (p.coordinate).out_abstract_full_coordinate (p))
 
 				moved_enities.force (s, moved_enities.count + 1)
+			else
+				create s.make_from_string (p.out_sqr_bracket)
+				s.append (":")
+				s.append (galaxy.at (p.coordinate).out_abstract_full_coordinate (p))
+				moved_enities.force (s, moved_enities.count + 1)
 			end
 		end
 
@@ -225,8 +230,8 @@ feature {NONE} -- Private Helper Commands
 						-- if the planets turns left is 0, then check if there is a star in the sector
 					if p.turns_left ~ 0 then
 						-- specal case ( pg  28 )
-						if galaxy.at (p.coordinate).has_star and then not p.attached_to_star then
-							if attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
+						if galaxy.at (p.coordinate).has_star then
+							if attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star and then not p.attached_to_star then
 									-- If there is a star in the sector then set attached for the planet to true.
 								p.set_attached_to_star (TRUE)
 									-- If this star is a yellow dwarf then rchoose if this planet should support life?
