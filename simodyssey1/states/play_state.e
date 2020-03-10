@@ -33,8 +33,31 @@ feature -- Controller command / queries
 		end
 
 	land
+		local
+			e: EXPLORER
+			tmp_s: STATE
 		do
-			-- TODO
+--			-- model.explorer is in a sector with planet and yellow dwarf
+			if model.is_explorer_landable then
+				executed_turn_command
+--				create {LANDED_STATE} next_state.make(model, abstract_state)
+				create {LANDED_STATE} tmp_s.make(model, abstract_state)
+				next_state := tmp_s.next_state
+			else
+				executed_invalid_command
+				if model.is_explorer_sector_no_yellow_dwarf then -- TODO refactor it so its short
+					msg_content := "  " + msg.land_error_no_yellow_dwarf (model.explorer_coordinate.row, model.explorer_coordinate.col)
+				elseif model.is_explorer_sector_no_planet then
+					msg_content := "  " + msg.land_error_no_planets (model.explorer_coordinate.row, model.explorer_coordinate.col)
+				elseif model.is_explorer_sector_unvisited then
+					msg_content := "  " + msg.land_error_no_visited_planets (model.explorer_coordinate.row, model.explorer_coordinate.col)
+				end
+			end
+
+--				create {LANDED_STATE} next_state.make(model, abstract_state)
+--			else
+--				
+--			end
 		end
 
 	liftoff

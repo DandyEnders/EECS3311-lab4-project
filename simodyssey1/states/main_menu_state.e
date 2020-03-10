@@ -20,6 +20,7 @@ feature -- Controller command / queries
 		do
 			msg_command_validity := "ok"
 			msg_content := "  " + msg.initial_message
+
 		end
 
 	abort, land, liftoff, pass, status, wormhole
@@ -38,7 +39,6 @@ feature -- Controller command / queries
 		do
 			executed_turn_command
 			create {PLAY_STATE} next_state.make(model, abstract_state)
-			-- TODO
 		end
 
 	test (th: INTEGER)

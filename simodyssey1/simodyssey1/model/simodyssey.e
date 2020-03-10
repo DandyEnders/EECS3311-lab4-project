@@ -116,7 +116,7 @@ feature -- Command
 		do
 		end
 
-	land
+	land_explorer
 		require
 			game_in_session
 		do
@@ -203,6 +203,55 @@ feature -- Queries
 			-- a game is in session if neither (the explorer's life or his fuel is equal to 0), the game was aborted and the explorer has not found life
 		do
 			Result := explorer.is_alive and explorer.fuel /~ 0 and not game_aborted and not explorer.found_life
+		end
+
+
+feature -- Interface
+	-- Keep these interface
+	get_explorer: EXPLORER
+		do
+			Result := explorer.deep_twin
+		end
+
+	is_landsite_has_life: BOOLEAN
+			-- is leftmost unvisited planet in a sector has a life?
+		do
+			Result := false
+		end
+
+
+
+
+	-- Change these interface
+	-- export these features to explorer TODO
+	explorer_coordinate: COORDINATE
+		do
+			Result := explorer.coordinate
+		end
+
+	is_explorer_landable:BOOLEAN
+		-- Not landable if
+		-- 1. all planets in a sector are visited
+		-- 2. there are no planets
+		-- 3. there is a planet but therre are no stars
+		do
+			Result := true -- TODO
+		end
+
+	is_explorer_sector_no_yellow_dwarf: BOOLEAN
+		do
+			Result := true -- TODO
+		end
+
+	is_explorer_sector_no_planet:BOOLEAN
+		do
+			Result := true -- TODO
+		end
+
+
+	is_explorer_sector_unvisited:BOOLEAN
+		do
+			Result := true -- TODO
 		end
 
 feature -- Out

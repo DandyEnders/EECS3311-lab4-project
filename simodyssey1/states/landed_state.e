@@ -17,7 +17,13 @@ feature -- Controller command / queries
 
 	initialization
 		do
-			msg_content := "  " + msg.initial_message
+			model.land_explorer
+			if model.is_landsite_has_life then
+				create {MAIN_MENU_STATE} next_state.make(model, abstract_state)
+				next_state.set_msg_content("  Tranquility base here - we've got a life!")
+			end
+
+			msg_content := "  landed"
 		end
 
 	abort

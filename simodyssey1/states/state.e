@@ -49,6 +49,11 @@ feature {STATE} -- Message attribute
 
 	msg_content: STRING
 
+	set_msg_content(s:STRING)
+		do
+			msg_content := s
+		end
+
 feature -- Commands
 
 	executed_valid_command

@@ -1,0 +1,15 @@
+test(30)
+move(S)
+move(S)
+land
+liftoff
+land
+land
+abort
+test(90)
+move(S)
+move(S)
+land
+test(90)
+move(E)
+land
