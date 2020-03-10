@@ -118,30 +118,48 @@ feature -- commands
 feature -- Queries
 
 	all_moveable_entities: ARRAY [MOVEABLE_ENTITY] -- I needed a way to return all movable_entities in accending order of their ids.
+		local
+			i: INTEGER
+			c: INTEGER
 		do
 			create Result.make_empty
 
-			across -- stationary, negative id out
-					-- counting inversely
-				0 |..| moveable_entities.count  is i
+--			across -- stationary, negative id out
+--					-- counting inversely
+--				moveable_entities is i_me
+			from
+				i := 0
+				c := moveable_entities.count
+			until
+				c < 1
 			loop
-				if attached moveable_entities [i] as i_se then
-					Result.force(i_se, Result.count + 1)
+				if attached moveable_entities[i] as i_me then
+					Result.force(i_me, Result.count + 1)
+					c := c - 1
 				end
+				i := i + 1
 			end
 		end
 
 	all_stationary_entities: ARRAY [STATIONARY_ENTITY] -- I needed a way to return all stationary_entities in accending order of their ids.
+		local
+			i: INTEGER
+			c: INTEGER
 		do
 			create Result.make_empty
 
-			across -- stationary, zero or psotivie id out
-					-- counting inversely
-				-1 |..| -stationary_entities.count is i
+--			across -- stationary, negative id out
+--								-- counting inversely
+--				stationary_entities is i_se
+			from
+				i := (-1 - stationary_entities.count)
+			until
+				i > -1
 			loop
-				if attached stationary_entities [i] as i_me then
-					Result.force (i_me, Result.count + 1)
+				if attached stationary_entities [i] as i_se then
+					Result.force (i_se, Result.count + 1)
 				end
+				i := i + 1
 			end
 		end
 
@@ -187,6 +205,7 @@ feature -- Out
 				across
 					1 |..| col is j
 				loop
+					Result.append ("%N")
 					Result.append ("    ")
 					Result.append (sectors [i, j].out_abstract_sector)
 				end
@@ -201,26 +220,25 @@ feature -- Out
 			--    [0,E]->fuel:3/3, life:3/3, landed?:F
 			--    [1,P]->attached?:F, support_life?:F, visited?:F, turns_left:0
 			-- 		..
+		local
+			i: INTEGER
 		do
 			create Result.make_empty
 			Result.append ("  Descriptions:")
-			across -- stationary, negative id out
-					-- counting inversely
-				stationary_entities.count |..| 1 is i
+			across
+				all_stationary_entities is i_se
 			loop
-				if attached stationary_entities [i] as i_se then
-					Result.append ("    ")
-					Result.append (i_se.out_description)
-				end
+				Result.append ("%N")
+				Result.append ("    ")
+				Result.append (i_se.out_description)
 			end
-			across -- stationary, zero or psotivie id out
-					-- counting inversely
-				0 |..| moveable_entities.count is i
+
+			across
+				all_moveable_entities is i_me
 			loop
-				if attached moveable_entities [i] as i_me then
-					Result.append ("    ")
-					Result.append (i_me.out_description)
-				end
+				Result.append ("%N")
+				Result.append ("    ")
+				Result.append (i_me.out_description)
 			end
 		end
 

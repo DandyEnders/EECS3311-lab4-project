@@ -2,7 +2,7 @@ abort
 play
 abort
 abort
-play
+test(30)
 move(N)
 move(NE)
 move(E)

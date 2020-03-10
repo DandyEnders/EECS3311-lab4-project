@@ -18,12 +18,13 @@ feature -- Controller command / queries
 
 	initialization
 		do
-			model.new_game (30)
-			msg_mode := "play"
+			if model.is_test_game then
+				msg_mode := "play"
+			else
+				msg_mode := "test"
+			end
 			msg_command_validity := "ok"
-			msg_content := model.out_movement
-			msg_content.append ("%N")
-			msg_content.append (model.out_grid)
+			msg_content := (model.out)
 		end
 
 	abort
@@ -69,9 +70,7 @@ feature -- Controller command / queries
 				executed_turn_command
 
 				model.move_explorer (d)
-				msg_content := model.out_movement
-				msg_content.append("%N")
-				msg_content.append(model.out_grid)
+				msg_content := model.out
 --				check model.is_explorer_alive end
 
 			else

@@ -218,7 +218,7 @@ feature -- Output
 	out_abstract_sector: STRING -- "[x, y]->[0, E],-,-,[2,P]"
 		do
 			create Result.make_empty
-			Result.append (coordinate.out_sqr_bracket)
+			Result.append (coordinate.out_sqr_bracket_comma)
 			Result.append ("->")
 			across
 				1 |..| quadrants.count is i

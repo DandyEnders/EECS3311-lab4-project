@@ -34,7 +34,7 @@ feature -- tests
 		do
 			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move?, does fuel recharge if you move into a sector with a star?, does explorer die if he goes into a sector with a blackhole. Do planets move as they do in the oracle?")
 			create s_o.make
-			s_o.new_game (50)
+			s_o.new_game (50, FALSE)
 			print ("%N")
 			print ("%N")
 			print (s_o.out_grid)
@@ -57,7 +57,7 @@ feature -- tests
 		do
 			comment ("t5: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move?, does fuel recharge if you move into a sector with a star?")
 			create s_o.make
-			s_o.new_game (50)
+			s_o.new_game (50, FALSE)
 
 				-- Testing fuel exact filling fuel over flow
 				--			print(s_o.explorer.fuel.out)
@@ -167,15 +167,15 @@ feature -- tests
 			comment ("t4: Testing SIMODYSSEY make and new_game() and partially move_explorer")
 			create s_o.make
 				-- testing new_game with multiple threshold values.
-			s_o.new_game (30)
+			s_o.new_game (30, FALSE)
 				--			print(s_o.out)
 				--			print("%N")
 				--			print("%N")
-			s_o.new_game (60)
+			s_o.new_game (60, FALSE)
 				--			print(s_o.out)
 				--			print("%N")
 				--			print("%N")
-			s_o.new_game (100)
+			s_o.new_game (100, FALSE)
 				--			print(s_o.out)
 			s_o.move_explorer (d.n) --moving the explorer S
 			print (s_o.out)

@@ -38,15 +38,15 @@ feature -- Queries
 
 feature -- out
 
-	out_sqr_bracket_comma: STRING -- "[id,chracter]"
-		do
-			create Result.make_empty
-			Result.append ("[")
-			Result.append (id.out)
-			Result.append (",")
-			Result.append (character)
-			Result.append ("]")
-		end
+--	out_sqr_bracket_comma: STRING -- "[id,chracter]"
+--		do
+--			create Result.make_empty
+--			Result.append ("[")
+--			Result.append (id.out)
+--			Result.append (",")
+--			Result.append (character)
+--			Result.append ("]")
+--		end
 
 
 	out_sqr_bracket: STRING -- "[id:character]" -> "[0:E]"
@@ -54,7 +54,7 @@ feature -- out
 			create Result.make_empty
 			Result.append ("[")
 			Result.append (id.out)
-			Result.append (":")
+			Result.append (",")
 			Result.append (character)
 			Result.append ("]")
 		end

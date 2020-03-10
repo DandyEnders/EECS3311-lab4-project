@@ -135,4 +135,14 @@ feature -- out
 			Result.append (":")
 			Result.append (col.out)
 		end
+
+	out_sqr_bracket_comma: STRING
+		do
+			create Result.make_empty
+			Result.append ("[")
+			Result.append (row.out)
+			Result.append (",")
+			Result.append (col.out)
+			Result.append ("]")
+		end
 end

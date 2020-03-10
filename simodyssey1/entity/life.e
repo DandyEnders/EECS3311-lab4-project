@@ -7,6 +7,12 @@ note
 class
 	LIFE
 
+inherit
+	ANY
+		redefine
+			out
+		end
+
 create
 	make
 
@@ -71,6 +77,14 @@ feature -- Queries
 	valid_value(a_value: INTEGER): BOOLEAN
 		do
 			Result := a_value >= 0 and a_value <= max
+		end
+
+	out:STRING
+		do
+			create Result.make_from_string("life:")
+			Result.append(value.out)
+			Result.append("/")
+			Result.append(max.out)
 		end
 
 invariant

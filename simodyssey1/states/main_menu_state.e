@@ -39,14 +39,16 @@ feature -- Controller command / queries
 		do
 			executed_turn_command
 			create {PLAY_STATE} next_state.make(model, abstract_state)
+			model.new_game (30, FALSE)
+			msg_content := model.out
 		end
 
 	test (th: INTEGER)
 		do
 			executed_turn_command
+			model.new_game (th, TRUE)
 			create {PLAY_STATE} next_state.make(model, abstract_state)
---			create {TEST_STATE} next_state.make(model)
-			-- TODO
+			msg_content := model.out
 		end
 
 end

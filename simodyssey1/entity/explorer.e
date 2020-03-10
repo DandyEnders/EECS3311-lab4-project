@@ -11,8 +11,9 @@ inherit
 
 	MOVEABLE_ENTITY
 		rename
-			make as moveable_make,
-			out_description as id_entity_out_description
+			make as moveable_make
+		redefine
+			out_description
 		end
 
 create
@@ -107,7 +108,7 @@ feature -- Out
 	out_description:STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean"
 		-- "[0,E]->fuel:2/3, life:3/3, landed?:F"
 		do
-			Result := id_entity_out_description
+			Result := precursor
 
 			Result.append("fuel:")
 			Result.append(fuel.out)
@@ -115,14 +116,15 @@ feature -- Out
 			Result.append("3")
 			Result.append(", ")
 
-			Result.append("life:")
 			Result.append(life.out)
-			Result.append("/")
-			Result.append("3")
 			Result.append(", ")
 
 			Result.append("landed?:")
-			Result.append(landed.out)
+			if landed then
+				Result.append ("T")
+			else
+				Result.append ("F")
+			end
 		end
 
 invariant

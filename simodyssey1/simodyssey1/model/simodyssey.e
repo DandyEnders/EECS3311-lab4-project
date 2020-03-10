@@ -7,6 +7,12 @@ note
 class
 	SIMODYSSEY
 
+inherit
+	ANY
+		redefine
+			out
+		end
+
 create
 	make
 
@@ -32,12 +38,16 @@ feature {NONE} -- Constructor
 				-- setting the game to be in an aborted state so game_in_session is false
 			game_aborted := TRUE
 
+			is_test_game := False
+
 			create moved_enities.make_empty
 		end
 
 feature -- Attribute
 
 	galaxy: GRID
+
+	is_test_game: BOOLEAN -- check if test game
 
 feature {NONE} -- Private Attribute
 
@@ -72,7 +82,12 @@ feature {NONE} -- private queries
 
 feature -- Command
 
-	new_game (th: INTEGER)
+	set_test_game
+		do
+			is_test_game := True
+		end
+
+	new_game (th: INTEGER; is_test: BOOLEAN)
 		require
 			valid_threshold: 1 <= th and th <= 101
 --			TODISCUSS: even if we are in seesion, we should be able to override it.
@@ -85,6 +100,7 @@ feature -- Command
 				-- populating the galaxy randomly
 			populate_galaxy
 			game_aborted := FALSE
+			is_test_game := is_test
 		end
 
 	move_explorer (d: COORDINATE)
@@ -102,7 +118,7 @@ feature -- Command
 			destination_coord := explorer.coordinate + d
 			destination_coord := destination_coord.wrap_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 
-			create s.make_from_string (explorer.out_sqr_bracket_comma)
+			create s.make_from_string (explorer.out_sqr_bracket)
 
 			s.append (":")
 			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
@@ -181,7 +197,7 @@ feature {NONE} -- Private Helper Commands
 			new_coordinate_of_p := new_coordinate_of_p.wrap_coordinate (new_coordinate_of_p, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 			if not galaxy.at (new_coordinate_of_p).is_full then
 
-				create s.make_from_string (p.out_sqr_bracket_comma)
+				create s.make_from_string (p.out_sqr_bracket)
 				s.append (":")
 				s.append (galaxy.at (p.coordinate).out_abstract_full_coordinate (p))
 
@@ -209,7 +225,7 @@ feature {NONE} -- Private Helper Commands
 						-- if the planets turns left is 0, then check if there is a star in the sector
 					if p.turns_left ~ 0 then
 						-- specal case ( pg  28 )
-						if galaxy.at (p.coordinate).has_star then
+						if galaxy.at (p.coordinate).has_star and then not p.attached_to_star then
 							if attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
 									-- If there is a star in the sector then set attached for the planet to true.
 								p.set_attached_to_star (TRUE)
@@ -226,12 +242,6 @@ feature {NONE} -- Private Helper Commands
 							direction_num := rng.rchoose (1, 8)
 							move_planet (p, d.give_direction (direction_num))
 
---								--check if the planet has entered a sector with a blackhole. Kill the planet if this is the case
---							if galaxy.at (p.coordinate).has_stationary_entity and attached {BLACKHOLE} galaxy.at (p.coordinate).get_stationary_entity then
---								p.kill_by_blackhole
---								galaxy.remove (p)
---							end
-
 								--check if the planet has entered a sector with a blackhole. Kill the planet if this is the case
 							if galaxy.at (p.coordinate).has_blackhole then
 								p.kill_by_blackhole
@@ -239,7 +249,7 @@ feature {NONE} -- Private Helper Commands
 							end
 								-- If the planet did not encounter a blackhole
 							if galaxy.has (p) then -- behave (pg 30)
-								if galaxy.at (p.coordinate).has_star then
+								if galaxy.at (p.coordinate).has_star then -- TODO
 									p.set_attached_to_star (TRUE)
 									if attached {YELLOW_DWARF} galaxy.at (p.coordinate).get_stationary_entity as yd then
 										sup_life_prob := rng.rchoose (1, 2)
@@ -250,21 +260,8 @@ feature {NONE} -- Private Helper Commands
 								else
 									p.set_turns_left (rng.rchoose (0, 2))
 								end
-									--behave the planet
---									-- If there is a star in the new sector sector then set attached for the planet to true.
---								if galaxy.at (p.coordinate).has_star and attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
---									p.set_attached_to_star (TRUE)
---										-- if this star is a yellow dwarf then rchoose if this planet should support life?
---									if attached {YELLOW_DWARF} star as y_star then
---										sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life
---										if sup_life_prob = 2 then
---											p.set_support_life (TRUE)
---										end
---									end
---								else
---									p.set_turns_left (rng.rchoose (0, 2))
---								end
 							end
+
 						end
 					else
 						p.set_turns_left (p.turns_left - 1)
@@ -407,13 +404,30 @@ feature -- Interface
 
 feature -- Out
 
+	out:STRING
+		Do
+			create Result.make_empty
+			Result.append(out_movement)
+			Result.append("%N")
+			if is_test_game then
+				Result.append(out_sectors)
+				Result.append("%N")
+				Result.append(out_descriptions)
+				Result.append("%N")
+				Result.append(out_deaths_this_turn)
+				Result.append("%N")
+			end
+
+			Result.append(out_grid)
+		end
+
 	out_grid: STRING
 		do
 			create Result.make_empty
 			Result.append (galaxy.out)
 		end
 
-	out_movement: STRING -- TODO@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	out_movement: STRING
 		do
 			create Result.make_from_string ("  Movement:")
 			if moved_enities.is_empty then
@@ -432,17 +446,17 @@ feature -- Out
 
 	out_sectors: STRING
 		do
-			create Result.make_from_string ("  ")
+			Result := galaxy.out_abstract_sectors
 		end
 
 	out_descriptions: STRING
 		do
-			create Result.make_from_string ("  ")
+			Result := galaxy.out_abstract_description
 		end
 
 	out_deaths_this_turn: STRING
 		do
-			create Result.make_from_string ("  ")
+			Result := "  Deaths This Turn:none" -- TODO
 		end
 
 end

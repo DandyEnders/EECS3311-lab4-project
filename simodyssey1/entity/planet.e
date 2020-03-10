@@ -11,8 +11,9 @@ inherit
 
 	MOVEABLE_ENTITY
 		rename
-			make as moveable_make,
-			out_description as id_entity_out_description
+			make as moveable_make
+		redefine
+			out_description
 		end
 
 create
@@ -74,15 +75,27 @@ feature -- Out
 
 	out_description: STRING -- "[id, character]->Luminosity:2" -> "[0, E]->"
 		do
-			Result := id_entity_out_description
+			Result := precursor
 			Result.append ("attached?:")
-			Result.append (attached_to_star.out)
+			if attached_to_star then
+				Result.append ("T")
+			else
+				Result.append ("F")
+			end
 			Result.append (", ")
 			Result.append ("support_life?:")
-			Result.append (support_life.out)
+			if support_life then
+				Result.append ("T")
+			else
+				Result.append ("F")
+			end
 			Result.append (", ")
 			Result.append ("visited?:")
-			Result.append (visited.out)
+			if visited then
+				Result.append ("T")
+			else
+				Result.append ("F")
+			end
 			Result.append (", ")
 			Result.append ("turns_left:")
 			if attached_to_star or is_dead then
