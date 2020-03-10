@@ -70,7 +70,9 @@ feature -- Command
 	new_game (th: INTEGER)
 		require
 			valid_threshold: 1 <= th and th <= 101
-			not game_in_session
+--			TODISCUSS: even if we are in seesion, we should be able to override it.
+--				It's state's job to check if we should call new_game when we suppose to.
+--			not game_in_session
 		do
 			make --calling make in order to initialize global ids and the board every new game
 				-- initializing the planet threshold
@@ -87,27 +89,43 @@ feature -- Command
 		local
 			destination_coord: COORDINATE
 		do
+
 			destination_coord := explorer.coordinate + d
 			destination_coord := destination_coord.wrap_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 			galaxy.move (explorer, destination_coord)
+
+			-- TODISCUSS: The order which "check" is done in document are in this order: (pg 30)
 			explorer.spend_fuel_unit
+
+			-- check if explorer can charge
 			if galaxy.at (explorer.coordinate).has_stationary_entity then
-					-- if the explorer's new sector has a star, then recharge.
+				-- if the explorer's new sector has a star, then recharge.
 				if attached {STAR} galaxy.at (explorer.coordinate).get_stationary_entity as i_star then
 					explorer.charge_fuel (i_star)
-						-- if explorer encountered a blackhole, he should lose his life and be removed from the galaxy
-				elseif attached {BLACKHOLE} galaxy.at (explorer.coordinate).get_stationary_entity then
+				end
+			end
+
+ 			-- check if explorer dies out of fuel
+			if explorer.is_out_of_fuel then
+				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
+				explorer.kill_by_out_of_fuel
+				galaxy.remove (explorer)
+			end
+
+--					-- if the explorer's new sector has a star, then recharge.
+--				if attached {STAR} galaxy.at (explorer.coordinate).get_stationary_entity as i_star then
+--					explorer.charge_fuel (i_star)
+--						-- if explorer encountered a blackhole, he should lose his life and be removed from the galaxy
+--				else
+
+			-- check if explorer dies out of blackhole
+			if galaxy.at (explorer.coordinate).has_stationary_entity then
+				if attached {BLACKHOLE} galaxy.at (explorer.coordinate).get_stationary_entity then
 					explorer.kill_by_blackhole
 					galaxy.remove (explorer)
 				end
 			end
 
-				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
-			if explorer.is_out_of_fuel then
-				explorer.kill_by_out_of_fuel
-				galaxy.remove (explorer)
-			end
-				-- moving moveable entities in the galaxy. TODO -- THIS COMMAND IS NOT WORKING FOR SUCCESSIVE MOVES.
 			npc_action
 		ensure
 				-- If the explorer did not move to a black hole, Explorer should now exist in the sector that he wanted to go to
@@ -170,7 +188,7 @@ feature {NONE} -- Private Helper Commands
 						if galaxy.at (p.coordinate).has_stationary_entity and attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
 								-- If there is a star in the sector then set attached for the planet to true.
 							p.set_attached_to_star (TRUE)
-								-- if this star is a yellow dwarf then rchoose if this planet should support life?
+								-- If this star is a yellow dwarf then rchoose if this planet should support life?
 							if attached {YELLOW_DWARF} star as y_star then
 								sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life
 								if sup_life_prob = 2 then
@@ -224,6 +242,7 @@ feature {NONE} -- Private Helper Commands
 		do
 				-- adding explorer and blackhole
 			galaxy.add (explorer) --
+			galaxy.move (explorer, [1, 1])
 			create blackhole.make ([3, 3], stationary_id.get_id) --
 			galaxy.add (blackhole) --
 				-- populating planets based on threshold
@@ -231,7 +250,7 @@ feature {NONE} -- Private Helper Commands
 				galaxy is i_g
 			loop
 				if i_g.coordinate /~ [3, 3] then
-					numb_of_entity := rng.rchoose (1, shared_info.quadrants_per_sector - 1)
+					numb_of_entity := rng.rchoose (1, (shared_info.quadrants_per_sector - 1))
 					across
 						1 |..| numb_of_entity is i
 					loop

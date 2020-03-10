@@ -120,20 +120,28 @@ feature -- Queries
 	all_moveable_entities: ARRAY [MOVEABLE_ENTITY] -- I needed a way to return all movable_entities in accending order of their ids.
 		do
 			create Result.make_empty
-			across
-				moveable_entities is i_e
+
+			across -- stationary, negative id out
+					-- counting inversely
+				stationary_entities.count |..| 1 is i
 			loop
-				Result.force (i_e, Result.count + 1)
+				if attached moveable_entities [i] as i_se then
+					Result.force(i_se, Result.count + 1)
+				end
 			end
 		end
 
 	all_stationary_entities: ARRAY [STATIONARY_ENTITY] -- I needed a way to return all stationary_entities in accending order of their ids.
 		do
 			create Result.make_empty
-			across
-				stationary_entities is i_e
+
+			across -- stationary, zero or psotivie id out
+					-- counting inversely
+				0 |..| moveable_entities.count is i
 			loop
-				Result.force (i_e, Result.count + 1)
+				if attached stationary_entities [i] as i_me then
+					Result.force (i_me, Result.count + 1)
+				end
 			end
 		end
 
