@@ -28,7 +28,7 @@ feature -- Controller command / queries
 
 	abort
 		do
-			executed_turn_command
+			executed_no_turn_command
 			create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
 		end
 
@@ -63,8 +63,18 @@ feature -- Controller command / queries
 		do
 		end
 
-	move (d: INTEGER)
+	move (d: COORDINATE)
 		do
+			if not model.sector_in_direction_is_full (d) and model.game_in_session then
+				executed_turn_command
+
+				model.move_explorer (d)
+--				check model.is_explorer_alive end
+
+			else
+				executed_invalid_command
+				msg_content := "  " + msg.move_error_sector_full
+			end
 		end
 
 	pass

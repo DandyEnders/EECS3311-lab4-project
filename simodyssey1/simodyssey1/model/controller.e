@@ -98,7 +98,7 @@ feature -- Model input
 			else
 				direction := dir_cls.NW
 			end -- when {ETF_TYPE_CONSTRAINTS}.NW
-			game_state.move(d)
+			game_state.move(direction)
 			move_to_next_state
 		end
 

@@ -102,7 +102,7 @@ feature -- Controller command / queries
 		deferred
 		end
 
-	move (d: INTEGER)
+	move (d: COORDINATE)
 		deferred
 		end
 

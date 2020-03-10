@@ -46,7 +46,7 @@ feature -- Queries
 
 	is_out_of_fuel: BOOLEAN
 		do
-			Result := fuel = 0
+			Result := fuel ~ 0
 		end
 
 	is_dead_by_out_of_fuel: BOOLEAN
@@ -62,12 +62,14 @@ feature -- Queries
 feature -- Commands
 
 	spend_fuel_unit
+		require
+			fuel > 0
 			-- calling this will cause fuel to decrease by 1
 		do
 			fuel := fuel - 1
 		end
 
-	set_found_life_true 
+	set_found_life_true
 		require
 			landed
 		do
@@ -76,6 +78,8 @@ feature -- Commands
 
 	charge_fuel (s: STAR)
 			--given a star, can recharge fuel.
+		require
+			s.luminosity >= 0
 		do
 			if (fuel + s.luminosity) > 3 then
 				fuel := 3
@@ -120,5 +124,8 @@ feature -- Out
 			Result.append("landed?:")
 			Result.append(landed.out)
 		end
+
+invariant
+	0 <= fuel and fuel <= 3
 
 end

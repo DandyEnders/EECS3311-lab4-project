@@ -29,7 +29,7 @@ feature -- Controller command / queries
 			msg_content := "  " + msg.abort_error_no_mission
 		end
 
-	move (d: INTEGER)
+	move (d: COORDINATE)
 		do
 			executed_invalid_command
 			msg_content := "  " + msg.abort_error_no_mission

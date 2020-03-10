@@ -26,6 +26,7 @@ feature {NONE} -- Constructor
 			create galaxy.make (r, c, n_quadrant)
 				--creating the explorer
 			create explorer.make ([1, 1], moveable_id.get_id) --
+			galaxy.add (explorer) --
 				--setting the threshold of a planet to some default value
 			planet_threshold := 0
 				-- setting the game to be in an aborted state so game_in_session is false
@@ -58,6 +59,8 @@ feature {NONE} -- Private Attribute
 
 	stationary_id: ID_DISPATCHER
 
+--	moved_enities: HASH_TABLE[MOVEABLE_ENTITY, INTEGER]
+
 feature {NONE} -- private queries
 
 	explorer_sector: SECTOR
@@ -85,6 +88,7 @@ feature -- Command
 	move_explorer (d: COORDINATE)
 		require
 			not sector_in_direction_is_full (d)
+			-- TODISCUSS : how do we indicate that game is rolling?
 			game_in_session
 		local
 			destination_coord: COORDINATE
@@ -94,8 +98,12 @@ feature -- Command
 			destination_coord := destination_coord.wrap_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 			galaxy.move (explorer, destination_coord)
 
+			check explorer.fuel = 1 end
+
 			-- TODISCUSS: The order which "check" is done in document are in this order: (pg 30)
 			explorer.spend_fuel_unit
+
+
 
 			-- check if explorer can charge
 			if galaxy.at (explorer.coordinate).has_stationary_entity then
@@ -105,12 +113,18 @@ feature -- Command
 				end
 			end
 
+--			check explorer.fuel > 0 end
+
  			-- check if explorer dies out of fuel
 			if explorer.is_out_of_fuel then
 				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
 				explorer.kill_by_out_of_fuel
 				galaxy.remove (explorer)
 			end
+--			check explorer.is_alive end
+--			print(explorer.fuel.out)
+
+
 
 --					-- if the explorer's new sector has a star, then recharge.
 --				if attached {STAR} galaxy.at (explorer.coordinate).get_stationary_entity as i_star then
@@ -119,11 +133,9 @@ feature -- Command
 --				else
 
 			-- check if explorer dies out of blackhole
-			if galaxy.at (explorer.coordinate).has_stationary_entity then
-				if attached {BLACKHOLE} galaxy.at (explorer.coordinate).get_stationary_entity then
-					explorer.kill_by_blackhole
-					galaxy.remove (explorer)
-				end
+			if galaxy.at (explorer.coordinate).has_blackhole then
+				explorer.kill_by_blackhole
+				galaxy.remove (explorer)
 			end
 
 			npc_action
@@ -177,6 +189,7 @@ feature {NONE} -- Private Helper Commands
 			sup_life_prob: INTEGER
 			direction_num: INTEGER
 			d: DIRECTION_UTILITY
+			se: STATIONARY_ENTITY
 		do
 				-- going across moveable entities except explorer by accending order
 			across
@@ -185,42 +198,62 @@ feature {NONE} -- Private Helper Commands
 				if attached {PLANET} i_e as p then
 						-- if the planets turns left is 0, then check if there is a star in the sector
 					if p.turns_left ~ 0 then
-						if galaxy.at (p.coordinate).has_stationary_entity and attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
-								-- If there is a star in the sector then set attached for the planet to true.
-							p.set_attached_to_star (TRUE)
-								-- If this star is a yellow dwarf then rchoose if this planet should support life?
-							if attached {YELLOW_DWARF} star as y_star then
-								sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life
-								if sup_life_prob = 2 then
-									p.set_support_life (TRUE)
+						-- specal case ( pg  28 )
+						if galaxy.at (p.coordinate).has_star then
+							if attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
+									-- If there is a star in the sector then set attached for the planet to true.
+								p.set_attached_to_star (TRUE)
+									-- If this star is a yellow dwarf then rchoose if this planet should support life?
+								if attached {YELLOW_DWARF} star then
+									sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life
+									if sup_life_prob = 2 then
+										p.set_support_life (TRUE)
+									end
 								end
 							end
-						else
-								-- move the planet
+						else -- turns_left = 0 and no star entity in same sector
+							 -- movement (pg  29)
 							direction_num := rng.rchoose (1, 8)
 							move_planet (p, d.give_direction (direction_num))
+
+--								--check if the planet has entered a sector with a blackhole. Kill the planet if this is the case
+--							if galaxy.at (p.coordinate).has_stationary_entity and attached {BLACKHOLE} galaxy.at (p.coordinate).get_stationary_entity then
+--								p.kill_by_blackhole
+--								galaxy.remove (p)
+--							end
+
 								--check if the planet has entered a sector with a blackhole. Kill the planet if this is the case
-							if galaxy.at (p.coordinate).has_stationary_entity and attached {BLACKHOLE} galaxy.at (p.coordinate).get_stationary_entity then
+							if galaxy.at (p.coordinate).has_blackhole then
 								p.kill_by_blackhole
 								galaxy.remove (p)
 							end
 								-- If the planet did not encounter a blackhole
-							if galaxy.has (p) then
-
-									--behave the planet
-									-- If there is a star in the new sector sector then set attached for the planet to true.
-								if galaxy.at (p.coordinate).has_stationary_entity and attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
+							if galaxy.has (p) then -- behave (pg 30)
+								if galaxy.at (p.coordinate).has_star then
 									p.set_attached_to_star (TRUE)
-										-- if this star is a yellow dwarf then rchoose if this planet should support life?
-									if attached {YELLOW_DWARF} star as y_star then
-										sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life
+									if attached {YELLOW_DWARF} galaxy.at (p.coordinate).get_stationary_entity as yd then
+										sup_life_prob := rng.rchoose (1, 2)
 										if sup_life_prob = 2 then
-											p.set_support_life (TRUE)
+											p.set_support_life (True)
 										end
 									end
 								else
 									p.set_turns_left (rng.rchoose (0, 2))
 								end
+									--behave the planet
+--									-- If there is a star in the new sector sector then set attached for the planet to true.
+--								if galaxy.at (p.coordinate).has_star and attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
+--									p.set_attached_to_star (TRUE)
+--										-- if this star is a yellow dwarf then rchoose if this planet should support life?
+--									if attached {YELLOW_DWARF} star as y_star then
+--										sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life
+--										if sup_life_prob = 2 then
+--											p.set_support_life (TRUE)
+--										end
+--									end
+--								else
+--									p.set_turns_left (rng.rchoose (0, 2))
+--								end
 							end
 						end
 					else
@@ -241,8 +274,6 @@ feature {NONE} -- Private Helper Commands
 			loop_counter: INTEGER
 		do
 				-- adding explorer and blackhole
-			galaxy.add (explorer) --
-			galaxy.move (explorer, [1, 1])
 			create blackhole.make ([3, 3], stationary_id.get_id) --
 			galaxy.add (blackhole) --
 				-- populating planets based on threshold
@@ -273,11 +304,11 @@ feature {NONE} -- Private Helper Commands
 				if not galaxy.at ([row, col]).has_stationary_entity and not galaxy.at ([row, col]).is_full then
 					s_entity_num := rng.rchoose (1, 3)
 					if s_entity_num ~ 1 then
-						galaxy.at ([row, col]).add (create {YELLOW_DWARF}.make ([row, col], stationary_id.get_id))
+						galaxy.add (create {YELLOW_DWARF}.make ([row, col], stationary_id.get_id))
 					elseif s_entity_num ~ 2 then
-						galaxy.at ([row, col]).add (create {BLUE_GIANT}.make ([row, col], stationary_id.get_id))
+						galaxy.add (create {BLUE_GIANT}.make ([row, col], stationary_id.get_id))
 					elseif s_entity_num ~ 3 then
-						galaxy.at ([row, col]).add (create {WORMHOLE}.make ([row, col], stationary_id.get_id))
+						galaxy.add (create {WORMHOLE}.make ([row, col], stationary_id.get_id))
 					end
 					loop_counter := loop_counter + 1
 				end
@@ -317,6 +348,11 @@ feature -- Interface
 	explorer_coordinate: COORDINATE
 		do
 			Result := explorer.coordinate
+		end
+
+	is_explorer_alive: BOOLEAN
+		do
+			Result := explorer.is_alive
 		end
 
 	is_explorer_landable: BOOLEAN

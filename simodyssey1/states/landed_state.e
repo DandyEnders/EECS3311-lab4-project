@@ -41,7 +41,7 @@ feature -- Controller command / queries
 
 		end
 
-	move (d: INTEGER)
+	move (d: COORDINATE)
 		do
 
 		end

@@ -121,13 +121,19 @@ feature -- Queries
 	get_stationary_entity: STATIONARY_ENTITY
 		require
 			has_stationary_entity
+		local
+			found : BOOLEAN
 		do
 			Result := create {YELLOW_DWARF}.make ([1, 1], 0) --creating random star. Note, this will never get returned
+			found := false
 			across
 				quadrants is i_q
+			until
+				found
 			loop
 				if attached {STATIONARY_ENTITY} i_q.entity as i_stat then
 					Result := i_stat
+					found := true
 				end
 			end
 		end
@@ -137,7 +143,7 @@ feature -- Queries
 			Result := across quadrants is i_q some i_q.has (me) end
 		end
 
-	quadrant_at (me: ID_ENTITY): INTEGER 
+	quadrant_at (me: ID_ENTITY): INTEGER
 		require
 			has (me)
 		do
@@ -162,6 +168,22 @@ feature -- Queries
 				if attached {STATIONARY_ENTITY} i_q.entity then
 					Result := TRUE
 				end
+			end
+		end
+
+	has_star: BOOLEAN
+		do
+			Result := False
+			if has_stationary_entity then
+				Result := attached {STAR} get_stationary_entity
+			end
+		end
+
+	has_blackhole: BOOLEAN
+		do
+			Result := False
+			if has_stationary_entity then
+				Result := attached {BLACKHOLE} get_stationary_entity
 			end
 		end
 
