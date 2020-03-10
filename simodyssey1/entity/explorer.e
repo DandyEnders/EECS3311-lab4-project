@@ -67,7 +67,7 @@ feature -- Commands
 			fuel := fuel - 1
 		end
 
-	set_found_life_true
+	set_found_life_true 
 		require
 			landed
 		do

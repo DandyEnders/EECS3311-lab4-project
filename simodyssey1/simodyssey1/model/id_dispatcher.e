@@ -23,8 +23,6 @@ feature {NONE} -- Attribute
 
 	start: INTEGER
 
-	count: INTEGER
-
 	count_up: BOOLEAN
 
 feature -- Command
@@ -45,5 +43,9 @@ feature -- Queries
 				count := count - 1
 			end
 		end
+
+feature -- Attributes
+
+	count: INTEGER
 
 end

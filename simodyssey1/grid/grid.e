@@ -36,7 +36,6 @@ feature {NONE} -- Contstructor
 			create sectors.make_filled (sect, r, c)
 			create moveable_entities.make (100)
 			create stationary_entities.make (100)
-
 			across
 				1 |..| r is i
 			loop
@@ -59,9 +58,9 @@ feature {NONE} -- Attribute
 
 	col: INTEGER
 
-	moveable_entities: HASH_TABLE[MOVEABLE_ENTITY, INTEGER]
+	moveable_entities: HASH_TABLE [MOVEABLE_ENTITY, INTEGER]
 
-	stationary_entities: HASH_TABLE[STATIONARY_ENTITY, INTEGER]
+	stationary_entities: HASH_TABLE [STATIONARY_ENTITY, INTEGER]
 
 feature -- commands
 
@@ -72,7 +71,7 @@ feature -- commands
 			not has (ie)
 			not at (ie.coordinate).is_full
 		do
-			add_at(ie, ie.coordinate)
+			add_at (ie, ie.coordinate)
 		ensure
 			at (ie.coordinate).has (ie)
 		end
@@ -85,22 +84,21 @@ feature -- commands
 			not at (c).is_full
 		do
 			at (c).add (ie)
-
 			if attached {MOVEABLE_ENTITY} ie as me then
 				moveable_entities.force (me, me.id)
 			elseif attached {STATIONARY_ENTITY} ie as se then
 				stationary_entities.force (se, se.id)
 			end
-
 		ensure
 			at (c).has (ie)
 		end
 
-	remove (me: MOVEABLE_ENTITY)
+	remove (me: MOVEABLE_ENTITY) -- Before you were forcing "me" into moveable_entities but I'm guessing you wanted to remove instead.
 			-- Removes moveable entity in me.coordinate.
 		do
 			at (me.coordinate).remove (me)
-			moveable_entities.force (me, me.id)
+				--			moveable_entities.force (me, me.id) -- ato changed this
+			moveable_entities.remove (me.id)
 		ensure
 			not at (me.coordinate).has (me)
 		end
@@ -118,6 +116,26 @@ feature -- commands
 		end
 
 feature -- Queries
+
+	all_moveable_entities: ARRAY [MOVEABLE_ENTITY] -- I needed a way to return all movable_entities in accending order of their ids.
+		do
+			create Result.make_empty
+			across
+				moveable_entities is i_e
+			loop
+				Result.force (i_e, Result.count + 1)
+			end
+		end
+
+	all_stationary_entities: ARRAY [STATIONARY_ENTITY] -- I needed a way to return all stationary_entities in accending order of their ids.
+		do
+			create Result.make_empty
+			across
+				stationary_entities is i_e
+			loop
+				Result.force (i_e, Result.count + 1)
+			end
+		end
 
 	at (c: COORDINATE): SECTOR
 		require
@@ -146,56 +164,54 @@ feature -- Traversal
 
 feature -- Out
 
-	out_abstract_sectors:STRING -- Abstract Sectors out
+	out_abstract_sectors: STRING -- Abstract Sectors out
 			--   Sectors:
-    		-- 		[1,1]->[0,E],[36,P],[40,P],-
-    		--		[1,2]->[3,P],-,[4,P],-
+			-- 		[1,1]->[0,E],[36,P],[40,P],-
+			--		[1,2]->[3,P],-,[4,P],-
 			--		..
 			-- 		[5,5]->[48,P],[32,P],[47,P],[15,P]
 		do
 			create Result.make_empty
-			Result.append("  Sectors:")
+			Result.append ("  Sectors:")
 			across
 				1 |..| row is i
 			loop
 				across
 					1 |..| col is j
 				loop
-					Result.append("    ")
-					Result.append(sectors[i, j].out_abstract_sector)
+					Result.append ("    ")
+					Result.append (sectors [i, j].out_abstract_sector)
 				end
 			end
 		end
 
-	out_abstract_description:STRING -- Abstract Description out
-		--  Descriptions:
-		--    [-11,*]->Luminosity:5
-		--		..
-		--    [-1,O]->
-		--    [0,E]->fuel:3/3, life:3/3, landed?:F
-		--    [1,P]->attached?:F, support_life?:F, visited?:F, turns_left:0
-		-- 		..
+	out_abstract_description: STRING -- Abstract Description out
+			--  Descriptions:
+			--    [-11,*]->Luminosity:5
+			--		..
+			--    [-1,O]->
+			--    [0,E]->fuel:3/3, life:3/3, landed?:F
+			--    [1,P]->attached?:F, support_life?:F, visited?:F, turns_left:0
+			-- 		..
 		do
 			create Result.make_empty
-			Result.append("  Descriptions:")
-
+			Result.append ("  Descriptions:")
 			across -- stationary, negative id out
-				-- counting inversely
-				stationary_entities.count |..| 1  is i
+					-- counting inversely
+				stationary_entities.count |..| 1 is i
 			loop
-				if attached stationary_entities[i] as i_se then
-					Result.append("    ")
-					Result.append(i_se.out_description)
+				if attached stationary_entities [i] as i_se then
+					Result.append ("    ")
+					Result.append (i_se.out_description)
 				end
 			end
-
 			across -- stationary, zero or psotivie id out
-				-- counting inversely
-				0 |..| moveable_entities.count  is i
+					-- counting inversely
+				0 |..| moveable_entities.count is i
 			loop
-				if attached moveable_entities[i] as i_me then
-					Result.append("    ")
-					Result.append(i_me.out_description)
+				if attached moveable_entities [i] as i_me then
+					Result.append ("    ")
+					Result.append (i_me.out_description)
 				end
 			end
 		end

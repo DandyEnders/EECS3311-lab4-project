@@ -30,13 +30,15 @@ feature {NONE} -- Constructor
 			planet_threshold := 0
 				-- setting the game to be in an aborted state so game_in_session is false
 			game_aborted := TRUE
-
-
 		end
 
 feature -- Attribute
 
 	galaxy: GRID
+
+feature {NONE} -- Private Attribute
+
+	game_aborted: BOOLEAN -- set to true when the game is aborted using abort command.
 
 	explorer: EXPLORER
 
@@ -48,10 +50,6 @@ feature -- Attribute
 		end
 			--attributes that might be bad design. It works for now so dont change it until you have a solid solution to implement.
 
-	game_aborted: BOOLEAN -- set to true when the game is aborted using abort command.
-
-feature {NONE} -- Private Attribute
-
 	rng: RANDOM_GENERATOR_ACCESS
 
 	planet_threshold: INTEGER
@@ -59,6 +57,13 @@ feature {NONE} -- Private Attribute
 	moveable_id: ID_DISPATCHER
 
 	stationary_id: ID_DISPATCHER
+
+feature {NONE} -- private queries
+
+	explorer_sector: SECTOR
+		do
+			Result := galaxy.at (explorer.coordinate)
+		end
 
 feature -- Command
 
@@ -90,7 +95,6 @@ feature -- Command
 					-- if the explorer's new sector has a star, then recharge.
 				if attached {STAR} galaxy.at (explorer.coordinate).get_stationary_entity as i_star then
 					explorer.charge_fuel (i_star)
-
 						-- if explorer encountered a blackhole, he should lose his life and be removed from the galaxy
 				elseif attached {BLACKHOLE} galaxy.at (explorer.coordinate).get_stationary_entity then
 					explorer.kill_by_blackhole
@@ -103,6 +107,8 @@ feature -- Command
 				explorer.kill_by_out_of_fuel
 				galaxy.remove (explorer)
 			end
+				-- moving moveable entities in the galaxy. TODO -- THIS COMMAND IS NOT WORKING FOR SUCCESSIVE MOVES.
+			npc_action
 		ensure
 				-- If the explorer did not move to a black hole, Explorer should now exist in the sector that he wanted to go to
 			If_not_lost_the_explorer_is_in_new_position: (explorer.is_alive) implies galaxy.at ((old explorer.coordinate + d).wrap_coordinate ((old explorer.coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer)
@@ -111,8 +117,8 @@ feature -- Command
 	wormhole
 		require
 			game_in_session
-			stationary_entity_exists_at_location: galaxy.at (explorer.coordinate).has_stationary_entity
-			stationar_entity_is_wormhole: attached {WORMHOLE} galaxy.at (explorer.coordinate).get_stationary_entity
+			stationary_entity_exists_at_location: galaxy.at (explorer_coordinate).has_stationary_entity
+			stationar_entity_is_wormhole: attached {WORMHOLE} galaxy.at (explorer_coordinate).get_stationary_entity
 		do
 		end
 
@@ -135,6 +141,76 @@ feature -- Command
 		end
 
 feature {NONE} -- Private Helper Commands
+
+	move_planet (p: PLANET; direction_of_p: COORDINATE)
+			-- moves a planet in the given direction from its current coordinate
+		local
+			new_coordinate_of_p: COORDINATE
+		do
+			new_coordinate_of_p := (p.coordinate + direction_of_p);
+			new_coordinate_of_p := new_coordinate_of_p.wrap_coordinate (new_coordinate_of_p, [1, 1], [shared_info.number_rows, shared_info.number_columns])
+			if not galaxy.at (new_coordinate_of_p).is_full then
+				galaxy.move (p, new_coordinate_of_p)
+			end
+		end
+
+	npc_action
+		local
+			sup_life_prob: INTEGER
+			direction_num: INTEGER
+			d: DIRECTION_UTILITY
+		do
+				-- going across moveable entities except explorer by accending order
+			across
+				galaxy.all_moveable_entities is i_e
+			loop
+				if attached {PLANET} i_e as p then
+						-- if the planets turns left is 0, then check if there is a star in the sector
+					if p.turns_left ~ 0 then
+						if galaxy.at (p.coordinate).has_stationary_entity and attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
+								-- If there is a star in the sector then set attached for the planet to true.
+							p.set_attached_to_star (TRUE)
+								-- if this star is a yellow dwarf then rchoose if this planet should support life?
+							if attached {YELLOW_DWARF} star as y_star then
+								sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life
+								if sup_life_prob = 2 then
+									p.set_support_life (TRUE)
+								end
+							end
+						else
+								-- move the planet
+							direction_num := rng.rchoose (1, 8)
+							move_planet (p, d.give_direction (direction_num))
+								--check if the planet has entered a sector with a blackhole. Kill the planet if this is the case
+							if galaxy.at (p.coordinate).has_stationary_entity and attached {BLACKHOLE} galaxy.at (p.coordinate).get_stationary_entity then
+								p.kill_by_blackhole
+								galaxy.remove (p)
+							end
+								-- If the planet did not encounter a blackhole
+							if galaxy.has (p) then
+
+									--behave the planet
+									-- If there is a star in the new sector sector then set attached for the planet to true.
+								if galaxy.at (p.coordinate).has_stationary_entity and attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star then
+									p.set_attached_to_star (TRUE)
+										-- if this star is a yellow dwarf then rchoose if this planet should support life?
+									if attached {YELLOW_DWARF} star as y_star then
+										sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life
+										if sup_life_prob = 2 then
+											p.set_support_life (TRUE)
+										end
+									end
+								else
+									p.set_turns_left (rng.rchoose (0, 2))
+								end
+							end
+						end
+					else
+						p.set_turns_left (p.turns_left - 1)
+					end
+				end
+			end
+		end
 
 	populate_galaxy
 		local
@@ -205,53 +281,63 @@ feature -- Queries
 			Result := explorer.is_alive and explorer.fuel /~ 0 and not game_aborted and not explorer.found_life
 		end
 
-
 feature -- Interface
-	-- Keep these interface
-	get_explorer: EXPLORER
-		do
-			Result := explorer.deep_twin
-		end
+
+		--	get_explorer: EXPLORER
+		--		do
+		--			Result := explorer.deep_twin
+		--		end
+		-- export these features to explorer (I decided not to because you're right that it is an interface) If we were to export such features into the explorer, then explorer would need to store its SECTOR as an attribute.
 
 	is_landsite_has_life: BOOLEAN
 			-- is leftmost unvisited planet in a sector has a life?
 		do
-			Result := false
+			Result := across explorer_sector is i_q some (attached {PLANET} i_q.entity as p) implies (not p.visited and (p.support_life)) end
 		end
 
-
-
-
-	-- Change these interface
-	-- export these features to explorer TODO
 	explorer_coordinate: COORDINATE
 		do
 			Result := explorer.coordinate
 		end
 
-	is_explorer_landable:BOOLEAN
-		-- Not landable if
-		-- 1. all planets in a sector are visited
-		-- 2. there are no planets
-		-- 3. there is a planet but therre are no stars
+	is_explorer_landable: BOOLEAN
+			-- Not landable if
+			-- 1. all planets in a sector are visited
+			-- 2. there are no planets
+			-- 3. there is a planet but therre are no stars
 		do
-			Result := true -- TODO
+			Result := e_sector_has_planets and e_sector_has_yellow_dwarf and e_sector_has_unvisted_attached_planets
 		end
 
-	is_explorer_sector_no_yellow_dwarf: BOOLEAN
+	e_sector_has_yellow_dwarf: BOOLEAN
 		do
-			Result := true -- TODO
+			if explorer_sector.has_stationary_entity then
+				if attached {YELLOW_DWARF} explorer_sector.get_stationary_entity as y_d then
+					Result := TRUE
+				else
+					Result := FALSE
+				end
+			else
+				Result := FALSE
+			end
 		end
 
-	is_explorer_sector_no_planet:BOOLEAN
+	e_sector_has_planets: BOOLEAN
 		do
-			Result := true -- TODO
+			if explorer_sector.moveable_entity_count > 1 then
+				Result := TRUE
+			else
+				Result := FALSE
+			end
 		end
 
-
-	is_explorer_sector_unvisited:BOOLEAN
+	e_sector_has_unvisted_attached_planets: BOOLEAN
 		do
-			Result := true -- TODO
+			if e_sector_has_planets and e_sector_has_yellow_dwarf then
+				Result := across explorer_sector is i_q some (attached {PLANET} i_q.entity as p) implies (p.attached_to_star and not p.visited) end
+			else
+				Result := FALSE
+			end
 		end
 
 feature -- Out

@@ -24,8 +24,11 @@ feature {NONE} -- Constructor
 		do
 			moveable_make (a_coordinate, a_id)
 			killable_make (1)
-
-			add_death_cause_type("BLACKHOLE")
+			add_death_cause_type ("BLACKHOLE")
+			visited := FALSE
+			attached_to_star := FALSE
+			support_life := FALSE
+			turns_left := 0
 		end
 
 feature -- Attributes
@@ -50,7 +53,17 @@ feature -- Command
 	kill_by_blackhole
 		do
 			turns_left := -1
-			kill_by("BLACKHOLE")
+			kill_by ("BLACKHOLE")
+		end
+
+	set_attached_to_star (b: BOOLEAN) --
+		do
+			attached_to_star := b
+		end
+
+	set_support_life (b: BOOLEAN) --
+		do
+			support_life := b
 		end
 
 feature -- Queries

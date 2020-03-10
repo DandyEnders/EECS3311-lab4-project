@@ -32,20 +32,23 @@ feature -- tests
 		local
 			s_o: SIMODYSSEY
 		do
-			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move?, does fuel recharge if you move into a sector with a star?, does explorer die if he goes into a sector with a blackhole")
+			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move?, does fuel recharge if you move into a sector with a star?, does explorer die if he goes into a sector with a blackhole. Do planets move as they do in the oracle?")
 			create s_o.make
 			s_o.new_game (50)
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
 			s_o.move_explorer ([1, 1])
-			print (s_o.explorer.current_life.out)
-			print (s_o.explorer.fuel.out)
 			print ("%N")
-			s_o.move_explorer ([1, 1])
-			print (s_o.explorer.current_life.out)
-			print (s_o.explorer.fuel.out)
 			print ("%N")
-			print (s_o.out)
+			print (s_o.out_grid)
+			s_o.move_explorer ([1,0])
 			print ("%N")
-				--			s_o.move_explorer ([1, 1]) -- If this line is executed, a violation will occur because the player has died.
+			print ("%N")
+			print (s_o.out_grid)
+			s_o.move_explorer ([1,0])
+
+		Result:=TRUE
 		end
 
 	t5: BOOLEAN
@@ -122,34 +125,34 @@ feature -- tests
 				--			print("%N")
 				--			print(s_o.out)
 				--
-			print (s_o.explorer.fuel.out)
+--			print (s_o.explorer.fuel.out) //query no longer works because explorer is private.
 			print ("%N")
 			print ("%N")
 			print (s_o.out)
 			print ("%N")
 			print ("%N")
 			s_o.move_explorer ([1, 0])
-			print (s_o.explorer.fuel.out)
+--			print (s_o.explorer.fuel.out)
 			print ("%N")
 			print ("%N")
 			print (s_o.out)
 			s_o.move_explorer ([1, 0])
-			print (s_o.explorer.fuel.out)
+--			print (s_o.explorer.fuel.out)
 			print ("%N")
 			print ("%N")
 			print (s_o.out)
 			s_o.move_explorer ([0, -1])
-			print (s_o.explorer.fuel.out)
+--			print (s_o.explorer.fuel.out)
 			print ("%N")
 			print ("%N")
 			print (s_o.out)
 			s_o.move_explorer ([1, 1])
-			print (s_o.explorer.fuel.out)
+--			print (s_o.explorer.fuel.out)
 			print ("%N")
 			print ("%N")
 			print (s_o.out)
 			s_o.move_explorer ([1, 0])
-			print (s_o.explorer.fuel.out)
+--			print (s_o.explorer.fuel.out)
 			print ("%N")
 			print ("%N")
 			print (s_o.out)

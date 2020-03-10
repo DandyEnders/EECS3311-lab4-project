@@ -49,4 +49,29 @@ feature
 			Result := N + W
 		end
 
+	give_direction (d: INTEGER): COORDINATE
+			--1 means N, 2 means NE, 3 means E, 4 means SE, ... 8 means NW
+		require
+			d_is_in_range: d <= 8 and d >= 1
+		do
+			Result:= N
+			if d ~ 1 then
+				Result := N
+			elseif d ~ 2 then
+				Result := NE
+			elseif d ~ 3 then
+				Result := E
+			elseif d ~ 4 then
+				Result := SE
+			elseif d ~ 5 then
+				Result := S
+			elseif d ~ 6 then
+				Result := SW
+			elseif d ~ 7 then
+				Result := W
+			elseif d ~ 8 then
+				Result := NW
+			end
+		end
+
 end

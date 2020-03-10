@@ -74,7 +74,6 @@ feature -- Queries
 			Result := ie ~ entity
 		end
 
-
 feature {NONE} -- private attributes
 
 	e_id: INTEGER
@@ -84,11 +83,10 @@ feature -- Out
 	out_abstract: STRING -- "[id, character]" -> "[2, P]", "-"
 		do
 			create Result.make_empty
-
 			if attached {ID_ENTITY} entity as id_entity then -- "[2, P]"
 				Result.append (id_entity.out_sqr_bracket)
 			else -- "-"
-				Result.append(entity.out)
+				Result.append (entity.out)
 			end
 		end
 

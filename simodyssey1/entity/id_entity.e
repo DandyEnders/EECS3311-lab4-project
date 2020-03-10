@@ -38,7 +38,7 @@ feature -- Queries
 
 feature -- out
 
-	out_sqr_bracket:STRING -- "[id, character]" -> "[0, E]"
+	out_sqr_bracket: STRING -- "[id, character]" -> "[0, E]"
 		do
 			create Result.make_empty
 			Result.append ("[")
@@ -48,7 +48,7 @@ feature -- out
 			Result.append ("]")
 		end
 
-	out_description:STRING -- "[id, character]->" -> "[0, E]->"
+	out_description: STRING -- "[id, character]->" -> "[0, E]->"
 		do
 			create Result.make_empty
 			Result.append (out_sqr_bracket)

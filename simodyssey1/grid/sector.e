@@ -14,6 +14,11 @@ inherit
 			out
 		end
 
+	ITERABLE [QUADRANT]
+		redefine
+			out
+		end
+
 create
 	make_empty
 
@@ -90,6 +95,11 @@ feature -- Command
 
 feature -- Queries
 
+	new_cursor: ARRAYED_LIST_ITERATION_CURSOR [QUADRANT]
+		do
+			Result := quadrants.new_cursor
+		end
+
 	is_full: BOOLEAN
 			-- Return true if quadrants is full.
 		do
@@ -127,7 +137,7 @@ feature -- Queries
 			Result := across quadrants is i_q some i_q.has (me) end
 		end
 
-	quadrant_at (me: ID_ENTITY): INTEGER
+	quadrant_at (me: ID_ENTITY): INTEGER 
 		require
 			has (me)
 		do
@@ -143,7 +153,7 @@ feature -- Queries
 			end
 		end
 
-	has_stationary_entity: BOOLEAN
+	has_stationary_entity: BOOLEAN --
 		do
 			Result := FALSE
 			across
@@ -155,7 +165,7 @@ feature -- Queries
 			end
 		end
 
-	moveable_entity_count: INTEGER
+	moveable_entity_count: INTEGER --
 		do
 			Result := 0
 			across
