@@ -69,6 +69,9 @@ feature -- Controller command / queries
 				executed_turn_command
 
 				model.move_explorer (d)
+				msg_content := model.out_movement
+				msg_content.append("%N")
+				msg_content.append(model.out_grid)
 --				check model.is_explorer_alive end
 
 			else

@@ -44,6 +44,7 @@ feature -- Controller command / queries
 	test (th: INTEGER)
 		do
 			executed_turn_command
+			create {PLAY_STATE} next_state.make(model, abstract_state)
 --			create {TEST_STATE} next_state.make(model)
 			-- TODO
 		end

@@ -103,7 +103,7 @@ feature -- Queries
 	is_full: BOOLEAN
 			-- Return true if quadrants is full.
 		do
-			Result := count = max_num_quadrants
+			Result := count ~ max_num_quadrants
 		end
 
 	count: INTEGER
@@ -208,9 +208,9 @@ feature -- Output
 			create Result.make_empty
 			Result.append ("[")
 			Result.append (coordinate.row.out)
-			Result.append (", ")
+			Result.append (",")
 			Result.append (coordinate.col.out)
-			Result.append (", ")
+			Result.append (",")
 			Result.append (quadrant_at (me).out)
 			Result.append ("]")
 		end

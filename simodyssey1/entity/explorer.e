@@ -81,7 +81,7 @@ feature -- Commands
 		require
 			s.luminosity >= 0
 		do
-			if (fuel + s.luminosity) > 3 then
+			if (fuel + s.luminosity) >= 3 then
 				fuel := 3
 			else
 				fuel := (fuel + s.luminosity)

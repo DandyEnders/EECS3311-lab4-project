@@ -55,6 +55,7 @@ feature
 			d_is_in_range: d <= 8 and d >= 1
 		do
 			Result:= N
+
 			if d ~ 1 then
 				Result := N
 			elseif d ~ 2 then

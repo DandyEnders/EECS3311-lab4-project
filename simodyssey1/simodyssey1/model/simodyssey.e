@@ -31,6 +31,8 @@ feature {NONE} -- Constructor
 			planet_threshold := 0
 				-- setting the game to be in an aborted state so game_in_session is false
 			game_aborted := TRUE
+
+			create moved_enities.make_empty
 		end
 
 feature -- Attribute
@@ -59,7 +61,7 @@ feature {NONE} -- Private Attribute
 
 	stationary_id: ID_DISPATCHER
 
---	moved_enities: HASH_TABLE[MOVEABLE_ENTITY, INTEGER]
+	moved_enities: ARRAY[STRING]
 
 feature {NONE} -- private queries
 
@@ -92,18 +94,27 @@ feature -- Command
 			game_in_session
 		local
 			destination_coord: COORDINATE
+			s: STRING
 		do
+			-- reset list of "moved" entities
+			create moved_enities.make_empty
 
 			destination_coord := explorer.coordinate + d
 			destination_coord := destination_coord.wrap_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
+
+			create s.make_from_string (explorer.out_sqr_bracket_comma)
+
+			s.append (":")
+			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
 			galaxy.move (explorer, destination_coord)
 
-			check explorer.fuel = 1 end
+			s.append ("->")
+			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
+			moved_enities.force (s, moved_enities.count + 1)
+
 
 			-- TODISCUSS: The order which "check" is done in document are in this order: (pg 30)
 			explorer.spend_fuel_unit
-
-
 
 			-- check if explorer can charge
 			if galaxy.at (explorer.coordinate).has_stationary_entity then
@@ -113,24 +124,12 @@ feature -- Command
 				end
 			end
 
---			check explorer.fuel > 0 end
-
  			-- check if explorer dies out of fuel
 			if explorer.is_out_of_fuel then
 				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
 				explorer.kill_by_out_of_fuel
 				galaxy.remove (explorer)
 			end
---			check explorer.is_alive end
---			print(explorer.fuel.out)
-
-
-
---					-- if the explorer's new sector has a star, then recharge.
---				if attached {STAR} galaxy.at (explorer.coordinate).get_stationary_entity as i_star then
---					explorer.charge_fuel (i_star)
---						-- if explorer encountered a blackhole, he should lose his life and be removed from the galaxy
---				else
 
 			-- check if explorer dies out of blackhole
 			if galaxy.at (explorer.coordinate).has_blackhole then
@@ -176,11 +175,22 @@ feature {NONE} -- Private Helper Commands
 			-- moves a planet in the given direction from its current coordinate
 		local
 			new_coordinate_of_p: COORDINATE
+			s: STRING
 		do
 			new_coordinate_of_p := (p.coordinate + direction_of_p);
 			new_coordinate_of_p := new_coordinate_of_p.wrap_coordinate (new_coordinate_of_p, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 			if not galaxy.at (new_coordinate_of_p).is_full then
+
+				create s.make_from_string (p.out_sqr_bracket_comma)
+				s.append (":")
+				s.append (galaxy.at (p.coordinate).out_abstract_full_coordinate (p))
+
 				galaxy.move (p, new_coordinate_of_p)
+
+				s.append ("->")
+				s.append (galaxy.at (p.coordinate).out_abstract_full_coordinate (p))
+
+				moved_enities.force (s, moved_enities.count + 1)
 			end
 		end
 
@@ -405,7 +415,19 @@ feature -- Out
 
 	out_movement: STRING -- TODO@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		do
-			create Result.make_from_string ("  ")
+			create Result.make_from_string ("  Movement:")
+			if moved_enities.is_empty then
+				Result.append("none")
+			else
+				across
+					moved_enities is i_s
+				loop
+					Result.append("%N")
+					Result.append("    ")
+					Result.append(i_s.out)
+				end
+			end
+
 		end
 
 	out_sectors: STRING

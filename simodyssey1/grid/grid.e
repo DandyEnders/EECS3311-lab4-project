@@ -123,7 +123,7 @@ feature -- Queries
 
 			across -- stationary, negative id out
 					-- counting inversely
-				stationary_entities.count |..| 1 is i
+				0 |..| moveable_entities.count  is i
 			loop
 				if attached moveable_entities [i] as i_se then
 					Result.force(i_se, Result.count + 1)
@@ -137,7 +137,7 @@ feature -- Queries
 
 			across -- stationary, zero or psotivie id out
 					-- counting inversely
-				0 |..| moveable_entities.count is i
+				-1 |..| -stationary_entities.count is i
 			loop
 				if attached stationary_entities [i] as i_me then
 					Result.force (i_me, Result.count + 1)
