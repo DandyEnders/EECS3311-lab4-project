@@ -61,6 +61,12 @@ feature -- Queries
 			Result := is_dead and then get_death_cause ~ "BLACKHOLE"
 		end
 
+feature {UNIT_TEST} -- testing Commands Delete after finalized
+	set_landed
+		do
+			landed:=TRUE
+		end
+
 feature -- Commands
 
 	spend_fuel_unit
