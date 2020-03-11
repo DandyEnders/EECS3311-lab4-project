@@ -25,10 +25,72 @@ feature {NONE} -- Initialization
 				--			add_boolean_case (agent t5)
 --			add_boolean_case (agent t6)
 --			add_boolean_case (agent t7)
-			add_boolean_case (agent t8)
+--			add_boolean_case (agent t8)
+--			add_boolean_case (agent t9)
+			add_boolean_case (agent t10)
 		end
 
 feature -- tests
+
+	t10:BOOLEAN
+		local
+			s_o:SIMODYSSEY
+		do
+			comment ("t6: Testing liftoff")
+			create s_o.make
+--			s_o.liftoff-- doesnt work if you're not in a game
+			s_o.new_game (50, FALSE)
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
+--			s_o.land_explorer -- wormhole shouldn't work if I'm not in a sector with a yellow star
+			s_o.move_explorer ([1,0])
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
+--			s_o.liftoff
+			s_o.move_explorer ([1,0])
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
+			s_o.land_explorer
+--			s_o.liftoff
+--			s_o.land_explorer
+--			s_o.liftoff
+--			s_o.liftoff
+--			s_o.land_explorer
+--			print ("%N")
+--			print ("%N")
+--			print (s_o.out_grid)
+--			s_o.pass
+--			print ("%N")
+--			print ("%N")
+--			print (s_o.out_grid)
+
+		end
+
+	t9:BOOLEAN
+		local
+			s_o:SIMODYSSEY
+		do
+			comment ("t6: Testing land_explorer")
+			create s_o.make
+--			s_o.land_explorer-- doesnt work if you're not in a game
+			s_o.new_game (10, FALSE)
+--			s_o.land_explorer -- wormhole shouldn't work if I'm not in a sector with a yellow star
+			s_o.move_explorer ([1,0])
+			s_o.move_explorer ([1,0])
+			s_o.move_explorer ([1,0])
+			s_o.land_explorer
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
+--			s_o.pass
+--			print ("%N")
+--			print ("%N")
+--			print (s_o.out_grid)
+
+		end
 
 	t8:BOOLEAN
 		local

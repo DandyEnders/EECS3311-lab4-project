@@ -51,6 +51,24 @@ feature -- Attribute
 
 feature -- Command
 
+	land_explorer (e: EXPLORER)
+		require
+			is_landable
+		do
+			across
+				quadrants is i_q
+			until
+				e.landed
+			loop
+				if attached {PLANET} i_q.entity as p then
+					if p.attached_to_star and not p.visited then
+						p.set_visited
+						e.set_landed (TRUE)
+					end
+				end
+			end
+		end
+
 	remove (me: MOVEABLE_ENTITY)
 		local
 			removed: BOOLEAN
@@ -95,6 +113,25 @@ feature -- Command
 
 feature -- Queries
 
+	is_landable: BOOLEAN
+		do
+			if moveable_entity_count > 2 and has_star and attached {YELLOW_DWARF} get_stationary_entity then
+				across
+					quadrants is i_q
+				until
+					Result
+				loop
+					if attached {PLANET} i_q.entity as p then
+						if (p.attached_to_star and not p.visited) then
+							Result := TRUE
+						end
+					end
+				end
+			else
+				Result := FALSE
+			end
+		end
+
 	new_cursor: ARRAYED_LIST_ITERATION_CURSOR [QUADRANT]
 		do
 			Result := quadrants.new_cursor
@@ -122,7 +159,7 @@ feature -- Queries
 		require
 			has_stationary_entity
 		local
-			found : BOOLEAN
+			found: BOOLEAN
 		do
 			Result := create {YELLOW_DWARF}.make ([1, 1], 0) --creating random star. Note, this will never get returned
 			found := false

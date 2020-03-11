@@ -8,6 +8,7 @@ class
 	SIMODYSSEY
 
 inherit
+
 	ANY
 		redefine
 			out
@@ -37,9 +38,7 @@ feature {NONE} -- Constructor
 			planet_threshold := 0
 				-- setting the game to be in an aborted state so game_in_session is false
 			game_aborted := TRUE
-
 			is_test_game := False
-
 			create moved_enities.make_empty
 			create dead_entity.make_empty
 		end
@@ -72,9 +71,9 @@ feature {NONE, UNIT_TEST} -- Private Attribute
 
 	stationary_id: ID_DISPATCHER
 
-	moved_enities: ARRAY[STRING]
+	moved_enities: ARRAY [STRING]
 
-	dead_entity: ARRAY[MOVEABLE_ENTITY]
+	dead_entity: ARRAY [MOVEABLE_ENTITY]
 
 feature {NONE} -- private queries
 
@@ -93,9 +92,9 @@ feature -- Command
 	new_game (th: INTEGER; is_test: BOOLEAN)
 		require
 			valid_threshold: 1 <= th and th <= 101
---			TODISCUSS: even if we are in seesion, we should be able to override it.
---				It's state's job to check if we should call new_game when we suppose to.
---			not game_in_session
+			--			TODISCUSS: even if we are in seesion, we should be able to override it.
+			--				It's state's job to check if we should call new_game when we suppose to.
+			--			not game_in_session
 		do
 			make --calling make in order to initialize global ids and the board every new game
 				-- initializing the planet threshold
@@ -109,47 +108,40 @@ feature -- Command
 	move_explorer (d: COORDINATE)
 		require
 			not sector_in_direction_is_full (d)
-			-- TODISCUSS : how do we indicate that game is rolling?
+				-- TODISCUSS : how do we indicate that game is rolling?
 			game_in_session
 		local
 			destination_coord: COORDINATE
 			s: STRING
 		do
-			-- reset list of "moved" entities
+				-- reset list of "moved" entities
 			create moved_enities.make_empty
 			create dead_entity.make_empty
-
 			destination_coord := explorer.coordinate + d
 			destination_coord := destination_coord.wrap_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
-
 			create s.make_from_string (explorer.out_sqr_bracket)
-
 			s.append (":")
 			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
 			galaxy.move (explorer, destination_coord)
-
 			s.append ("->")
 			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
 			moved_enities.force (s, moved_enities.count + 1)
 
-
-			-- TODISCUSS: The order which "check" is done in document are in this order: (pg 30)
+				-- TODISCUSS: The order which "check" is done in document are in this order: (pg 30)
 			explorer.spend_fuel_unit
 
-			-- check if explorer can charge
+				-- check if explorer can charge
 			if galaxy.at (explorer.coordinate).has_stationary_entity then
-				-- if the explorer's new sector has a star, then recharge.
+					-- if the explorer's new sector has a star, then recharge.
 				if attached {STAR} galaxy.at (explorer.coordinate).get_stationary_entity as i_star then
 					explorer.charge_fuel (i_star)
 				end
 			end
-
 			confirm_explorer_health
-
 			npc_action
 		ensure
 				-- If the explorer did not move to a black hole, Explorer should now exist in the sector that he wanted to go to
-			If_not_lost_the_explorer_is_in_new_position: (is_explorer_alive) implies galaxy.at ((old explorer_coordinate + d).wrap_coordinate ((old explorer_coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer)  -- change so "explorer" attribute is not reffered to
+			If_not_lost_the_explorer_is_in_new_position: (is_explorer_alive) implies galaxy.at ((old explorer_coordinate + d).wrap_coordinate ((old explorer_coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer) -- change so "explorer" attribute is not reffered to
 		end
 
 	wormhole
@@ -159,27 +151,25 @@ feature -- Command
 			stationary_entity_exists_at_location: galaxy.at (explorer_coordinate).has_stationary_entity
 			stationar_entity_is_wormhole: galaxy.at (explorer_coordinate).has_wormhole
 		local
-			added:BOOLEAN
-			temp_row:INTEGER
-			temp_col:INTEGER
+			added: BOOLEAN
+			temp_row: INTEGER
+			temp_col: INTEGER
 		do
 			from
-				added:=FALSE
+				added := FALSE
 			until
 				added
 			loop
-				temp_row:=rng.rchoose(1,5)
-				temp_col:=rng.rchoose(1,5)
-
-				if not galaxy.at ([temp_row,temp_col]).is_full then
-					galaxy.move (explorer,[temp_row,temp_col])
-					added:=TRUE
+				temp_row := rng.rchoose (1, 5)
+				temp_col := rng.rchoose (1, 5)
+				if not galaxy.at ([temp_row, temp_col]).is_full then
+					galaxy.move (explorer, [temp_row, temp_col])
+					added := TRUE
 				end
 				confirm_explorer_health
-
 				npc_action
 			end
-			ensure
+		ensure
 			If_not_lost_the_explorer_is_in_new_position: galaxy.at (explorer_coordinate).has (explorer) -- change so "explorer" attribute is not reffered to
 
 		end
@@ -187,13 +177,24 @@ feature -- Command
 	land_explorer
 		require
 			game_in_session
+			not explorer_is_landed
+			e_sector_has_yellow_dwarf
+			e_sector_has_planets
+			e_sector_has_unvisted_attached_planets
 		do
+			galaxy.at (explorer.coordinate).land_explorer (explorer)
+			confirm_explorer_health
+			npc_action
 		end
 
 	liftoff
 		require
 			game_in_session
+			explorer_is_landed
 		do
+			explorer.set_landed (FALSE)
+			confirm_explorer_health
+			npc_action
 		end
 
 	pass
@@ -201,28 +202,27 @@ feature -- Command
 			game_in_session ---make sure that if the player dies, then this is false.
 		do
 			confirm_explorer_health
-
 			npc_action
 		end
 
 feature {NONE} -- Private Helper Commands
 
 	confirm_explorer_health
-	do
-		 	-- check if explorer dies out of fuel
+		do
+				-- check if explorer dies out of fuel
 			if explorer.is_out_of_fuel then
-				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
+					-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
 				explorer.kill_by_out_of_fuel
 				galaxy.remove (explorer)
 				dead_entity.force (explorer, dead_entity.count + 1)
 
-			-- check if explorer dies out of blackhole
+					-- check if explorer dies out of blackhole
 			elseif galaxy.at (explorer.coordinate).has_blackhole then
 				explorer.kill_by_blackhole
 				galaxy.remove (explorer)
 				dead_entity.force (explorer, dead_entity.count + 1)
 			end
-	end
+		end
 
 	move_planet (p: PLANET; direction_of_p: COORDINATE)
 			-- moves a planet in the given direction from its current coordinate
@@ -233,16 +233,12 @@ feature {NONE} -- Private Helper Commands
 			new_coordinate_of_p := (p.coordinate + direction_of_p);
 			new_coordinate_of_p := new_coordinate_of_p.wrap_coordinate (new_coordinate_of_p, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 			if not galaxy.at (new_coordinate_of_p).is_full then
-
 				create s.make_from_string (p.out_sqr_bracket)
 				s.append (":")
 				s.append (galaxy.at (p.coordinate).out_abstract_full_coordinate (p))
-
 				galaxy.move (p, new_coordinate_of_p)
-
 				s.append ("->")
 				s.append (galaxy.at (p.coordinate).out_abstract_full_coordinate (p))
-
 				moved_enities.force (s, moved_enities.count + 1)
 			else
 				create s.make_from_string (p.out_sqr_bracket)
@@ -265,7 +261,7 @@ feature {NONE} -- Private Helper Commands
 				if attached {PLANET} i_e as p then
 						-- if the planets turns left is 0, then check if there is a star in the sector
 					if p.turns_left ~ 0 then
-						-- specal case ( pg  28 )
+							-- specal case ( pg  28 )
 						if galaxy.at (p.coordinate).has_star then
 							if attached {STAR} galaxy.at (p.coordinate).get_stationary_entity as star and then not p.attached_to_star then
 									-- If there is a star in the sector then set attached for the planet to true.
@@ -279,7 +275,7 @@ feature {NONE} -- Private Helper Commands
 								end
 							end
 						else -- turns_left = 0 and no star entity in same sector
-							 -- movement (pg  29)
+								-- movement (pg  29)
 							direction_num := rng.rchoose (1, 8)
 							move_planet (p, d.give_direction (direction_num))
 
@@ -303,7 +299,6 @@ feature {NONE} -- Private Helper Commands
 									p.set_turns_left (rng.rchoose (0, 2))
 								end
 							end
-
 						end
 					else
 						p.set_turns_left (p.turns_left - 1)
@@ -388,9 +383,9 @@ feature -- Interface
 		--		end
 		-- export these features to explorer (I decided not to because you're right that it is an interface) If we were to export such features into the explorer, then explorer would need to store its SECTOR as an attribute.
 
-	explorer_is_landed:BOOLEAN
+	explorer_is_landed: BOOLEAN
 		do
-			Result:=explorer.landed
+			Result := explorer.landed
 		end
 
 	is_landsite_has_life: BOOLEAN
@@ -453,7 +448,17 @@ feature -- Interface
 	e_sector_has_unvisted_attached_planets: BOOLEAN
 		do
 			if e_sector_has_planets and e_sector_has_yellow_dwarf then
-				Result := across explorer_sector is i_q some (attached {PLANET} i_q.entity as p) implies (p.attached_to_star and not p.visited) end
+				across
+					explorer_sector is i_q
+				until
+					Result
+				loop
+					if attached {PLANET} i_q.entity as p then
+						if (p.attached_to_star and not p.visited) then
+							Result := TRUE
+						end
+					end
+				end
 			else
 				Result := FALSE
 			end
@@ -461,21 +466,20 @@ feature -- Interface
 
 feature -- Out
 
-	out:STRING
+	out: STRING
 		Do
 			create Result.make_empty
-			Result.append(out_movement)
-			Result.append("%N")
+			Result.append (out_movement)
+			Result.append ("%N")
 			if is_test_game then
-				Result.append(out_sectors)
-				Result.append("%N")
-				Result.append(out_descriptions)
-				Result.append("%N")
-				Result.append(out_deaths_this_turn)
-				Result.append("%N")
+				Result.append (out_sectors)
+				Result.append ("%N")
+				Result.append (out_descriptions)
+				Result.append ("%N")
+				Result.append (out_deaths_this_turn)
+				Result.append ("%N")
 			end
-
-			Result.append(out_grid)
+			Result.append (out_grid)
 		end
 
 	out_grid: STRING
@@ -488,17 +492,16 @@ feature -- Out
 		do
 			create Result.make_from_string ("  Movement:")
 			if moved_enities.is_empty then
-				Result.append("none")
+				Result.append ("none")
 			else
 				across
 					moved_enities is i_s
 				loop
-					Result.append("%N")
-					Result.append("    ")
-					Result.append(i_s.out)
+					Result.append ("%N")
+					Result.append ("    ")
+					Result.append (i_s.out)
 				end
 			end
-
 		end
 
 	out_sectors: STRING

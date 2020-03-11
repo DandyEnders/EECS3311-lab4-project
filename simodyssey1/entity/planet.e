@@ -68,6 +68,11 @@ feature -- Command
 			support_life := b
 		end
 
+	set_visited
+		do
+			visited := TRUE
+		end
+
 feature -- Queries
 
 	character: STRING = "P"
@@ -83,7 +88,7 @@ feature -- Out
 		do
 			Result := precursor
 			if is_dead_by_blackhole then
-				Result.append(msg.planet_death_blackhole (coordinate.row, coordinate.col, -1))
+				Result.append (msg.planet_death_blackhole (coordinate.row, coordinate.col, -1))
 			end
 		end
 

@@ -29,9 +29,8 @@ feature {NONE} -- Constructor
 			fuel := 3
 			landed := false
 			found_life := FALSE
-
-			add_death_cause_type("BLACKHOLE")
-			add_death_cause_type("OUT_OF_FUEL")
+			add_death_cause_type ("BLACKHOLE")
+			add_death_cause_type ("OUT_OF_FUEL")
 		end
 
 feature -- Attributes
@@ -62,12 +61,13 @@ feature -- Queries
 		end
 
 feature {UNIT_TEST} -- testing Commands Delete after finalized
-	set_landed
-		do
-			landed:=TRUE
-		end
 
 feature -- Commands
+
+	set_landed (b: BOOLEAN)
+		do
+			landed := b
+		end
 
 	spend_fuel_unit
 		require
@@ -98,17 +98,15 @@ feature -- Commands
 
 	kill_by_blackhole
 		do
-			kill_by("BLACKHOLE")
+			kill_by ("BLACKHOLE")
 		end
 
 	kill_by_out_of_fuel
 		require
 			fuel = 0
 		do
-			kill_by("OUT_OF_FUEL")
+			kill_by ("OUT_OF_FUEL")
 		end
-
-
 
 feature -- Out
 
@@ -116,27 +114,24 @@ feature -- Out
 		do
 			Result := precursor
 			if is_dead_by_out_of_fuel then
-				Result.append(msg.explorer_death_out_of_fuel (coordinate.row, coordinate.col))
+				Result.append (msg.explorer_death_out_of_fuel (coordinate.row, coordinate.col))
 			elseif is_dead_by_blackhole then
-				Result.append(msg.explorer_death_blackhole (coordinate.row, coordinate.col, -1))
+				Result.append (msg.explorer_death_blackhole (coordinate.row, coordinate.col, -1))
 			end
 		end
 
-	out_description:STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean"
-		-- "[0,E]->fuel:2/3, life:3/3, landed?:F"
+	out_description: STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean"
+			-- "[0,E]->fuel:2/3, life:3/3, landed?:F"
 		do
 			Result := precursor
-
-			Result.append("fuel:")
-			Result.append(fuel.out)
-			Result.append("/")
-			Result.append("3")
-			Result.append(", ")
-
-			Result.append(life.out)
-			Result.append(", ")
-
-			Result.append("landed?:")
+			Result.append ("fuel:")
+			Result.append (fuel.out)
+			Result.append ("/")
+			Result.append ("3")
+			Result.append (", ")
+			Result.append (life.out)
+			Result.append (", ")
+			Result.append ("landed?:")
 			if landed then
 				Result.append ("T")
 			else
