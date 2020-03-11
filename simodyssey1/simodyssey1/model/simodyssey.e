@@ -382,6 +382,16 @@ feature -- Interface
 			Result := e_sector_has_planets and e_sector_has_yellow_dwarf and e_sector_has_unvisted_attached_planets
 		end
 
+	is_explorer_dead_by_out_of_fuel: BOOLEAN
+		do
+			Result := explorer.is_dead_by_out_of_fuel
+		end
+
+	is_explorer_dead_by_blackhole: BOOLEAN
+		do
+			Result := explorer.is_dead_by_blackhole
+		end
+
 	e_sector_has_yellow_dwarf: BOOLEAN
 		do
 			if explorer_sector.has_stationary_entity then

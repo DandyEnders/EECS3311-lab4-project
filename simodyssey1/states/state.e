@@ -26,7 +26,6 @@ feature -- Constructor
 			create msg_content.make_empty
 
 			next_state := current
-			initialization
 		end
 
 feature {STATE} -- Attribute
@@ -37,7 +36,7 @@ feature {STATE} -- Attribute
 
 	abstract_state: ABSTRACT_STATE
 
-feature {STATE} -- Message attribute
+feature {STATE, CONTROLLER} -- Message attribute
 
 	-- "  {abstract_state.out}{, msg_mode}{, msg_command_validity}{%Nmsg_content}
 	-- example
@@ -54,41 +53,47 @@ feature {STATE} -- Message attribute
 			msg_content := s
 		end
 
+	set_msg_mode(s: STRING)
+		do
+			msg_mode := s
+		end
+
+	set_msg_command_validity(s: STRING)
+		do
+			msg_command_validity := s
+		end
+
 feature -- Commands
 
-	executed_valid_command
-		do
-			abstract_state.executed_valid_command
-			msg_command_validity := "ok"
-		end
+--	executed_valid_command
+--		do
+--			abstract_state.executed_valid_command
+--			msg_command_validity := "ok"
+--		end
 
-	executed_turn_command
-		do
-			abstract_state.executed_turn_command
-			msg_command_validity := "ok"
-		end
+--	executed_turn_command
+--		do
+--			abstract_state.executed_turn_command
+--			msg_command_validity := "ok"
+--		end
 
-	executed_invalid_command
-		do
-			abstract_state.executed_invalid_command
-			msg_command_validity := "error"
-		end
+--	executed_invalid_command
+--		do
+--			abstract_state.executed_invalid_command
+--			msg_command_validity := "error"
+--		end
 
-	executed_no_turn_command
-		do
-			abstract_state.executed_no_turn_command
-			msg_command_validity := "error"
-		end
+--	executed_no_turn_command
+--		do
+--			abstract_state.executed_no_turn_command
+--			msg_command_validity := "ok"
+--		end
 
 feature -- Queries
 
 	next_state: STATE
 
 feature -- Controller command / queries
-
-	initialization
-		deferred
-		end
 
 	abort
 		deferred

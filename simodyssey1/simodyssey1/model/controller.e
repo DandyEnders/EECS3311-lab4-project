@@ -29,6 +29,8 @@ feature {NONE} -- Initialization
 
 			-- initial state = main menu state
 			create {MAIN_MENU_STATE} game_state.make(game_model, abstract_state)
+			game_state.set_msg_command_validity("ok")
+			game_state.set_msg_content ("  " + msg.initial_message)
 
 		end
 
@@ -39,6 +41,8 @@ feature -- model attributes
 	game_state: STATE
 
 	abstract_state: ABSTRACT_STATE
+
+	msg: MESSAGE
 
 feature -- state operation
 

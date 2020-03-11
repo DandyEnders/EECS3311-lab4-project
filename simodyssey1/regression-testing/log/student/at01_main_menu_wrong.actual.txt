@@ -18,7 +18,7 @@
     PW--   ----   *---   ----   PW--   
 ->abort
   state:1.1, ok
-  Welcome! Try test(30)
+  Mission aborted. Try test(30)
 ->abort
   state:1.2, error
   Negative on that request:no mission in progress.
@@ -330,14 +330,14 @@
   state:5.6, mode:test, error
   Negative on that request:no yellow dwarf at Sector:4:3
 ->liftoff
-  state:5.6, mode:test, error
-  Negative on that request:no yellow dwarf at Sector:4:3
+  state:5.7, mode:test, error
+  Negative on that request:you are not on a planet at Sector:4:3
 ->pass
-  state:5.6, mode:test, error
-  Negative on that request:no yellow dwarf at Sector:4:3
+  state:5.7, mode:test, error
+  Negative on that request:you are not on a planet at Sector:4:3
 ->wormhole
-  state:5.6, mode:test, error
-  Negative on that request:no yellow dwarf at Sector:4:3
+  state:5.7, mode:test, error
+  Negative on that request:you are not on a planet at Sector:4:3
 ->status
-  state:5.6, mode:test, error
-  Negative on that request:no yellow dwarf at Sector:4:3
+  state:5.7, mode:test, error
+  Negative on that request:you are not on a planet at Sector:4:3
