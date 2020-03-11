@@ -163,7 +163,9 @@ feature -- Command
 			create moved_enities.make_empty
 			create dead_entity.make_empty
 			galaxy.at (explorer.coordinate).land_explorer (explorer)
-			npc_action
+			if not explorer.found_life then
+				npc_action
+			end
 		end
 
 	liftoff
