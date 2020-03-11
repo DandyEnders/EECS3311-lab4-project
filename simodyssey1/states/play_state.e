@@ -141,11 +141,19 @@ feature -- Controller command / queries
 
 				set_msg_content (s_content)
 
-			else
-				abstract_state.executed_invalid_command
-				set_msg_mode(msg_mode)
-				set_msg_command_validity ("error")
-				set_msg_content ("  " + msg.move_error_sector_full)
+			else -- model.sector_in_direction_is_full (d) or not model.game_in_session
+				if model.sector_in_direction_is_full (d) then
+					abstract_state.executed_invalid_command
+					set_msg_mode(msg_mode)
+					set_msg_command_validity ("error")
+					set_msg_content ("  " + msg.move_error_sector_full)
+--				elseif not model.game_in_session then
+--					abstract_state.executed_invalid_command
+--					set_msg_mode(msg_mode)
+--					set_msg_command_validity ("error")
+--					set_msg_content ("  " + msg.move_error_no_mission)
+				end
+
 			end
 		end
 
@@ -168,6 +176,12 @@ feature -- Controller command / queries
 	wormhole
 		do
 		end
+
+invariant
+	if_game_ended_next_state_is_main_menu:
+		(not model.game_in_session) implies (attached {MAIN_MENU_STATE} next_state)
+	if_game_continues_next_state_is_either_play_or_landed:
+		model.game_in_session implies (attached {LANDED_STATE} next_state or attached {PLAY_STATE} next_state or next_state = current )
 
 
 end
