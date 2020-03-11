@@ -1,0 +1,10 @@
+play
+move(S)
+move(S)
+land
+land
+move(E)
+move(N)
+play
+wormhole
+test(100)

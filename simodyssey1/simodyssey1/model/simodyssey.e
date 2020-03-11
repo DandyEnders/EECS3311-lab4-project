@@ -129,7 +129,7 @@ feature -- Command
 		require
 			game_in_session
 			explorer_is_not_landed: not is_explorer_landed
-			stationar_entity_is_wormhole: galaxy.at (explorer_coordinate).has_wormhole
+			stationary_entity_is_wormhole: is_explorer_with_wormhole
 		local
 			added: BOOLEAN
 			temp_row: INTEGER
@@ -394,6 +394,11 @@ feature -- Interface
 		--			Result := explorer.deep_twin
 		--		end
 		-- export these features to explorer (I decided not to because you're right that it is an interface) If we were to export such features into the explorer, then explorer would need to store its SECTOR as an attribute.
+
+	is_explorer_with_wormhole: BOOLEAN
+		do
+			Result := galaxy.at (explorer.coordinate).has_wormhole
+		end
 
 	is_explorer_landed: BOOLEAN
 		do

@@ -38,27 +38,68 @@ feature -- Controller command / queries
 		end
 
 	land
+		local
+			c: COORDINATE
 		do
+			c := model.explorer_coordinate
+
+			abstract_state.executed_no_turn_command
+			next_state.set_msg_mode (msg_mode)
+			next_state.set_msg_command_validity ("error")
+			next_state.set_msg_content ("  " + msg.land_error_landed_already (c.row, c.col))
 
 		end
 
 	liftoff
+		local
+			s_tmp:STRING
+			c: COORDINATE
 		do
+			c := model.explorer_coordinate
 
+			model.liftoff
+			create {PLAY_STATE} next_state.make (model, abstract_state)
+
+			abstract_state.executed_turn_command
+			next_state.set_msg_mode(msg_mode)
+			next_state.set_msg_command_validity ("ok")
+
+			create s_tmp.make_empty
+			s_tmp.append ("  ")
+			s_tmp.append (msg.liftoff (c.row, c.col))
+			s_tmp.append ("%N")
+			s_tmp.append (model.out)
+			next_state.set_msg_content (s_tmp)
 		end
 
 	move (d: COORDINATE)
+		local
+			c: COORDINATE
 		do
+			c := model.explorer_coordinate
+
+			abstract_state.executed_no_turn_command
+			next_state.set_msg_mode (msg_mode)
+			next_state.set_msg_command_validity ("error")
+			next_state.set_msg_content ("  " + msg.move_error_landed (c.row, c.col))
 
 		end
 
 	pass
 		do
-
+			model.pass
+			abstract_state.executed_turn_command
+			set_msg_mode(msg_mode)
+			set_msg_command_validity ("ok")
+			set_msg_content (model.out)
 		end
 
 	play
 		do
+			abstract_state.executed_no_turn_command
+			next_state.set_msg_mode (msg_mode)
+			next_state.set_msg_command_validity ("error")
+			next_state.set_msg_content ("  " + msg.play_error_no_mission)
 		end
 
 	status
@@ -71,10 +112,22 @@ feature -- Controller command / queries
 
 	test (th: INTEGER)
 		do
+			abstract_state.executed_no_turn_command
+			next_state.set_msg_mode (msg_mode)
+			next_state.set_msg_command_validity ("error")
+			next_state.set_msg_content ("  " + msg.test_error_no_mission)
 		end
 
 	wormhole
+		local
+			c: COORDINATE
 		do
+			c := model.explorer_coordinate
+
+			abstract_state.executed_no_turn_command
+			next_state.set_msg_mode (msg_mode)
+			next_state.set_msg_command_validity ("error")
+			next_state.set_msg_content ("  " + msg.wormhole_error_landed (c.row, c.col))
 		end
 
 end

@@ -220,10 +220,62 @@ feature -- Controller command / queries
 		end
 
 	wormhole
+		local
+			s_content: STRING
+			c: COORDINATE
+			s_explorer_death: STRING
 		do
---			if model.game_in_session then
---				
---			end
+			if model.is_explorer_with_wormhole then
+				model.wormhole
+
+				abstract_state.executed_turn_command
+				set_msg_mode(msg_mode)
+				set_msg_command_validity ("ok")
+				create s_content.make_empty
+
+				if model.is_explorer_alive then
+					s_content.append (model.out)
+				else
+					if model.is_explorer_dead_by_blackhole then
+						c := model.explorer_coordinate
+
+						create s_explorer_death.make_from_string ("  ")
+						s_explorer_death.append(msg.explorer_death_blackhole (c.row, c.col, -1))
+						s_explorer_death.append ("%N")
+						s_explorer_death.append ("  ")
+						s_explorer_death.append (msg.game_is_over)
+
+						if model.is_test_game then
+							s_content.append (s_explorer_death)
+							s_content.append ("%N")
+							s_content.append (model.out)
+							s_content.append ("%N")
+							s_content.append (s_explorer_death)
+						else
+							s_content.append (s_explorer_death)
+							s_content.append ("%N")
+							s_content.append (model.out)
+						end
+					end
+					create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
+					next_state.set_msg_command_validity (msg_command_validity)
+					next_state.set_msg_mode (msg_mode)
+					next_state.set_msg_content (s_content)
+				end
+
+				set_msg_content (s_content)
+
+
+			else
+				if not model.is_explorer_with_wormhole then
+					c := model.explorer_coordinate
+
+					abstract_state.executed_invalid_command
+					set_msg_mode(msg_mode)
+					set_msg_command_validity ("error")
+					set_msg_content ("  " + msg.wormhole_error_explorer_not_found_wormhole (c.row, c.col) )
+				end
+			end
 		end
 
 
