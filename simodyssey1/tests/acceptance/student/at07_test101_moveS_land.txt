@@ -1,0 +1,3 @@
+test(101)
+move(S)
+land

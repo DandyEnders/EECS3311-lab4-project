@@ -48,17 +48,34 @@ feature -- Controller command / queries
 			if model.is_explorer_landable then
 
 				model.land_explorer
-				create {LANDED_STATE} next_state.make (model, abstract_state)
 
-				abstract_state.executed_turn_command
-				next_state.set_msg_mode ("")
-				next_state.set_msg_command_validity ("ok")
+				if model.is_explorer_found_life then
+					create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
 
-				c := model.explorer_coordinate
-				create tmp_str.make_from_string ("  ")
-				tmp_str.append (msg.land_life_not_found (c.row, c.col))
-				tmp_str.append (model.out)
-				next_state.set_msg_content (tmp_str)
+					abstract_state.executed_turn_command
+					next_state.set_msg_mode (msg_mode)
+					next_state.set_msg_command_validity ("ok")
+
+					create tmp_str.make_from_string ("  ")
+					tmp_str.append (msg.land_life_found)
+					next_state.set_msg_content (tmp_str)
+
+				else -- landed in no life planet	
+					create {LANDED_STATE} next_state.make (model, abstract_state)
+
+					abstract_state.executed_turn_command
+					next_state.set_msg_mode (msg_mode)
+					next_state.set_msg_command_validity ("ok")
+
+					c := model.explorer_coordinate
+					create tmp_str.make_from_string ("  ")
+					tmp_str.append (msg.land_life_not_found (c.row, c.col))
+					tmp_str.append (model.out)
+					next_state.set_msg_content (tmp_str)
+				end
+
+
+
 
 			else
 				abstract_state.executed_invalid_command
@@ -73,7 +90,6 @@ feature -- Controller command / queries
 				elseif not model.e_sector_has_unvisted_attached_planets then
 					tmp_str.append (msg.land_error_no_visited_planets (model.explorer_coordinate.row, model.explorer_coordinate.col))
 				end
-
 				set_msg_content(tmp_str)
 			end
 		end
@@ -94,6 +110,7 @@ feature -- Controller command / queries
 		local
 			s_content: STRING
 			c: COORDINATE
+			s_explorer_death: STRING
 		do
 			if not model.sector_in_direction_is_full (d) then
 
@@ -109,40 +126,42 @@ feature -- Controller command / queries
 				else
 					if model.is_explorer_dead_by_out_of_fuel then -- TODO make the s_content cleaner
 						c := model.explorer_coordinate
+
+						create s_explorer_death.make_from_string ("  ")
+						s_explorer_death.append(msg.explorer_death_out_of_fuel (c.row, c.col))
+						s_explorer_death.append ("%N")
+						s_explorer_death.append ("  ")
+						s_explorer_death.append (msg.game_is_over)
+
 						if model.is_test_game then
-							s_content.append ("  " + msg.explorer_death_out_of_fuel (c.row, c.col))
-							s_content.append ("%N")
-							s_content.append ("  " + msg.game_is_over)
+							s_content.append (s_explorer_death)
 							s_content.append ("%N")
 							s_content.append (model.out)
 							s_content.append ("%N")
-							s_content.append ("  " + msg.explorer_death_out_of_fuel (c.row, c.col))
-							s_content.append ("%N")
-							s_content.append ("  " + msg.game_is_over)
+							s_content.append (s_explorer_death)
 						else
-							s_content.append ("  " + msg.explorer_death_out_of_fuel (c.row, c.col))
-							s_content.append ("%N")
-							s_content.append ("  " + msg.game_is_over)
+							s_content.append (s_explorer_death)
 							s_content.append ("%N")
 							s_content.append (model.out)
 						end
 
 					elseif model.is_explorer_dead_by_blackhole then
 						c := model.explorer_coordinate
+
+						create s_explorer_death.make_from_string ("  ")
+						s_explorer_death.append(msg.explorer_death_blackhole (c.row, c.col, -1))
+						s_explorer_death.append ("%N")
+						s_explorer_death.append ("  ")
+						s_explorer_death.append (msg.game_is_over)
+
 						if model.is_test_game then
-							s_content.append ("  " + msg.explorer_death_blackhole (c.row, c.col, -1))
-							s_content.append ("%N")
-							s_content.append ("  " + msg.game_is_over)
+							s_content.append (s_explorer_death)
 							s_content.append ("%N")
 							s_content.append (model.out)
 							s_content.append ("%N")
-							s_content.append ("  " + msg.explorer_death_blackhole (c.row, c.col, -1))
-							s_content.append ("%N")
-							s_content.append ("  " + msg.game_is_over)
+							s_content.append (s_explorer_death)
 						else
-							s_content.append ("  " + msg.explorer_death_blackhole (c.row, c.col, -1))
-							s_content.append ("%N")
-							s_content.append ("  " + msg.game_is_over)
+							s_content.append (s_explorer_death)
 							s_content.append ("%N")
 							s_content.append (model.out)
 						end

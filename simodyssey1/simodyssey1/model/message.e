@@ -57,7 +57,7 @@ feature -- status
 
 feature -- land
 
-	land_life_found: STRING = "Tranquility base here - weve got a life!"
+	land_life_found: STRING = "Tranquility base here - we've got a life!"
 
 	land_life_not_found (row, col: INTEGER): STRING
 		do
