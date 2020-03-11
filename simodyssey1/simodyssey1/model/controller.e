@@ -22,21 +22,18 @@ feature {NONE} -- Initialization
 	make
 			-- Initialization for `Current'.
 		do
-			create game_model.make
 
 			-- Abstract state. (state:x.y)
 			create abstract_state.make
 
 			-- initial state = main menu state
-			create {MAIN_MENU_STATE} game_state.make(game_model, abstract_state)
+			create {MAIN_MENU_STATE} game_state.make(create {SIMODYSSEY}.make, abstract_state)
 			game_state.set_msg_command_validity("ok")
 			game_state.set_msg_content ("  " + msg.initial_message)
 
 		end
 
 feature -- model attributes
-
-	game_model: SIMODYSSEY
 
 	game_state: STATE
 

@@ -148,7 +148,10 @@ feature -- Command
 				end
 			end
 		ensure
-			If_not_lost_the_explorer_is_in_new_position: galaxy.at (explorer_coordinate).has (explorer) -- change so "explorer" attribute is not reffered to
+			If_not_lost_the_explorer_is_in_new_position:
+				explorer.is_alive implies galaxy.at (explorer_coordinate).has (explorer) -- change so "explorer" attribute is not reffered to
+			if_explorer_goes_blackhole_he_is_dead:
+				galaxy.at (explorer_coordinate).has_blackhole implies explorer.is_dead
 
 		end
 
