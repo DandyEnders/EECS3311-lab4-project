@@ -22,11 +22,11 @@ feature {NONE} -- Initialization
 			add_boolean_case (agent t2)
 			add_boolean_case (agent t3)
 				--			add_boolean_case (agent t4)
---			add_boolean_case (agent t6)
+			add_boolean_case (agent t6)
 --			add_boolean_case (agent t7)
 --			add_boolean_case (agent t8)
 --			add_boolean_case (agent t9)
-			add_boolean_case (agent t10)
+--			add_boolean_case (agent t10)
 		end
 
 feature -- tests
@@ -136,24 +136,25 @@ feature -- tests
 		local
 			s_o: SIMODYSSEY
 		do
-			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move?,")
-			comment ("does fuel recharge if you move into a sector with a star?")
-			comment ("does explorer die if he goes into a sector with a blackhole.")
-			comment ("Do planets move as they do in the oracle?")
+			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move?,Does explorer die after several moves")
+--			comment ("does fuel recharge if you move into a sector with a star?")
+--			comment ("does explorer die if he goes into a sector with a blackhole.")
+--			comment ("Do planets move as they do in the oracle?")
 			create s_o.make
 			s_o.new_game (50, FALSE)
 			print ("%N")
 			print ("%N")
-			print (s_o.out_grid)
-			s_o.move_explorer ([1, 1])
-			print ("%N")
+			print (s_o.out_descriptions)
 			print ("%N")
 			print (s_o.out_grid)
-			s_o.move_explorer ([1,0])
-			print ("%N")
-			print ("%N")
-			print (s_o.out_grid)
-			s_o.move_explorer ([1,0])
+--			s_o.move_explorer ([1, 1])
+--			print ("%N")
+
+--			s_o.move_explorer ([1,0])
+--			print ("%N")
+--			print ("%N")
+--			print (s_o.out_grid)
+--			s_o.move_explorer ([1,0])
 
 		Result:=TRUE
 		end

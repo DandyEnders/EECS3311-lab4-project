@@ -80,7 +80,6 @@ feature -- Controller command / queries
 		local
 			s_content: STRING
 			c: COORDINATE
-			s_tmp: STATE
 		do
 			if not model.sector_in_direction_is_full (d) and model.game_in_session then
 
