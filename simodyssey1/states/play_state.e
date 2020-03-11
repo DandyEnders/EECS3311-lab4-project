@@ -16,17 +16,6 @@ create
 
 feature -- Controller command / queries
 
---	initialization
---		do
---			if model.is_test_game then
---				msg_mode := "test"
---			else
---				msg_mode := "play"
---			end
---			msg_command_validity := "ok"
---			msg_content := model.out
---		end
-
 	abort
 		do
 			model.abort
