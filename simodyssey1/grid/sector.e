@@ -146,7 +146,11 @@ feature -- Queries
 
 	has_planet:BOOLEAN
 		do
-			Result:= moveable_entity_count > 2
+			Result:= across quadrants is i_q
+			some
+				 attached {PLANET} i_q.entity
+			end
+
 		end
 
 	new_cursor: ARRAYED_LIST_ITERATION_CURSOR [QUADRANT]
