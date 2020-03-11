@@ -33,11 +33,10 @@ feature {NONE} -- Constructor
 			create galaxy.make (r, c, n_quadrant)
 				--creating the explorer
 			create explorer.make ([1, 1], moveable_id.get_id) --
-			galaxy.add (explorer) --
+
 				--setting the threshold of a planet to some default value
 			planet_threshold := 0
 				-- setting the game to be in an aborted state so game_in_session is false
-			game_aborted := TRUE
 			is_test_game := False
 			create moved_enities.make_empty
 			create dead_entity.make_empty
@@ -50,8 +49,6 @@ feature -- Attribute
 	is_test_game: BOOLEAN -- check if test game
 
 feature {NONE, UNIT_TEST} -- Private Attribute
-
-	game_aborted: BOOLEAN -- set to true when the game is aborted using abort command.
 
 	explorer: EXPLORER
 
@@ -84,11 +81,6 @@ feature {NONE} -- private queries
 
 feature -- Command
 
-	set_test_game
-		do
-			is_test_game := True
-		end
-
 	new_game (th: INTEGER; is_test: BOOLEAN)
 		require
 			valid_threshold: 1 <= th and th <= 101
@@ -101,44 +93,21 @@ feature -- Command
 			planet_threshold := th
 				-- populating the galaxy randomly
 			populate_galaxy
-			game_aborted := FALSE
 			is_test_game := is_test
 		end
 
+
 	move_explorer (d: COORDINATE)
 		require
-			not sector_in_direction_is_full (d)
-				-- TODISCUSS : how do we indicate that game is rolling?
 			game_in_session
+			not sector_in_direction_is_full (d)
+			explorer_is_landed
 		local
 			destination_coord: COORDINATE
-			s: STRING
 		do
-				-- reset list of "moved" entities
-			create moved_enities.make_empty
-			create dead_entity.make_empty
 			destination_coord := explorer.coordinate + d
 			destination_coord := destination_coord.wrap_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
-			create s.make_from_string (explorer.out_sqr_bracket)
-			s.append (":")
-			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
-			galaxy.move (explorer, destination_coord)
-			s.append ("->")
-			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
-			moved_enities.force (s, moved_enities.count + 1)
-
-				-- TODISCUSS: The order which "check" is done in document are in this order: (pg 30)
-			explorer.spend_fuel_unit
-
-				-- check if explorer can charge
-			if galaxy.at (explorer.coordinate).has_stationary_entity then
-					-- if the explorer's new sector has a star, then recharge.
-				if attached {STAR} galaxy.at (explorer.coordinate).get_stationary_entity as i_star then
-					explorer.charge_fuel (i_star)
-				end
-			end
-			confirm_explorer_health
-			npc_action
+			relocate_explorer (destination_coord,TRUE)
 		ensure
 				-- If the explorer did not move to a black hole, Explorer should now exist in the sector that he wanted to go to
 			If_not_lost_the_explorer_is_in_new_position: (is_explorer_alive) implies galaxy.at ((old explorer_coordinate + d).wrap_coordinate ((old explorer_coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer) -- change so "explorer" attribute is not reffered to
@@ -163,11 +132,9 @@ feature -- Command
 				temp_row := rng.rchoose (1, 5)
 				temp_col := rng.rchoose (1, 5)
 				if not galaxy.at ([temp_row, temp_col]).is_full then
-					galaxy.move (explorer, [temp_row, temp_col])
+					relocate_explorer ([temp_row,temp_col],FALSE)
 					added := TRUE
 				end
-				confirm_explorer_health
-				npc_action
 			end
 		ensure
 			If_not_lost_the_explorer_is_in_new_position: galaxy.at (explorer_coordinate).has (explorer) -- change so "explorer" attribute is not reffered to
@@ -183,7 +150,6 @@ feature -- Command
 			e_sector_has_unvisted_attached_planets
 		do
 			galaxy.at (explorer.coordinate).land_explorer (explorer)
-			confirm_explorer_health
 			npc_action
 		end
 
@@ -193,7 +159,6 @@ feature -- Command
 			explorer_is_landed
 		do
 			explorer.set_landed (FALSE)
-			confirm_explorer_health
 			npc_action
 		end
 
@@ -201,11 +166,40 @@ feature -- Command
 		require
 			game_in_session ---make sure that if the player dies, then this is false.
 		do
-			confirm_explorer_health
 			npc_action
 		end
 
 feature {NONE} -- Private Helper Commands
+
+	relocate_explorer (c:COORDINATE; spend_fuel:BOOLEAN)
+		local
+			s:STRING
+		do
+			-- reset list of "moved" entities
+			create moved_enities.make_empty
+			create dead_entity.make_empty
+			create s.make_from_string (explorer.out_sqr_bracket)
+			s.append (":")
+			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
+			galaxy.move (explorer, c)
+			s.append ("->")
+			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
+			moved_enities.force (s, moved_enities.count + 1)
+
+				-- TODISCUSS: The order which "check" is done in document are in this order: (pg 30)
+			if spend_fuel then
+				explorer.spend_fuel_unit
+			end
+				-- check if explorer can charge
+			if galaxy.at (explorer.coordinate).has_stationary_entity then
+					-- if the explorer's new sector has a star, then recharge.
+				if attached {STAR} galaxy.at (explorer.coordinate).get_stationary_entity as i_star then
+					explorer.charge_fuel (i_star)
+				end
+			end
+			confirm_explorer_health
+			npc_action
+		end
 
 	confirm_explorer_health
 		do
@@ -318,6 +312,7 @@ feature {NONE} -- Private Helper Commands
 			loop_counter: INTEGER
 		do
 				-- adding explorer and blackhole
+			galaxy.add (explorer) --
 			create blackhole.make ([3, 3], stationary_id.get_id) --
 			galaxy.add (blackhole) --
 				-- populating planets based on threshold
@@ -372,7 +367,7 @@ feature -- Queries
 	game_in_session: BOOLEAN
 			-- a game is in session if neither (the explorer's life or his fuel is equal to 0), the game was aborted and the explorer has not found life
 		do
-			Result := explorer.is_alive and explorer.fuel /~ 0 and not game_aborted and not explorer.found_life
+			Result := explorer.is_alive and explorer.fuel /~ 0 and not explorer.found_life and galaxy.has (explorer)
 		end
 
 feature -- Interface
