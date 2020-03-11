@@ -29,7 +29,6 @@ feature -- Controller command / queries
 
 	land
 		local
-			tmp_s: STATE
 			c: COORDINATE
 			tmp_str: STRING
 		do
