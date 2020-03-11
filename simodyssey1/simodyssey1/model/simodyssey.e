@@ -393,6 +393,11 @@ feature -- Interface
 		do
 			Result := explorer.landed
 		end
+		
+	is_explorer_found_life:BOOLEAN
+		do
+			Result:=explorer.found_life
+		end
 
 	is_landsite_has_life: BOOLEAN
 			-- is leftmost unvisited planet in a sector has a life?
