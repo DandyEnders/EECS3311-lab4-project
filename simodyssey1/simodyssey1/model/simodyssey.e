@@ -160,6 +160,8 @@ feature -- Command
 			e_sector_has_planets
 			e_sector_has_unvisted_attached_planets
 		do
+			create moved_enities.make_empty
+			create dead_entity.make_empty
 			galaxy.at (explorer.coordinate).land_explorer (explorer)
 			npc_action
 		end
@@ -169,6 +171,8 @@ feature -- Command
 			game_in_session
 			is_explorer_landed
 		do
+			create moved_enities.make_empty
+			create dead_entity.make_empty
 			explorer.set_landed (FALSE)
 			npc_action
 		end
@@ -177,6 +181,8 @@ feature -- Command
 		require
 			game_in_session ---make sure that if the player dies, then this is false.
 		do
+			create moved_enities.make_empty
+			create dead_entity.make_empty
 			npc_action
 		end
 
@@ -393,7 +399,7 @@ feature -- Interface
 		do
 			Result := explorer.landed
 		end
-		
+
 	is_explorer_found_life:BOOLEAN
 		do
 			Result:=explorer.found_life

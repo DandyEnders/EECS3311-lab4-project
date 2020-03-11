@@ -70,6 +70,7 @@ feature -- Controller command / queries
 					c := model.explorer_coordinate
 					create tmp_str.make_from_string ("  ")
 					tmp_str.append (msg.land_life_not_found (c.row, c.col))
+					tmp_str.append ("%N")
 					tmp_str.append (model.out)
 					next_state.set_msg_content (tmp_str)
 				end
@@ -187,7 +188,11 @@ feature -- Controller command / queries
 
 	pass
 		do
-			-- TODO
+			model.pass
+			abstract_state.executed_turn_command
+			set_msg_mode(msg_mode)
+			set_msg_command_validity ("ok")
+			set_msg_content (model.out)
 		end
 
 	play
