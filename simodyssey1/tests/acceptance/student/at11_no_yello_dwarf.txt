@@ -1,0 +1,6 @@
+-- No yellow dwarf
+play
+move(E)
+pass
+land
+

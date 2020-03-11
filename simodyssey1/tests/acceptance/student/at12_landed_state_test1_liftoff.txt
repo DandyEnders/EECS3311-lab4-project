@@ -1,0 +1,26 @@
+-- Enter Landed state
+play
+move(S)
+move(S)
+land
+-- Testing invalid commands in landed state
+land
+move(N)
+move(NE)
+move(E)
+move(SE)
+move(S)
+move(SW)
+move(W)
+move(NW)
+play
+test(95)
+wormhole
+
+-- Testing valid-non_conditional commands in landed state
+status
+pass
+liftoff
+
+abort
+

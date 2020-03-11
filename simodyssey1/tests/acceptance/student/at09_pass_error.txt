@@ -1,4 +1,4 @@
--- Move(), Move() , pass causes the player to move after entering pass
+-- Move(), Move() , pass 
 move(S)
 --no mission in progress
 test(30)

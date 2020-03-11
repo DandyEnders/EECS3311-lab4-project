@@ -1,0 +1,12 @@
+--Finding life
+play
+move(S)
+move(S)
+land
+liftoff
+pass
+pass
+pass
+pass
+land
+

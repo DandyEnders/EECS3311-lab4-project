@@ -1,0 +1,13 @@
+--No planets
+play
+abort
+play
+move(W)
+land
+move(N)
+move(E)
+move(E)
+land
+liftoff
+-- negative on that request:no unvisited attached planet.
+land 
