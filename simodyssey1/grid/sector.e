@@ -54,22 +54,31 @@ feature -- Command
 	land_explorer (e: EXPLORER)
 		require
 			is_landable
+		local
+			min_id:INTEGER
+			min_p:detachable PLANET
 		do
+			min_id:=min_id.max_value
 			across
 				quadrants is i_q
-			until
-				e.landed
 			loop
 				if attached {PLANET} i_q.entity as p then
 					if p.attached_to_star and not p.visited then
-						p.set_visited
-						e.set_landed (TRUE)
-						if p.support_life then
-							e.set_found_life_true
+						if p.id < min_id then
+							min_id:=p.id
+							min_p:=p
 						end
 					end
 				end
 			end
+			if attached min_p as a_p then
+				a_p.set_visited
+				e.set_landed (TRUE)
+				if a_p.support_life then
+				e.set_found_life_true
+				end
+			end
+
 		end
 
 	remove (me: MOVEABLE_ENTITY)
@@ -118,7 +127,7 @@ feature -- Queries
 
 	is_landable: BOOLEAN
 		do
-			if moveable_entity_count > 2 and has_star and attached {YELLOW_DWARF} get_stationary_entity then
+			if has_planet and has_star then
 				across
 					quadrants is i_q
 				until
@@ -133,6 +142,11 @@ feature -- Queries
 			else
 				Result := FALSE
 			end
+		end
+
+	has_planet:BOOLEAN
+		do
+			Result:= moveable_entity_count > 2
 		end
 
 	new_cursor: ARRAYED_LIST_ITERATION_CURSOR [QUADRANT]
