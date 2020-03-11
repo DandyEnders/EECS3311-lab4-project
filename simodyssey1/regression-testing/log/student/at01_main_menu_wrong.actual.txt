@@ -239,6 +239,8 @@
     ----   PY--   ----   *P--   -WP-   
 ->move(E)
   state:5.0, mode:test, ok
+  Explorer got lost in space - out of fuel at Sector:4:3
+  The game has ended. You can start a new game.
   Movement:
     [0,E]:[4,2,1]->[4,3,2]
     [5,P]:[1,3,2]->[1,4,1]
@@ -311,33 +313,35 @@
     P---   ----   W---   ----   P---   
     (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
     ----   PY--   ----   *P--   -W--   
+  Explorer got lost in space - out of fuel at Sector:4:3
+  The game has ended. You can start a new game.
 ->move(SE)
-  state:5.1, mode:test, error
-  Cannot transfer to new location as it is full.
+  state:5.1, error
+  Negative on that request:no mission in progress.
 ->move(S)
-  state:5.2, mode:test, error
-  Cannot transfer to new location as it is full.
+  state:5.2, error
+  Negative on that request:no mission in progress.
 ->move(SW)
-  state:5.3, mode:test, error
-  Cannot transfer to new location as it is full.
+  state:5.3, error
+  Negative on that request:no mission in progress.
 ->move(W)
-  state:5.4, mode:test, error
-  Cannot transfer to new location as it is full.
+  state:5.4, error
+  Negative on that request:no mission in progress.
 ->move(NW)
-  state:5.5, mode:test, error
-  Cannot transfer to new location as it is full.
+  state:5.5, error
+  Negative on that request:no mission in progress.
 ->land
-  state:5.6, mode:test, error
-  Negative on that request:no yellow dwarf at Sector:4:3
+  state:5.6, error
+  Negative on that request:no mission in progress.
 ->liftoff
-  state:5.7, mode:test, error
-  Negative on that request:you are not on a planet at Sector:4:3
+  state:5.7, error
+  Negative on that request:no mission in progress.
 ->pass
-  state:5.7, mode:test, error
-  Negative on that request:you are not on a planet at Sector:4:3
+  state:5.8, error
+  Negative on that request:no mission in progress.
 ->wormhole
-  state:5.7, mode:test, error
-  Negative on that request:you are not on a planet at Sector:4:3
+  state:5.9, error
+  Negative on that request:no mission in progress.
 ->status
-  state:5.7, mode:test, error
-  Negative on that request:you are not on a planet at Sector:4:3
+  state:5.10, error
+  Negative on that request:no mission in progress.

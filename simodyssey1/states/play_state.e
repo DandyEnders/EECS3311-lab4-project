@@ -80,10 +80,12 @@ feature -- Controller command / queries
 		local
 			s_content: STRING
 			c: COORDINATE
+			s_tmp: STATE
 		do
 			if not model.sector_in_direction_is_full (d) and model.game_in_session then
 
 				model.move_explorer (d)
+
 				abstract_state.executed_turn_command
 				set_msg_mode(msg_mode)
 				set_msg_command_validity ("ok")
@@ -100,12 +102,16 @@ feature -- Controller command / queries
 							s_content.append ("  " + msg.game_is_over)
 							s_content.append ("%N")
 							s_content.append (model.out)
-						else
-							s_content.append (model.out)
 							s_content.append ("%N")
 							s_content.append ("  " + msg.explorer_death_out_of_fuel (c.row, c.col))
 							s_content.append ("%N")
 							s_content.append ("  " + msg.game_is_over)
+						else
+							s_content.append ("  " + msg.explorer_death_out_of_fuel (c.row, c.col))
+							s_content.append ("%N")
+							s_content.append ("  " + msg.game_is_over)
+							s_content.append ("%N")
+							s_content.append (model.out)
 						end
 
 					elseif model.is_explorer_dead_by_blackhole then
@@ -116,14 +122,22 @@ feature -- Controller command / queries
 							s_content.append ("  " + msg.game_is_over)
 							s_content.append ("%N")
 							s_content.append (model.out)
-						else
-							s_content.append (model.out)
 							s_content.append ("%N")
 							s_content.append ("  " + msg.explorer_death_blackhole (c.row, c.col, -1))
 							s_content.append ("%N")
 							s_content.append ("  " + msg.game_is_over)
+						else
+							s_content.append ("  " + msg.explorer_death_blackhole (c.row, c.col, -1))
+							s_content.append ("%N")
+							s_content.append ("  " + msg.game_is_over)
+							s_content.append ("%N")
+							s_content.append (model.out)
 						end
 					end
+					create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
+					next_state.set_msg_command_validity (msg_command_validity)
+					next_state.set_msg_mode (msg_mode)
+					next_state.set_msg_content (s_content)
 				end
 
 				set_msg_content (s_content)
