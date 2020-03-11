@@ -1,0 +1,9 @@
+--No yellow dwarf
+play
+move(E)
+move(E)
+land
+move(N)
+land
+move(N)
+land
