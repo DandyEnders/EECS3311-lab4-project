@@ -29,6 +29,7 @@ feature -- Controller command / queries
 
 	abort
 		do
+			model.abort
 			create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
 
 			abstract_state.executed_no_turn_command
@@ -40,27 +41,40 @@ feature -- Controller command / queries
 	land
 		local
 			tmp_s: STATE
+			c: COORDINATE
+			tmp_str: STRING
 		do
 				--			-- model.explorer is in a sector with planet and yellow dwarf
 			if model.is_explorer_landable then
 
-				create {LANDED_STATE} tmp_s.make (model, abstract_state)
-				next_state := tmp_s.next_state
+				model.land_explorer
+				create {LANDED_STATE} next_state.make (model, abstract_state)
 
 				abstract_state.executed_turn_command
-				msg_command_validity := "ok"
+				next_state.set_msg_mode ("")
+				next_state.set_msg_command_validity ("ok")
+
+				c := model.explorer_coordinate
+				create tmp_str.make_from_string ("  ")
+				tmp_str.append (msg.land_life_not_found (c.row, c.col))
+				tmp_str.append (model.out)
+				next_state.set_msg_content (tmp_str)
 
 			else
 				abstract_state.executed_invalid_command
 				set_msg_mode(msg_mode)
 				set_msg_command_validity ("error")
+
+				create tmp_str.make_from_string ("  ")
 				if not model.e_sector_has_yellow_dwarf then -- TODO refactor it so its short
-					msg_content := "  " + msg.land_error_no_yellow_dwarf (model.explorer_coordinate.row, model.explorer_coordinate.col)
+					tmp_str.append (msg.land_error_no_yellow_dwarf (model.explorer_coordinate.row, model.explorer_coordinate.col))
 				elseif not model.e_sector_has_planets then
-					msg_content := "  " + msg.land_error_no_planets (model.explorer_coordinate.row, model.explorer_coordinate.col)
+					tmp_str.append (msg.land_error_no_planets (model.explorer_coordinate.row, model.explorer_coordinate.col))
 				elseif not model.e_sector_has_unvisted_attached_planets then
-					msg_content := "  " + msg.land_error_no_visited_planets (model.explorer_coordinate.row, model.explorer_coordinate.col)
+					tmp_str.append (msg.land_error_no_visited_planets (model.explorer_coordinate.row, model.explorer_coordinate.col))
 				end
+
+				set_msg_content(tmp_str)
 			end
 		end
 
@@ -81,7 +95,7 @@ feature -- Controller command / queries
 			s_content: STRING
 			c: COORDINATE
 		do
-			if not model.sector_in_direction_is_full (d) and model.game_in_session then
+			if not model.sector_in_direction_is_full (d) then
 
 				model.move_explorer (d)
 
@@ -147,11 +161,6 @@ feature -- Controller command / queries
 					set_msg_mode(msg_mode)
 					set_msg_command_validity ("error")
 					set_msg_content ("  " + msg.move_error_sector_full)
---				elseif not model.game_in_session then
---					abstract_state.executed_invalid_command
---					set_msg_mode(msg_mode)
---					set_msg_command_validity ("error")
---					set_msg_content ("  " + msg.move_error_no_mission)
 				end
 
 			end
@@ -159,29 +168,40 @@ feature -- Controller command / queries
 
 	pass
 		do
+			-- TODO
 		end
 
 	play
 		do
+			abstract_state.executed_invalid_command
+			set_msg_mode(msg_mode)
+			set_msg_command_validity ("error")
+			set_msg_content ("  " + msg.play_error_no_mission)
 		end
 
 	status
 		do
+			abstract_state.executed_no_turn_command
+			set_msg_mode(msg_mode)
+			set_msg_command_validity ("ok")
+			set_msg_content (model.out_status_explorer)
 		end
 
 	test (th: INTEGER)
 		do
+			abstract_state.executed_invalid_command
+			set_msg_mode(msg_mode)
+			set_msg_command_validity ("error")
+			set_msg_content ("  " + msg.test_error_no_mission)
 		end
 
 	wormhole
 		do
+--			if model.game_in_session then
+--				
+--			end
 		end
 
-invariant
-	if_game_ended_next_state_is_main_menu:
-		(not model.game_in_session) implies (attached {MAIN_MENU_STATE} next_state)
-	if_game_continues_next_state_is_either_play_or_landed:
-		model.game_in_session implies (attached {LANDED_STATE} next_state or attached {PLAY_STATE} next_state or next_state = current )
 
 
 end

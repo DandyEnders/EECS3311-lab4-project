@@ -1,0 +1,5 @@
+test(100)
+move(S)
+pass
+land
+abort

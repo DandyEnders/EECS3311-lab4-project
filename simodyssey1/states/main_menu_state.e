@@ -54,4 +54,6 @@ feature -- Controller command / queries
 			next_state.set_msg_content (model.out)
 		end
 
+
+
 end

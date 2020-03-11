@@ -249,7 +249,7 @@ feature -- Queries
 
 feature -- Output
 
-	out_abstract_full_coordinate (me: MOVEABLE_ENTITY): STRING -- "[x, y, q]" -> "[2, 2, 4]"
+	out_abstract_full_coordinate (me: MOVEABLE_ENTITY): STRING -- "[x,y,q]" -> "[2,2,4]"
 		require
 			has (me)
 		do
@@ -263,7 +263,7 @@ feature -- Output
 			Result.append ("]")
 		end
 
-	out_abstract_sector: STRING -- "[x, y]->[0, E],-,-,[2,P]"
+	out_abstract_sector: STRING -- "[x,y]->[0,E],-,-,[2,P]"
 		do
 			create Result.make_empty
 			Result.append (coordinate.out_sqr_bracket_comma)

@@ -16,6 +16,7 @@ feature -- status
 	status_not_landed (row, col, quad, life, fuel: INTEGER): STRING
 		do
 			create Result.make_empty
+			Result.append ("  ")
 			Result.append ("Explorer status report:Travelling at cruise speed at ")
 			Result.append ("[")
 			Result.append (row.out)
@@ -25,6 +26,7 @@ feature -- status
 			Result.append (quad.out)
 			Result.append ("]")
 			Result.append ("%N")
+			Result.append ("  ")
 			Result.append ("Life units left:")
 			Result.append (life.out)
 			Result.append (", Fuel units left:")
@@ -34,6 +36,7 @@ feature -- status
 	status_landed (row, col, quad, life, fuel: INTEGER): STRING
 		do
 			create Result.make_empty
+			Result.append ("  ")
 			Result.append ("Explorer status report:Stationary on planet surface at ")
 			Result.append ("[")
 			Result.append (row.out)
@@ -43,6 +46,7 @@ feature -- status
 			Result.append (quad.out)
 			Result.append ("]")
 			Result.append ("%N")
+			Result.append ("  ")
 			Result.append ("Life units left:")
 			Result.append (life.out)
 			Result.append (", Fuel units left:")

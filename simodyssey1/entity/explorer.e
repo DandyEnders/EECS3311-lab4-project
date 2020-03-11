@@ -110,6 +110,18 @@ feature -- Commands
 
 feature -- Out
 
+	out_status(quadrant: INTEGER): STRING
+
+		do
+			create Result.make_empty
+			if landed then
+				Result.append(msg.status_landed (coordinate.row, coordinate.col, quadrant, life.value, fuel))
+			else
+				Result.append(msg.status_not_landed (coordinate.row, coordinate.col, quadrant, life.value, fuel))
+			end
+
+		end
+
 	out_death_description: STRING -- "[0,E]->fuel:2/3, life:3/3, landed?:F,%N{DEATH_MESSAGE}"
 		do
 			Result := precursor

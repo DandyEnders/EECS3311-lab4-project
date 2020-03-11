@@ -40,6 +40,7 @@ feature {NONE} -- Constructor
 			is_test_game := False
 			create moved_enities.make_empty
 			create dead_entity.make_empty
+			is_aborted := false
 		end
 
 feature -- Attribute
@@ -49,6 +50,8 @@ feature -- Attribute
 	is_test_game: BOOLEAN -- check if test game
 
 feature {NONE, UNIT_TEST} -- Private Attribute
+
+	is_aborted:BOOLEAN
 
 	explorer: EXPLORER
 
@@ -81,12 +84,19 @@ feature {NONE} -- private queries
 
 feature -- Command
 
+	abort
+		require
+			game_in_session
+		do
+			is_aborted := TRUE
+		end
+
 	new_game (th: INTEGER; is_test: BOOLEAN)
 		require
 			valid_threshold: 1 <= th and th <= 101
 			--			TODISCUSS: even if we are in seesion, we should be able to override it.
 			--				It's state's job to check if we should call new_game when we suppose to.
-			--			not game_in_session
+			not game_in_session
 		do
 			make --calling make in order to initialize global ids and the board every new game
 				-- initializing the planet threshold
@@ -101,7 +111,7 @@ feature -- Command
 		require
 			game_in_session
 			not sector_in_direction_is_full (d)
-			explorer_is_landed
+			not is_explorer_landed
 		local
 			destination_coord: COORDINATE
 		do
@@ -116,8 +126,7 @@ feature -- Command
 	wormhole
 		require
 			game_in_session
-			eplorere_is_not_landed: not explorer_is_landed
-			stationary_entity_exists_at_location: galaxy.at (explorer_coordinate).has_stationary_entity
+			explorer_is_not_landed: not is_explorer_landed
 			stationar_entity_is_wormhole: galaxy.at (explorer_coordinate).has_wormhole
 		local
 			added: BOOLEAN
@@ -144,7 +153,7 @@ feature -- Command
 	land_explorer
 		require
 			game_in_session
-			not explorer_is_landed
+			not is_explorer_landed
 			e_sector_has_yellow_dwarf
 			e_sector_has_planets
 			e_sector_has_unvisted_attached_planets
@@ -156,7 +165,7 @@ feature -- Command
 	liftoff
 		require
 			game_in_session
-			explorer_is_landed
+			is_explorer_landed
 		do
 			explorer.set_landed (FALSE)
 			npc_action
@@ -367,7 +376,7 @@ feature -- Queries
 	game_in_session: BOOLEAN
 			-- a game is in session if neither (the explorer's life or his fuel is equal to 0), the game was aborted and the explorer has not found life
 		do
-			Result := explorer.is_alive and explorer.fuel /~ 0 and not explorer.found_life and galaxy.has (explorer)
+			Result := explorer.is_alive and explorer.fuel /~ 0 and not explorer.found_life and galaxy.has (explorer) and not is_aborted
 		end
 
 feature -- Interface
@@ -378,7 +387,7 @@ feature -- Interface
 		--		end
 		-- export these features to explorer (I decided not to because you're right that it is an interface) If we were to export such features into the explorer, then explorer would need to store its SECTOR as an attribute.
 
-	explorer_is_landed: BOOLEAN
+	is_explorer_landed: BOOLEAN
 		do
 			Result := explorer.landed
 		end
@@ -522,6 +531,15 @@ feature -- Out
 					Result.append (i_me.out_death_description)
 				end
 			end
+		end
+
+	out_status_explorer: STRING
+		local
+			e_q:INTEGER
+		do
+			e_q := galaxy.at (explorer.coordinate).quadrant_at (explorer)
+			create Result.make_empty
+			Result.append(explorer.out_status(e_q))
 		end
 
 end
