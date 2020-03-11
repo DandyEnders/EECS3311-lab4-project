@@ -196,6 +196,7 @@ feature {NONE} -- Private Helper Commands
 	relocate_explorer (c:COORDINATE; spend_fuel:BOOLEAN)
 		local
 			s:STRING
+			c_before: COORDINATE
 		do
 			-- reset list of "moved" entities
 			create moved_enities.make_empty
@@ -203,9 +204,14 @@ feature {NONE} -- Private Helper Commands
 			create s.make_from_string (explorer.out_sqr_bracket)
 			s.append (":")
 			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
+
+			c_before := explorer.coordinate
+
 			galaxy.move (explorer, c)
-			s.append ("->")
-			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
+			if c_before /~ c then
+				s.append ("->")
+				s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
+			end
 			moved_enities.force (s, moved_enities.count + 1)
 
 				-- TODISCUSS: The order which "check" is done in document are in this order: (pg 30)
