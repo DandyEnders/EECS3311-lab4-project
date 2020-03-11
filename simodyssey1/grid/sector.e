@@ -64,6 +64,9 @@ feature -- Command
 					if p.attached_to_star and not p.visited then
 						p.set_visited
 						e.set_landed (TRUE)
+						if p.support_life then
+							e.set_found_life_true
+						end
 					end
 				end
 			end
