@@ -86,7 +86,7 @@ feature -- Command
 			valid_threshold: 1 <= th and th <= 101
 			--			TODISCUSS: even if we are in seesion, we should be able to override it.
 			--				It's state's job to check if we should call new_game when we suppose to.
-			--			not game_in_session
+--			not game_in_session
 		do
 			make --calling make in order to initialize global ids and the board every new game
 				-- initializing the planet threshold
@@ -101,7 +101,7 @@ feature -- Command
 		require
 			game_in_session
 			not sector_in_direction_is_full (d)
-			explorer_is_landed
+			not explorer_is_landed
 		local
 			destination_coord: COORDINATE
 		do
@@ -433,11 +433,7 @@ feature -- Interface
 
 	e_sector_has_planets: BOOLEAN
 		do
-			if explorer_sector.moveable_entity_count > 1 then
-				Result := TRUE
-			else
-				Result := FALSE
-			end
+			Result:=galaxy.at (explorer.coordinate).has_planet
 		end
 
 	e_sector_has_unvisted_attached_planets: BOOLEAN
