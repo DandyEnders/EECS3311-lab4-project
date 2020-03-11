@@ -29,7 +29,7 @@ feature -- Controller command / queries
 			abstract_state.executed_invalid_command
 			set_msg_mode("")
 			set_msg_command_validity ("error")
-			set_msg_content ("  " + msg.abort_error_no_mission)
+			set_msg_content ("  " + msg.move_error_no_mission)
 		end
 
 	play
@@ -53,5 +53,7 @@ feature -- Controller command / queries
 			next_state.set_msg_command_validity ("ok")
 			next_state.set_msg_content (model.out)
 		end
+
+
 
 end

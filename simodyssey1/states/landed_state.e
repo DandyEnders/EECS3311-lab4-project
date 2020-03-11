@@ -28,7 +28,13 @@ feature -- Controller command / queries
 
 	abort
 		do
+			model.abort
+			create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
 
+			abstract_state.executed_no_turn_command
+			next_state.set_msg_mode ("")
+			next_state.set_msg_command_validity ("ok")
+			next_state.set_msg_content ("  " + msg.abort)
 		end
 
 	land
@@ -57,6 +63,10 @@ feature -- Controller command / queries
 
 	status
 		do
+			abstract_state.executed_no_turn_command
+			set_msg_mode(msg_mode)
+			set_msg_command_validity ("ok")
+			set_msg_content (model.out_status_explorer)
 		end
 
 	test (th: INTEGER)
