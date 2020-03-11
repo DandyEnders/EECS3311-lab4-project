@@ -50,7 +50,7 @@ feature -- Attribute
 
 	is_test_game: BOOLEAN -- check if test game
 
-feature {NONE} -- Private Attribute
+feature {NONE, UNIT_TEST} -- Private Attribute
 
 	game_aborted: BOOLEAN -- set to true when the game is aborted using abort command.
 
@@ -144,32 +144,44 @@ feature -- Command
 				end
 			end
 
- 			-- check if explorer dies out of fuel
-			if explorer.is_out_of_fuel then
-				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
-				explorer.kill_by_out_of_fuel
-				galaxy.remove (explorer)
-				dead_entity.force (explorer, dead_entity.count + 1)
-
-			-- check if explorer dies out of blackhole
-			elseif galaxy.at (explorer.coordinate).has_blackhole then
-				explorer.kill_by_blackhole
-				galaxy.remove (explorer)
-				dead_entity.force (explorer, dead_entity.count + 1)
-			end
+			confirm_explorer_health
 
 			npc_action
 		ensure
 				-- If the explorer did not move to a black hole, Explorer should now exist in the sector that he wanted to go to
-			If_not_lost_the_explorer_is_in_new_position: (explorer.is_alive) implies galaxy.at ((old explorer.coordinate + d).wrap_coordinate ((old explorer.coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer)
+			If_not_lost_the_explorer_is_in_new_position: (is_explorer_alive) implies galaxy.at ((old explorer_coordinate + d).wrap_coordinate ((old explorer_coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer)  -- change so "explorer" attribute is not reffered to
 		end
 
 	wormhole
 		require
 			game_in_session
+			eplorere_is_not_landed: not explorer_is_landed
 			stationary_entity_exists_at_location: galaxy.at (explorer_coordinate).has_stationary_entity
-			stationar_entity_is_wormhole: attached {WORMHOLE} galaxy.at (explorer_coordinate).get_stationary_entity
+			stationar_entity_is_wormhole: galaxy.at (explorer_coordinate).has_wormhole
+		local
+			added:BOOLEAN
+			temp_row:INTEGER
+			temp_col:INTEGER
 		do
+			from
+				added:=FALSE
+			until
+				added
+			loop
+				temp_row:=rng.rchoose(1,5)
+				temp_col:=rng.rchoose(1,5)
+
+				if not galaxy.at ([temp_row,temp_col]).is_full then
+					galaxy.move (explorer,[temp_row,temp_col])
+					added:=TRUE
+				end
+				confirm_explorer_health
+
+				npc_action
+			end
+			ensure
+			If_not_lost_the_explorer_is_in_new_position: galaxy.at (explorer_coordinate).has (explorer) -- change so "explorer" attribute is not reffered to
+
 		end
 
 	land_explorer
@@ -186,11 +198,31 @@ feature -- Command
 
 	pass
 		require
-			game_in_session
+			game_in_session ---make sure that if the player dies, then this is false.
 		do
+			confirm_explorer_health
+
+			npc_action
 		end
 
 feature {NONE} -- Private Helper Commands
+
+	confirm_explorer_health
+	do
+		 	-- check if explorer dies out of fuel
+			if explorer.is_out_of_fuel then
+				-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
+				explorer.kill_by_out_of_fuel
+				galaxy.remove (explorer)
+				dead_entity.force (explorer, dead_entity.count + 1)
+
+			-- check if explorer dies out of blackhole
+			elseif galaxy.at (explorer.coordinate).has_blackhole then
+				explorer.kill_by_blackhole
+				galaxy.remove (explorer)
+				dead_entity.force (explorer, dead_entity.count + 1)
+			end
+	end
 
 	move_planet (p: PLANET; direction_of_p: COORDINATE)
 			-- moves a planet in the given direction from its current coordinate
@@ -225,7 +257,6 @@ feature {NONE} -- Private Helper Commands
 			sup_life_prob: INTEGER
 			direction_num: INTEGER
 			d: DIRECTION_UTILITY
-			se: STATIONARY_ENTITY
 		do
 				-- going across moveable entities except explorer by accending order
 			across
@@ -356,6 +387,11 @@ feature -- Interface
 		--			Result := explorer.deep_twin
 		--		end
 		-- export these features to explorer (I decided not to because you're right that it is an interface) If we were to export such features into the explorer, then explorer would need to store its SECTOR as an attribute.
+
+	explorer_is_landed:BOOLEAN
+		do
+			Result:=explorer.landed
+		end
 
 	is_landsite_has_life: BOOLEAN
 			-- is leftmost unvisited planet in a sector has a life?

@@ -1,0 +1,6 @@
+play
+move(SE)
+move(SE)
+test(30)
+move(SE)
+move(SE)

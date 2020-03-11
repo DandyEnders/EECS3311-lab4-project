@@ -144,7 +144,6 @@ feature -- Queries
 	all_stationary_entities: ARRAY [STATIONARY_ENTITY] -- I needed a way to return all stationary_entities in accending order of their ids.
 		local
 			i: INTEGER
-			c: INTEGER
 		do
 			create Result.make_empty
 
@@ -220,8 +219,6 @@ feature -- Out
 			--    [0,E]->fuel:3/3, life:3/3, landed?:F
 			--    [1,P]->attached?:F, support_life?:F, visited?:F, turns_left:0
 			-- 		..
-		local
-			i: INTEGER
 		do
 			create Result.make_empty
 			Result.append ("  Descriptions:")

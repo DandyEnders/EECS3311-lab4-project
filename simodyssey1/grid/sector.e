@@ -179,6 +179,14 @@ feature -- Queries
 			end
 		end
 
+	has_wormhole: BOOLEAN
+		do
+			Result := False
+			if has_stationary_entity then
+				Result := attached {WORMHOLE} get_stationary_entity
+			end
+		end
+
 	has_blackhole: BOOLEAN
 		do
 			Result := False

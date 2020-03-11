@@ -23,10 +23,53 @@ feature {NONE} -- Initialization
 			add_boolean_case (agent t3)
 				--			add_boolean_case (agent t4)
 				--			add_boolean_case (agent t5)
-			add_boolean_case (agent t6)
+--			add_boolean_case (agent t6)
+--			add_boolean_case (agent t7)
+			add_boolean_case (agent t8)
 		end
 
 feature -- tests
+
+	t8:BOOLEAN
+		local
+			s_o:SIMODYSSEY
+		do
+			comment ("t6: Testing Pass")
+			create s_o.make
+--			s_o.pass-- doesnt work if you're not in a game
+			s_o.new_game (50, FALSE)
+--			s_o.wormhole -- wormhole shouldn't work if I'm not in a sector with a blackhole.
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
+			s_o.pass
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
+
+		end
+
+
+	t7:BOOLEAN
+		local
+			s_o:SIMODYSSEY
+		do
+			comment ("t6: Testing Wormhole")
+			create s_o.make
+--			s_o.wormhole -- doesnt work if you're not in a game
+			s_o.new_game (50, FALSE)
+--			s_o.wormhole -- wormhole shouldn't work if I'm not in a sector with a blackhole.
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
+			s_o.move_explorer ([-1,-1])
+--			s_o.explorer.set_landed  -- wormhole shouldnt work if I'm already landed
+			s_o.wormhole
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
+
+		end
 
 	t6: BOOLEAN
 		local
