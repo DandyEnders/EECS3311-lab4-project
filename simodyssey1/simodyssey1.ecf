@@ -58,5 +58,6 @@
 		</cluster>
 		<cluster name="states" location=".\states\" recursive="true"/>
 		<cluster name="tests" location=".\tests\" recursive="true"/>
+		<cluster name="utility" location=".\utility\" recursive="true"/>
 	</target>
 </system>

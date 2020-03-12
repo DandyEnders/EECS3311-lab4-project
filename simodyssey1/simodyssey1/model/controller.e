@@ -21,6 +21,8 @@ feature {NONE} -- Initialization
 
 	make
 			-- Initialization for `Current'.
+		local
+			msg: MESSAGE
 		do
 			-- initial state = main menu state
 			create {MAIN_MENU_STATE} game_state.make(create {SIMODYSSEY}.make, create {ABSTRACT_STATE}.make)
@@ -32,8 +34,6 @@ feature {NONE} -- Initialization
 feature -- model attributes
 
 	game_state: STATE
-
-	msg: MESSAGE
 
 feature -- state operation
 
