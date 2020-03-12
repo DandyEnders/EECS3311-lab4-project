@@ -197,6 +197,7 @@ feature {NONE} -- Private Helper Commands
 		local
 			s:STRING
 			c_before: COORDINATE
+			quad_before: INTEGER
 		do
 			-- reset list of "moved" entities
 			create moved_enities.make_empty
@@ -206,9 +207,12 @@ feature {NONE} -- Private Helper Commands
 			s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
 
 			c_before := explorer.coordinate
+			quad_before := galaxy.at (c_before).quadrant_at (explorer)
 
 			galaxy.move (explorer, c)
-			if c_before /~ c then
+			
+			-- either coordinate change or quadrant change then do ->[1,1,1]
+			if c_before /~ c or quad_before /~ galaxy.at (c_before).quadrant_at (explorer) then
 				s.append ("->")
 				s.append (galaxy.at (explorer.coordinate).out_abstract_full_coordinate (explorer))
 			end
