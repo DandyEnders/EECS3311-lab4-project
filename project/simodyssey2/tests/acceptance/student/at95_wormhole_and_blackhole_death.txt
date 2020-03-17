@@ -1,0 +1,4 @@
+test(99)
+move(W)
+wormhole
+status

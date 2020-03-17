@@ -1,0 +1,36 @@
+-- Move(), Move() , pass 
+move(S)
+--no mission in progress
+test(30)
+move(S)
+move(S)
+land
+liftoff
+land
+land
+abort
+test(90)
+move(S)
+move(S)
+land
+test(90)
+move(E)
+land
+liftoff
+land
+land
+liftoff
+land
+land
+liftoff
+land
+land
+liftoff
+land
+land
+liftoff
+land
+pass
+land
+liftoff
+move(N)

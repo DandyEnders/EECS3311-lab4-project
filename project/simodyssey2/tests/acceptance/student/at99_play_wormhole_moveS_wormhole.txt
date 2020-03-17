@@ -1,0 +1,4 @@
+play
+wormhole
+move(S)
+wormhole

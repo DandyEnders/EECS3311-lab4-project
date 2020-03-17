@@ -1,0 +1,25 @@
+-- Entering play_state via play
+play
+-- Testing invalid commands while in play_state
+liftoff
+play
+test(50)
+-- Testing valid-non_conditional commands while in play_state
+-- first permutation
+pass 
+status
+abort
+
+-- Entering play_state via test
+test(20)
+-- Testing invalid commands while in play_state
+liftoff
+play
+test(50)
+-- Testing valid commands while in play_state
+pass 
+status
+abort
+
+
+

@@ -1,0 +1,18 @@
+--Not destination sector full and explorer is not alive
+play
+move(E)
+test(90)
+move(SE)
+move(W)
+move(E)
+move(N)
+move(E)
+move(W)
+--death by fuel occurs here
+move(E) 
+play   
+--death by blackhole starts here
+move(SE)
+move(SE)
+move(SE)
+move(S)

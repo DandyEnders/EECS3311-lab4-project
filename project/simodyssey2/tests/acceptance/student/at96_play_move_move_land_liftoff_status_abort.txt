@@ -1,0 +1,7 @@
+play
+move(S)
+move(S)
+land
+liftoff
+status
+abort

@@ -1,0 +1,1 @@
+python3 ETF_Test_finalize_test.py
