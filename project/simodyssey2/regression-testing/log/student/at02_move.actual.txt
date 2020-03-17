@@ -1,17 +1,17 @@
   System State: default model state (0)
-->play
+->abort
   System State: default model state (1)
-->move(E)
+->play
   System State: default model state (2)
-->move(E)
+->abort
   System State: default model state (3)
-->land
+->abort
   System State: default model state (4)
-->move(N)
+->play
   System State: default model state (5)
-->land
-  System State: default model state (6)
 ->move(N)
+  System State: default model state (6)
+->move(NE)
   System State: default model state (7)
-->land
+->move(E)
   System State: default model state (8)

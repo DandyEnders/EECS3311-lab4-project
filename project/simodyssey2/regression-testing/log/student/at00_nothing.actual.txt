@@ -1,2 +1,1 @@
-  state:0.0, ok
-  Welcome! Try test(30)
+  System State: default model state (0)
