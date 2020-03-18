@@ -11,7 +11,7 @@ inherit
 
 	ID_ENTITY
 
-	KILLABLE
+	DEATHABLE
 			rename
 				make as killable_make
 			undefine

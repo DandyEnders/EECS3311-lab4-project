@@ -193,6 +193,7 @@ feature -- Controller command / queries
 		end
 
 	test (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER)
+	
 		do
 			abstract_state.executed_invalid_command
 			set_msg_mode(msg_mode)

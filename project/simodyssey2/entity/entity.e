@@ -53,8 +53,7 @@ feature -- out
 
 	out: STRING
 		do
-			create Result.make_empty
-			Result.append (character);
+			Result := character
 		end
 
 

@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {KILLABLE}."
+	description: "Summary description for {DEATHABLE}."
 	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"
 
 deferred class
-	KILLABLE
+	DEATHABLE
 
 feature -- Constructor
 	make(a_max_life:INTEGER)
@@ -17,7 +17,7 @@ feature -- Constructor
 
 		end
 
-feature {KILLABLE} -- Killable Attribute
+feature {DEATHABLE} -- Killable Attribute
 
 	life: LIFE
 
@@ -25,7 +25,7 @@ feature {KILLABLE} -- Killable Attribute
 
 	death_cause_type: HASH_TABLE[INTEGER, STRING]
 
-feature {KILLABLE} -- Killable Commands
+feature {DEATHABLE} -- Killable Commands
 
 	add_death_cause_type(a_death_cause_type: STRING)
 		require
@@ -35,7 +35,7 @@ feature {KILLABLE} -- Killable Commands
 			death_cause_type[a_death_cause_type] := 0
 		end
 
-feature {KILLABLE} -- Killable Queries
+feature {DEATHABLE} -- Killable Queries
 
 	has_death_cause_type(a_death_cause_type: STRING): BOOLEAN
 		do
