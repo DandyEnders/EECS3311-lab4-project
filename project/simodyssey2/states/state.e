@@ -63,32 +63,6 @@ feature {STATE, CONTROLLER} -- Message attribute
 			msg_command_validity := s
 		end
 
-feature -- Commands
-
---	executed_valid_command
---		do
---			abstract_state.executed_valid_command
---			msg_command_validity := "ok"
---		end
-
---	executed_turn_command
---		do
---			abstract_state.executed_turn_command
---			msg_command_validity := "ok"
---		end
-
---	executed_invalid_command
---		do
---			abstract_state.executed_invalid_command
---			msg_command_validity := "error"
---		end
-
---	executed_no_turn_command
---		do
---			abstract_state.executed_no_turn_command
---			msg_command_validity := "ok"
---		end
-
 feature -- Queries
 
 	next_state: STATE
@@ -123,7 +97,7 @@ feature -- Controller command / queries
 		deferred
 		end
 
-	test (th: INTEGER)
+	test (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER)
 		deferred
 		end
 
@@ -135,7 +109,7 @@ feature -- Out
 
 	out: STRING
 		do
-			create Result.make_from_string ("  ")
+			create Result.make_from_string (msg.left_margin)
 			Result.append (abstract_state.out)
 			if not msg_mode.is_empty then
 				Result.append (", mode:")

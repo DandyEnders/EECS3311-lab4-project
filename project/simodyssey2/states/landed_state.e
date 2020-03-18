@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {LANDED_STATE}."
-	author: ""
+	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -21,9 +21,9 @@ feature -- Controller command / queries
 			create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
 
 			abstract_state.executed_no_turn_command
-			next_state.set_msg_mode ("")
-			next_state.set_msg_command_validity ("ok")
-			next_state.set_msg_content ("  " + msg.abort)
+			next_state.set_msg_mode (msg.empty_string)
+			next_state.set_msg_command_validity (msg.ok)
+			next_state.set_msg_content (msg.abort)
 		end
 
 	land
@@ -34,8 +34,8 @@ feature -- Controller command / queries
 
 			abstract_state.executed_no_turn_command
 			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity ("error")
-			next_state.set_msg_content ("  " + msg.land_error_landed_already (c.row, c.col))
+			next_state.set_msg_command_validity (msg.error)
+			next_state.set_msg_content (msg.land_error_landed_already (c.row, c.col))
 
 		end
 
@@ -51,10 +51,9 @@ feature -- Controller command / queries
 
 			abstract_state.executed_turn_command
 			next_state.set_msg_mode(msg_mode)
-			next_state.set_msg_command_validity ("ok")
+			next_state.set_msg_command_validity (msg.ok)
 
 			create s_tmp.make_empty
-			s_tmp.append ("  ")
 			s_tmp.append (msg.liftoff (c.row, c.col))
 			s_tmp.append ("%N")
 			s_tmp.append (model.out)
@@ -69,8 +68,8 @@ feature -- Controller command / queries
 
 			abstract_state.executed_no_turn_command
 			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity ("error")
-			next_state.set_msg_content ("  " + msg.move_error_landed (c.row, c.col))
+			next_state.set_msg_command_validity (msg.error)
+			next_state.set_msg_content (msg.move_error_landed (c.row, c.col))
 
 		end
 
@@ -79,7 +78,7 @@ feature -- Controller command / queries
 			model.pass
 			abstract_state.executed_turn_command
 			set_msg_mode(msg_mode)
-			set_msg_command_validity ("ok")
+			set_msg_command_validity (msg.ok)
 			set_msg_content (model.out)
 		end
 
@@ -87,24 +86,24 @@ feature -- Controller command / queries
 		do
 			abstract_state.executed_no_turn_command
 			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity ("error")
-			next_state.set_msg_content ("  " + msg.play_error_no_mission)
+			next_state.set_msg_command_validity (msg.error)
+			next_state.set_msg_content (msg.play_error_no_mission)
 		end
 
 	status
 		do
 			abstract_state.executed_no_turn_command
 			set_msg_mode(msg_mode)
-			set_msg_command_validity ("ok")
+			set_msg_command_validity (msg.ok)
 			set_msg_content (model.out_status_explorer)
 		end
 
-	test (th: INTEGER)
+	test (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER)
 		do
 			abstract_state.executed_no_turn_command
 			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity ("error")
-			next_state.set_msg_content ("  " + msg.test_error_no_mission)
+			next_state.set_msg_command_validity (msg.error)
+			next_state.set_msg_content (msg.test_error_no_mission)
 		end
 
 	wormhole
@@ -115,8 +114,8 @@ feature -- Controller command / queries
 
 			abstract_state.executed_no_turn_command
 			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity ("error")
-			next_state.set_msg_content ("  " + msg.wormhole_error_landed (c.row, c.col))
+			next_state.set_msg_command_validity (msg.error)
+			next_state.set_msg_content (msg.wormhole_error_landed (c.row, c.col))
 		end
 
 end

@@ -65,8 +65,6 @@ feature {NONE, UNIT_TEST} -- Private Attribute
 
 	rng: RANDOM_GENERATOR_ACCESS
 
-	planet_threshold: INTEGER
-
 	moveable_id: ID_DISPATCHER
 
 	stationary_id: ID_DISPATCHER
@@ -74,6 +72,18 @@ feature {NONE, UNIT_TEST} -- Private Attribute
 	moved_enities: ARRAY [STRING]
 
 	dead_entity: ARRAY [MOVEABLE_ENTITY]
+
+	astroid_threshold: INTEGER
+
+	janitaur_threshold: INTEGER
+
+	malevolent_threshold: INTEGER
+
+	benign_threshold: INTEGER
+
+	planet_threshold: INTEGER
+
+
 
 feature {NONE} -- private queries
 
@@ -91,17 +101,19 @@ feature -- Command
 			is_aborted := TRUE
 		end
 
-	new_game (th: INTEGER; is_test: BOOLEAN)
+	new_game (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER; is_test: BOOLEAN)
+			-- TODO - MAKE THRESHOLD REFLECT
 		require
-			valid_threshold: 1 <= th and th <= 101
-			--			TODISCUSS: even if we are in seesion, we should be able to override it.
-			--				It's state's job to check if we should call new_game when we suppose to.
+			valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold)
 			not game_in_session
-
 		do
 			make --calling make in order to initialize global ids and the board every new game
 				-- initializing the planet threshold
-			planet_threshold := th
+			astroid_threshold := a_threshold
+			janitaur_threshold := j_threshold
+			malevolent_threshold := m_threshold
+			benign_threshold := b_threshold
+			planet_threshold := p_threshold
 				-- populating the galaxy randomly
 			populate_galaxy
 			is_test_game := is_test
@@ -159,9 +171,9 @@ feature -- Command
 		require
 			game_in_session
 			not is_explorer_landed
-			e_sector_has_yellow_dwarf
-			e_sector_has_planets
-			e_sector_has_unvisted_attached_planets
+			is_sector_has_yellow_dwarf
+			is_sector_has_planets
+			is_sector_has_unvisted_attached_planets
 		do
 			create moved_enities.make_empty
 			create dead_entity.make_empty
@@ -210,7 +222,7 @@ feature {NONE} -- Private Helper Commands
 			quad_before := galaxy.at (c_before).quadrant_at (explorer)
 
 			galaxy.move (explorer, c)
-			
+
 			-- either coordinate change or quadrant change then do ->[1,1,1]
 			if c_before /~ c or quad_before /~ galaxy.at (c_before).quadrant_at (explorer) then
 				s.append ("->")
@@ -402,6 +414,13 @@ feature -- Queries
 			Result := explorer.is_alive and explorer.fuel /~ 0 and not explorer.found_life and galaxy.has (explorer) and not is_aborted
 		end
 
+	valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER): BOOLEAN
+		do
+			Result := a_threshold <= j_threshold
+			and j_threshold <= m_threshold
+			and m_threshold <= b_threshold
+			and b_threshold <= p_threshold
+		end
 feature -- Interface
 
 		--	get_explorer: EXPLORER
@@ -447,7 +466,7 @@ feature -- Interface
 			-- 2. there are no planets
 			-- 3. there is a planet but therre are no stars
 		do
-			Result := e_sector_has_planets and e_sector_has_yellow_dwarf and e_sector_has_unvisted_attached_planets
+			Result := is_sector_has_planets and is_sector_has_yellow_dwarf and is_sector_has_unvisted_attached_planets
 		end
 
 	is_explorer_dead_by_out_of_fuel: BOOLEAN
@@ -460,7 +479,7 @@ feature -- Interface
 			Result := explorer.is_dead_by_blackhole
 		end
 
-	e_sector_has_yellow_dwarf: BOOLEAN
+	is_sector_has_yellow_dwarf: BOOLEAN
 		do
 			if explorer_sector.has_stationary_entity then
 				if attached {YELLOW_DWARF} explorer_sector.get_stationary_entity as y_d then
@@ -473,14 +492,14 @@ feature -- Interface
 			end
 		end
 
-	e_sector_has_planets: BOOLEAN
+	is_sector_has_planets: BOOLEAN
 		do
 			Result:=galaxy.at (explorer.coordinate).has_planet
 		end
 
-	e_sector_has_unvisted_attached_planets: BOOLEAN
+	is_sector_has_unvisted_attached_planets: BOOLEAN
 		do
-			if e_sector_has_planets and e_sector_has_yellow_dwarf then
+			if is_sector_has_planets and is_sector_has_yellow_dwarf then
 				across
 					explorer_sector is i_q
 				until
@@ -522,8 +541,11 @@ feature -- Out
 		end
 
 	out_movement: STRING
+		local
+			msg: MESSAGE
 		do
-			create Result.make_from_string ("  Movement:")
+			create Result.make_from_string (msg.left_margin)
+			Result.append("Movement:")
 			if moved_enities.is_empty then
 				Result.append ("none")
 			else
@@ -531,7 +553,7 @@ feature -- Out
 					moved_enities is i_s
 				loop
 					Result.append ("%N")
-					Result.append ("    ")
+					Result.append (msg.left_big_margin)
 					Result.append (i_s.out)
 				end
 			end
@@ -548,8 +570,11 @@ feature -- Out
 		end
 
 	out_deaths_this_turn: STRING
+		local
+			msg: MESSAGE
 		do
-			create Result.make_from_string ("  Deaths This Turn:")
+			create Result.make_from_string (msg.left_margin)
+			Result.append ("Deaths This Turn:")
 			if dead_entity.is_empty then
 				Result.append ("none")
 			else

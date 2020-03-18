@@ -169,6 +169,13 @@ feature -- Queries
 			Result := sectors [c.row, c.col]
 		end
 
+	sector_with (ie: ID_ENTITY): SECTOR -- galaxy.sector_with (explorer) <=> galaxy.at(explorer.coordinate)
+		require
+			has(ie)
+		do
+			Result := at (ie.coordinate)
+		end
+
 	valid_coordinate (c: COORDINATE): BOOLEAN
 		do
 			Result := 1 <= c.row and c.row <= row and 1 <= c.col and c.col <= col
@@ -195,9 +202,11 @@ feature -- Out
 			--		[1,2]->[3,P],-,[4,P],-
 			--		..
 			-- 		[5,5]->[48,P],[32,P],[47,P],[15,P]
+		local
+			msg: MESSAGE
 		do
-			create Result.make_empty
-			Result.append ("  Sectors:")
+			create Result.make_from_string (msg.left_margin)
+			Result.append ("Sectors:")
 			across
 				1 |..| row is i
 			loop
@@ -205,7 +214,7 @@ feature -- Out
 					1 |..| col is j
 				loop
 					Result.append ("%N")
-					Result.append ("    ")
+					Result.append (msg.left_big_margin)
 					Result.append (sectors [i, j].out_abstract_sector)
 				end
 			end
@@ -219,14 +228,16 @@ feature -- Out
 			--    [0,E]->fuel:3/3, life:3/3, landed?:F
 			--    [1,P]->attached?:F, support_life?:F, visited?:F, turns_left:0
 			-- 		..
+		local
+			msg: MESSAGE
 		do
-			create Result.make_empty
-			Result.append ("  Descriptions:")
+			create Result.make_from_string (msg.left_margin)
+			Result.append ("Descriptions:")
 			across
 				all_stationary_entities is i_se
 			loop
 				Result.append ("%N")
-				Result.append ("    ")
+				Result.append (msg.left_big_margin)
 				Result.append (i_se.out_description)
 			end
 
@@ -234,18 +245,20 @@ feature -- Out
 				all_moveable_entities is i_me
 			loop
 				Result.append ("%N")
-				Result.append ("    ")
+				Result.append (msg.left_big_margin)
 				Result.append (i_me.out_description)
 			end
 		end
 
 	out: STRING
+		local
+			msg: MESSAGE
 		do
 			create Result.make_empty
 			across
 				1 |..| row is i
 			loop
-				Result.append ("    ")
+				Result.append (msg.left_big_margin)
 				across
 					1 |..| col is j
 				loop
@@ -253,7 +266,7 @@ feature -- Out
 					Result.append ("  ")
 				end
 				Result.append ("%N")
-				Result.append ("    ")
+				Result.append (msg.left_big_margin)
 				across
 					1 |..| col is j
 				loop

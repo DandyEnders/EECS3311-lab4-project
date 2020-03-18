@@ -1,0 +1,8 @@
+  state:0.0, ok
+  Welcome! Try test(3,5,7,15,30)
+->test(5,4,3,2,1)
+  state:0.1, error
+  Thresholds should be non-decreasing order.
+->test(10,20,30,40,10)
+  state:0.2, error
+  Thresholds should be non-decreasing order.

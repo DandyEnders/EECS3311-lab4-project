@@ -49,11 +49,6 @@ feature {NONE} -- Private Command
 
 feature -- Command
 
-	executed_valid_command
-		do
-			increment_first_number
-		end
-
 	executed_turn_command
 		do
 			increment_first_number
@@ -71,7 +66,7 @@ feature -- Command
 
 feature -- Queries
 
-	out: STRING
+	out: STRING -- "state:12.3"
 		do
 			create Result.make_empty
 			Result.append("state:")

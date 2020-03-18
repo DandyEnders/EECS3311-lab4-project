@@ -1,9 +1,0 @@
-  System State: default model state (0)
-->play
-  System State: default model state (1)
-->wormhole
-  System State: default model state (2)
-->move(S)
-  System State: default model state (3)
-->wormhole
-  System State: default model state (4)
