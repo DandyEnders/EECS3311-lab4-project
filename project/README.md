@@ -9,5 +9,6 @@
 1. [ ] Refactor MESSAGE class so that they take COORDINATES instead of rows and columns.
 1. [ ] Redo acceptance tests' "test" command (project has 4 more arguments, like test(3,5,7,15,30))
 1. [ ] Make fuel a class
+1. [ ] (Suggestion) Make the entity the actor of its behavior (For example, it is explorer's job to move to next sector. So it needs to hold the reference to **galaxy:GRID**. This will take a long time to refactor but might be more syntactically easy to use (For example, explorer.move(direction_util.SE), blackhole.kill(s:SECTOR), ...) and this encapsulates what an entity can do. (For example, Moveable entities can have feature to move; move(s:SECTOR).)
 
 # Ato will work on ...
