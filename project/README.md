@@ -15,9 +15,12 @@
 
 ## ENTITIES
 1. [ ] Add MURDERABLE
-1. [ ] Rename KILLABLE to "DEATHABLE" (Due to addition of "MURDERABLE"
+1. [ ] Rename KILLABLE to "DEATHABLE" (Due to addition of "MURDERABLE" 
 1. [ ] Add REPRODUCEABLE
 1. [ ] Add TURNABLE -> has turn-related attributes
 1. [ ] Make fuel a class -> maybe make a class of FUELABLE ?
+
+### side note
+Addition of MURDERABLE and DEATHABLE is in a hope to refactor death messages system. (Currently we have "hard-codeded" 
 
 # Ato will work on ...
