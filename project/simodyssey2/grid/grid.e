@@ -124,17 +124,17 @@ feature -- Queries
 		do
 			create Result.make_empty
 
---			across -- stationary, negative id out
---					-- counting inversely
---				moveable_entities is i_me
+				--			across -- stationary, negative id out
+				--					-- counting inversely
+				--				moveable_entities is i_me
 			from
 				i := 0
 				c := moveable_entities.count
 			until
 				c < 1
 			loop
-				if attached moveable_entities[i] as i_me then
-					Result.force(i_me, Result.count + 1)
+				if attached moveable_entities [i] as i_me then
+					Result.force (i_me, Result.count + 1)
 					c := c - 1
 				end
 				i := i + 1
@@ -147,9 +147,9 @@ feature -- Queries
 		do
 			create Result.make_empty
 
---			across -- stationary, negative id out
---								-- counting inversely
---				stationary_entities is i_se
+				--			across -- stationary, negative id out
+				--								-- counting inversely
+				--				stationary_entities is i_se
 			from
 				i := (-1 - stationary_entities.count)
 			until
@@ -171,7 +171,7 @@ feature -- Queries
 
 	sector_with (ie: ID_ENTITY): SECTOR -- galaxy.sector_with (explorer) <=> galaxy.at(explorer.coordinate)
 		require
-			has(ie)
+			has (ie)
 		do
 			Result := at (ie.coordinate)
 		end
@@ -240,7 +240,6 @@ feature -- Out
 				Result.append (msg.left_big_margin)
 				Result.append (i_se.out_description)
 			end
-
 			across
 				all_moveable_entities is i_me
 			loop

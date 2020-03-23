@@ -9,7 +9,7 @@ class
 
 inherit
 
-	MOVEABLE_ENTITY
+	NP_MOVEABLE_ENTITY
 		rename
 			make as moveable_make
 		redefine
@@ -30,12 +30,9 @@ feature {NONE} -- Constructor
 			visited := FALSE
 			attached_to_star := FALSE
 			support_life := FALSE
-			turns_left := 0
 		end
 
 feature -- Attributes
-
-	turns_left: INTEGER -- TODO: might make it a class, and means of modification
 
 	visited: BOOLEAN
 
@@ -44,13 +41,6 @@ feature -- Attributes
 	support_life: BOOLEAN
 
 feature -- Command
-
-	set_turns_left (value: INTEGER)
-		require
-			valid_value: 0 <= value and value <= 2
-		do
-			turns_left := value
-		end
 
 	kill_by_blackhole
 		do
@@ -71,6 +61,28 @@ feature -- Command
 	set_visited
 		do
 			visited := TRUE
+		end
+
+	behave (sector: SECTOR) -- (2)
+		local
+			rng: RANDOM_GENERATOR_ACCESS
+			sup_life_prob: INTEGER
+		do
+			if sector.has_blackhole then
+				kill_by_blackhole
+			elseif sector.has_star and not attached_to_star then
+					-- If there is a star in the sector then set attached for the planet to true.
+				set_attached_to_star (TRUE)
+					-- If this star is a yellow dwarf then rchoose if this planet should support life?
+				if attached {YELLOW_DWARF} sector.get_stationary_entity then
+					sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life
+					if sup_life_prob = 2 then
+						set_support_life (TRUE)
+					end
+				end
+			elseif not sector.has_star then -- you should only set the turns again if the current sector does not have a star
+				set_turns_left (rng.rchoose (0, 2))
+			end
 		end
 
 feature -- Queries

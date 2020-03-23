@@ -108,18 +108,42 @@ feature -- Commands
 			kill_by ("OUT_OF_FUEL")
 		end
 
+	behave (sector: SECTOR) --(2)
+		do
+				-- check if explorer can charge
+			if sector.has_stationary_entity then
+					-- if the explorer's new sector has a star, then recharge.
+				if attached {STAR} sector.get_stationary_entity as i_star then
+					charge_fuel (i_star)
+				end
+			end
+			confirm_health (sector)
+		end
+
+feature {NONE} -- Private Query for Behave (2) -- not sure if this should be private or expanded.
+
+	confirm_health (sector: SECTOR)
+		do
+				-- check if explorer dies out of fuel
+			if is_out_of_fuel then
+					-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
+				kill_by_out_of_fuel
+					-- check if explorer dies out of blackhole
+			elseif sector.has_blackhole then
+				kill_by_blackhole
+			end
+		end
+
 feature -- Out
 
-	out_status(quadrant: INTEGER): STRING
-
+	out_status (quadrant: INTEGER): STRING
 		do
 			create Result.make_empty
 			if landed then
-				Result.append(msg.status_landed (coordinate.row, coordinate.col, quadrant, life.value, fuel))
+				Result.append (msg.status_landed (coordinate.row, coordinate.col, quadrant, life.value, fuel))
 			else
-				Result.append(msg.status_not_landed (coordinate.row, coordinate.col, quadrant, life.value, fuel))
+				Result.append (msg.status_not_landed (coordinate.row, coordinate.col, quadrant, life.value, fuel))
 			end
-
 		end
 
 	out_death_description: STRING -- "[0,E]->fuel:2/3, life:3/3, landed?:F,%N{DEATH_MESSAGE}"
