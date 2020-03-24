@@ -130,7 +130,7 @@ feature {NONE} -- private queries
 
 	explorer_sector: SECTOR
 		do
-			Result := galaxy.at (explorer.coordinate)
+			Result := galaxy.sector_with (explorer)
 		end
 
 feature -- Command
@@ -212,7 +212,7 @@ feature -- Command
 			create moved_enities.make_empty
 			create dead_entity.make_empty
 				--landing the explorer
-			galaxy.at (explorer.coordinate).land_explorer (explorer)
+			galaxy.sector_with (explorer).land_explorer (explorer)
 			default_turn_actions
 		end
 
@@ -242,7 +242,7 @@ feature {NONE} -- Private Helper Commands
 
 	default_turn_actions -- every time a turn command occurs, these actions must be done.
 		do
-			explorer.behave (galaxy.at (explorer.coordinate))
+			explorer.behave (galaxy.sector_with (explorer))
 			if explorer.is_dead then
 				galaxy.remove (explorer) -- I believe it is the job of SYMODYSSEY to remove the explorer from the game
 				dead_entity.force (explorer, dead_entity.count + 1)
@@ -262,7 +262,7 @@ feature {NONE} -- Private Helper Commands
 				--Storing Previous locaiton of me in a String (2)
 			create s.make_from_string (me.out_sqr_bracket)
 			s.append (":")
-			s.append (galaxy.at (me.coordinate).out_abstract_full_coordinate (me))
+			s.append (galaxy.sector_with (me).out_abstract_full_coordinate (me))
 				-- Moving the me to COORDINATE c
 			c_before := me.coordinate
 			quad_before := galaxy.at (c_before).quadrant_at (me)
@@ -270,7 +270,7 @@ feature {NONE} -- Private Helper Commands
 				-- either coordinate change or quadrant change then do ->[1,1,1]
 			if c_before /~ c or quad_before /~ galaxy.at (c_before).quadrant_at (me) then
 				s.append ("->")
-				s.append (galaxy.at (me.coordinate).out_abstract_full_coordinate (me))
+				s.append (galaxy.sector_with (me).out_abstract_full_coordinate (me))
 			end
 				-- Adding Explorer's "movement" to the list of moved enetities.
 			moved_enities.force (s, moved_enities.count + 1)
@@ -309,7 +309,7 @@ feature {NONE} -- Private Helper Commands
 			else
 				create s.make_from_string (n_me.out_sqr_bracket)
 				s.append (":")
-				s.append (galaxy.at (n_me.coordinate).out_abstract_full_coordinate (n_me))
+				s.append (galaxy.sector_with (n_me).out_abstract_full_coordinate (n_me))
 				moved_enities.force (s, moved_enities.count + 1)
 			end
 		end
@@ -327,29 +327,30 @@ feature {NONE} -- Private Helper Commands
 						-- if the planets turns left is 0, then check if there is a star in the sector
 					if n_me.turns_left ~ 0 then
 							-- specal case ( pg  28 )
-						if galaxy.at (n_me.coordinate).has_star and attached {PLANET} n_me as p then
-							p.behave (galaxy.at (p.coordinate))
+						if galaxy.sector_with (n_me).has_star and attached {PLANET} n_me as p then
+							p.behave (galaxy.sector_with (p))
 						else -- turns_left = 0 and no star entity in same sector
 								-- movement (pg  29)
-								--							if galaxy.at (n_me.coordinate).has_wormhole and (attached {MALEVOLENT} n_me or attached {BENIGN} n_me)then
-								--								 wormhole_entity(n_me)
-								--							else
-								--								direction_num := rng.rchoose (1, 8)
-								--								move_entity (n_me, d.give_direction (direction_num))
-								--								--spend fuel for janitaur, malevonent, and benign
-								--								if attached {MALEVOLENT} n_me as m then
-								--									m.spend_fuel_unit
-								--								elseif attached {BENIGN} n_me as b then
-								--									b.spend_fuel_unit
-								--								elseif attached {JANITAUR} n_me as j then
-								--									j.spend_fuel_unit
-								--								end
-								--							end --
-								--							n_me.behave (galaxy.at (n_me.coordinate))
-								--							if n_me.is_dead then
-								--								galaxy.remove (n_me)
-								--								dead_entity.force (n_me, dead_entity.count + 1)
-								--							end
+								-- TODO
+								--								--							if galaxy.sector_with (n_me).has_wormhole and (attached {MALEVOLENT} n_me or attached {BENIGN} n_me)then
+								--								--								 wormhole_entity(n_me)
+								--								--							else
+								--								--								direction_num := rng.rchoose (1, 8)
+								--								--								move_entity (n_me, d.give_direction (direction_num))
+								--								--								--spend fuel for janitaur, malevonent, and benign
+								--								--								if attached {MALEVOLENT} n_me as m then
+								--								--									m.spend_fuel_unit
+								--								--								elseif attached {BENIGN} n_me as b then
+								--								--									b.spend_fuel_unit
+								--								--								elseif attached {JANITAUR} n_me as j then
+								--								--									j.spend_fuel_unit
+								--								--								end
+								--								--							end --
+								--								--							n_me.behave (galaxy.sector_with (n_me))
+								--								--							if n_me.is_dead then
+								--								--								galaxy.remove (n_me)
+								--								--								dead_entity.force (n_me, dead_entity.count + 1)
+								--								--							end
 						end
 					else
 						n_me.set_turns_left (n_me.turns_left - 1)
@@ -362,6 +363,7 @@ feature {NONE} -- Private Helper Commands
 		local
 			numb_of_entity_per_sector: INTEGER
 			value: INTEGER
+				-- TODO
 				--			a:ASTROID
 				--			j:JANITAUR
 				--			m: MALEVOLENT
@@ -378,6 +380,7 @@ feature {NONE} -- Private Helper Commands
 					loop
 						value := rng.rchoose (1, 100)
 						if value < astroid_threshold then
+								-- TODO
 								--							create a.make (i_g.coordinate, moveable_id.get_id)
 								--							a.set_turns_left (rng.rchoose (0, 2))
 								--							galaxy.add (a)
@@ -458,7 +461,7 @@ feature -- Interface
 
 	is_explorer_with_wormhole: BOOLEAN
 		do
-			Result := galaxy.at (explorer.coordinate).has_wormhole
+			Result := galaxy.sector_with (explorer).has_wormhole
 		end
 
 	is_explorer_found_life: BOOLEAN
@@ -516,7 +519,7 @@ feature -- Interface
 
 	is_sector_has_planets: BOOLEAN
 		do
-			Result := galaxy.at (explorer.coordinate).has_planet
+			Result := galaxy.sector_with (explorer).has_planet
 		end
 
 	is_sector_has_unvisted_attached_planets: BOOLEAN
@@ -613,7 +616,7 @@ feature -- Out
 		local
 			e_q: INTEGER
 		do
-			e_q := galaxy.at (explorer.coordinate).quadrant_at (explorer)
+			e_q := galaxy.sector_with (explorer).quadrant_at (explorer)
 			create Result.make_empty
 			Result.append (explorer.out_status (e_q))
 		end
