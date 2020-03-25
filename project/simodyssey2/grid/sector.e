@@ -322,26 +322,27 @@ feature -- Queries
 			Result.compare_objects
 		ensure
 			Result.count ~ moveable_entity_count
-			is_sorted(Result)
+			is_sorted (Result)
 		end
+
 feature {NONE} --command
 
-is_sorted(a:ARRAY [MOVEABLE_ENTITY]):BOOLEAN
-	local
-		i: INTEGER
-	do
-		Result:=TRUE
-		from
-			i:=1
-		until
-			i>a.count-1
-		loop
-			if not (a[i].id <= a[i+1].id) then
-				Result:=FALSE
+	is_sorted (a: ARRAY [MOVEABLE_ENTITY]): BOOLEAN
+		local
+			i: INTEGER
+		do
+			Result := TRUE
+			from
+				i := 1
+			until
+				i > a.count - 1
+			loop
+				if not (a [i].id <= a [i + 1].id) then
+					Result := FALSE
+				end
+				i := i + 1
 			end
-			i:=i+1
 		end
-	end
 
 feature -- Output
 

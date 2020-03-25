@@ -168,5 +168,6 @@ feature -- Commands
 			n_me.set_turns_left (rng.rchoose (0, 2))
 			actions_left_until_reproduction := reproduction_interval
 		end
-
+invariant
+	is_alive implies (0 <= load and load <= max_load)
 end

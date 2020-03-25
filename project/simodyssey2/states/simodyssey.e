@@ -61,7 +61,7 @@ feature -- Queries relevant to play / test / abort
 	game_in_session: BOOLEAN --TODO, why is galaxy.has(explorer) a requirenment for the game to be in session?
 			-- a game is in session if neither (the explorer's life or his fuel is equal to 0), the game was aborted and the explorer has not found life
 		do
-			Result := explorer.is_alive and explorer.fuel /~ 0 and not explorer.found_life and galaxy.has (explorer) and not is_aborted
+			Result := explorer.is_alive and not explorer.is_out_of_fuel and not explorer.found_life and galaxy.has (explorer) and not is_aborted
 		end
 
 	valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER): BOOLEAN
