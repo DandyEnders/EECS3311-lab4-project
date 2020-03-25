@@ -10,11 +10,10 @@ class
 inherit
 
 	NP_MOVEABLE_ENTITY
-		rename
-			make as moveable_make
 		redefine
-			out_description,
-			out_death_description
+			make,
+			out_death_description,
+			out_description
 		end
 
 create
@@ -24,7 +23,7 @@ feature {NONE} -- Constructor
 
 	make (a_coordinate: COORDINATE; a_id: INTEGER)
 		do
-			moveable_make (a_coordinate, a_id)
+			precursor (a_coordinate, a_id)
 			deathable_make (1)
 			add_death_cause_type ("BLACKHOLE")
 			visited := FALSE
@@ -42,10 +41,11 @@ feature -- Attributes
 
 feature -- Command
 
-	kill_by_blackhole
+	kill_by_blackhole(k_id:INTEGER)
 		do
 			turns_left := -1
 			kill_by ("BLACKHOLE")
+			killers_id:=k_id
 		end
 
 	set_attached_to_star (b: BOOLEAN) --
@@ -93,7 +93,9 @@ feature {NONE} -- Commands
 	confirm_health (sector: SECTOR)
 		do
 			if sector.has_blackhole then
-				kill_by_blackhole
+				check attached {BLACKHOLE} sector.get_stationary_entity as b_e then
+					kill_by_blackhole (b_e.id)
+				end
 			end
 		end
 
@@ -108,9 +110,10 @@ feature -- Queries
 
 feature -- Out
 
-	out_death_description: STRING -- "[0,E]->fuel:2/3, life:3/3, landed?:F,%N{DEATH_MESSAGE}"
+	out_death_description: STRING -- "Outputs Abstract Death Message on pg 26"
 		do
-			Result := precursor
+			create Result.make_empty
+			Result:=precursor
 			if is_dead_by_blackhole then
 				Result.append (msg.planet_death_blackhole (coordinate.row, coordinate.col, -1))
 			end
@@ -118,7 +121,7 @@ feature -- Out
 
 	out_description: STRING -- "[id, character]->Luminosity:2" -> "[0, E]->"
 		do
-			Result := precursor
+			Result:=precursor
 			Result.append ("attached?:")
 			if attached_to_star then
 				Result.append ("T")

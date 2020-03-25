@@ -49,7 +49,7 @@ feature
 			Result := N + W
 		end
 
-	give_direction (d: INTEGER): COORDINATE
+	direction_for_number (d: INTEGER): COORDINATE
 			--1 means N, 2 means NE, 3 means E, 4 means SE, ... 8 means NW
 		require
 			d_is_in_range: d <= 8 and d >= 1

@@ -282,42 +282,37 @@ feature -- Queries
 			end
 		end
 
-	ordered_moveable_entities: ARRAY [MOVEABLE_ENTITY]
+	moveable_entities_in_increasing_order: ARRAY [MOVEABLE_ENTITY]
 		local
-			i, j: INTEGER
-			min_id: INTEGER
-			index: INTEGER
-			temp: ARRAY [MOVEABLE_ENTITY]
+			i, n: INTEGER
+			temp: MOVEABLE_ENTITY
 		do
 			create Result.make_empty
-			create temp.make_empty
 			across -- placing all moveable entities into an array
 				quadrants is i_q
 			loop
 				if attached {MOVEABLE_ENTITY} i_q.entity as me then
-					temp.force (me, temp.count + 1)
+					Result.force (me, Result.count + 1)
 				end
 			end
-			from -- sorting(in increasing order) and placing all moveable entities into Result.
-				i := 1
+			from
+				n := 0
 			until
-				i > temp.count
+				n = Result.count
 			loop
-				min_id := temp [i].id
-				index := i
 				from
-					j := i
+					i := 1
 				until
-					j > temp.count
+					i + 1 > Result.count
 				loop
-					if temp [j].id < min_id then
-						min_id := temp [j].id
-						index := j
+					if Result [i + 1].id < Result [i].id then
+						temp := Result [i + 1]
+						Result.put (Result [i], i + 1)
+						Result.put (temp, i)
 					end
-					j := j + 1
+					i := i + 1
 				end
-				Result.force (temp [index], Result.count + 1)
-				i := i + 1
+				n := n + 1
 			end
 			Result.compare_objects
 		ensure
@@ -335,9 +330,9 @@ feature {NONE} --command
 			from
 				i := 1
 			until
-				i > a.count - 1
+				i + 1 > a.count
 			loop
-				if not (a [i].id <= a [i + 1].id) then
+				if not (a [i].id < a [i + 1].id) then
 					Result := FALSE
 				end
 				i := i + 1

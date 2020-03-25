@@ -56,5 +56,5 @@ feature -- Queries
 
 invariant
 	0 <= fuel and fuel <= max_fuel
-
+	
 end

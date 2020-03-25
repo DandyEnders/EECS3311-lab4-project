@@ -34,7 +34,7 @@ feature {NONE} -- Contstructor
 		do
 			create sect.make_empty ([1, 1], 0)
 			create sectors.make_filled (sect, r, c)
-			create stationary_entities.make (100)
+			create stationary_entities.make (500)
 			across
 				1 |..| r is i
 			loop
@@ -59,15 +59,15 @@ feature {NONE} -- Attribute
 
 	stationary_entities: HASH_TABLE [STATIONARY_ENTITY, INTEGER]
 
-feature {NONE} --Queries
+feature {NONE} -- Queries
 	moveable_entities: HASH_TABLE [MOVEABLE_ENTITY, INTEGER]
 	do
-		create Result.make(100)
+		create Result.make(500)
 		across
 			sectors is i_s
 		loop
 			across
-			i_s.ordered_moveable_entities is me
+			i_s.moveable_entities_in_increasing_order is me
 			loop
 				Result.force(me,me.id)
 			end
@@ -129,6 +129,7 @@ feature -- Queries
 		local
 			i: INTEGER
 			c: INTEGER
+			temp:HASH_TABLE[MOVEABLE_ENTITY,INTEGER]
 		do
 			create Result.make_empty
 
@@ -137,11 +138,12 @@ feature -- Queries
 				--				moveable_entities is i_me
 			from
 				i := 0
-				c := moveable_entities.count
+				temp:=moveable_entities
+				c := temp.count
 			until
 				c < 1
 			loop
-				if attached moveable_entities [i] as i_me then
+				if attached temp [i] as i_me then
 					Result.force (i_me, Result.count + 1)
 					c := c - 1
 				end

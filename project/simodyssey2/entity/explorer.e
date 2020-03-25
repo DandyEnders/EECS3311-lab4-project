@@ -68,7 +68,7 @@ feature -- Queries
 			Result := is_dead and then get_death_cause ~ "MALEVOLENT"
 		end
 
-	is_dead_by_astroid: BOOLEAN
+	is_dead_by_asteroid: BOOLEAN
 		do
 			Result := is_dead and then get_death_cause ~ "ASTROID"
 		end
@@ -89,9 +89,10 @@ feature -- Commands
 			found_life := TRUE
 		end
 
-	kill_by_blackhole
+	kill_by_blackhole(k_id:INTEGER)
 		do
 			kill_by ("BLACKHOLE")
+			killers_id:=k_id
 		end
 
 	kill_by_malevolent
@@ -99,9 +100,12 @@ feature -- Commands
 			kill_by ("MALEVOLENT")
 		end
 
-	kill_by_astroid
+	kill_by_asteroid (k_id:INTEGER)
 		do
-			kill_by ("ASTROID")
+			kill_by ("ASTEROID")
+			killers_id:=k_id
+		ensure
+			is_dead_by_asteroid
 		end
 
 	kill_by_out_of_fuel
@@ -109,6 +113,8 @@ feature -- Commands
 			fuel = 0
 		do
 			kill_by ("OUT_OF_FUEL")
+		ensure
+			is_dead_by_out_of_fuel
 		end
 
 	check_health (sector: SECTOR) --(2)
@@ -133,7 +139,9 @@ feature {NONE} -- Private Query for Behave (2) -- not sure if this should be pri
 				kill_by_out_of_fuel
 					-- check if explorer dies out of blackhole
 			elseif sector.has_blackhole then
-				kill_by_blackhole
+				check attached {BLACKHOLE} sector.get_stationary_entity as b_e then
+					kill_by_blackhole (b_e.id)
+				end
 			end
 		end
 
@@ -156,6 +164,10 @@ feature -- Out
 				Result.append (msg.explorer_death_out_of_fuel (coordinate.row, coordinate.col))
 			elseif is_dead_by_blackhole then
 				Result.append (msg.explorer_death_blackhole (coordinate.row, coordinate.col, -1))
+			elseif is_dead_by_asteroid then
+				Result.append (msg.death_by_asteroid (current,coordinate.row, coordinate.col, killers_id))
+			elseif is_dead_by_malevolent  then
+				Result.append (msg.death_by_malevolent (current,coordinate.row, coordinate.col))
 			end
 		end
 

@@ -11,7 +11,9 @@ inherit
 
 	NP_MOVEABLE_ENTITY
 		redefine
-			make
+			make,
+			out_death_description,
+			out_description
 		end
 
 	FUELABLE
@@ -64,10 +66,10 @@ feature -- Command
 			rng: RANDOM_GENERATOR_ACCESS
 		do
 			across
-				sector.ordered_moveable_entities is me
+				sector.moveable_entities_in_increasing_order is me
 			loop
 				if attached {MALEVOLENT} me as m_me then
-					m_me.kill_by_benign
+					m_me.kill_by_benign(current.id)
 				end
 			end
 			set_turns_left (rng.rchoose (0, 2))
@@ -83,7 +85,9 @@ feature {NONE} --Commands
 				kill_by_out_of_fuel
 					-- check if explorer dies out of blackhole
 			elseif sector.has_blackhole then
-				kill_by_blackhole
+				check attached {BLACKHOLE} sector.get_stationary_entity as b_e then
+					kill_by_blackhole (b_e.id)
+				end
 			end
 		end
 
@@ -101,28 +105,37 @@ feature -- Queries
 			Result := is_dead and then get_death_cause ~ "OUT_OF_FUEL"
 		end
 
-	is_dead_by_astroid: BOOLEAN
+	is_dead_by_asteroid: BOOLEAN
 		do
 			Result := is_dead and then get_death_cause ~ "ASTROID"
 		end
 
 feature -- Commands
 
-	kill_by_blackhole
+	kill_by_blackhole(k_id:INTEGER)
 		do
+			turns_left := -1
 			kill_by ("BLACKHOLE")
+			killers_id:=k_id
 		end
 
 	kill_by_out_of_fuel
 		require
 			fuel = 0
 		do
+			turns_left := -1
 			kill_by ("OUT_OF_FUEL")
+		ensure
+			is_dead_by_out_of_fuel
 		end
 
-	kill_by_astroid
+	kill_by_asteroid (k_id:INTEGER)
 		do
+			turns_left := -1
 			kill_by ("ASTROID")
+			killers_id:=k_id
+		ensure
+			is_dead_by_asteroid
 		end
 
 	reproduce (sector: SECTOR; moveable_id: INTEGER)
@@ -134,6 +147,32 @@ feature -- Commands
 			sector.add (n_me)
 			n_me.set_turns_left (rng.rchoose (0, 2))
 			actions_left_until_reproduction := reproduction_interval
+		end
+feature -- Output [ TODO ] -- Looks good but temporary version for now
+	out_death_description: STRING -- "[0,E]->fuel:2/3, life:3/3, landed?:F,%N{DEATH_MESSAGE}"
+		do
+			Result:=precursor
+			if is_dead_by_out_of_fuel then
+					Result.append (msg.death_by_out_of_fuel (current,coordinate.row, coordinate.col))
+			elseif is_dead_by_blackhole then
+				Result.append ( msg.moveable_entity_death_blackhole (current,coordinate.row, coordinate.col, killers_id))
+			elseif is_dead_by_asteroid then
+				Result.append (msg.death_by_asteroid (current,coordinate.row, coordinate.col, killers_id))
+			end
+		end
+
+	out_description: STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean"
+			-- "[0,E]->fuel:2/3, life:3/3, landed?:F"
+		local
+			turns_left_string: STRING
+		do
+			Result:=precursor
+			if turns_left < 0 then
+				create turns_left_string.make_from_string ("N/A")
+			else
+				turns_left_string:=turns_left.out
+			end
+			Result.append ("fuel:" + fuel.out + "/" + max_fuel.out + ", " + "actions_left_until_reproduction:" + actions_left_until_reproduction.out + "/" + reproduction_interval.out + ", " + "turns_left:" + turns_left_string.out)
 		end
 
 end

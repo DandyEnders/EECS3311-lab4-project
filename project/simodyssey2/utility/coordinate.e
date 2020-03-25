@@ -86,7 +86,7 @@ feature -- Queries
 			Result := current ~ d.n or current ~ d.s or current ~ d.w or current ~ d.e or current ~ d.nw or current ~ d.ne or current ~ d.sw or current ~ d.se
 		end
 
-	wrap_coordinate (c, lower_bound, upper_bound: COORDINATE): COORDINATE
+	wrap_direction_to_coordinate (c, lower_bound, upper_bound: COORDINATE): COORDINATE
 			--given a coordinate, returns a coordinate that lies between lower_bound and upper_bound
 		local
 --			wrap_row, wrap_col: INTEGER
@@ -107,7 +107,7 @@ feature -- Queries
 				Result := Result - create {COORDINATE}.make ([0, upper_bound.col])
 			end
 		ensure
-			((c).row ~ lower_bound.row - 1 implies Result.row ~ upper_bound.row) and ((c).row ~ upper_bound.row + 1 implies Result.row ~ lower_bound.row) and ((c).col ~ lower_bound.col - 1 implies Result.col ~ upper_bound.col) and ((c).col ~ upper_bound.col + 1 implies Result.col ~ lower_bound.col) and (((c).col /~ upper_bound.col + 1 and (c).col /~ lower_bound.col - 1) implies (Result.col ~ (c.col))) and (((c).row /~ upper_bound.row + 1 and (c).row /~ lower_bound.row - 1) implies (Result.row ~ (c.row)))
+			cordinate_is_wrapped_and_correct: ((c).row ~ lower_bound.row - 1 implies Result.row ~ upper_bound.row) and ((c).row ~ upper_bound.row + 1 implies Result.row ~ lower_bound.row) and ((c).col ~ lower_bound.col - 1 implies Result.col ~ upper_bound.col) and ((c).col ~ upper_bound.col + 1 implies Result.col ~ lower_bound.col) and (((c).col /~ upper_bound.col + 1 and (c).col /~ lower_bound.col - 1) implies (Result.col ~ (c.col))) and (((c).row /~ upper_bound.row + 1 and (c).row /~ lower_bound.row - 1) implies (Result.row ~ (c.row)))
 		end
 
 feature -- out

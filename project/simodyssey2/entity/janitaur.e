@@ -11,7 +11,9 @@ inherit
 
 	NP_MOVEABLE_ENTITY
 		redefine
-			make
+			make,
+			out_death_description,
+			out_description
 		end
 
 	FUELABLE
@@ -71,9 +73,9 @@ feature -- Queries
 			Result := is_dead and then get_death_cause ~ "OUT_OF_FUEL"
 		end
 
-	is_dead_by_astroid: BOOLEAN
+	is_dead_by_asteroid: BOOLEAN
 		do
-			Result := is_dead and then get_death_cause ~ "ASTROID"
+			Result := is_dead and then get_death_cause ~ "ASTEROID"
 		end
 
 feature {NONE} --Commands
@@ -86,7 +88,9 @@ feature {NONE} --Commands
 				kill_by_out_of_fuel
 					-- check if explorer dies out of blackhole
 			elseif sector.has_blackhole then
-				kill_by_blackhole
+				check attached {BLACKHOLE} sector.get_stationary_entity as b_e then
+					kill_by_blackhole (b_e.id)
+				end
 			end
 		end
 
@@ -126,10 +130,10 @@ feature -- Commands
 			rng: RANDOM_GENERATOR_ACCESS
 		do
 			across
-				sector.ordered_moveable_entities is me
+				sector.moveable_entities_in_increasing_order is me
 			loop
-				if attached {ASTROID} me as a_me and then load < max_load then
-					a_me.kill_by_janitaur
+				if attached {ASTEROID} me as a_me and then load < max_load then
+					a_me.kill_by_janitaur(current.id)
 					increment_load_by_one
 				end
 			end
@@ -141,21 +145,29 @@ feature -- Commands
 			set_turns_left (rng.rchoose (0, 2))
 		end
 
-	kill_by_blackhole
+	kill_by_blackhole(k_id:INTEGER)
 		do
+			turns_left := -1
 			kill_by ("BLACKHOLE")
+			killers_id:=k_id
 		end
-
 	kill_by_out_of_fuel
 		require
 			fuel = 0
 		do
+			turns_left := -1
 			kill_by ("OUT_OF_FUEL")
+		ensure
+			is_dead_by_out_of_fuel
 		end
 
-	kill_by_astroid
+	kill_by_asteroid (k_id:INTEGER)
 		do
-			kill_by ("ASTROID")
+			turns_left := -1
+			kill_by ("ASTEROID")
+			killers_id:=k_id
+		ensure
+			is_dead_by_asteroid
 		end
 
 	reproduce (sector: SECTOR; moveable_id: INTEGER)
@@ -168,6 +180,33 @@ feature -- Commands
 			n_me.set_turns_left (rng.rchoose (0, 2))
 			actions_left_until_reproduction := reproduction_interval
 		end
+
+feature -- out
+	out_death_description:STRING --Looks good but temporary version for now
+		do
+			Result:=precursor
+			if is_dead_by_out_of_fuel then
+				Result.append (msg.death_by_out_of_fuel (current,coordinate.row, coordinate.col))
+			elseif is_dead_by_blackhole then
+				Result.append (msg.moveable_entity_death_blackhole (current,coordinate.row, coordinate.col, killers_id))
+			elseif is_dead_by_asteroid then
+				Result.append (msg.death_by_asteroid (current,coordinate.row, coordinate.col, killers_id))
+			end
+		end
+
+	out_description:STRING
+		local
+			turns_left_string: STRING
+		do
+			Result:=Precursor
+			if turns_left < 0 then
+				create turns_left_string.make_from_string ("N/A")
+			else
+				turns_left_string:=turns_left.out
+			end
+			Result.append ("fuel:" + fuel.out + "/" + max_fuel.out + ", " + "load:" + load.out + "/" + max_load.out + ", " + "actions_left_until_reproduction:" + actions_left_until_reproduction.out + "/" + reproduction_interval.out + ", " + "turns_left:" + turns_left_string.out)
+		end
+
 invariant
 	is_alive implies (0 <= load and load <= max_load)
 end

@@ -29,7 +29,7 @@ feature -- Query
 			gen := gen_access.debug_gen
 			Result := gen.num \\ (high - low + 1) + low
 			gen.forth
-				--RNG debug Related
+				--Below is related to RNG debug
 			gen.rng_debug_this_round.append (" " + Result.out + "->" + "[" + low.out + "/" + high.out + "]")
 		end
 

@@ -13,11 +13,13 @@ feature -- Constructor
 			create life.make(a_max_life)
 			create death_cause.make_empty
 			create death_cause_type.make(10)
-
+			killers_id:=0
 
 		end
 
 feature {DEATHABLE} -- Killable Attribute
+
+	killers_id:INTEGER
 
 	life: LIFE
 

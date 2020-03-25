@@ -31,8 +31,8 @@ feature -- Initial message
 
 	initial_message: STRING
 		do
-			create Result.make_from_string(left_margin)
-			Result.append("Welcome! Try test(3,5,7,15,30)")
+			create Result.make_from_string (left_margin)
+			Result.append ("Welcome! Try test(3,5,7,15,30)")
 		end
 
 feature -- status
@@ -79,15 +79,15 @@ feature -- status
 
 	status_error_no_mission: STRING
 		do
-			create Result.make_from_string(left_margin)
-			Result.append("Negative on that request:no mission in progress.")
+			create Result.make_from_string (left_margin)
+			Result.append ("Negative on that request:no mission in progress.")
 		end
 
 feature -- land
 
 	land_life_found: STRING
 		do
-			create Result.make_from_string(left_margin)
+			create Result.make_from_string (left_margin)
 			Result.append ("Tranquility base here - we've got a life!")
 		end
 
@@ -103,7 +103,7 @@ feature -- land
 
 	land_error_no_mission: STRING
 		do
-			create Result.make_from_string(left_margin)
+			create Result.make_from_string (left_margin)
 			Result.append ("Negative on that request:no mission in progress.")
 		end
 
@@ -161,7 +161,7 @@ feature -- liftoff
 
 	liftoff_error_no_mission: STRING
 		do
-			create Result.make_from_string(left_margin)
+			create Result.make_from_string (left_margin)
 			Result.append ("Negative on that request:no mission in progress.")
 		end
 
@@ -180,22 +180,21 @@ feature -- abort
 	abort: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("Mission aborted. Try test(30)")
+			Result.append ("Mission aborted. Try test(30)")
 		end
 
 	abort_error_no_mission: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("Negative on that request:no mission in progress.")
+			Result.append ("Negative on that request:no mission in progress.")
 		end
-
 
 feature -- game_is_over
 
 	game_is_over: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("The game has ended. You can start a new game.")
+			Result.append ("The game has ended. You can start a new game.")
 		end
 
 feature -- explorer
@@ -237,12 +236,107 @@ feature -- planet
 			Result.append (col.out)
 		end
 
+feature {NONE} -- Helper Query
+	moveable_entity_type (np: MOVEABLE_ENTITY): STRING -- ie "blackhole "
+		do
+			create Result.make_empty
+			if attached {BENIGN} np then
+				create Result.make_from_string ("Benign ")
+			elseif attached {MALEVOLENT} np then
+				create Result.make_from_string ("Malevolent ")
+			elseif attached {JANITAUR} np then
+				create Result.make_from_string ("Janitaur ")
+			elseif attached {ASTEROID} np then
+				create Result.make_from_string ("Asteroid ")
+			elseif attached {PLANET} np then
+				create Result.make_from_string ("Planet ")
+			elseif attached {EXPLORER} np then
+				create Result.make_from_string ("Explorer ")
+			end
+		end
+
+feature -- MOVEABLE_ENTITY death by BLACKHOLE -- (effective for explorer,benign,malevolent,janitaur,asteroid and planet)  --Looks good but temporary version for now TODO
+
+	moveable_entity_death_blackhole (np: MOVEABLE_ENTITY; row, col, blackhole_id: INTEGER): STRING
+		do
+			create Result.make_empty
+			Result.append (moveable_entity_type (np))
+			Result.append ("got devoured by blackhole ")
+			Result.append ("(id: ")
+			Result.append (blackhole_id.out)
+			Result.append (") at Sector:")
+			Result.append (row.out)
+			Result.append (":")
+			Result.append (col.out)
+		end
+
+feature -- ASTEROID death by JANITAUR
+
+	death_by_janitaur (a: ASTEROID; sector_row, sector_col, janitaur_id: INTEGER): STRING
+		do
+			create Result.make_empty
+			Result.append (moveable_entity_type (a))
+			Result.append ("got imploded by janitaur ")
+			Result.append ("(id: " + janitaur_id.out + ") ")
+			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
+		end
+
+feature -- MOVEABLE_ENTITY death by ASTEROID
+
+	death_by_asteroid (me: MOVEABLE_ENTITY; sector_row, sector_col, asteroid_id: INTEGER): STRING
+		require
+			me_is_not_a_planet: not attached {PLANET} me
+			me_is_not_an_asteroid: not attached {ASTEROID} me
+		do
+			create Result.make_empty
+			Result.append (moveable_entity_type (me))
+			Result.append ("got destroyed by asteroid (id: " + asteroid_id.out + ") ")
+			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
+		end
+
+feature -- FUELABLE death by out_of_fuel
+
+	death_by_out_of_fuel (f: MOVEABLE_ENTITY; sector_row, sector_col: INTEGER): STRING
+		require
+			f_is_fuelable: attached {FUELABLE} f
+			f_is_out_of_fuel: (attached {FUELABLE} f as f_e) implies f_e.is_out_of_fuel
+		do
+			create Result.make_empty
+			Result.append (moveable_entity_type (f))
+			Result.append ("got lost in space - out of fuel at ")
+			Result.append ("Sector:" + sector_row.out + ":" + sector_col.out)
+		end
+
+feature -- EXPLORER death by MALEVOLENT
+
+	death_by_malevolent (e: EXPLORER; sector_row, sector_col: INTEGER): STRING
+		require
+			e.is_dead_by_malevolent
+		do
+			create Result.make_empty
+			Result.append (moveable_entity_type (e))
+			Result.append ("got lost in space - out of life support at ")
+			Result.append ("Sector:" + sector_row.out + ":" + sector_col.out)
+		end
+
+feature -- MALEVOLENT death by BENIGN
+
+	death_by_benign (m: MALEVOLENT; sector_row, sector_col, benign_id: INTEGER): STRING
+		do
+			create Result.make_empty
+			Result.append (moveable_entity_type (m))
+			Result.append ("got destroyed by benign (id: " + benign_id.out + ") ")
+			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
+		end
+
+		--End of TODO
+
 feature -- move
 
 	move_error_no_mission: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("Negative on that request:no mission in progress.")
+			Result.append ("Negative on that request:no mission in progress.")
 		end
 
 	move_error_landed (row, col: INTEGER): STRING
@@ -258,7 +352,7 @@ feature -- move
 	move_error_sector_full: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("Cannot transfer to new location as it is full.")
+			Result.append ("Cannot transfer to new location as it is full.")
 		end
 
 feature -- pass
@@ -266,7 +360,7 @@ feature -- pass
 	pass_error_no_mission: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("Negative on that request:no mission in progress.")
+			Result.append ("Negative on that request:no mission in progress.")
 		end
 
 feature -- play
@@ -274,7 +368,7 @@ feature -- play
 	play_error_no_mission: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("To start a new mission, please abort the current one first.")
+			Result.append ("To start a new mission, please abort the current one first.")
 		end
 
 feature -- test
@@ -282,22 +376,21 @@ feature -- test
 	test_error_no_mission: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("To start a new mission, please abort the current one first.")
+			Result.append ("To start a new mission, please abort the current one first.")
 		end
 
 	test_error_threshold: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("Thresholds should be non-decreasing order.")
+			Result.append ("Thresholds should be non-decreasing order.")
 		end
-
 
 feature -- wormhole
 
 	wormhole_error_no_mission: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append("To start a new mission, please abort the current one first.")
+			Result.append ("To start a new mission, please abort the current one first.")
 		end
 
 	wormhole_error_landed (row, col: INTEGER): STRING
