@@ -237,7 +237,8 @@ feature -- planet
 		end
 
 feature {NONE} -- Helper Query
-	moveable_entity_type (np: MOVEABLE_ENTITY): STRING -- ie "blackhole "
+
+	moveable_entity_type (np: MOVEABLE_ENTITY): STRING -- ie "Benign "
 		do
 			create Result.make_empty
 			if attached {BENIGN} np then
@@ -294,6 +295,16 @@ feature -- MOVEABLE_ENTITY death by ASTEROID
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
+feature -- MALEVOLENT death by BENIGN
+
+	death_by_benign (m: MALEVOLENT; sector_row, sector_col, benign_id: INTEGER): STRING
+		do
+			create Result.make_empty
+			Result.append (moveable_entity_type (m))
+			Result.append ("got destroyed by benign (id: " + benign_id.out + ") ")
+			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
+		end
+
 feature -- FUELABLE death by out_of_fuel
 
 	death_by_out_of_fuel (f: MOVEABLE_ENTITY; sector_row, sector_col: INTEGER): STRING
@@ -303,8 +314,8 @@ feature -- FUELABLE death by out_of_fuel
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (f))
-			Result.append ("got lost in space - out of fuel at ")
-			Result.append ("Sector:" + sector_row.out + ":" + sector_col.out)
+			Result.append ("got lost in space - out of fuel ")
+			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
 feature -- EXPLORER death by MALEVOLENT
@@ -315,17 +326,7 @@ feature -- EXPLORER death by MALEVOLENT
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (e))
-			Result.append ("got lost in space - out of life support at ")
-			Result.append ("Sector:" + sector_row.out + ":" + sector_col.out)
-		end
-
-feature -- MALEVOLENT death by BENIGN
-
-	death_by_benign (m: MALEVOLENT; sector_row, sector_col, benign_id: INTEGER): STRING
-		do
-			create Result.make_empty
-			Result.append (moveable_entity_type (m))
-			Result.append ("got destroyed by benign (id: " + benign_id.out + ") ")
+			Result.append ("got lost in space - out of life support ")
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
