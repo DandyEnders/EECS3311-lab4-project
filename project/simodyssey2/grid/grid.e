@@ -34,7 +34,6 @@ feature {NONE} -- Contstructor
 		do
 			create sect.make_empty ([1, 1], 0)
 			create sectors.make_filled (sect, r, c)
-			create moveable_entities.make (100)
 			create stationary_entities.make (100)
 			across
 				1 |..| r is i
@@ -58,10 +57,23 @@ feature {NONE} -- Attribute
 
 	col: INTEGER
 
-	moveable_entities: HASH_TABLE [MOVEABLE_ENTITY, INTEGER]
-
 	stationary_entities: HASH_TABLE [STATIONARY_ENTITY, INTEGER]
 
+feature {NONE} --Queries
+	moveable_entities: HASH_TABLE [MOVEABLE_ENTITY, INTEGER]
+	do
+		create Result.make(100)
+		across
+			sectors is i_s
+		loop
+			across
+			i_s.ordered_moveable_entities is me
+			loop
+				Result.force(me,me.id)
+			end
+		end
+		Result.compare_objects
+	end
 feature -- commands
 
 	add (ie: ID_ENTITY)
@@ -84,9 +96,7 @@ feature -- commands
 			not at (c).is_full
 		do
 			at (c).add (ie)
-			if attached {MOVEABLE_ENTITY} ie as me then
-				moveable_entities.force (me, me.id)
-			elseif attached {STATIONARY_ENTITY} ie as se then
+			if attached {STATIONARY_ENTITY} ie as se then
 				stationary_entities.force (se, se.id)
 			end
 		ensure
@@ -97,8 +107,6 @@ feature -- commands
 			-- Removes moveable entity in me.coordinate.
 		do
 			at (me.coordinate).remove (me)
-				--			moveable_entities.force (me, me.id) -- ato changed this
-			moveable_entities.remove (me.id)
 		ensure
 			not at (me.coordinate).has (me)
 		end
@@ -186,7 +194,6 @@ feature -- Queries
 		do
 			Result := across sectors is i_s some i_s.has (ie) end
 		end
-
 feature -- Traversal
 
 	new_cursor: ARRAY_ITERATION_CURSOR [SECTOR]

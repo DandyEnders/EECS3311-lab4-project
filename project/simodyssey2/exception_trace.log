@@ -1,0 +1,201 @@
+
+simodyssey2: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+EXPLORER            confirm_health @1      Unhandled exception:         
+<0000000005EBEEA8>                         External event.               Fail
+-------------------------------------------------------------------------------
+EXPLORER            confirm_health @1                                   
+<0000000005EBEEA8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+EXPLORER            check_health @5                                     
+<0000000005EBEEA8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+SIMODYSSEY          default_turn_actions @1
+<0000000005EB3E14>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+SIMODYSSEY          move_explorer @10                                   
+<0000000005EB3E14>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PLAY_STATE          move @2                                             
+<0000000005ED5F00>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+CONTROLLER          move @10                                            
+<0000000005EB3DC0>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_MOVE            move @3                                             
+<0000000005EE4DB0>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           fast_call                                           
+<0000000005EE4F78>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           call @3                                             
+<0000000005EE4F78>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           apply @2                                            
+<0000000005EE4F78>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_ABSTRACT_UI     run_input_commands @2                               
+<0000000005EE2BCC>  (From ETF_ABSTRACT_UI_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_SOFTWARE_OPERATION
+                    execute_without_log @7 
+<0000000005EB3D84>  (From ETF_SOFTWARE_OPERATION_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                handle_interactive_mode @20
+<0000000005EB3418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @21                                            
+<0000000005EB3418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @16                                            
+<0000000005EB3418>  (From ETF_ROOT_INTERFACE)
+                                           Routine failure.              Rescue
+-------------------------------------------------------------------------------
+ROOT                root's creation                                     
+<0000000005EB3418>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
+
+simodyssey2: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+EXPLORER            confirm_health @1      Unhandled exception:         
+<0000000005F4FEA8>                         External event.               Fail
+-------------------------------------------------------------------------------
+EXPLORER            confirm_health @1                                   
+<0000000005F4FEA8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+EXPLORER            check_health @5                                     
+<0000000005F4FEA8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+SIMODYSSEY          default_turn_actions @1
+<0000000005F44E14>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+SIMODYSSEY          move_explorer @10                                   
+<0000000005F44E14>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PLAY_STATE          move @2                                             
+<0000000005F66F00>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+CONTROLLER          move @10                                            
+<0000000005F44DC0>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_MOVE            move @3                                             
+<0000000005F75DB0>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           fast_call                                           
+<0000000005F75F78>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           call @3                                             
+<0000000005F75F78>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           apply @2                                            
+<0000000005F75F78>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_ABSTRACT_UI     run_input_commands @2                               
+<0000000005F73BCC>  (From ETF_ABSTRACT_UI_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_SOFTWARE_OPERATION
+                    execute_without_log @7 
+<0000000005F44D84>  (From ETF_SOFTWARE_OPERATION_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                handle_interactive_mode @20
+<0000000005F44418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @21                                            
+<0000000005F44418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @16                                            
+<0000000005F44418>  (From ETF_ROOT_INTERFACE)
+                                           Routine failure.              Rescue
+-------------------------------------------------------------------------------
+ROOT                root's creation                                     
+<0000000005F44418>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
+
+simodyssey2: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+EXPLORER            confirm_health @1      Unhandled exception:         
+<0000000006057EA8>                         External event.               Fail
+-------------------------------------------------------------------------------
+EXPLORER            confirm_health @1                                   
+<0000000006057EA8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+EXPLORER            check_health @5                                     
+<0000000006057EA8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+SIMODYSSEY          default_turn_actions @1
+<000000000604CE14>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+SIMODYSSEY          move_explorer @10                                   
+<000000000604CE14>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PLAY_STATE          move @2                                             
+<000000000606EF00>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+CONTROLLER          move @10                                            
+<000000000604CDC0>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_MOVE            move @3                                             
+<000000000607DDB0>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           fast_call                                           
+<000000000607DF78>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           call @3                                             
+<000000000607DF78>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           apply @2                                            
+<000000000607DF78>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_ABSTRACT_UI     run_input_commands @2                               
+<000000000607BBCC>  (From ETF_ABSTRACT_UI_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_SOFTWARE_OPERATION
+                    execute_without_log @7 
+<000000000604CD84>  (From ETF_SOFTWARE_OPERATION_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                handle_interactive_mode @20
+<000000000604C418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @21                                            
+<000000000604C418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @16                                            
+<000000000604C418>  (From ETF_ROOT_INTERFACE)
+                                           Routine failure.              Rescue
+-------------------------------------------------------------------------------
+ROOT                root's creation                                     
+<000000000604C418>                         Routine failure.              Exit
+-------------------------------------------------------------------------------

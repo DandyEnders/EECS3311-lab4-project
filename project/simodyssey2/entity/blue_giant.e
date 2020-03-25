@@ -8,6 +8,7 @@ class
 	BLUE_GIANT
 
 inherit
+
 	STAR
 
 create

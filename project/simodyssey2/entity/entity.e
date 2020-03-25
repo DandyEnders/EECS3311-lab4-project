@@ -56,6 +56,4 @@ feature -- out
 			Result := character
 		end
 
-
-
 end

@@ -8,6 +8,7 @@ class
 	BLACKHOLE
 
 inherit
+
 	STATIONARY_ENTITY
 
 create

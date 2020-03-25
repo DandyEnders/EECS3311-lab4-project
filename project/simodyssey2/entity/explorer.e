@@ -17,6 +17,14 @@ inherit
 			out_death_description
 		end
 
+	FUELABLE
+		rename
+			make as fuelable_make
+		undefine
+			out,
+			is_equal
+		end
+
 create
 	make
 
@@ -25,17 +33,17 @@ feature {NONE} -- Constructor
 	make (a_coordinate: COORDINATE; a_id: INTEGER)
 		do
 			moveable_make (a_coordinate, a_id)
-			killable_make (3)
-			fuel := 3
+			deathable_make (3)
+			fuelable_make (3)
 			landed := false
 			found_life := FALSE
 			add_death_cause_type ("BLACKHOLE")
 			add_death_cause_type ("OUT_OF_FUEL")
+			add_death_cause_type ("MALEVOLENT")
+			add_death_cause_type ("ASTROID")
 		end
 
 feature -- Attributes
-
-	fuel: INTEGER -- TODO: might make it a class
 
 	landed: BOOLEAN
 
@@ -44,11 +52,6 @@ feature -- Attributes
 feature -- Queries
 
 	character: STRING = "E"
-
-	is_out_of_fuel: BOOLEAN
-		do
-			Result := fuel ~ 0
-		end
 
 	is_dead_by_out_of_fuel: BOOLEAN
 		do
@@ -60,6 +63,16 @@ feature -- Queries
 			Result := is_dead and then get_death_cause ~ "BLACKHOLE"
 		end
 
+	is_dead_by_malevolent: BOOLEAN
+		do
+			Result := is_dead and then get_death_cause ~ "MALEVOLENT"
+		end
+
+	is_dead_by_astroid: BOOLEAN
+		do
+			Result := is_dead and then get_death_cause ~ "ASTROID"
+		end
+
 feature {UNIT_TEST} -- testing Commands Delete after finalized
 
 feature -- Commands
@@ -69,14 +82,6 @@ feature -- Commands
 			landed := b
 		end
 
-	spend_fuel_unit
-		require
-			fuel > 0
-			-- calling this will cause fuel to decrease by 1
-		do
-			fuel := fuel - 1
-		end
-
 	set_found_life_true
 		require
 			landed
@@ -84,21 +89,19 @@ feature -- Commands
 			found_life := TRUE
 		end
 
-	charge_fuel (s: STAR)
-			--given a star, can recharge fuel.
-		require
-			s.luminosity >= 0
-		do
-			if (fuel + s.luminosity) >= 3 then
-				fuel := 3
-			else
-				fuel := (fuel + s.luminosity)
-			end
-		end
-
 	kill_by_blackhole
 		do
 			kill_by ("BLACKHOLE")
+		end
+
+	kill_by_malevolent
+		do
+			kill_by ("MALEVOLENT")
+		end
+
+	kill_by_astroid
+		do
+			kill_by ("ASTROID")
 		end
 
 	kill_by_out_of_fuel
@@ -108,7 +111,7 @@ feature -- Commands
 			kill_by ("OUT_OF_FUEL")
 		end
 
-	behave (sector: SECTOR) --(2)
+	check_health (sector: SECTOR) --(2)
 		do
 				-- check if explorer can charge
 			if sector.has_stationary_entity then
@@ -174,8 +177,5 @@ feature -- Out
 				Result.append ("F")
 			end
 		end
-
-invariant
-	0 <= fuel and fuel <= 3
 
 end

@@ -34,4 +34,16 @@ feature -- Attributes
 			turns_left := value
 		end
 
+feature -- Commands
+
+	behave (sector: SECTOR)
+		require
+			sector.coordinate ~ coordinate
+			turns_left ~ 0
+		deferred
+		end
+
+invariant
+	0 <= turns_left and turns_left <= 2
+
 end

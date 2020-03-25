@@ -13,7 +13,7 @@ inherit
 
 	DEATHABLE
 		rename
-			make as killable_make
+			make as deathable_make
 		undefine
 			out,
 			is_equal
@@ -21,7 +21,7 @@ inherit
 
 feature -- Commands (2)
 
-	behave (sector: SECTOR)
+	check_health (sector: SECTOR)
 		require
 			sector.coordinate ~ coordinate
 		deferred

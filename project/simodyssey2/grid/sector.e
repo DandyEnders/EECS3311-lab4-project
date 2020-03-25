@@ -55,18 +55,18 @@ feature -- Command
 		require
 			is_landable
 		local
-			min_id:INTEGER
-			min_p:detachable PLANET
+			min_id: INTEGER
+			min_p: detachable PLANET
 		do
-			min_id:=min_id.max_value
+			min_id := min_id.max_value
 			across
 				quadrants is i_q
 			loop
 				if attached {PLANET} i_q.entity as p then
 					if p.attached_to_star and not p.visited then
 						if p.id < min_id then
-							min_id:=p.id
-							min_p:=p
+							min_id := p.id
+							min_p := p
 						end
 					end
 				end
@@ -75,10 +75,9 @@ feature -- Command
 				a_p.set_visited
 				e.set_landed (TRUE)
 				if a_p.support_life then
-				e.set_found_life_true
+					e.set_found_life_true
 				end
 			end
-
 		end
 
 	remove (me: MOVEABLE_ENTITY)
@@ -125,6 +124,23 @@ feature -- Command
 
 feature -- Queries
 
+	entity (id: INTEGER): ID_ENTITY
+		require
+			has_id (id)
+		do
+			Result := create {EXPLORER}.make ([1, 1], 3) -- will never be returned.
+
+			across
+				quadrants is i_q
+			loop
+				if attached {ID_ENTITY} i_q.entity as id_e then
+					if id_e.id ~ id then
+						Result := id_e
+					end
+				end
+			end
+		end
+
 	is_landable: BOOLEAN
 		do
 			if has_planet and has_star then
@@ -144,13 +160,9 @@ feature -- Queries
 			end
 		end
 
-	has_planet:BOOLEAN
+	has_planet: BOOLEAN
 		do
-			Result:= across quadrants is i_q
-			some
-				 attached {PLANET} i_q.entity
-			end
-
+			Result := across quadrants is i_q some attached {PLANET} i_q.entity end
 		end
 
 	new_cursor: ARRAYED_LIST_ITERATION_CURSOR [QUADRANT]
@@ -199,6 +211,11 @@ feature -- Queries
 	has (me: ID_ENTITY): BOOLEAN
 		do
 			Result := across quadrants is i_q some i_q.has (me) end
+		end
+
+	has_id (id: INTEGER): BOOLEAN
+		do
+			Result := across quadrants is i_q some i_q.entity_id ~ id end
 		end
 
 	quadrant_at (me: ID_ENTITY): INTEGER
@@ -263,6 +280,48 @@ feature -- Queries
 					Result := Result + 1
 				end
 			end
+		end
+
+	ordered_moveable_entities: ARRAY [MOVEABLE_ENTITY]
+		local
+			i, j: INTEGER
+			min_id: INTEGER
+			index: INTEGER
+			temp: ARRAY [MOVEABLE_ENTITY]
+		do
+			create Result.make_empty
+			create temp.make_empty
+			across -- placing all moveable entities into an array
+				quadrants is i_q
+			loop
+				if attached {MOVEABLE_ENTITY} i_q.entity as me then
+					temp.force (me, temp.count + 1)
+				end
+			end
+			from -- sorting(increasing order) and placing all moveable entities into Result.
+				i := 1
+			until
+				i > temp.count
+			loop
+				min_id := temp [i].id
+				index := i
+				from
+					j := i
+				until
+					j > temp.count
+				loop
+					if temp [j].id < min_id then
+						min_id := temp [i].id
+						index := i
+					end
+					j := j + 1
+				end
+				Result.force (temp [index], Result.count + 1)
+				i := i + 1
+			end
+			Result.compare_objects
+		ensure
+			Result.count ~ moveable_entity_count
 		end
 
 feature -- Output

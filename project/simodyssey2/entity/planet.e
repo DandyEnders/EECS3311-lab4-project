@@ -25,7 +25,7 @@ feature {NONE} -- Constructor
 	make (a_coordinate: COORDINATE; a_id: INTEGER)
 		do
 			moveable_make (a_coordinate, a_id)
-			killable_make (1)
+			deathable_make (1)
 			add_death_cause_type ("BLACKHOLE")
 			visited := FALSE
 			attached_to_star := FALSE
@@ -63,14 +63,19 @@ feature -- Command
 			visited := TRUE
 		end
 
+	check_health (sector: SECTOR)
+		do
+			if sector.has_blackhole then
+				kill_by_blackhole
+			end
+		end
+
 	behave (sector: SECTOR) -- (2)
 		local
 			rng: RANDOM_GENERATOR_ACCESS
 			sup_life_prob: INTEGER
 		do
-			if sector.has_blackhole then
-				kill_by_blackhole
-			elseif sector.has_star and not attached_to_star then
+			if sector.has_star and not attached_to_star then
 					-- If there is a star in the sector then set attached for the planet to true.
 				set_attached_to_star (TRUE)
 					-- If this star is a yellow dwarf then rchoose if this planet should support life?

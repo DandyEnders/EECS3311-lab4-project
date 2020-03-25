@@ -23,28 +23,28 @@ feature {NONE} -- Constructor
 		local
 			r, c, n_quadrant: INTEGER
 		do
-				--setting the threshold of a planet to some default value (1)
+				--setting the threshold of a planet to some default value
 			astroid_threshold := 0
 			janitaur_threshold := 0
 			malevolent_threshold := 0
 			benign_threshold := 0
 			planet_threshold := 0
-				--initializing global id object (1)
+				--initializing global id object
 			create moveable_id.make (0, TRUE)
 			create stationary_id.make (-1, FALSE)
-				--creating unique entities Explorer and Blackhole (1)
+				--creating unique entities Explorer and Blackhole
 			create explorer.make ([1, 1], moveable_id.get_id)
 			create blackhole.make ([3, 3], stationary_id.get_id)
-				-- creating the board (1)
+				-- creating the board
 			r := shared_info.number_rows
 			c := shared_info.number_columns
 			n_quadrant := shared_info.quadrants_per_sector
 			create galaxy.make (r, c, n_quadrant)
-				-- intializing game_in_session = FALSE (1)
+				-- intializing game_in_session = FALSE
 			is_test_game := FALSE
 			is_aborted := FALSE
-				-- moved_entities.is_empty = TRUE and dead_entity.is_empty = TRUE. (1)
-			create moved_enities.make_empty
+				-- moved_entities.is_empty = TRUE and dead_entity.is_empty = TRUE.
+			create moved_entities.make_empty
 			create dead_entity.make_empty
 		end
 
@@ -52,7 +52,7 @@ feature -- Attribute
 
 	galaxy: GRID
 
-feature -- Queries relevant to play / test / abort (1)
+feature -- Queries relevant to play / test / abort
 
 	is_test_game: BOOLEAN -- is this a test game?
 
@@ -84,7 +84,7 @@ feature -- Queries relevant to move_explorer (2)
 			Result := explorer.landed
 		end
 
-feature {NONE} -- Main MOVEABLE_ENTITY Attributes (1)
+feature {NONE} -- Main MOVEABLE_ENTITY Attributes
 
 	explorer: EXPLORER
 
@@ -110,7 +110,7 @@ feature {NONE, UNIT_TEST} -- Private Attribute
 
 		--moved_entities and dead entities
 
-	moved_enities: ARRAY [STRING]
+	moved_entities: ARRAY [STRING]
 
 	dead_entity: ARRAY [MOVEABLE_ENTITY]
 
@@ -171,7 +171,7 @@ feature -- Command
 			destination_coord := explorer.coordinate + d
 			destination_coord := destination_coord.wrap_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 				-- reset list of "moved" entities and "dead" entities
-			create moved_enities.make_empty
+			create moved_entities.make_empty
 			create dead_entity.make_empty
 				-- relocate the explorer and spend fuel
 			relocate_moveable_entity (explorer, destination_coord)
@@ -190,7 +190,7 @@ feature -- Command
 			stationary_entity_is_wormhole: is_explorer_with_wormhole
 		do
 				-- reset list of "moved" entities and "dead" entities
-			create moved_enities.make_empty
+			create moved_entities.make_empty
 			create dead_entity.make_empty
 				--wormhole-ing
 			wormhole_entity (explorer)
@@ -209,7 +209,7 @@ feature -- Command
 			is_sector_has_unvisted_attached_planets
 		do
 				-- reset list of "moved" entities and "dead" entities
-			create moved_enities.make_empty
+			create moved_entities.make_empty
 			create dead_entity.make_empty
 				--landing the explorer
 			galaxy.sector_with (explorer).land_explorer (explorer)
@@ -222,7 +222,7 @@ feature -- Command
 			is_explorer_landed
 		do
 				-- reset list of "moved" entities and "dead" entities
-			create moved_enities.make_empty
+			create moved_entities.make_empty
 			create dead_entity.make_empty
 			explorer.set_landed (FALSE)
 			default_turn_actions
@@ -233,16 +233,43 @@ feature -- Command
 			game_in_session ---make sure that if the player dies, then this is false.
 		do
 				-- reset list of "moved" entities and "dead" entities
-			create moved_enities.make_empty
+			create moved_entities.make_empty
 			create dead_entity.make_empty
 			default_turn_actions
 		end
 
 feature {NONE} -- Private Helper Commands
 
+	reproduce (n_me: NP_MOVEABLE_ENTITY)
+		local
+			sector: SECTOR
+			s: STRING
+			id: INTEGER
+			temp_me: NP_MOVEABLE_ENTITY
+		do
+			sector := galaxy.sector_with (n_me)
+			if attached {REPRODUCEABLE} n_me as r_n_me then
+				if (not sector.is_full) and r_n_me.ready_to_reproduce then
+					id := moveable_id.get_id
+					r_n_me.reproduce (sector, id)
+						--doing pretty printing {must change, this is a temporary thing just for testing}
+						-- TODO
+					check attached {NP_MOVEABLE_ENTITY} sector.entity (id) as ne then
+						temp_me := ne
+					end
+					create s.make_from_string ("  reproduced " + temp_me.out_sqr_bracket + " at " + sector.out_abstract_full_coordinate (temp_me))
+					moved_entities.force (s, moved_entities.count + 1)
+				else
+					if not r_n_me.ready_to_reproduce then
+						r_n_me.decrement_actions_left_by_one
+					end
+				end
+			end
+		end
+
 	default_turn_actions -- every time a turn command occurs, these actions must be done.
 		do
-			explorer.behave (galaxy.sector_with (explorer))
+			explorer.check_health (galaxy.sector_with (explorer))
 			if explorer.is_dead then
 				galaxy.remove (explorer) -- I believe it is the job of SYMODYSSEY to remove the explorer from the game
 				dead_entity.force (explorer, dead_entity.count + 1)
@@ -273,7 +300,7 @@ feature {NONE} -- Private Helper Commands
 				s.append (galaxy.sector_with (me).out_abstract_full_coordinate (me))
 			end
 				-- Adding Explorer's "movement" to the list of moved enetities.
-			moved_enities.force (s, moved_enities.count + 1)
+			moved_entities.force (s, moved_entities.count + 1)
 		end
 
 	wormhole_entity (me: MOVEABLE_ENTITY) -- (2)
@@ -306,11 +333,14 @@ feature {NONE} -- Private Helper Commands
 			new_coordinate_of_p := new_coordinate_of_p.wrap_coordinate (new_coordinate_of_p, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 			if not galaxy.at (new_coordinate_of_p).is_full then
 				relocate_moveable_entity (n_me, new_coordinate_of_p)
+				if attached {FUELABLE} n_me as n_me_f then
+					n_me_f.spend_fuel_unit
+				end
 			else
 				create s.make_from_string (n_me.out_sqr_bracket)
 				s.append (":")
 				s.append (galaxy.sector_with (n_me).out_abstract_full_coordinate (n_me))
-				moved_enities.force (s, moved_enities.count + 1)
+				moved_entities.force (s, moved_entities.count + 1)
 			end
 		end
 
@@ -323,7 +353,7 @@ feature {NONE} -- Private Helper Commands
 			across
 				galaxy.all_moveable_entities is i_e
 			loop
-				if attached {NP_MOVEABLE_ENTITY} i_e as n_me then
+				if not i_e.is_dead and attached {NP_MOVEABLE_ENTITY} i_e as n_me then
 						-- if the planets turns left is 0, then check if there is a star in the sector
 					if n_me.turns_left ~ 0 then
 							-- specal case ( pg  28 )
@@ -331,26 +361,30 @@ feature {NONE} -- Private Helper Commands
 							p.behave (galaxy.sector_with (p))
 						else -- turns_left = 0 and no star entity in same sector
 								-- movement (pg  29)
-								-- TODO
-								--								--							if galaxy.sector_with (n_me).has_wormhole and (attached {MALEVOLENT} n_me or attached {BENIGN} n_me)then
-								--								--								 wormhole_entity(n_me)
-								--								--							else
-								--								--								direction_num := rng.rchoose (1, 8)
-								--								--								move_entity (n_me, d.give_direction (direction_num))
-								--								--								--spend fuel for janitaur, malevonent, and benign
-								--								--								if attached {MALEVOLENT} n_me as m then
-								--								--									m.spend_fuel_unit
-								--								--								elseif attached {BENIGN} n_me as b then
-								--								--									b.spend_fuel_unit
-								--								--								elseif attached {JANITAUR} n_me as j then
-								--								--									j.spend_fuel_unit
-								--								--								end
-								--								--							end --
-								--								--							n_me.behave (galaxy.sector_with (n_me))
-								--								--							if n_me.is_dead then
-								--								--								galaxy.remove (n_me)
-								--								--								dead_entity.force (n_me, dead_entity.count + 1)
-								--								--							end
+							if galaxy.sector_with (n_me).has_wormhole and (attached {MALEVOLENT} n_me or attached {BENIGN} n_me) then
+								wormhole_entity (n_me)
+							else
+								direction_num := rng.rchoose (1, 8)
+									--move_entity and spend fuel spend fuel for janitaur, malevonent, and benign
+								move_entity (n_me, d.give_direction (direction_num))
+							end --
+							n_me.check_health (galaxy.sector_with (n_me))
+							if not n_me.is_dead then
+								if attached {REPRODUCEABLE} n_me then
+									reproduce (n_me)
+								end
+								n_me.behave (galaxy.sector_with (n_me))
+							end
+							across
+								galaxy.sector_with (n_me) is i_q -- collecting all dead entities in the secotr
+							loop
+								if attached {MOVEABLE_ENTITY} i_q.entity as me_d then
+									if me_d.is_dead then
+										galaxy.remove (me_d)
+										dead_entity.force (me_d, dead_entity.count + 1)
+									end
+								end
+							end
 						end
 					else
 						n_me.set_turns_left (n_me.turns_left - 1)
@@ -359,15 +393,14 @@ feature {NONE} -- Private Helper Commands
 			end
 		end
 
-	populate_galaxy_with_non_playable_moveable_entities --(1)
+	populate_galaxy_with_non_playable_moveable_entities -- (1)
 		local
 			numb_of_entity_per_sector: INTEGER
 			value: INTEGER
-				-- TODO
-				--			a:ASTROID
-				--			j:JANITAUR
-				--			m: MALEVOLENT
-				--			b: BENIGN
+			a: ASTROID
+			j: JANITAUR
+			m: MALEVOLENT
+			b: BENIGN
 			p: PLANET
 		do
 			across
@@ -380,26 +413,21 @@ feature {NONE} -- Private Helper Commands
 					loop
 						value := rng.rchoose (1, 100)
 						if value < astroid_threshold then
-								-- TODO
-								--							create a.make (i_g.coordinate, moveable_id.get_id)
-								--							a.set_turns_left (rng.rchoose (0, 2))
-								--							galaxy.add (a)
-
+							create a.make (i_g.coordinate, moveable_id.get_id)
+							a.set_turns_left (rng.rchoose (0, 2))
+							galaxy.add (a)
 						elseif value < janitaur_threshold then
-								--							create j.make (i_g.coordinate, moveable_id.get_id)
-								--							j.set_turns_left (rng.rchoose (0, 2))
-								--							galaxy.add (j)
-
+							create j.make (i_g.coordinate, moveable_id.get_id)
+							j.set_turns_left (rng.rchoose (0, 2))
+							galaxy.add (j)
 						elseif value < malevolent_threshold then
-								--							create m.make (i_g.coordinate, moveable_id.get_id)
-								--							m.set_turns_left (rng.rchoose (0, 2))
-								--							galaxy.add (m)
-
+							create m.make (i_g.coordinate, moveable_id.get_id)
+							m.set_turns_left (rng.rchoose (0, 2))
+							galaxy.add (m)
 						elseif value < benign_threshold then
-								--							create b.make (i_g.coordinate, moveable_id.get_id)
-								--							b.set_turns_left (rng.rchoose (0, 2))
-								--							galaxy.add (b)
-								--
+							create b.make (i_g.coordinate, moveable_id.get_id)
+							b.set_turns_left (rng.rchoose (0, 2))
+							galaxy.add (b)
 						elseif value < planet_threshold then
 							create p.make (i_g.coordinate, moveable_id.get_id)
 							p.set_turns_left (rng.rchoose (0, 2))
@@ -410,7 +438,7 @@ feature {NONE} -- Private Helper Commands
 			end
 		end
 
-	populate_galaxy_with_stationary_entities --(1)
+	populate_galaxy_with_stationary_entities
 		local
 			row: INTEGER
 			col: INTEGER
@@ -438,9 +466,9 @@ feature {NONE} -- Private Helper Commands
 			end
 		end
 
-	populate_galaxy --(1)
+	populate_galaxy --
 		do
-				-- adding explorer and blackhole (1)
+				-- adding explorer and blackhole
 			galaxy.add (explorer) --
 			galaxy.add (blackhole) --
 				-- populating galaxy based on threshold values
@@ -544,7 +572,7 @@ feature -- Interface
 feature -- Out
 
 	out: STRING
-		Do
+		do
 			create Result.make_empty
 			Result.append (out_movement)
 			Result.append ("%N")
@@ -557,6 +585,10 @@ feature -- Out
 				Result.append ("%N")
 			end
 			Result.append (out_grid)
+				--			--RNG debug
+				--			Result.append ("%N")
+				--			Result.append(rng.rng_debug_this_round)
+				--			rng.reset_debug
 		end
 
 	out_grid: STRING
@@ -571,11 +603,11 @@ feature -- Out
 		do
 			create Result.make_from_string (msg.left_margin)
 			Result.append ("Movement:")
-			if moved_enities.is_empty then
+			if moved_entities.is_empty then
 				Result.append ("none")
 			else
 				across
-					moved_enities is i_s
+					moved_entities is i_s
 				loop
 					Result.append ("%N")
 					Result.append (msg.left_big_margin)
