@@ -44,6 +44,6 @@ feature -- Commands
 		end
 
 invariant
-	0 <= turns_left and turns_left <= 2
+	is_alive implies (0 <= turns_left and turns_left <= 2)
 
 end

@@ -102,17 +102,19 @@ feature -- Commands
 	behave (sector: SECTOR)
 		local
 			rng: RANDOM_GENERATOR_ACCESS
+			benign_at_sector: BOOLEAN
 		do
-			if not (across sector is i_q some attached {BENIGN} i_q.entity end) then --if there does not exists a benign at the sector
+			benign_at_sector := (across sector.ordered_moveable_entities is me some attached {BENIGN} me end)
+			if not benign_at_sector then --if there does not exists a benign at the sector
 				across
-					sector is i_q
+					sector.ordered_moveable_entities is me
 				loop
-					if attached {EXPLORER} i_q.entity as e then -- if there is an explorer and he is not landed then proceed
-						if not e.landed then
-							if e.life.value ~ 1 then -- if there is an explorer and he is almost dead
-								e.kill_by_malevolent
+					if attached {EXPLORER} me as e_me then -- if there is an explorer and he is not landed then proceed
+						if not e_me.landed then
+							if e_me.life.value ~ 1 then -- if there is an explorer and he is almost dead
+								e_me.kill_by_malevolent
 							else
-								e.life.subtract_life (1)
+								e_me.life.subtract_life (1)
 							end
 						end
 					end

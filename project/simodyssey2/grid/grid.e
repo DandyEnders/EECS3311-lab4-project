@@ -147,6 +147,7 @@ feature -- Queries
 				end
 				i := i + 1
 			end
+			Result.compare_objects
 		end
 
 	all_stationary_entities: ARRAY [STATIONARY_ENTITY] -- I needed a way to return all stationary_entities in accending order of their ids.
@@ -168,6 +169,7 @@ feature -- Queries
 				end
 				i := i + 1
 			end
+			Result.compare_objects
 		end
 
 	at (c: COORDINATE): SECTOR

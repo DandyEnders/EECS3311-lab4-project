@@ -65,9 +65,7 @@ feature -- Command
 
 	check_health (sector: SECTOR)
 		do
-			if sector.has_blackhole then
-				kill_by_blackhole
-			end
+			confirm_health (sector)
 		end
 
 	behave (sector: SECTOR) -- (2)
@@ -87,6 +85,15 @@ feature -- Command
 				end
 			elseif not sector.has_star then -- you should only set the turns again if the current sector does not have a star
 				set_turns_left (rng.rchoose (0, 2))
+			end
+		end
+
+feature {NONE} -- Commands
+
+	confirm_health (sector: SECTOR)
+		do
+			if sector.has_blackhole then
+				kill_by_blackhole
 			end
 		end
 

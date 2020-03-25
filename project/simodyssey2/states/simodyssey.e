@@ -333,7 +333,7 @@ feature {NONE} -- Private Helper Commands
 			new_coordinate_of_p := new_coordinate_of_p.wrap_coordinate (new_coordinate_of_p, [1, 1], [shared_info.number_rows, shared_info.number_columns])
 			if not galaxy.at (new_coordinate_of_p).is_full then
 				relocate_moveable_entity (n_me, new_coordinate_of_p)
-				if attached {FUELABLE} n_me as n_me_f then
+				if attached {FUELABLE} n_me as n_me_f then --decrement fue only when a move was successful. If n_me is a planet, then this will be false.
 					n_me_f.spend_fuel_unit
 				end
 			else
@@ -353,7 +353,7 @@ feature {NONE} -- Private Helper Commands
 			across
 				galaxy.all_moveable_entities is i_e
 			loop
-				if not i_e.is_dead and attached {NP_MOVEABLE_ENTITY} i_e as n_me then
+				if not i_e.is_dead and attached {NP_MOVEABLE_ENTITY} i_e as n_me then --checking if i_e.is_dead because there sometimes are dead entities in the list while all npc behave succesively
 						-- if the planets turns left is 0, then check if there is a star in the sector
 					if n_me.turns_left ~ 0 then
 							-- specal case ( pg  28 )
