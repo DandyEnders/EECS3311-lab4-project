@@ -58,7 +58,7 @@ feature -- Queries relevant to play / test / abort
 
 	is_aborted: BOOLEAN -- has the game been aborted?
 
-	game_in_session: BOOLEAN
+	game_in_session: BOOLEAN --TODO, why is galaxy.has(explorer) a requirenment for the game to be in session?
 			-- a game is in session if neither (the explorer's life or his fuel is equal to 0), the game was aborted and the explorer has not found life
 		do
 			Result := explorer.is_alive and explorer.fuel /~ 0 and not explorer.found_life and galaxy.has (explorer) and not is_aborted

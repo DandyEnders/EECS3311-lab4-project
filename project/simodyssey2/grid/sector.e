@@ -298,7 +298,7 @@ feature -- Queries
 					temp.force (me, temp.count + 1)
 				end
 			end
-			from -- sorting(increasing order) and placing all moveable entities into Result.
+			from -- sorting(in increasing order) and placing all moveable entities into Result.
 				i := 1
 			until
 				i > temp.count
@@ -311,8 +311,8 @@ feature -- Queries
 					j > temp.count
 				loop
 					if temp [j].id < min_id then
-						min_id := temp [i].id
-						index := i
+						min_id := temp [j].id
+						index := j
 					end
 					j := j + 1
 				end
@@ -322,7 +322,26 @@ feature -- Queries
 			Result.compare_objects
 		ensure
 			Result.count ~ moveable_entity_count
+			is_sorted(Result)
 		end
+feature {NONE} --command
+
+is_sorted(a:ARRAY [MOVEABLE_ENTITY]):BOOLEAN
+	local
+		i: INTEGER
+	do
+		Result:=TRUE
+		from
+			i:=1
+		until
+			i>a.count-1
+		loop
+			if not (a[i].id <= a[i+1].id) then
+				Result:=FALSE
+			end
+			i:=i+1
+		end
+	end
 
 feature -- Output
 
