@@ -8,6 +8,7 @@ class
 	LIFE
 
 inherit
+
 	ANY
 		redefine
 			out
@@ -17,13 +18,13 @@ create
 	make
 
 feature {NONE}
-	make(a_max: INTEGER)
+
+	make (a_max: INTEGER)
 		do
 			max := a_max
 			value := max
 			is_dead := false
 		end
-
 
 feature -- Attribute
 
@@ -35,9 +36,9 @@ feature -- Attribute
 
 feature -- Commands
 
-	set_life(a_value: INTEGER)
+	set_life (a_value: INTEGER)
 		require
-			valid_value(a_value)
+			valid_value (a_value)
 			not is_dead
 		do
 			value := a_value
@@ -46,7 +47,7 @@ feature -- Commands
 			end
 		end
 
-	add_life(a_value: INTEGER)
+	add_life (a_value: INTEGER)
 			-- If a_value is too big, set vale to max. (Tolerant to big number)
 		require
 			a_value >= 0
@@ -59,7 +60,7 @@ feature -- Commands
 			end
 		end
 
-	subtract_life(a_value: INTEGER)
+	subtract_life (a_value: INTEGER)
 		require
 			a_value >= 0
 			not is_dead
@@ -74,17 +75,17 @@ feature -- Commands
 
 feature -- Queries
 
-	valid_value(a_value: INTEGER): BOOLEAN
+	valid_value (a_value: INTEGER): BOOLEAN
 		do
 			Result := a_value >= 0 and a_value <= max
 		end
 
-	out:STRING
+	out: STRING
 		do
-			create Result.make_from_string("life:")
-			Result.append(value.out)
-			Result.append("/")
-			Result.append(max.out)
+			create Result.make_from_string ("life:")
+			Result.append (value.out)
+			Result.append ("/")
+			Result.append (max.out)
 		end
 
 invariant

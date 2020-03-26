@@ -7,12 +7,21 @@ note
 deferred class
 	REPRODUCEABLE
 
+inherit
+
+	NP_MOVEABLE_ENTITY
+		rename
+			make as np_moveable_entity_make
+		end
+
 feature {NONE} -- Initialization
 
-	make (r_interval: INTEGER)
+	make (a_coordinate: COORDINATE; a_id, t_left, r_interval: INTEGER)
 		do
+			np_moveable_entity_make (a_coordinate, a_id, t_left)
 			reproduction_interval := r_interval
 			actions_left_until_reproduction := reproduction_interval
+			create reproduction_message.make_empty
 		end
 
 feature -- Attributes
@@ -20,6 +29,8 @@ feature -- Attributes
 	actions_left_until_reproduction: INTEGER
 
 	reproduction_interval: INTEGER
+
+	reproduction_message: STRING
 
 feature -- Queries
 
@@ -50,10 +61,29 @@ feature -- Commands
 		require
 			not sector.is_full
 			ready_to_reproduce
-		deferred
+		local
+			rng: RANDOM_GENERATOR_ACCESS
+			n_me: NP_MOVEABLE_ENTITY
+		do
+			reproduction_message.make_empty
+			n_me := cloner (moveable_id, rng.rchoose (0, 2))
+			sector.add (n_me)
+			reproduction_message.make_from_string (msg.left_margin + "reproduced " + n_me.out_sqr_bracket + " at " + sector.out_abstract_full_coordinate (n_me))
+			actions_left_until_reproduction := reproduction_interval
 		ensure
 			not ready_to_reproduce
 			actions_left_until_reproduction ~ reproduction_interval
+			not reproduction_message.is_empty
+		end
+
+feature {NONE} -- Implementation
+
+	cloner (a_id, t_left: INTEGER): like current
+		deferred
+		ensure
+			Result /~ Current
+			Result.id ~ a_id
+			Result.turns_left ~ t_left
 		end
 
 invariant

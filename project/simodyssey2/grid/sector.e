@@ -124,23 +124,6 @@ feature -- Command
 
 feature -- Queries
 
-	entity (id: INTEGER): ID_ENTITY
-		require
-			has_id (id)
-		do
-			Result := create {EXPLORER}.make ([1, 1], 3) -- will never be returned.
-
-			across
-				quadrants is i_q
-			loop
-				if attached {ID_ENTITY} i_q.entity as id_e then
-					if id_e.id ~ id then
-						Result := id_e
-					end
-				end
-			end
-		end
-
 	is_landable: BOOLEAN
 		do
 			if has_planet and has_star then

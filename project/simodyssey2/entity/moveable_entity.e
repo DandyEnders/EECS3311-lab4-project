@@ -10,6 +10,9 @@ deferred class
 inherit
 
 	ID_ENTITY
+		rename
+			make as id_entity_make
+		end
 
 	DEATHABLE
 		rename
@@ -19,24 +22,41 @@ inherit
 			is_equal
 		end
 
-feature -- Commands (2)
+feature {NONE} --Initialization
+
+	make(a_coordinate: COORDINATE; a_id, a_max_life:INTEGER)
+		do
+			id_entity_make(a_coordinate,a_id)
+			deathable_make(a_max_life)
+			add_death_cause_type ("BLACKHOLE")
+		end
+
+feature -- Commands
+
+	kill_by_blackhole(k_id:INTEGER)
+		do
+			kill_by ("BLACKHOLE")
+			killers_id:=k_id
+		ensure
+			is_dead_by_blackhole
+		end
 
 	check_health (sector: SECTOR)
 		require
 			sector.coordinate ~ coordinate
 			is_alive
-		deferred
+		do
+			if sector.has_blackhole then
+				check attached {BLACKHOLE} sector.get_stationary_entity as b_e then
+					kill_by_blackhole (b_e.id)
+				end
+			end
 		end
-
-	kill_by_blackhole(k_id:INTEGER)
-		deferred
-		ensure
-			is_dead_by_blackhole
-		end
-
 feature	-- Queries
 	is_dead_by_blackhole: BOOLEAN
-		deferred end
+		do
+			Result := is_dead and then get_death_cause ~ "BLACKHOLE"
+		end
 
 feature -- out
 
@@ -44,10 +64,17 @@ feature -- out
 		require
 			is_dead
 		do
-			create Result.make_from_string ("    ")
+			create Result.make_from_string (msg.left_big_margin)
 			Result.append (out_description)
 			Result.append (",%N")
-			Result.append ("      ")
+			Result.append (msg.left_big_margin)
+			Result.append (out_death_message)
+		end
+
+	out_death_message: STRING
+		require
+			is_dead
+		deferred
 		end
 
 end

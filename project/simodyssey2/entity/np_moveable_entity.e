@@ -10,20 +10,23 @@ deferred class
 inherit
 
 	MOVEABLE_ENTITY
-		redefine
-			make
+		rename
+			make as moveable_make
 		end
 
 feature {NONE} -- Initialization
 
-	make (a_coordinate: COORDINATE; a_id: INTEGER)
+	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER)
 			-- Initialization for `Current'.
 		do
-			precursor (a_coordinate, a_id)
-			set_turns_left (0)
+			moveable_make (a_coordinate, a_id, 1)
+			set_turns_left (t_left)
+			create behavior_messages.make_empty
 		end
 
 feature -- Attributes
+
+	behavior_messages: ARRAY [STRING]
 
 	turns_left: INTEGER
 
@@ -44,6 +47,6 @@ feature -- Commands
 		end
 
 invariant
-	is_alive implies (0 <= turns_left and turns_left <= 2)
+	0 <= turns_left and turns_left <= 2
 
 end

@@ -8,6 +8,7 @@ class
 	ABSTRACT_STATE
 
 inherit
+
 	ANY
 		redefine
 			out
@@ -26,12 +27,14 @@ feature {NONE} -- Constructor
 
 feature -- Attibute
 
-	-- First number is incremented by one after executing a valid command
-	-- that constitutes a turn or after a valid play or test command.
+		-- First number is incremented by one after executing a valid command
+		-- that constitutes a turn or after a valid play or test command.
+
 	first_number: INTEGER
 
-	-- Second number is incremented if the command is invalid or it doe not
-	-- constitudes a turn.
+		-- Second number is incremented if the command is invalid or it doe not
+		-- constitudes a turn.
+
 	second_number: INTEGER
 
 feature {NONE} -- Private Command
@@ -69,10 +72,10 @@ feature -- Queries
 	out: STRING -- "state:12.3"
 		do
 			create Result.make_empty
-			Result.append("state:")
-			Result.append(first_number.out)
-			Result.append(".")
-			Result.append(second_number.out)
+			Result.append ("state:")
+			Result.append (first_number.out)
+			Result.append (".")
+			Result.append (second_number.out)
 		end
 
 end

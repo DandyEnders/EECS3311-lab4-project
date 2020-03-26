@@ -12,7 +12,6 @@ inherit
 	NP_MOVEABLE_ENTITY
 		redefine
 			make,
-			out_death_description,
 			out_description
 		end
 
@@ -21,11 +20,9 @@ create
 
 feature {NONE} -- Constructor
 
-	make (a_coordinate: COORDINATE; a_id: INTEGER)
+	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER)
 		do
-			precursor (a_coordinate, a_id)
-			deathable_make (1)
-			add_death_cause_type ("BLACKHOLE")
+			precursor (a_coordinate, a_id, t_left)
 			visited := FALSE
 			attached_to_star := FALSE
 			support_life := FALSE
@@ -41,13 +38,6 @@ feature -- Attributes
 
 feature -- Command
 
-	kill_by_blackhole(k_id:INTEGER)
-		do
-			turns_left := -1
-			kill_by ("BLACKHOLE")
-			killers_id:=k_id
-		end
-
 	set_attached_to_star (b: BOOLEAN) --
 		do
 			attached_to_star := b
@@ -61,11 +51,6 @@ feature -- Command
 	set_visited
 		do
 			visited := TRUE
-		end
-
-	check_health (sector: SECTOR)
-		do
-			confirm_health (sector)
 		end
 
 	behave (sector: SECTOR) -- (2)
@@ -88,40 +73,23 @@ feature -- Command
 			end
 		end
 
-feature {NONE} -- Commands
-
-	confirm_health (sector: SECTOR)
-		do
-			if sector.has_blackhole then
-				check attached {BLACKHOLE} sector.get_stationary_entity as b_e then
-					kill_by_blackhole (b_e.id)
-				end
-			end
-		end
-
 feature -- Queries
 
 	character: STRING = "P"
 
-	is_dead_by_blackhole: BOOLEAN -- TODO put this in moveable entity by inheritance
-		do
-			Result := is_dead and then get_death_cause ~ "BLACKHOLE"
-		end
-
 feature -- Out
 
-	out_death_description: STRING -- "Outputs Abstract Death Message on pg 26"
+	out_death_message: STRING
 		do
 			create Result.make_empty
-			Result:=precursor
 			if is_dead_by_blackhole then
-				Result.append (msg.planet_death_blackhole (coordinate.row, coordinate.col, -1))
+				Result.append (msg.moveable_entity_death_blackhole (current, coordinate.row, coordinate.col, killers_id))
 			end
 		end
 
 	out_description: STRING -- "[id, character]->Luminosity:2" -> "[0, E]->"
 		do
-			Result:=precursor
+			Result := precursor
 			Result.append ("attached?:")
 			if attached_to_star then
 				Result.append ("T")

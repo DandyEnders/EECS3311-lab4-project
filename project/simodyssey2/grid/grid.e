@@ -60,20 +60,22 @@ feature {NONE} -- Attribute
 	stationary_entities: HASH_TABLE [STATIONARY_ENTITY, INTEGER]
 
 feature {NONE} -- Queries
+
 	moveable_entities: HASH_TABLE [MOVEABLE_ENTITY, INTEGER]
-	do
-		create Result.make(500)
-		across
-			sectors is i_s
-		loop
+		do
+			create Result.make (500)
 			across
-			i_s.moveable_entities_in_increasing_order is me
+				sectors is i_s
 			loop
-				Result.force(me,me.id)
+				across
+					i_s.moveable_entities_in_increasing_order is me
+				loop
+					Result.force (me, me.id)
+				end
 			end
+			Result.compare_objects
 		end
-		Result.compare_objects
-	end
+
 feature -- commands
 
 	add (ie: ID_ENTITY)
@@ -129,7 +131,7 @@ feature -- Queries
 		local
 			i: INTEGER
 			c: INTEGER
-			temp:HASH_TABLE[MOVEABLE_ENTITY,INTEGER]
+			temp: HASH_TABLE [MOVEABLE_ENTITY, INTEGER]
 		do
 			create Result.make_empty
 
@@ -138,7 +140,7 @@ feature -- Queries
 				--				moveable_entities is i_me
 			from
 				i := 0
-				temp:=moveable_entities
+				temp := moveable_entities
 				c := temp.count
 			until
 				c < 1
@@ -198,6 +200,7 @@ feature -- Queries
 		do
 			Result := across sectors is i_s some i_s.has (ie) end
 		end
+
 feature -- Traversal
 
 	new_cursor: ARRAY_ITERATION_CURSOR [SECTOR]

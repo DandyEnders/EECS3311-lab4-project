@@ -238,21 +238,22 @@ feature -- planet
 
 feature {NONE} -- Helper Query
 
-	moveable_entity_type (np: MOVEABLE_ENTITY): STRING -- ie "Benign "
+	moveable_entity_type (np: MOVEABLE_ENTITY): STRING -- ie "  Benign "
 		do
 			create Result.make_empty
+			Result.append (left_margin)
 			if attached {BENIGN} np then
-				create Result.make_from_string ("Benign ")
+				Result.append ("Benign ")
 			elseif attached {MALEVOLENT} np then
-				create Result.make_from_string ("Malevolent ")
+				Result.append ("Malevolent ")
 			elseif attached {JANITAUR} np then
-				create Result.make_from_string ("Janitaur ")
+				Result.append ("Janitaur ")
 			elseif attached {ASTEROID} np then
-				create Result.make_from_string ("Asteroid ")
+				Result.append ("Asteroid ")
 			elseif attached {PLANET} np then
-				create Result.make_from_string ("Planet ")
+				Result.append ("Planet ")
 			elseif attached {EXPLORER} np then
-				create Result.make_from_string ("Explorer ")
+				Result.append ("Explorer ")
 			end
 		end
 

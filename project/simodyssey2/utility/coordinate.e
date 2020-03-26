@@ -89,12 +89,12 @@ feature -- Queries
 	wrap_direction_to_coordinate (c, lower_bound, upper_bound: COORDINATE): COORDINATE
 			--given a coordinate, returns a coordinate that lies between lower_bound and upper_bound
 		local
---			wrap_row, wrap_col: INTEGER
+			--			wrap_row, wrap_col: INTEGER
 		do
-			-- // => modulus
---			wrap_row := (c.row - lower_bound.row) // upper_bound.row + lower_bound.row
---			wrap_col := (c.col - lower_bound.col) // upper_bound.col + lower_bound.col
---			create Result.make ([wrap_row, wrap_col])
+				-- // => modulus
+				--			wrap_row := (c.row - lower_bound.row) // upper_bound.row + lower_bound.row
+				--			wrap_col := (c.col - lower_bound.col) // upper_bound.col + lower_bound.col
+				--			create Result.make ([wrap_row, wrap_col])
 			Result := c
 			if c.row ~ (lower_bound.row - 1) then
 				Result := Result + create {COORDINATE}.make ([upper_bound.row, 0])
@@ -145,4 +145,5 @@ feature -- out
 			Result.append (col.out)
 			Result.append ("]")
 		end
+
 end

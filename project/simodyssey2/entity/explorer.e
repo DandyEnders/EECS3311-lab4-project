@@ -13,8 +13,8 @@ inherit
 		rename
 			make as moveable_make
 		redefine
-			out_description,
-			out_death_description
+			check_health,
+			out_description
 		end
 
 	FUELABLE
@@ -32,15 +32,13 @@ feature {NONE} -- Constructor
 
 	make (a_coordinate: COORDINATE; a_id: INTEGER)
 		do
-			moveable_make (a_coordinate, a_id)
-			deathable_make (3)
+			moveable_make (a_coordinate, a_id, 3)
 			fuelable_make (3)
 			landed := false
 			found_life := FALSE
-			add_death_cause_type ("BLACKHOLE")
 			add_death_cause_type ("OUT_OF_FUEL")
 			add_death_cause_type ("MALEVOLENT")
-			add_death_cause_type ("ASTROID")
+			add_death_cause_type ("ASTEROID")
 		end
 
 feature -- Attributes
@@ -58,11 +56,6 @@ feature -- Queries
 			Result := is_dead and then get_death_cause ~ "OUT_OF_FUEL"
 		end
 
-	is_dead_by_blackhole: BOOLEAN
-		do
-			Result := is_dead and then get_death_cause ~ "BLACKHOLE"
-		end
-
 	is_dead_by_malevolent: BOOLEAN
 		do
 			Result := is_dead and then get_death_cause ~ "MALEVOLENT"
@@ -70,7 +63,7 @@ feature -- Queries
 
 	is_dead_by_asteroid: BOOLEAN
 		do
-			Result := is_dead and then get_death_cause ~ "ASTROID"
+			Result := is_dead and then get_death_cause ~ "ASTEROID"
 		end
 
 feature {UNIT_TEST} -- testing Commands Delete after finalized
@@ -89,21 +82,15 @@ feature -- Commands
 			found_life := TRUE
 		end
 
-	kill_by_blackhole(k_id:INTEGER)
-		do
-			kill_by ("BLACKHOLE")
-			killers_id:=k_id
-		end
-
 	kill_by_malevolent
 		do
 			kill_by ("MALEVOLENT")
 		end
 
-	kill_by_asteroid (k_id:INTEGER)
+	kill_by_asteroid (k_id: INTEGER)
 		do
 			kill_by ("ASTEROID")
-			killers_id:=k_id
+			killers_id := k_id
 		ensure
 			is_dead_by_asteroid
 		end
@@ -117,31 +104,25 @@ feature -- Commands
 			is_dead_by_out_of_fuel
 		end
 
-	check_health (sector: SECTOR) --(2)
+	check_health (sector: SECTOR)
+		local
+			are_you_killed_yet: BOOLEAN
 		do
-				-- check if explorer can charge
+			are_you_killed_yet := FALSE
 			if sector.has_stationary_entity then
 					-- if the explorer's new sector has a star, then recharge.
 				if attached {STAR} sector.get_stationary_entity as i_star then
 					charge_fuel (i_star)
 				end
 			end
-			confirm_health (sector)
-		end
-
-feature {NONE} -- Private Query for Behave (2) -- not sure if this should be private or expanded.
-
-	confirm_health (sector: SECTOR)
-		do
-				-- check if explorer dies out of fuel
 			if is_out_of_fuel then
 					-- if the explorer ran out of fuel, he should lose his life and be removed from the galaxy
 				kill_by_out_of_fuel
 					-- check if explorer dies out of blackhole
-			elseif sector.has_blackhole then
-				check attached {BLACKHOLE} sector.get_stationary_entity as b_e then
-					kill_by_blackhole (b_e.id)
-				end
+				are_you_killed_yet := TRUE
+			end
+			if not are_you_killed_yet then
+				precursor (sector)
 			end
 		end
 
@@ -157,17 +138,17 @@ feature -- Out
 			end
 		end
 
-	out_death_description: STRING -- "[0,E]->fuel:2/3, life:3/3, landed?:F,%N{DEATH_MESSAGE}"
+	out_death_message: STRING
 		do
-			Result := precursor
+			create Result.make_empty
 			if is_dead_by_out_of_fuel then
-				Result.append (msg.explorer_death_out_of_fuel (coordinate.row, coordinate.col))
+				Result.append (msg.death_by_out_of_fuel (current, coordinate.row, coordinate.col))
 			elseif is_dead_by_blackhole then
-				Result.append (msg.explorer_death_blackhole (coordinate.row, coordinate.col, -1))
+				Result.append (msg.moveable_entity_death_blackhole (current, coordinate.row, coordinate.col, killers_id))
 			elseif is_dead_by_asteroid then
-				Result.append (msg.death_by_asteroid (current,coordinate.row, coordinate.col, killers_id))
-			elseif is_dead_by_malevolent  then
-				Result.append (msg.death_by_malevolent (current,coordinate.row, coordinate.col))
+				Result.append (msg.death_by_asteroid (current, coordinate.row, coordinate.col, killers_id))
+			elseif is_dead_by_malevolent then
+				Result.append (msg.death_by_malevolent (current, coordinate.row, coordinate.col))
 			end
 		end
 
