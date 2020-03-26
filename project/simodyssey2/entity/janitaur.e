@@ -175,7 +175,7 @@ feature -- out
 			turns_left_string: STRING
 		do
 			Result := Precursor
-			if turns_left < 0 then
+			if is_dead then
 				create turns_left_string.make_from_string ("N/A")
 			else
 				turns_left_string := turns_left.out
