@@ -87,7 +87,7 @@ feature -- Commands
 		local
 			rng: RANDOM_GENERATOR_ACCESS
 			benign_at_sector: BOOLEAN
-			destroyed_message: STRING
+			attacked_message: STRING
 		do
 			behavior_messages.make_empty
 			benign_at_sector := (across sector.moveable_entities_in_increasing_order is me some attached {BENIGN} me end)
@@ -102,8 +102,8 @@ feature -- Commands
 							else
 								e_me.life.subtract_life (1)
 							end
-							create destroyed_message.make_from_string (msg.left_margin + "attacked " + e_me.out_sqr_bracket + " at " + sector.out_abstract_full_coordinate (e_me))
-							behavior_messages.force (destroyed_message, behavior_messages.count + 1)
+							create attacked_message.make_from_string (msg.left_margin + "attacked " + e_me.out_sqr_bracket + " at " + sector.out_abstract_full_coordinate (e_me))
+							behavior_messages.force (attacked_message, behavior_messages.count + 1)
 						end
 					end
 				end

@@ -370,7 +370,7 @@ feature {NONE} -- Private Helper Commands
 								across
 									n_me.behavior_messages is i_m
 								loop
-									movement_output.force (i_m, movement_output.count)
+									movement_output.force (i_m, movement_output.count+1)
 								end
 									-- End of Pretty Printing
 							end
