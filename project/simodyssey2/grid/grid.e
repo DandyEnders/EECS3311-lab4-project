@@ -78,18 +78,6 @@ feature {NONE} -- Queries
 
 feature -- commands
 
-	add (ie: ID_ENTITY)
-			-- Add an ID_ENTITY to a sector with entity's coordinate.
-		require
-			valid_coordinate (ie.coordinate)
-			not has (ie)
-			not at (ie.coordinate).is_full
-		do
-			add_at (ie, ie.coordinate)
-		ensure
-			at (ie.coordinate).has (ie)
-		end
-
 	add_at (ie: ID_ENTITY; c: COORDINATE)
 			-- Add an ID_ENTITY to a sector with specified coordinate c. (c overrides entitie's coordinate)
 		require
@@ -291,5 +279,8 @@ feature -- Out
 				end
 			end
 		end
+invariant
+	--sectors is private so I'm not sure if this is a good invariant to have.
+	sectors.count ~ (row*col)
 
 end

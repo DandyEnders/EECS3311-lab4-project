@@ -257,9 +257,9 @@ feature {NONE} -- Helper Query
 			end
 		end
 
-feature -- MOVEABLE_ENTITY death by BLACKHOLE -- (effective for explorer,benign,malevolent,janitaur,asteroid and planet)  --Looks good but temporary version for now TODO
+feature -- MOVEABLE_ENTITY death by BLACKHOLE (effective for explorer,benign,malevolent,janitaur,asteroid and planet)
 
-	moveable_entity_death_blackhole (np: MOVEABLE_ENTITY; row, col, blackhole_id: INTEGER): STRING
+	death_by_blackhole (np: MOVEABLE_ENTITY; row, col, blackhole_id: INTEGER): STRING
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (np))
@@ -275,6 +275,8 @@ feature -- MOVEABLE_ENTITY death by BLACKHOLE -- (effective for explorer,benign,
 feature -- ASTEROID death by JANITAUR
 
 	death_by_janitaur (a: ASTEROID; sector_row, sector_col, janitaur_id: INTEGER): STRING
+		require
+			a.is_dead_by_janitaur
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (a))
@@ -289,6 +291,7 @@ feature -- MOVEABLE_ENTITY death by ASTEROID
 		require
 			me_is_not_a_planet: not attached {PLANET} me
 			me_is_not_an_asteroid: not attached {ASTEROID} me
+			me.is_dead
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (me))
@@ -299,6 +302,8 @@ feature -- MOVEABLE_ENTITY death by ASTEROID
 feature -- MALEVOLENT death by BENIGN
 
 	death_by_benign (m: MALEVOLENT; sector_row, sector_col, benign_id: INTEGER): STRING
+		require
+			m.is_dead_by_benign
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (m))
@@ -312,6 +317,7 @@ feature -- FUELABLE death by out_of_fuel
 		require
 			f_is_fuelable: attached {FUELABLE} f
 			f_is_out_of_fuel: (attached {FUELABLE} f as f_e) implies f_e.is_out_of_fuel
+			f.is_dead
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (f))
@@ -330,8 +336,6 @@ feature -- EXPLORER death by MALEVOLENT
 			Result.append ("got lost in space - out of life support ")
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
-
-		--End of TODO
 
 feature -- move
 

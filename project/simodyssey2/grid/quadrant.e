@@ -23,7 +23,6 @@ feature {NONE} -- Constructor
 		do
 			coordinate := c
 			remove_entity
-			e_id := 0
 		end
 
 feature -- Attribute
@@ -41,24 +40,15 @@ feature -- Command
 		do
 			create ne.make (coordinate)
 			entity := ne
-			e_id := 0
 		end
 
 	set_entity (e: ID_ENTITY)
 		do
 			e.set_coordinate (coordinate)
 			entity := e
-			e_id := e.id
 		end
 
 feature -- Queries
-
-	entity_id: INTEGER
-		require
-			not is_empty
-		do
-			Result := e_id
-		end
 
 	is_empty: BOOLEAN
 			-- Return true if entity in quadrant is null entity.
@@ -73,10 +63,6 @@ feature -- Queries
 		do
 			Result := ie ~ entity
 		end
-
-feature {NONE} -- private attributes
-
-	e_id: INTEGER
 
 feature -- Out
 

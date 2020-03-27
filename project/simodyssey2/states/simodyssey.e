@@ -207,12 +207,15 @@ feature -- Command
 			is_sector_has_yellow_dwarf
 			is_sector_has_planets
 			is_sector_has_unvisted_attached_planets
+		local
+			p: PLANET
 		do
 				-- reset list of "moved" entities and "dead" entities
 			create movement_output.make_empty
 			create dead_entity.make_empty
 				--landing the explorer
-			galaxy.sector_with (explorer).land_explorer (explorer)
+			p:=galaxy.sector_with (explorer).find_landable_planet_for (explorer)
+			explorer.land_on (p)
 			default_turn_actions
 		end
 
@@ -310,7 +313,8 @@ feature {NONE} -- Private Helper Commands
 				temp_row := rng.rchoose (1, 5)
 				temp_col := rng.rchoose (1, 5)
 				create c.make ([temp_row, temp_col])
-				if not galaxy.at (c).is_full or (c ~ me.coordinate) then
+				if not galaxy.at (c).is_full then
+					-- forum question suggests oracle change comming up {or (c ~ me.coordinate) }
 					relocate_moveable_entity (me, [temp_row, temp_col])
 					added := TRUE
 				end
@@ -414,19 +418,19 @@ feature {NONE} -- Private Helper Commands
 						value := rng.rchoose (1, 100)
 						if value < astroid_threshold then
 							create a.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
-							galaxy.add (a)
+							galaxy.add_at (a, a.coordinate)
 						elseif value < janitaur_threshold then
 							create j.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
-							galaxy.add (j)
+							galaxy.add_at (j, j.coordinate)
 						elseif value < malevolent_threshold then
 							create m.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
-							galaxy.add (m)
+							galaxy.add_at (m, m.coordinate)
 						elseif value < benign_threshold then
 							create b.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
-							galaxy.add (b)
+							galaxy.add_at (b, b.coordinate)
 						elseif value < planet_threshold then
 							create p.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
-							galaxy.add (p)
+							galaxy.add_at (p, p.coordinate)
 						end
 					end
 				end
@@ -450,11 +454,11 @@ feature {NONE} -- Private Helper Commands
 				if not galaxy.at ([row, col]).has_stationary_entity and not galaxy.at ([row, col]).is_full then
 					s_entity_num := rng.rchoose (1, 3)
 					if s_entity_num ~ 1 then
-						galaxy.add (create {YELLOW_DWARF}.make ([row, col], stationary_id.get_id))
+						galaxy.add_at (create {YELLOW_DWARF}.make ([row, col], stationary_id.get_id),[row,col])
 					elseif s_entity_num ~ 2 then
-						galaxy.add (create {BLUE_GIANT}.make ([row, col], stationary_id.get_id))
+						galaxy.add_at (create {BLUE_GIANT}.make ([row, col], stationary_id.get_id),[row,col])
 					elseif s_entity_num ~ 3 then
-						galaxy.add (create {WORMHOLE}.make ([row, col], stationary_id.get_id))
+						galaxy.add_at (create {WORMHOLE}.make ([row, col], stationary_id.get_id),[row,col])
 					end
 					loop_counter := loop_counter + 1
 				end
@@ -464,8 +468,8 @@ feature {NONE} -- Private Helper Commands
 	populate_galaxy --
 		do
 				-- adding explorer and blackhole
-			galaxy.add (explorer) --
-			galaxy.add (blackhole) --
+			galaxy.add_at (explorer, explorer.coordinate) --
+			galaxy.add_at (blackhole, blackhole.coordinate) --
 				-- populating galaxy based on threshold values
 			populate_galaxy_with_non_playable_moveable_entities
 				-- populating stationary objects

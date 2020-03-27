@@ -55,7 +55,7 @@ feature -- Controller command / queries
 				s_tmp.append (model.out)
 				next_state.set_msg_content (s_tmp)
 			else
-				set_explorer_dead_message
+				set_explorer_death_message
 			end
 		end
 

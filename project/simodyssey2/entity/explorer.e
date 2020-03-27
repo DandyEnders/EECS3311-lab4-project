@@ -126,6 +126,21 @@ feature -- Commands
 			end
 		end
 
+	land_on (a_p: PLANET)
+		require
+			a_p.attached_to_star and not a_p.visited
+		do
+			a_p.set_visited
+			set_landed (TRUE)
+			if a_p.support_life then
+				set_found_life_true
+			end
+		ensure
+			a_p.visited
+			and landed
+			and (a_p.support_life implies found_life)
+		end
+
 feature -- Out
 
 	out_status (quadrant: INTEGER): STRING -- {Abstract State: Command-Specific Messages on pg 26}
@@ -144,7 +159,7 @@ feature -- Out
 			if is_dead_by_out_of_fuel then
 				Result.append (msg.death_by_out_of_fuel (current, coordinate.row, coordinate.col))
 			elseif is_dead_by_blackhole then
-				Result.append (msg.moveable_entity_death_blackhole (current, coordinate.row, coordinate.col, killers_id))
+				Result.append (msg.death_by_blackhole (current, coordinate.row, coordinate.col, killers_id))
 			elseif is_dead_by_asteroid then
 				Result.append (msg.death_by_asteroid (current, coordinate.row, coordinate.col, killers_id))
 			elseif is_dead_by_malevolent then

@@ -154,7 +154,7 @@ feature -- out
 			if is_dead_by_out_of_fuel then
 				Result.append (msg.death_by_out_of_fuel (current, coordinate.row, coordinate.col))
 			elseif is_dead_by_blackhole then
-				Result.append (msg.moveable_entity_death_blackhole (current, coordinate.row, coordinate.col, killers_id))
+				Result.append (msg.death_by_blackhole (current, coordinate.row, coordinate.col, killers_id))
 			elseif is_dead_by_asteroid then
 				Result.append (msg.death_by_asteroid (current, coordinate.row, coordinate.col, killers_id))
 			elseif is_dead_by_benign then

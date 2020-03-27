@@ -51,18 +51,19 @@ feature -- Attribute
 
 feature -- Command
 
-	land_explorer (e: EXPLORER)
+	find_landable_planet_for (e: EXPLORER): PLANET
 		require
 			is_landable
 		local
 			min_id: INTEGER
-			min_p: detachable PLANET
+			min_p: PLANET
 		do
 			min_id := min_id.max_value
+			create min_p.make (coordinate, min_id,0)
 			across
-				quadrants is i_q
+				moveable_entities_in_increasing_order is i_m
 			loop
-				if attached {PLANET} i_q.entity as p then
+				if attached {PLANET} i_m as p then
 					if p.attached_to_star and not p.visited then
 						if p.id < min_id then
 							min_id := p.id
@@ -71,13 +72,11 @@ feature -- Command
 					end
 				end
 			end
-			if attached min_p as a_p then
-				a_p.set_visited
-				e.set_landed (TRUE)
-				if a_p.support_life then
-					e.set_found_life_true
-				end
-			end
+				Result:=min_p
+		ensure
+			Result.id /~ Result.id.max_value
+			and Result.attached_to_star
+			and (not Result.visited)
 		end
 
 	remove (me: MOVEABLE_ENTITY)
@@ -128,11 +127,11 @@ feature -- Queries
 		do
 			if has_planet and has_star then
 				across
-					quadrants is i_q
+					moveable_entities_in_increasing_order is i_m
 				until
 					Result
 				loop
-					if attached {PLANET} i_q.entity as p then
+					if attached {PLANET} i_m as p then
 						if (p.attached_to_star and not p.visited) then
 							Result := TRUE
 						end
@@ -198,7 +197,7 @@ feature -- Queries
 
 	has_id (id: INTEGER): BOOLEAN
 		do
-			Result := across quadrants is i_q some i_q.entity_id ~ id end
+			Result := across quadrants is i_q some (attached {ID_ENTITY} i_q.entity as id_e) implies (id_e.id ~ id)	end
 		end
 
 	quadrant_at (me: ID_ENTITY): INTEGER
@@ -378,6 +377,7 @@ feature -- Output
 
 invariant
 	min_max_count: 0 <= count and count <= max_num_quadrants
+	entity_coordinates_are_same_as_coordinate: across quadrants is i_q all i_q.entity.coordinate ~ coordinate  end
 	--	unique_entities: TODO
 	--		across quadrants is i_q all
 	--			if not i_q.is_empty then

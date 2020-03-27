@@ -88,7 +88,7 @@ feature -- Controller command / queries
 					set_msg_mode (msg_mode)
 					set_msg_content (model.out)
 				else
-					set_explorer_dead_message
+					set_explorer_death_message
 				end
 			else -- model.sector_in_direction_is_full (d) or not model.game_in_session
 				if model.sector_in_direction_is_full (d) then
@@ -109,7 +109,7 @@ feature -- Controller command / queries
 				set_msg_mode (msg_mode)
 				set_msg_content (model.out)
 			else
-				set_explorer_dead_message
+				set_explorer_death_message
 			end
 		end
 
@@ -150,7 +150,7 @@ feature -- Controller command / queries
 					set_msg_mode (msg_mode)
 					set_msg_content (model.out)
 				else
-					set_explorer_dead_message
+					set_explorer_death_message
 				end
 			else
 				if not model.explorer_with_wormhole then
