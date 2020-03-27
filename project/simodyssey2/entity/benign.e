@@ -125,7 +125,7 @@ feature {NONE} -- Implementation
 
 feature -- Output [ TODO ] -- Looks good but temporary version for now
 
-	out_death_message: STRING
+	out_death_message: STRING -- {Abstract State: Death Message for pg 26-27 relevant to this entity}
 		do
 			create Result.make_empty
 			if is_dead_by_out_of_fuel then
@@ -137,8 +137,7 @@ feature -- Output [ TODO ] -- Looks good but temporary version for now
 			end
 		end
 
-	out_description: STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean"
-			-- "[0,E]->fuel:2/3, life:3/3, landed?:F"
+	out_description: STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, actions_left_until_reproduction: c_value / reproduction_interval, turns_left: N/A or turns_left"
 		local
 			turns_left_string: STRING
 		do

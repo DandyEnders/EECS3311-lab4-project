@@ -68,7 +68,7 @@ feature -- Command
 						set_support_life (TRUE)
 					end
 				end
-			elseif not sector.has_star then -- you should only set the turns again if the current sector does not have a star
+			elseif not attached_to_star then -- you should only set the turns again if planet is not attached to a star pg 19
 				set_turns_left (rng.rchoose (0, 2))
 			end
 		end
@@ -79,7 +79,7 @@ feature -- Queries
 
 feature -- Out
 
-	out_death_message: STRING
+	out_death_message: STRING -- {Abstract State: Death Message for pg 26-27 relevant to this entity}
 		do
 			create Result.make_empty
 			if is_dead_by_blackhole then
@@ -87,7 +87,7 @@ feature -- Out
 			end
 		end
 
-	out_description: STRING -- "[id, character]->Luminosity:2" -> "[0, E]->"
+	out_description: STRING -- "[id, character]->attached?:T or F, support_life?:T or F, visited:T or F, turns_left: N/A or turns_left"
 		do
 			Result := precursor
 			Result.append ("attached?:")

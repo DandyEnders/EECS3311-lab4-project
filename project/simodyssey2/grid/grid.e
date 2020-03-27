@@ -117,7 +117,7 @@ feature -- commands
 			-- Moves entity ie to to_c coordinate.
 		require
 			has (ie)
-			not at (to_c).is_full
+			(not at (to_c).is_full or at (to_c).has (ie)) -- changed this to effect the forum post
 		do
 			remove (ie)
 			add_at (ie, to_c)

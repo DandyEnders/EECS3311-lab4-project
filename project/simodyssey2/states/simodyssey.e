@@ -69,7 +69,7 @@ feature -- Queries relevant to play / test / abort
 			Result := a_threshold <= j_threshold and j_threshold <= m_threshold and m_threshold <= b_threshold and b_threshold <= p_threshold
 		end
 
-feature -- Queries relevant to move_explorer (2)
+feature -- Queries relevant to move_explorer
 
 	sector_in_direction_is_full (d: COORDINATE): BOOLEAN
 			--Returns true if the sector in the direction specified is full.
@@ -272,13 +272,13 @@ feature {NONE} -- Private Helper Commands
 			end
 		end
 
-	relocate_moveable_entity (me: MOVEABLE_ENTITY; c: COORDINATE) -- (2)
+	relocate_moveable_entity (me: MOVEABLE_ENTITY; c: COORDINATE)
 		local
 			s: STRING
 			c_before: COORDINATE
 			quad_before: INTEGER
 		do
-				--Storing Previous locaiton of me in a String (2)
+				--Storing Previous locaiton of me in a String
 			create s.make_from_string (me.out_sqr_bracket)
 			s.append (":")
 			s.append (galaxy.sector_with (me).out_abstract_full_coordinate (me))
@@ -295,11 +295,12 @@ feature {NONE} -- Private Helper Commands
 			movement_output.force (s, movement_output.count + 1)
 		end
 
-	wormhole_entity (me: MOVEABLE_ENTITY) -- (2)
+	wormhole_entity (me: MOVEABLE_ENTITY)
 		local
 			added: BOOLEAN
 			temp_row: INTEGER
 			temp_col: INTEGER
+			c: COORDINATE
 		do
 			from
 				added := FALSE
@@ -308,14 +309,15 @@ feature {NONE} -- Private Helper Commands
 			loop
 				temp_row := rng.rchoose (1, 5)
 				temp_col := rng.rchoose (1, 5)
-				if not galaxy.at ([temp_row, temp_col]).is_full then
+				create c.make ([temp_row, temp_col])
+				if not galaxy.at (c).is_full or (c ~ me.coordinate) then
 					relocate_moveable_entity (me, [temp_row, temp_col])
 					added := TRUE
 				end
 			end
 		end
 
-	move_entity (n_me: NP_MOVEABLE_ENTITY; direction_of_p: COORDINATE) -- (2)
+	move_entity (n_me: NP_MOVEABLE_ENTITY; direction_of_p: COORDINATE)
 			-- moves a planet in the given direction from its current coordinate
 		local
 			new_coordinate_of_p: COORDINATE
@@ -336,7 +338,7 @@ feature {NONE} -- Private Helper Commands
 			end
 		end
 
-	npc_action -- (2)
+	npc_action
 		local
 			direction_num: INTEGER
 			d: DIRECTION_UTILITY

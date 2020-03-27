@@ -128,7 +128,7 @@ feature -- Commands
 
 feature -- Out
 
-	out_status (quadrant: INTEGER): STRING
+	out_status (quadrant: INTEGER): STRING -- {Abstract State: Command-Specific Messages on pg 26}
 		do
 			create Result.make_empty
 			if landed then
@@ -138,7 +138,7 @@ feature -- Out
 			end
 		end
 
-	out_death_message: STRING
+	out_death_message: STRING -- {Abstract State: Death Message for pg 26-27 relevant to this entity}
 		do
 			create Result.make_empty
 			if is_dead_by_out_of_fuel then

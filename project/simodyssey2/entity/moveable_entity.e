@@ -71,7 +71,7 @@ feature -- out
 			Result.append (out_death_message)
 		end
 
-	out_death_message: STRING
+	out_death_message: STRING -- {Abstract State: Death Message for pg 26-27 relevant to this entity}
 		require
 			is_dead
 		deferred
