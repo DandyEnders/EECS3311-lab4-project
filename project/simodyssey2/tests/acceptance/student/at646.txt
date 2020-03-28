@@ -1,0 +1,11 @@
+move(W)
+move(SE)
+liftoff
+move(S)
+move(E)
+move(N)
+pass
+move(W)
+pass
+move(S)
+wormhole

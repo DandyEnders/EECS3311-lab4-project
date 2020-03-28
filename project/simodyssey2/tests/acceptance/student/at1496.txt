@@ -1,0 +1,15 @@
+move(SW)
+liftoff
+move(W)
+move(W)
+test(92,92,92,92,92)
+move(SW)
+move(NE)
+move(SW)
+move(S)
+move(W)
+pass
+test(33,99,99,99,99)
+move(N)
+move(N)
+move(S)

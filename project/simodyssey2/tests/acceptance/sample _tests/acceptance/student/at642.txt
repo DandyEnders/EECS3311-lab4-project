@@ -1,0 +1,16 @@
+move(N)
+play
+land
+play
+land
+move(E)
+liftoff
+move(E)
+move(S)
+move(E)
+move(NE)
+move(N)
+move(SW)
+move(SE)
+move(NE)
+move(N)

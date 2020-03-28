@@ -1,0 +1,15 @@
+move(S)
+move(SE)
+liftoff
+abort
+play
+move(SW)
+move(E)
+land
+play
+move(N)
+liftoff
+abort
+play
+wormhole
+play

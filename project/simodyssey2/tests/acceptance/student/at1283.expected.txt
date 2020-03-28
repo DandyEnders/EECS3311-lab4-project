@@ -1,0 +1,315 @@
+  state:0.0, ok
+  Welcome! Try test(3,5,7,15,30)
+->move(S)
+  state:0.1, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:0.2, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:0.3, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:0.4, error
+  Negative on that request:no mission in progress.
+->pass
+  state:0.5, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:0.6, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:0.7, error
+  Negative on that request:no mission in progress.
+->test(24,24,39,39,39)
+  state:1.0, mode:test, ok
+  Movement:none
+  Sectors:
+    [1,1]->[0,E],-,-,-
+    [1,2]->[1,M],[-4,*],-,-
+    [1,3]->[2,M],-,-,-
+    [1,4]->-,-,-,-
+    [1,5]->[3,M],[4,A],-,-
+    [2,1]->-,-,-,-
+    [2,2]->[-10,*],-,-,-
+    [2,3]->[5,M],-,-,-
+    [2,4]->[6,A],[7,A],[-11,W],-
+    [2,5]->[8,M],[9,M],-,-
+    [3,1]->[10,M],[-2,Y],-,-
+    [3,2]->[11,M],[-7,*],-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[12,A],-,-,-
+    [3,5]->[13,A],-,-,-
+    [4,1]->[14,A],-,-,-
+    [4,2]->[-3,*],-,-,-
+    [4,3]->[15,A],[16,M],-,-
+    [4,4]->-,-,-,-
+    [4,5]->[-8,W],-,-,-
+    [5,1]->[-6,Y],-,-,-
+    [5,2]->[17,M],-,-,-
+    [5,3]->[-9,Y],-,-,-
+    [5,4]->[18,M],[19,M],[20,A],-
+    [5,5]->[-5,W],-,-,-
+  Descriptions:
+    [-11,W]->
+    [-10,*]->Luminosity:5
+    [-9,Y]->Luminosity:2
+    [-8,W]->
+    [-7,*]->Luminosity:5
+    [-6,Y]->Luminosity:2
+    [-5,W]->
+    [-4,*]->Luminosity:5
+    [-3,*]->Luminosity:5
+    [-2,Y]->Luminosity:2
+    [-1,O]->
+    [0,E]->fuel:3/3, life:3/3, landed?:F
+    [1,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [2,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [3,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:2
+    [4,A]->turns_left:0
+    [5,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [6,A]->turns_left:2
+    [7,A]->turns_left:2
+    [8,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [9,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [10,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:2
+    [11,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:2
+    [12,A]->turns_left:2
+    [13,A]->turns_left:0
+    [14,A]->turns_left:1
+    [15,A]->turns_left:1
+    [16,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [17,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:2
+    [18,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:2
+    [19,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [20,A]->turns_left:2
+  Deaths This Turn:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    E---   M*--   M---   ----   MA--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    ----   *---   M---   AAW-   MM--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    MY--   M*--   O---   A---   A---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    A---   *---   AM--   ----   W---   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    Y---   M---   Y---   MMA-   W---   
+->move(SE)
+  state:2.0, mode:test, ok
+  Movement:
+    [0,E]:[1,1,1]->[2,2,2]
+    [4,A]:[1,5,2]->[1,1,1]
+    [5,M]:[2,3,1]->[3,3,2]
+    [13,A]:[3,5,1]->[3,4,2]
+  Sectors:
+    [1,1]->[4,A],-,-,-
+    [1,2]->[1,M],[-4,*],-,-
+    [1,3]->[2,M],-,-,-
+    [1,4]->-,-,-,-
+    [1,5]->[3,M],-,-,-
+    [2,1]->-,-,-,-
+    [2,2]->[-10,*],[0,E],-,-
+    [2,3]->-,-,-,-
+    [2,4]->[6,A],[7,A],[-11,W],-
+    [2,5]->[8,M],[9,M],-,-
+    [3,1]->[10,M],[-2,Y],-,-
+    [3,2]->[11,M],[-7,*],-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[12,A],[13,A],-,-
+    [3,5]->-,-,-,-
+    [4,1]->[14,A],-,-,-
+    [4,2]->[-3,*],-,-,-
+    [4,3]->[15,A],[16,M],-,-
+    [4,4]->-,-,-,-
+    [4,5]->[-8,W],-,-,-
+    [5,1]->[-6,Y],-,-,-
+    [5,2]->[17,M],-,-,-
+    [5,3]->[-9,Y],-,-,-
+    [5,4]->[18,M],[19,M],[20,A],-
+    [5,5]->[-5,W],-,-,-
+  Descriptions:
+    [-11,W]->
+    [-10,*]->Luminosity:5
+    [-9,Y]->Luminosity:2
+    [-8,W]->
+    [-7,*]->Luminosity:5
+    [-6,Y]->Luminosity:2
+    [-5,W]->
+    [-4,*]->Luminosity:5
+    [-3,*]->Luminosity:5
+    [-2,Y]->Luminosity:2
+    [-1,O]->
+    [0,E]->fuel:3/3, life:3/3, landed?:F
+    [1,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [2,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [3,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [4,A]->turns_left:0
+    [6,A]->turns_left:1
+    [7,A]->turns_left:1
+    [8,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [9,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [10,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [11,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [12,A]->turns_left:1
+    [13,A]->turns_left:2
+    [14,A]->turns_left:0
+    [15,A]->turns_left:0
+    [16,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [17,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [18,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:1
+    [19,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [20,A]->turns_left:1
+  Deaths This Turn:
+    [5,M]->fuel:2/3, actions_left_until_reproduction:1/1, turns_left:N/A,
+      Malevolent got devoured by blackhole (id: -1) at Sector:3:3
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    A---   M*--   M---   ----   M---   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    ----   *E--   ----   AAW-   MM--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    MY--   M*--   O---   AA--   ----   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    A---   *---   AM--   ----   W---   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    Y---   M---   Y---   MMA-   W---   
+->liftoff
+  state:2.1, mode:test, error
+  Negative on that request:you are not on a planet at Sector:2:2
+->move(SE)
+  state:3.0, mode:test, ok
+  Explorer got devoured by blackhole (id: -1) at Sector:3:3
+  The game has ended. You can start a new game.
+  Movement:
+    [0,E]:[2,2,2]->[3,3,2]
+    [1,M]:[1,2,1]->[5,1,2]
+    [2,M]:[1,3,1]->[2,2,2]
+    [4,A]:[1,1,1]->[1,5,2]
+      destroyed [3,M] at [1,5,1]
+    [8,M]:[2,5,1]->[3,4,3]
+    [9,M]:[2,5,2]->[1,5,1]
+    [14,A]:[4,1,1]->[5,1,3]
+      destroyed [1,M] at [5,1,2]
+    [15,A]:[4,3,1]->[5,2,2]
+      destroyed [17,M] at [5,2,1]
+    [16,M]:[4,3,2]->[3,2,3]
+    [19,M]:[5,4,2]->[4,5,2]
+  Sectors:
+    [1,1]->-,-,-,-
+    [1,2]->-,[-4,*],-,-
+    [1,3]->-,-,-,-
+    [1,4]->-,-,-,-
+    [1,5]->[9,M],[4,A],-,-
+    [2,1]->-,-,-,-
+    [2,2]->[-10,*],[2,M],-,-
+    [2,3]->-,-,-,-
+    [2,4]->[6,A],[7,A],[-11,W],-
+    [2,5]->-,-,-,-
+    [3,1]->[10,M],[-2,Y],-,-
+    [3,2]->[11,M],[-7,*],[16,M],-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[12,A],[13,A],[8,M],-
+    [3,5]->-,-,-,-
+    [4,1]->-,-,-,-
+    [4,2]->[-3,*],-,-,-
+    [4,3]->-,-,-,-
+    [4,4]->-,-,-,-
+    [4,5]->[-8,W],[19,M],-,-
+    [5,1]->[-6,Y],-,[14,A],-
+    [5,2]->-,[15,A],-,-
+    [5,3]->[-9,Y],-,-,-
+    [5,4]->[18,M],-,[20,A],-
+    [5,5]->[-5,W],-,-,-
+  Descriptions:
+    [-11,W]->
+    [-10,*]->Luminosity:5
+    [-9,Y]->Luminosity:2
+    [-8,W]->
+    [-7,*]->Luminosity:5
+    [-6,Y]->Luminosity:2
+    [-5,W]->
+    [-4,*]->Luminosity:5
+    [-3,*]->Luminosity:5
+    [-2,Y]->Luminosity:2
+    [-1,O]->
+    [2,M]->fuel:3/3, actions_left_until_reproduction:0/1, turns_left:0
+    [4,A]->turns_left:0
+    [6,A]->turns_left:0
+    [7,A]->turns_left:0
+    [8,M]->fuel:2/3, actions_left_until_reproduction:0/1, turns_left:1
+    [9,M]->fuel:2/3, actions_left_until_reproduction:0/1, turns_left:1
+    [10,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [11,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [12,A]->turns_left:0
+    [13,A]->turns_left:1
+    [14,A]->turns_left:0
+    [15,A]->turns_left:0
+    [16,M]->fuel:3/3, actions_left_until_reproduction:0/1, turns_left:1
+    [18,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:0
+    [19,M]->fuel:2/3, actions_left_until_reproduction:0/1, turns_left:1
+    [20,A]->turns_left:0
+  Deaths This Turn:
+    [0,E]->fuel:2/3, life:0/3, landed?:F,
+      Explorer got devoured by blackhole (id: -1) at Sector:3:3
+    [3,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:N/A,
+      Malevolent got destroyed by asteroid (id: 4) at Sector:1:5
+    [1,M]->fuel:3/3, actions_left_until_reproduction:0/1, turns_left:N/A,
+      Malevolent got destroyed by asteroid (id: 14) at Sector:5:1
+    [17,M]->fuel:3/3, actions_left_until_reproduction:1/1, turns_left:N/A,
+      Malevolent got destroyed by asteroid (id: 15) at Sector:5:2
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    ----   -*--   ----   ----   MA--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    ----   *M--   ----   AAW-   ----   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    MY--   M*M-   O---   AAM-   ----   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   *---   ----   ----   WM--   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    Y-A-   -A--   Y---   M-A-   W---   
+  Explorer got devoured by blackhole (id: -1) at Sector:3:3
+  The game has ended. You can start a new game.
+->move(S)
+  state:3.1, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:3.2, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:3.3, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:3.4, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:3.5, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:3.6, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:3.7, error
+  Negative on that request:no mission in progress.
+->move(NE)
+  state:3.8, error
+  Negative on that request:no mission in progress.
+->land
+  state:3.9, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:3.10, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:3.11, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:3.12, error
+  Negative on that request:no mission in progress.
+->land
+  state:3.13, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:3.14, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:3.15, error
+  Negative on that request:no mission in progress.

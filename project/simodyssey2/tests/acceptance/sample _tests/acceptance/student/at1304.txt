@@ -1,0 +1,11 @@
+wormhole
+abort
+move(NE)
+wormhole
+abort
+test(14,14,25,48,69)
+move(NW)
+move(N)
+move(S)
+move(SE)
+move(NW)

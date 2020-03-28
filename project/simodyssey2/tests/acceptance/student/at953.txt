@@ -1,0 +1,14 @@
+move(E)
+play
+move(N)
+play
+move(NW)
+move(S)
+move(NE)
+move(E)
+move(NE)
+wormhole
+liftoff
+pass
+move(NW)
+move(SE)

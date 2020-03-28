@@ -1,0 +1,13 @@
+move(W)
+play
+move(W)
+pass
+move(SE)
+move(NE)
+pass
+move(SE)
+move(W)
+move(S)
+move(NE)
+liftoff
+pass

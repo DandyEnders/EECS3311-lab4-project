@@ -1,0 +1,10 @@
+move(NE)
+move(NE)
+land
+move(SE)
+move(E)
+move(NW)
+move(E)
+wormhole
+move(SW)
+move(N)

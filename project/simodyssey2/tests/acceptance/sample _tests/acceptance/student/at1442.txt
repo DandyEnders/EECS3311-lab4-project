@@ -1,0 +1,11 @@
+move(S)
+move(S)
+move(NW)
+move(NW)
+move(SE)
+land
+move(N)
+abort
+move(E)
+move(NW)
+move(E)

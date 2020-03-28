@@ -1,0 +1,11 @@
+move(W)
+liftoff
+abort
+liftoff
+abort
+move(W)
+move(NE)
+move(E)
+move(N)
+move(NW)
+pass

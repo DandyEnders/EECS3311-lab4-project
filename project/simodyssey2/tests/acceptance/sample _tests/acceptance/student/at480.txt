@@ -1,0 +1,10 @@
+liftoff
+move(S)
+move(NW)
+move(SW)
+move(NW)
+move(E)
+wormhole
+test(23,32,11,36,28)
+test(4,22,45,21,46)
+move(N)

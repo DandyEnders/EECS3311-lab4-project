@@ -1,0 +1,10 @@
+land
+liftoff
+wormhole
+move(W)
+move(SE)
+move(NE)
+pass
+move(S)
+move(SW)
+move(E)

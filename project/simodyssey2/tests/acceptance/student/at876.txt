@@ -1,0 +1,11 @@
+test(22,38,36,31,53)
+pass
+land
+move(W)
+land
+test(4,21,42,45,47)
+liftoff
+move(SE)
+wormhole
+move(S)
+wormhole

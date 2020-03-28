@@ -1,0 +1,16 @@
+wormhole
+move(NE)
+land
+land
+move(W)
+move(NE)
+move(SW)
+move(SW)
+move(SE)
+move(NE)
+move(NE)
+abort
+pass
+liftoff
+move(N)
+move(NE)

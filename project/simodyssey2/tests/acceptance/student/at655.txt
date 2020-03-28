@@ -1,0 +1,17 @@
+move(NE)
+move(E)
+move(SW)
+move(SW)
+move(E)
+abort
+move(SE)
+move(N)
+move(NW)
+pass
+move(W)
+move(N)
+move(E)
+move(NE)
+liftoff
+move(S)
+move(N)

@@ -1,0 +1,492 @@
+  state:0.0, ok
+  Welcome! Try test(3,5,7,15,30)
+->move(N)
+  state:0.1, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:0.2, error
+  Negative on that request:no mission in progress.
+->pass
+  state:0.3, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:0.4, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:0.5, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:0.6, error
+  Negative on that request:no mission in progress.
+->test(4,26,16,23,31)
+  state:0.7, error
+  Thresholds should be non-decreasing order.
+->wormhole
+  state:0.8, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:0.9, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:0.10, error
+  Negative on that request:no mission in progress.
+->play
+  state:1.0, mode:play, ok
+  Movement:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    E---   *---   P---   ----   PP--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    ----   ----   W---   ----   P---   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    MY--   ----   O---   PW--   ----   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    W---   M*--   P---   P*--   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    BW--   ----   *---   ----   PW--   
+->move(SW)
+  state:2.0, mode:play, ok
+  Movement:
+    [0,E]:[1,1,1]->[2,5,2]
+    [3,P]:[1,5,2]->[5,4,1]
+    [8,P]:[4,3,1]->[3,2,1]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    ----   *---   P---   ----   P---   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    ----   ----   W---   ----   PE--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    MY--   P---   O---   PW--   ----   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    W---   M*--   ----   P*--   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    BW--   ----   *---   P---   PW--   
+->move(N)
+  state:3.0, mode:play, ok
+  Movement:
+    [0,E]:[2,5,2]->[1,5,2]
+    [5,M]:[3,1,1]->[3,5,1]
+    [8,P]:[3,2,1]->[2,1,1]
+    [10,B]:[5,1,1]->[5,2,1]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    ----   *---   P---   ----   PE--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    P---   ----   W---   ----   P---   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    -Y--   ----   O---   PW--   M---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    W---   M*--   ----   P*--   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    -W--   B---   *---   P---   PW--   
+->pass
+  state:4.0, mode:play, ok
+  Movement:
+    [1,P]:[1,3,1]->[2,4,1]
+    [2,P]:[1,5,1]->[2,5,2]
+    [4,P]:[2,5,1]->[2,4,2]
+    [6,P]:[3,4,1]->[2,3,2]
+    [7,M]:[4,2,1]->[5,1,1]
+    [10,B]:[5,2,1]->[5,1,3]
+      reproduced [12,B] at [5,1,4]
+      destroyed [7,M] at [5,1,1]
+    [11,P]:[5,5,1]->[4,4,3]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    ----   *---   ----   ----   -E--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    P---   ----   WP--   PP--   -P--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    -Y--   ----   O---   -W--   M---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    W---   -*--   ----   P*P-   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    -WBB   ----   *---   P---   -W--   
+->pass
+  state:5.0, mode:play, ok
+  Movement:
+    [2,P]:[2,5,2]->[1,5,1]
+    [3,P]:[5,4,1]->[1,4,1]
+    [6,P]:[2,3,2]->[3,2,1]
+    [8,P]:[2,1,1]->[1,5,3]
+    [12,B]:[5,1,4]->[5,3,2]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    ----   *---   ----   P---   PEP-   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    ----   ----   W---   PP--   ----   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    -Y--   P---   O---   -W--   M---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    W---   -*--   ----   P*P-   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    -WB-   ----   *B--   ----   -W--   
+->play
+  state:5.1, mode:play, error
+  To start a new mission, please abort the current one first.
+->move(E)
+  state:6.0, mode:play, error
+  Explorer got lost in space - out of fuel at Sector:1:1
+  The game has ended. You can start a new game.
+  Movement:
+    [0,E]:[1,5,2]->[1,1,1]
+    [1,P]:[2,4,1]->[1,3,1]
+    [3,P]:[1,4,1]->[1,3,2]
+    [5,M]:[3,5,1]->[2,1,1]
+      reproduced [13,M] at [2,1,2]
+    [6,P]:[3,2,1]->[2,1,3]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    ----   *---   PP--   ----   P-P-   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    MMP-   ----   W---   -P--   ----   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    -Y--   ----   O---   -W--   ----   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    W---   -*--   ----   P*P-   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    -WB-   ----   *B--   ----   -W--   
+->move(NE)
+  state:6.1, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:6.2, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:6.3, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:6.4, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:6.5, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:6.6, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:6.7, error
+  Negative on that request:no mission in progress.
+->land
+  state:6.8, error
+  Negative on that request:no mission in progress.
+->pass
+  state:6.9, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:6.10, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:6.11, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:6.12, error
+  Negative on that request:no mission in progress.
+->pass
+  state:6.13, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:6.14, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:6.15, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:6.16, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:6.17, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:6.18, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:6.19, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:6.20, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:6.21, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:6.22, error
+  Negative on that request:no mission in progress.
+->liftoff
+  state:6.23, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:6.24, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:6.25, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:6.26, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:6.27, error
+  Negative on that request:no mission in progress.
+->move(NE)
+  state:6.28, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:6.29, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:6.30, error
+  Negative on that request:no mission in progress.
+->play
+  state:7.0, mode:play, ok
+  Movement:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    EW--   P---   PY--   Y---   Y---   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    *---   B---   Y---   ----   PW--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    P---   ----   O---   P---   ----   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   PY--   ----   ----   A---   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    P---   ----   ----   P*--   *---   
+->move(W)
+  state:8.0, mode:play, ok
+  Movement:
+    [0,E]:[1,1,1]->[1,5,2]
+    [4,P]:[2,5,1]->[3,5,1]
+    [5,P]:[3,1,1]->[4,1,1]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    -W--   P---   PY--   Y---   YE--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    *---   B---   Y---   ----   -W--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    ----   ----   O---   P---   P---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    P---   PY--   ----   ----   A---   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    P---   ----   ----   P*--   *---   
+->move(NE)
+  state:9.0, mode:play, ok
+  Movement:
+    [0,E]:[1,5,2]->[5,1,2]
+    [1,P]:[1,2,1]->[1,3,3]
+    [3,B]:[2,2,1]->[3,3,2]
+    [5,P]:[4,1,1]->[5,2,1]
+    [6,P]:[3,4,1]->[4,4,1]
+    [8,A]:[4,5,1]->[4,4,2]
+    [9,P]:[5,1,1]->[1,1,1]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    PW--   ----   PYP-   Y---   Y---   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    *---   ----   Y---   ----   -W--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    ----   ----   O---   ----   P---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   PY--   ----   PA--   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    -E--   P---   ----   P*--   *---   
+->pass
+  state:10.0, mode:play, ok
+  Movement:
+    [5,P]:[5,2,1]->[1,1,3]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    PWP-   ----   PYP-   Y---   Y---   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    *---   ----   Y---   ----   -W--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    ----   ----   O---   ----   P---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   PY--   ----   PA--   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    -E--   ----   ----   P*--   *---   
+->wormhole
+  state:10.1, mode:play, error
+  Explorer couldn't find wormhole at Sector:5:1
+->move(SW)
+  state:11.0, mode:play, ok
+  Movement:
+    [0,E]:[5,1,2]->[1,5,2]
+    [4,P]:[3,5,1]->[3,1,1]
+    [9,P]:[1,1,1]->[2,2,1]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    -WP-   ----   PYP-   Y---   YE--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    *---   P---   Y---   ----   -W--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    P---   ----   O---   ----   ----   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   PY--   ----   PA--   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    ----   ----   ----   P*--   *---   
+->move(W)
+  state:12.0, mode:play, ok
+  Movement:
+    [0,E]:[1,5,2]->[1,4,2]
+    [4,P]:[3,1,1]->[2,2,2]
+    [5,P]:[1,1,3]->[2,2,3]
+    [6,P]:[4,4,1]->[3,3,2]
+    [8,A]:[4,4,2]->[3,5,1]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    -W--   ----   PYP-   YE--   Y---   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    *---   PPP-   Y---   ----   -W--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    ----   ----   O---   ----   A---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   PY--   ----   ----   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    ----   ----   ----   P*--   *---   
+->move(N)
+  state:13.0, mode:play, ok
+  Movement:
+    [0,E]:[1,4,2]->[5,4,3]
+    [5,P]:[2,2,3]->[2,1,2]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    -W--   ----   PYP-   Y---   Y---   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    *P--   PP--   Y---   ----   -W--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    ----   ----   O---   ----   A---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   PY--   ----   ----   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    ----   ----   ----   P*E-   *---   
+->liftoff
+  state:13.1, mode:play, error
+  Negative on that request:you are not on a planet at Sector:5:4
+->move(N)
+  state:14.0, mode:play, ok
+  Movement:
+    [0,E]:[5,4,3]->[4,4,1]
+    [9,P]:[2,2,1]->[3,3,2]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    -W--   ----   PYP-   Y---   Y---   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    *P--   -P--   Y---   ----   -W--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    ----   ----   O---   ----   A---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   PY--   ----   E---   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    ----   ----   ----   P*--   *---   
+->abort
+  state:14.1, ok
+  Mission aborted. Try test(3,5,7,15,30)
+->liftoff
+  state:14.2, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:14.3, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:14.4, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:14.5, error
+  Negative on that request:no mission in progress.
+->play
+  state:15.0, mode:play, ok
+  Movement:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    EBY-   P---   ----   ----   ----   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    B---   B*--   *---   BB--   J---   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    B*--   P---   O---   P---   Y---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    B---   B*--   ----   PY--   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    ----   B---   Y---   P*--   JY--   
+->move(N)
+  state:16.0, mode:play, ok
+  Movement:
+    [0,E]:[1,1,1]->[5,1,1]
+    [1,B]:[1,1,2]->[5,5,3]
+    [2,P]:[1,2,1]->[5,1,2]
+    [3,B]:[2,1,1]->[2,2,3]
+    [6,B]:[2,4,2]->[3,5,2]
+    [9,P]:[3,2,1]->[3,1,3]
+    [10,P]:[3,4,1]->[2,3,2]
+    [11,B]:[4,1,1]->[3,1,4]
+    [14,B]:[5,2,1]->[4,3,1]
+    [16,J]:[5,5,1]->[5,4,3]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    --Y-   ----   ----   ----   ----   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    ----   B*B-   *P--   B---   J---   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    B*PB   ----   O---   ----   YB--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   B*--   B---   PY--   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    EP--   ----   Y---   P*J-   -YB-   
+->move(NE)
+  state:17.0, mode:play, ok
+  Movement:
+    [0,E]:[5,1,1]->[4,2,3]
+    [8,B]:[3,1,1]->[4,1,1]
+    [12,B]:[4,2,1]->[5,1,1]
+    [16,J]:[5,4,3]->[5,3,2]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    --Y-   ----   ----   ----   ----   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    ----   B*B-   *P--   B---   J---   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    -*PB   ----   O---   ----   YB--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    B---   -*E-   B---   PY--   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    BP--   ----   YJ--   P*--   -YB-   
+->pass
+  state:18.0, mode:play, ok
+  Movement:
+    [1,B]:[5,5,3]->[5,4,3]
+      reproduced [17,B] at [5,4,4]
+    [2,P]:[5,1,2]->[4,1,2]
+    [3,B]:[2,2,3]->[2,3,3]
+      reproduced [18,B] at [2,3,4]
+    [4,B]:[2,2,1]->[2,1,1]
+    [5,B]:[2,4,1]
+    [7,J]:[2,5,1]->[1,1,1]
+    [11,B]:[3,1,4]->[4,5,1]
+      reproduced [19,B] at [4,5,2]
+    [14,B]:[4,3,1]->[5,3,3]
+      reproduced [20,B] at [5,3,4]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    J-Y-   ----   ----   ----   ----   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    B---   -*--   *PBB   B---   ----   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    -*P-   ----   O---   ----   YB--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    BP--   -*E-   ----   PY--   BB--   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    B---   ----   YJBB   P*BB   -Y--   
+->move(SW)
+  state:19.0, mode:play, ok
+  Movement:
+    [0,E]:[4,2,3]->[5,1,2]
+    [2,P]:[4,1,2]->[3,2,1]
+    [4,B]:[2,1,1]->[1,1,2]
+      reproduced [21,B] at [1,1,4]
+    [5,B]:[2,4,1]->[1,4,1]
+      reproduced [22,B] at [1,4,2]
+    [6,B]:[3,5,2]->[2,4,1]
+      reproduced [23,B] at [2,4,2]
+    [8,B]:[4,1,1]->[4,5,3]
+      reproduced [24,B] at [4,5,4]
+    [12,B]:[5,1,1]->[1,2,1]
+      reproduced [25,B] at [1,2,2]
+    [16,J]:[5,3,2]->[1,3,1]
+      reproduced [26,J] at [1,3,2]
+    [17,B]:[5,4,4]->[4,4,3]
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    JBYB   BB--   JJ--   BB--   ----   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    ----   -*--   *PBB   BB--   ----   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    -*P-   P---   O---   ----   Y---   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   -*--   ----   PYB-   BBBB   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    -E--   ----   Y-BB   P*B-   -Y--   
+->play
+  state:19.1, mode:play, error
+  To start a new mission, please abort the current one first.
+->land
+  state:19.2, mode:play, error
+  Negative on that request:no yellow dwarf at Sector:5:1

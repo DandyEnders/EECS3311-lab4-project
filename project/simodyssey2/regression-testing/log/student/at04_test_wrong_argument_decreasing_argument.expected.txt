@@ -1,5 +1,0 @@
-  state:0.0, ok
-  Welcome! Try test(3,5,7,15,30)
-->test(100,50,25,12,6)
-  state:0.1, error
-  Thresholds should be non-decreasing order.

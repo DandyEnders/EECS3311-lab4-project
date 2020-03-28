@@ -1,0 +1,13 @@
+move(S)
+wormhole
+play
+land
+move(E)
+move(SW)
+move(SE)
+move(N)
+move(SW)
+move(E)
+move(SW)
+move(W)
+test(14,31,44,46,39)

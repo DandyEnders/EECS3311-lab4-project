@@ -1,0 +1,15 @@
+wormhole
+move(W)
+move(N)
+move(SW)
+move(N)
+move(SW)
+move(W)
+move(E)
+move(NE)
+move(E)
+move(S)
+move(SE)
+move(W)
+play
+move(N)

@@ -1,0 +1,11 @@
+move(SW)
+test(32,32,96,96,96)
+move(N)
+move(NW)
+move(NW)
+move(E)
+test(54,55,55,97,97)
+move(SE)
+move(N)
+wormhole
+move(NW)

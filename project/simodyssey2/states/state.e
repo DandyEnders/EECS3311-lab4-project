@@ -147,7 +147,7 @@ feature {NONE} -- Helper Method (Handling explorer death messages)
 				s_content.append (game_model.out)
 			end
 			create {MAIN_MENU_STATE} s.make (game_model, abstract_state)
-			s.set_msg_command_validity (msg_command_validity)
+			s.set_msg_command_validity (msg.ok)
 			s.set_msg_mode (msg_mode)
 			s.set_msg_content (s_content)
 			transition_to (s)

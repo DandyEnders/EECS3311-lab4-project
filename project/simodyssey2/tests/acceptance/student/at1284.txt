@@ -1,0 +1,14 @@
+move(N)
+move(E)
+move(NE)
+move(S)
+move(S)
+move(SW)
+move(SW)
+abort
+move(E)
+test(75,90,98,98,98)
+move(W)
+move(NE)
+move(S)
+pass

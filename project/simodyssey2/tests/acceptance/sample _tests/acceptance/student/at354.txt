@@ -1,0 +1,10 @@
+liftoff
+move(SW)
+move(NW)
+move(W)
+move(NW)
+land
+move(NE)
+liftoff
+move(SE)
+move(E)

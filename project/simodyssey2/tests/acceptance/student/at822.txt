@@ -1,0 +1,10 @@
+move(NE)
+abort
+move(SW)
+land
+move(NE)
+land
+move(W)
+move(E)
+pass
+move(SE)

@@ -1,0 +1,62 @@
+  state:0.0, ok
+  Welcome! Try test(3,5,7,15,30)
+->move(S)
+  state:0.1, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:0.2, error
+  Negative on that request:no mission in progress.
+->pass
+  state:0.3, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:0.4, error
+  Negative on that request:no mission in progress.
+->move(NE)
+  state:0.5, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:0.6, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:0.7, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:0.8, error
+  Negative on that request:no mission in progress.
+->wormhole
+  state:0.9, error
+  Negative on that request:no mission in progress.
+->land
+  state:0.10, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:0.11, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:0.12, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:0.13, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:0.14, error
+  Negative on that request:no mission in progress.
+->land
+  state:0.15, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:0.16, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:0.17, error
+  Negative on that request:no mission in progress.
+->liftoff
+  state:0.18, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:0.19, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:0.20, error
+  Negative on that request:no mission in progress.

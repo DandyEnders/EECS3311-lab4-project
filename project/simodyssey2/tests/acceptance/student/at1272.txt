@@ -1,0 +1,15 @@
+liftoff
+pass
+move(W)
+abort
+move(W)
+wormhole
+abort
+move(S)
+move(NW)
+move(S)
+move(W)
+move(N)
+move(W)
+move(W)
+test(71,71,89,89,89)

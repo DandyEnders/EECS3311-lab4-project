@@ -1,0 +1,10 @@
+move(S)
+move(E)
+move(E)
+move(E)
+move(SE)
+wormhole
+wormhole
+move(W)
+test(73,73,73,73,95)
+move(E)

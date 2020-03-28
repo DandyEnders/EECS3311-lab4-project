@@ -1,0 +1,1766 @@
+  state:0.0, ok
+  Welcome! Try test(3,5,7,15,30)
+->move(SE)
+  state:0.1, error
+  Negative on that request:no mission in progress.
+->liftoff
+  state:0.2, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:0.3, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:0.4, error
+  Negative on that request:no mission in progress.
+->pass
+  state:0.5, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:0.6, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:0.7, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:0.8, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:0.9, error
+  Negative on that request:no mission in progress.
+->liftoff
+  state:0.10, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:0.11, error
+  Negative on that request:no mission in progress.
+->liftoff
+  state:0.12, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:0.13, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:0.14, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:0.15, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:0.16, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:0.17, error
+  Negative on that request:no mission in progress.
+->wormhole
+  state:0.18, error
+  Negative on that request:no mission in progress.
+->move(NE)
+  state:0.19, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:0.20, error
+  Negative on that request:no mission in progress.
+->land
+  state:0.21, error
+  Negative on that request:no mission in progress.
+->move(NE)
+  state:0.22, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:0.23, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:0.24, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:0.25, error
+  Negative on that request:no mission in progress.
+->test(5,78,78,78,78)
+  state:1.0, mode:test, ok
+  Movement:none
+  Sectors:
+    [1,1]->[0,E],[1,J],-,-
+    [1,2]->[2,J],[3,J],[-8,Y],-
+    [1,3]->[4,J],[5,J],-,-
+    [1,4]->[6,J],-,-,-
+    [1,5]->[7,J],[-11,*],-,-
+    [2,1]->[8,J],[9,J],-,-
+    [2,2]->[10,J],[-6,Y],-,-
+    [2,3]->[11,J],-,-,-
+    [2,4]->-,-,-,-
+    [2,5]->[12,J],[13,J],[14,J],[-4,*]
+    [3,1]->[15,J],[16,J],-,-
+    [3,2]->[17,J],[18,J],-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[19,J],[20,J],[21,J],[-3,W]
+    [3,5]->[22,J],[23,J],[24,J],[-7,W]
+    [4,1]->[25,J],-,-,-
+    [4,2]->-,-,-,-
+    [4,3]->[26,J],-,-,-
+    [4,4]->[27,J],[28,J],[-10,W],-
+    [4,5]->[29,J],-,-,-
+    [5,1]->[30,J],[31,J],-,-
+    [5,2]->[32,J],[-5,Y],-,-
+    [5,3]->[33,J],[34,J],[-2,W],-
+    [5,4]->[35,J],[-9,Y],-,-
+    [5,5]->[36,J],[37,J],-,-
+  Descriptions:
+    [-11,*]->Luminosity:5
+    [-10,W]->
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,W]->
+    [-6,Y]->Luminosity:2
+    [-5,Y]->Luminosity:2
+    [-4,*]->Luminosity:5
+    [-3,W]->
+    [-2,W]->
+    [-1,O]->
+    [0,E]->fuel:3/3, life:3/3, landed?:F
+    [1,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [2,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [3,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [4,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [5,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [6,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [7,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [8,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [9,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [10,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [11,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [12,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [13,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [14,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [15,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [16,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [17,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [18,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [19,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [20,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [21,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [22,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [23,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [24,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [25,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [26,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [27,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [28,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [29,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [30,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [31,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [32,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [33,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [34,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [35,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [36,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [37,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+  Deaths This Turn:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    EJ--   JJY-   JJ--   J---   J*--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    JJ--   JY--   J---   ----   JJJ*   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    JJ--   JJ--   O---   JJJW   JJJW   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    J---   ----   J---   JJW-   J---   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    JJ--   JY--   JJW-   JY--   JJ--   
+->move(W)
+  state:2.0, mode:test, ok
+  Movement:
+    [0,E]:[1,1,1]->[1,5,3]
+    [2,J]:[1,2,1]->[5,1,3]
+    [4,J]:[1,3,1]->[5,3,4]
+    [5,J]:[1,3,2]->[5,2,3]
+    [6,J]:[1,4,1]->[5,4,3]
+    [7,J]:[1,5,1]->[5,4,4]
+    [18,J]:[3,2,2]->[3,3,2]
+    [20,J]:[3,4,2]->[3,3,2]
+    [21,J]:[3,4,3]
+    [25,J]:[4,1,1]->[4,2,1]
+    [27,J]:[4,4,1]
+    [28,J]:[4,4,2]->[4,3,2]
+    [35,J]:[5,4,1]->[1,5,1]
+  Sectors:
+    [1,1]->-,[1,J],-,-
+    [1,2]->-,[3,J],[-8,Y],-
+    [1,3]->-,-,-,-
+    [1,4]->-,-,-,-
+    [1,5]->[35,J],[-11,*],[0,E],-
+    [2,1]->[8,J],[9,J],-,-
+    [2,2]->[10,J],[-6,Y],-,-
+    [2,3]->[11,J],-,-,-
+    [2,4]->-,-,-,-
+    [2,5]->[12,J],[13,J],[14,J],[-4,*]
+    [3,1]->[15,J],[16,J],-,-
+    [3,2]->[17,J],-,-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[19,J],-,[21,J],[-3,W]
+    [3,5]->[22,J],[23,J],[24,J],[-7,W]
+    [4,1]->-,-,-,-
+    [4,2]->[25,J],-,-,-
+    [4,3]->[26,J],[28,J],-,-
+    [4,4]->[27,J],-,[-10,W],-
+    [4,5]->[29,J],-,-,-
+    [5,1]->[30,J],[31,J],[2,J],-
+    [5,2]->[32,J],[-5,Y],[5,J],-
+    [5,3]->[33,J],[34,J],[-2,W],[4,J]
+    [5,4]->-,[-9,Y],[6,J],[7,J]
+    [5,5]->[36,J],[37,J],-,-
+  Descriptions:
+    [-11,*]->Luminosity:5
+    [-10,W]->
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,W]->
+    [-6,Y]->Luminosity:2
+    [-5,Y]->Luminosity:2
+    [-4,*]->Luminosity:5
+    [-3,W]->
+    [-2,W]->
+    [-1,O]->
+    [0,E]->fuel:3/3, life:3/3, landed?:F
+    [1,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [2,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [3,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [4,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [5,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [6,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [7,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [8,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [9,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [10,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [11,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [12,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [13,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [14,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [15,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [16,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [17,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [19,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [21,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [22,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [23,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [24,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [25,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [26,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [27,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [28,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [29,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [30,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [31,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [32,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [33,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [34,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [35,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [36,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [37,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+  Deaths This Turn:
+    [18,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got devoured by blackhole (id: -1) at Sector:3:3
+    [20,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got devoured by blackhole (id: -1) at Sector:3:3
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    -J--   -JY-   ----   ----   J*E-   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    JJ--   JY--   J---   ----   JJJ*   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    JJ--   J---   O---   J-JW   JJJW   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ----   J---   JJ--   J-W-   J---   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    JJJ-   JYJ-   JJWJ   -YJJ   JJ--   
+->move(NE)
+  state:3.0, mode:test, ok
+  Movement:
+    [0,E]:[1,5,3]->[5,1,4]
+    [1,J]:[1,1,2]->[5,5,3]
+    [3,J]:[1,2,2]
+    [5,J]:[5,2,3]->[1,1,1]
+    [8,J]:[2,1,1]->[1,2,1]
+    [11,J]:[2,3,1]->[1,3,1]
+    [12,J]:[2,5,1]->[3,4,2]
+    [14,J]:[2,5,3]
+    [17,J]:[3,2,1]->[4,3,3]
+    [19,J]:[3,4,1]
+    [22,J]:[3,5,1]->[4,4,2]
+    [23,J]:[3,5,2]
+    [24,J]:[3,5,3]
+    [26,J]:[4,3,1]->[3,2,1]
+    [30,J]:[5,1,1]->[1,2,4]
+    [31,J]:[5,1,2]->[4,1,1]
+    [37,J]:[5,5,2]->[1,4,1]
+  Sectors:
+    [1,1]->[5,J],-,-,-
+    [1,2]->[8,J],[3,J],[-8,Y],[30,J]
+    [1,3]->[11,J],-,-,-
+    [1,4]->[37,J],-,-,-
+    [1,5]->[35,J],[-11,*],-,-
+    [2,1]->-,[9,J],-,-
+    [2,2]->[10,J],[-6,Y],-,-
+    [2,3]->-,-,-,-
+    [2,4]->-,-,-,-
+    [2,5]->-,[13,J],[14,J],[-4,*]
+    [3,1]->[15,J],[16,J],-,-
+    [3,2]->[26,J],-,-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[19,J],[12,J],[21,J],[-3,W]
+    [3,5]->-,[23,J],[24,J],[-7,W]
+    [4,1]->[31,J],-,-,-
+    [4,2]->[25,J],-,-,-
+    [4,3]->-,[28,J],[17,J],-
+    [4,4]->[27,J],[22,J],[-10,W],-
+    [4,5]->[29,J],-,-,-
+    [5,1]->-,-,[2,J],[0,E]
+    [5,2]->[32,J],[-5,Y],-,-
+    [5,3]->[33,J],[34,J],[-2,W],[4,J]
+    [5,4]->-,[-9,Y],[6,J],[7,J]
+    [5,5]->[36,J],-,[1,J],-
+  Descriptions:
+    [-11,*]->Luminosity:5
+    [-10,W]->
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,W]->
+    [-6,Y]->Luminosity:2
+    [-5,Y]->Luminosity:2
+    [-4,*]->Luminosity:5
+    [-3,W]->
+    [-2,W]->
+    [-1,O]->
+    [0,E]->fuel:2/3, life:3/3, landed?:F
+    [1,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [2,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [3,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [4,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [5,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:2
+    [6,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [7,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [8,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [9,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [10,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [11,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [12,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [13,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [14,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [15,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [16,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [17,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [19,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [21,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [22,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [23,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [24,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [25,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [26,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [27,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [28,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [29,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [30,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [31,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [32,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [33,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [34,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [35,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [36,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [37,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+  Deaths This Turn:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    J---   JJYJ   J---   J---   J*--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    -J--   JY--   ----   ----   -JJ*   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    JJ--   J---   O---   JJJW   -JJW   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    J---   J---   -JJ-   JJW-   J---   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    --JE   JY--   JJWJ   -YJJ   J-J-   
+->move(NW)
+  state:4.0, mode:test, ok
+  Movement:
+    [0,E]:[5,1,4]->[4,5,2]
+    [1,J]:[5,5,3]->[5,4,1]
+    [6,J]:[5,4,3]->[1,5,3]
+    [7,J]:[5,4,4]->[5,5,2]
+    [8,J]:[1,2,1]->[5,2,3]
+    [9,J]:[2,1,2]->[2,2,3]
+    [10,J]:[2,2,1]->[1,2,1]
+    [13,J]:[2,5,2]->[1,5,4]
+    [15,J]:[3,1,1]->[2,1,1]
+    [16,J]:[3,1,2]->[2,1,2]
+    [23,J]:[3,5,2]->[2,4,1]
+    [26,J]:[3,2,1]->[4,1,2]
+    [27,J]:[4,4,1]
+    [29,J]:[4,5,1]->[4,1,3]
+    [32,J]:[5,2,1]
+    [33,J]:[5,3,1]->[4,4,4]
+    [34,J]:[5,3,2]->[1,3,2]
+    [35,J]:[1,5,1]->[5,1,1]
+    [36,J]:[5,5,1]->[1,4,2]
+  Sectors:
+    [1,1]->[5,J],-,-,-
+    [1,2]->[10,J],[3,J],[-8,Y],[30,J]
+    [1,3]->[11,J],[34,J],-,-
+    [1,4]->[37,J],[36,J],-,-
+    [1,5]->-,[-11,*],[6,J],[13,J]
+    [2,1]->[15,J],[16,J],-,-
+    [2,2]->-,[-6,Y],[9,J],-
+    [2,3]->-,-,-,-
+    [2,4]->[23,J],-,-,-
+    [2,5]->-,-,[14,J],[-4,*]
+    [3,1]->-,-,-,-
+    [3,2]->-,-,-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[19,J],[12,J],[21,J],[-3,W]
+    [3,5]->-,-,[24,J],[-7,W]
+    [4,1]->[31,J],[26,J],[29,J],-
+    [4,2]->[25,J],-,-,-
+    [4,3]->-,[28,J],[17,J],-
+    [4,4]->[27,J],[22,J],[-10,W],[33,J]
+    [4,5]->-,[0,E],-,-
+    [5,1]->[35,J],-,[2,J],-
+    [5,2]->[32,J],[-5,Y],[8,J],-
+    [5,3]->-,-,[-2,W],[4,J]
+    [5,4]->[1,J],[-9,Y],-,-
+    [5,5]->-,[7,J],-,-
+  Descriptions:
+    [-11,*]->Luminosity:5
+    [-10,W]->
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,W]->
+    [-6,Y]->Luminosity:2
+    [-5,Y]->Luminosity:2
+    [-4,*]->Luminosity:5
+    [-3,W]->
+    [-2,W]->
+    [-1,O]->
+    [0,E]->fuel:1/3, life:3/3, landed?:F
+    [1,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [2,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [3,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [4,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [5,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [6,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [7,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:2
+    [8,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [9,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [10,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [11,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [12,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [13,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [14,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [15,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [16,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [17,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [19,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [21,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [22,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [23,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:2
+    [24,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [25,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [26,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [27,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [28,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [29,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [30,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [31,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [32,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [33,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [34,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [35,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [36,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [37,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+  Deaths This Turn:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    J---   JJYJ   JJ--   JJ--   -*JJ   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    JJ--   -YJ-   ----   J---   --J*   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    ----   ----   O---   JJJW   --JW   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    JJJ-   J---   -JJ-   JJWJ   -E--   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    J-J-   JYJ-   --WJ   JY--   -J--   
+->move(SE)
+  state:5.0, mode:test, ok
+  Explorer got lost in space - out of fuel at Sector:5:1
+  The game has ended. You can start a new game.
+  Movement:
+    [0,E]:[4,5,2]->[5,1,2]
+    [2,J]:[5,1,3]->[5,5,1]
+    [4,J]:[5,3,4]
+    [6,J]:[1,5,3]->[2,1,3]
+      reproduced [38,J] at [2,1,4]
+    [8,J]:[5,2,3]->[4,2,2]
+      reproduced [39,J] at [4,2,3]
+    [9,J]:[2,2,3]
+    [10,J]:[1,2,1]->[1,3,3]
+    [11,J]:[1,3,1]->[1,2,1]
+    [12,J]:[3,4,2]->[2,4,2]
+    [13,J]:[1,5,4]->[1,1,2]
+    [14,J]:[2,5,3]->[3,1,1]
+    [16,J]:[2,1,2]->[1,1,3]
+    [17,J]:[4,3,3]->[3,3,2]
+    [21,J]:[3,4,3]->[3,5,1]
+    [22,J]:[4,4,2]->[3,5,2]
+    [25,J]:[4,2,1]->[5,3,1]
+    [28,J]:[4,3,2]->[3,3,2]
+    [29,J]:[4,1,3]->[3,1,2]
+    [30,J]:[1,2,4]->[5,3,2]
+    [32,J]:[5,2,1]->[4,2,1]
+    [35,J]:[5,1,1]->[5,2,1]
+      reproduced [40,J] at [5,2,3]
+    [36,J]:[1,4,2]->[2,5,1]
+    [37,J]:[1,4,1]->[2,4,3]
+  Sectors:
+    [1,1]->[5,J],[13,J],[16,J],-
+    [1,2]->[11,J],[3,J],[-8,Y],-
+    [1,3]->-,[34,J],[10,J],-
+    [1,4]->-,-,-,-
+    [1,5]->-,[-11,*],-,-
+    [2,1]->[15,J],-,[6,J],[38,J]
+    [2,2]->-,[-6,Y],[9,J],-
+    [2,3]->-,-,-,-
+    [2,4]->[23,J],[12,J],[37,J],-
+    [2,5]->[36,J],-,-,[-4,*]
+    [3,1]->[14,J],[29,J],-,-
+    [3,2]->-,-,-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[19,J],-,-,[-3,W]
+    [3,5]->[21,J],[22,J],[24,J],[-7,W]
+    [4,1]->[31,J],[26,J],-,-
+    [4,2]->[32,J],[8,J],[39,J],-
+    [4,3]->-,-,-,-
+    [4,4]->[27,J],-,[-10,W],[33,J]
+    [4,5]->-,-,-,-
+    [5,1]->-,-,-,-
+    [5,2]->[35,J],[-5,Y],[40,J],-
+    [5,3]->[25,J],[30,J],[-2,W],[4,J]
+    [5,4]->[1,J],[-9,Y],-,-
+    [5,5]->[2,J],[7,J],-,-
+  Descriptions:
+    [-11,*]->Luminosity:5
+    [-10,W]->
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,W]->
+    [-6,Y]->Luminosity:2
+    [-5,Y]->Luminosity:2
+    [-4,*]->Luminosity:5
+    [-3,W]->
+    [-2,W]->
+    [-1,O]->
+    [1,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [2,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:2
+    [3,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [4,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [5,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [6,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [7,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [8,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [9,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [10,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [11,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [12,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [13,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [14,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [15,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [16,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:2
+    [19,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [21,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:2
+    [22,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:2
+    [23,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [24,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [25,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [26,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [27,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [29,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [30,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:2
+    [31,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [32,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:1
+    [33,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [34,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [35,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [36,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [37,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:2
+    [38,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [39,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [40,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+  Deaths This Turn:
+    [0,E]->fuel:0/3, life:0/3, landed?:F,
+      Explorer got lost in space - out of fuel at Sector:5:1
+    [17,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:N/A,
+      Janitaur got devoured by blackhole (id: -1) at Sector:3:3
+    [28,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:N/A,
+      Janitaur got devoured by blackhole (id: -1) at Sector:3:3
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    JJJ-   JJY-   -JJ-   ----   -*--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    J-JJ   -YJ-   ----   JJJ-   J--*   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    JJ--   ----   O---   J--W   JJJW   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    JJ--   JJJ-   ----   J-WJ   ----   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    ----   JYJ-   JJWJ   JY--   JJ--   
+  Explorer got lost in space - out of fuel at Sector:5:1
+  The game has ended. You can start a new game.
+->abort
+  state:5.1, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:5.2, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:5.3, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:5.4, error
+  Negative on that request:no mission in progress.
+->land
+  state:5.5, error
+  Negative on that request:no mission in progress.
+->liftoff
+  state:5.6, error
+  Negative on that request:no mission in progress.
+->liftoff
+  state:5.7, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:5.8, error
+  Negative on that request:no mission in progress.
+->pass
+  state:5.9, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:5.10, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:5.11, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:5.12, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:5.13, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:5.14, error
+  Negative on that request:no mission in progress.
+->test(63,63,63,63,63)
+  state:6.0, mode:test, ok
+  Movement:none
+  Sectors:
+    [1,1]->[0,E],[1,A],[-11,Y],-
+    [1,2]->[2,A],-,-,-
+    [1,3]->[3,A],[-7,*],-,-
+    [1,4]->[4,A],[5,A],-,-
+    [1,5]->-,-,-,-
+    [2,1]->[6,A],[7,A],[-5,W],-
+    [2,2]->[8,A],-,-,-
+    [2,3]->[9,A],[-4,Y],-,-
+    [2,4]->[10,A],-,-,-
+    [2,5]->-,-,-,-
+    [3,1]->[11,A],[12,A],[13,A],-
+    [3,2]->[14,A],[15,A],-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[16,A],[-10,Y],-,-
+    [3,5]->[17,A],[-3,*],-,-
+    [4,1]->[18,A],[-6,Y],-,-
+    [4,2]->[19,A],-,-,-
+    [4,3]->[20,A],[21,A],[22,A],-
+    [4,4]->[23,A],[24,A],[-2,Y],-
+    [4,5]->[25,A],[26,A],-,-
+    [5,1]->-,-,-,-
+    [5,2]->-,-,-,-
+    [5,3]->[-8,Y],-,-,-
+    [5,4]->[27,A],[28,A],-,-
+    [5,5]->[29,A],[-9,Y],-,-
+  Descriptions:
+    [-11,Y]->Luminosity:2
+    [-10,Y]->Luminosity:2
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,*]->Luminosity:5
+    [-6,Y]->Luminosity:2
+    [-5,W]->
+    [-4,Y]->Luminosity:2
+    [-3,*]->Luminosity:5
+    [-2,Y]->Luminosity:2
+    [-1,O]->
+    [0,E]->fuel:3/3, life:3/3, landed?:F
+    [1,A]->turns_left:2
+    [2,A]->turns_left:1
+    [3,A]->turns_left:0
+    [4,A]->turns_left:0
+    [5,A]->turns_left:1
+    [6,A]->turns_left:0
+    [7,A]->turns_left:2
+    [8,A]->turns_left:1
+    [9,A]->turns_left:1
+    [10,A]->turns_left:1
+    [11,A]->turns_left:1
+    [12,A]->turns_left:1
+    [13,A]->turns_left:2
+    [14,A]->turns_left:2
+    [15,A]->turns_left:2
+    [16,A]->turns_left:0
+    [17,A]->turns_left:2
+    [18,A]->turns_left:1
+    [19,A]->turns_left:0
+    [20,A]->turns_left:0
+    [21,A]->turns_left:0
+    [22,A]->turns_left:2
+    [23,A]->turns_left:0
+    [24,A]->turns_left:0
+    [25,A]->turns_left:1
+    [26,A]->turns_left:1
+    [27,A]->turns_left:2
+    [28,A]->turns_left:0
+    [29,A]->turns_left:2
+  Deaths This Turn:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    EAY-   A---   A*--   AA--   ----   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    AAW-   A---   AY--   A---   ----   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    AAA-   AA--   O---   AY--   A*--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    AY--   A---   AAA-   AAY-   AA--   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    ----   ----   Y---   AA--   AY--   
+->move(N)
+  state:7.0, mode:test, ok
+  Movement:
+    [0,E]:[1,1,1]->[5,1,1]
+    [3,A]:[1,3,1]->[5,2,1]
+    [4,A]:[1,4,1]->[5,3,2]
+    [6,A]:[2,1,1]->[2,2,2]
+    [16,A]:[3,4,1]->[4,5,3]
+    [19,A]:[4,2,1]->[4,1,3]
+    [20,A]:[4,3,1]->[3,3,2]
+    [21,A]:[4,3,2]->[3,3,2]
+    [23,A]:[4,4,1]->[3,5,3]
+    [24,A]:[4,4,2]->[4,3,1]
+    [28,A]:[5,4,2]->[1,4,1]
+  Sectors:
+    [1,1]->-,[1,A],[-11,Y],-
+    [1,2]->[2,A],-,-,-
+    [1,3]->-,[-7,*],-,-
+    [1,4]->[28,A],[5,A],-,-
+    [1,5]->-,-,-,-
+    [2,1]->-,[7,A],[-5,W],-
+    [2,2]->[8,A],[6,A],-,-
+    [2,3]->[9,A],[-4,Y],-,-
+    [2,4]->[10,A],-,-,-
+    [2,5]->-,-,-,-
+    [3,1]->[11,A],[12,A],[13,A],-
+    [3,2]->[14,A],[15,A],-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->-,[-10,Y],-,-
+    [3,5]->[17,A],[-3,*],[23,A],-
+    [4,1]->[18,A],[-6,Y],[19,A],-
+    [4,2]->-,-,-,-
+    [4,3]->[24,A],-,[22,A],-
+    [4,4]->-,-,[-2,Y],-
+    [4,5]->[25,A],[26,A],[16,A],-
+    [5,1]->[0,E],-,-,-
+    [5,2]->[3,A],-,-,-
+    [5,3]->[-8,Y],[4,A],-,-
+    [5,4]->[27,A],-,-,-
+    [5,5]->[29,A],[-9,Y],-,-
+  Descriptions:
+    [-11,Y]->Luminosity:2
+    [-10,Y]->Luminosity:2
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,*]->Luminosity:5
+    [-6,Y]->Luminosity:2
+    [-5,W]->
+    [-4,Y]->Luminosity:2
+    [-3,*]->Luminosity:5
+    [-2,Y]->Luminosity:2
+    [-1,O]->
+    [0,E]->fuel:2/3, life:3/3, landed?:F
+    [1,A]->turns_left:1
+    [2,A]->turns_left:0
+    [3,A]->turns_left:1
+    [4,A]->turns_left:1
+    [5,A]->turns_left:0
+    [6,A]->turns_left:1
+    [7,A]->turns_left:1
+    [8,A]->turns_left:0
+    [9,A]->turns_left:0
+    [10,A]->turns_left:0
+    [11,A]->turns_left:0
+    [12,A]->turns_left:0
+    [13,A]->turns_left:1
+    [14,A]->turns_left:1
+    [15,A]->turns_left:1
+    [16,A]->turns_left:2
+    [17,A]->turns_left:1
+    [18,A]->turns_left:0
+    [19,A]->turns_left:0
+    [22,A]->turns_left:1
+    [23,A]->turns_left:1
+    [24,A]->turns_left:0
+    [25,A]->turns_left:0
+    [26,A]->turns_left:0
+    [27,A]->turns_left:1
+    [28,A]->turns_left:1
+    [29,A]->turns_left:1
+  Deaths This Turn:
+    [20,A]->turns_left:N/A,
+      Asteroid got devoured by blackhole (id: -1) at Sector:3:3
+    [21,A]->turns_left:N/A,
+      Asteroid got devoured by blackhole (id: -1) at Sector:3:3
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    -AY-   A---   -*--   AA--   ----   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    -AW-   AA--   AY--   A---   ----   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    AAA-   AA--   O---   -Y--   A*A-   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    AYA-   ----   A-A-   --Y-   AAA-   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    E---   A---   YA--   A---   AY--   
+->move(SW)
+  state:8.0, mode:test, ok
+  Movement:
+    [0,E]:[5,1,1]->[1,5,1]
+    [2,A]:[1,2,1]->[2,1,1]
+    [5,A]:[1,4,2]->[1,3,1]
+    [8,A]:[2,2,1]->[2,1,4]
+    [9,A]:[2,3,1]->[3,2,3]
+    [10,A]:[2,4,1]->[3,4,1]
+    [11,A]:[3,1,1]->[2,2,1]
+    [12,A]:[3,1,2]->[3,5,4]
+    [18,A]:[4,1,1]->[4,5,4]
+    [19,A]:[4,1,3]->[3,2,4]
+    [24,A]:[4,3,1]->[5,2,2]
+    [25,A]:[4,5,1]->[5,5,3]
+    [26,A]:[4,5,2]->[5,5,4]
+  Sectors:
+    [1,1]->-,[1,A],[-11,Y],-
+    [1,2]->-,-,-,-
+    [1,3]->[5,A],[-7,*],-,-
+    [1,4]->[28,A],-,-,-
+    [1,5]->[0,E],-,-,-
+    [2,1]->[2,A],[7,A],[-5,W],[8,A]
+    [2,2]->[11,A],[6,A],-,-
+    [2,3]->-,[-4,Y],-,-
+    [2,4]->-,-,-,-
+    [2,5]->-,-,-,-
+    [3,1]->-,-,[13,A],-
+    [3,2]->[14,A],[15,A],[9,A],[19,A]
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[10,A],[-10,Y],-,-
+    [3,5]->[17,A],[-3,*],[23,A],[12,A]
+    [4,1]->-,[-6,Y],-,-
+    [4,2]->-,-,-,-
+    [4,3]->-,-,[22,A],-
+    [4,4]->-,-,[-2,Y],-
+    [4,5]->-,-,[16,A],[18,A]
+    [5,1]->-,-,-,-
+    [5,2]->[3,A],[24,A],-,-
+    [5,3]->[-8,Y],[4,A],-,-
+    [5,4]->[27,A],-,-,-
+    [5,5]->[29,A],[-9,Y],[25,A],[26,A]
+  Descriptions:
+    [-11,Y]->Luminosity:2
+    [-10,Y]->Luminosity:2
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,*]->Luminosity:5
+    [-6,Y]->Luminosity:2
+    [-5,W]->
+    [-4,Y]->Luminosity:2
+    [-3,*]->Luminosity:5
+    [-2,Y]->Luminosity:2
+    [-1,O]->
+    [0,E]->fuel:1/3, life:3/3, landed?:F
+    [1,A]->turns_left:0
+    [2,A]->turns_left:1
+    [3,A]->turns_left:0
+    [4,A]->turns_left:0
+    [5,A]->turns_left:1
+    [6,A]->turns_left:0
+    [7,A]->turns_left:0
+    [8,A]->turns_left:0
+    [9,A]->turns_left:2
+    [10,A]->turns_left:0
+    [11,A]->turns_left:1
+    [12,A]->turns_left:0
+    [13,A]->turns_left:0
+    [14,A]->turns_left:0
+    [15,A]->turns_left:0
+    [16,A]->turns_left:1
+    [17,A]->turns_left:0
+    [18,A]->turns_left:0
+    [19,A]->turns_left:2
+    [22,A]->turns_left:0
+    [23,A]->turns_left:0
+    [24,A]->turns_left:1
+    [25,A]->turns_left:2
+    [26,A]->turns_left:2
+    [27,A]->turns_left:0
+    [28,A]->turns_left:0
+    [29,A]->turns_left:0
+  Deaths This Turn:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    -AY-   ----   A*--   A---   E---   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    AAWA   AA--   -Y--   ----   ----   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    --A-   AAAA   O---   AY--   A*AA   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    -Y--   ----   --A-   --Y-   --AA   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    ----   AA--   YA--   A---   AYAA   
+->wormhole
+  state:8.1, mode:test, error
+  Explorer couldn't find wormhole at Sector:1:5
+->test(39,73,87,89,89)
+  state:8.2, mode:test, error
+  To start a new mission, please abort the current one first.
+->move(N)
+  state:8.3, mode:test, error
+  Cannot transfer to new location as it is full.
+->move(E)
+  state:9.0, mode:test, ok
+  Movement:
+    [0,E]:[1,5,1]->[1,1,1]
+    [1,A]:[1,1,2]->[1,2,1]
+    [3,A]:[5,2,1]->[5,3,3]
+    [4,A]:[5,3,2]->[4,3,1]
+    [6,A]:[2,2,2]->[1,2,2]
+    [7,A]:[2,1,2]->[2,5,1]
+    [8,A]:[2,1,4]->[3,1,1]
+    [10,A]:[3,4,1]->[3,3,2]
+    [12,A]:[3,5,4]->[2,1,2]
+    [13,A]:[3,1,3]->[4,2,1]
+    [14,A]:[3,2,1]->[3,1,2]
+    [15,A]:[3,2,2]->[2,2,2]
+    [17,A]:[3,5,1]->[2,5,2]
+    [18,A]:[4,5,4]->[5,1,1]
+    [22,A]:[4,3,3]->[3,4,1]
+    [23,A]:[3,5,3]->[4,5,1]
+    [27,A]:[5,4,1]->[4,5,2]
+    [28,A]:[1,4,1]->[5,3,2]
+    [29,A]:[5,5,1]->[5,1,2]
+  Sectors:
+    [1,1]->[0,E],-,[-11,Y],-
+    [1,2]->[1,A],[6,A],-,-
+    [1,3]->[5,A],[-7,*],-,-
+    [1,4]->-,-,-,-
+    [1,5]->-,-,-,-
+    [2,1]->[2,A],[12,A],[-5,W],-
+    [2,2]->[11,A],[15,A],-,-
+    [2,3]->-,[-4,Y],-,-
+    [2,4]->-,-,-,-
+    [2,5]->[7,A],[17,A],-,-
+    [3,1]->[8,A],[14,A],-,-
+    [3,2]->-,-,[9,A],[19,A]
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[22,A],[-10,Y],-,-
+    [3,5]->-,[-3,*],-,-
+    [4,1]->-,[-6,Y],-,-
+    [4,2]->[13,A],-,-,-
+    [4,3]->[4,A],-,-,-
+    [4,4]->-,-,[-2,Y],-
+    [4,5]->[23,A],[27,A],[16,A],-
+    [5,1]->[18,A],[29,A],-,-
+    [5,2]->-,[24,A],-,-
+    [5,3]->[-8,Y],[28,A],[3,A],-
+    [5,4]->-,-,-,-
+    [5,5]->-,[-9,Y],[25,A],[26,A]
+  Descriptions:
+    [-11,Y]->Luminosity:2
+    [-10,Y]->Luminosity:2
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,*]->Luminosity:5
+    [-6,Y]->Luminosity:2
+    [-5,W]->
+    [-4,Y]->Luminosity:2
+    [-3,*]->Luminosity:5
+    [-2,Y]->Luminosity:2
+    [-1,O]->
+    [0,E]->fuel:2/3, life:3/3, landed?:F
+    [1,A]->turns_left:0
+    [2,A]->turns_left:0
+    [3,A]->turns_left:1
+    [4,A]->turns_left:0
+    [5,A]->turns_left:0
+    [6,A]->turns_left:1
+    [7,A]->turns_left:1
+    [8,A]->turns_left:1
+    [9,A]->turns_left:1
+    [11,A]->turns_left:0
+    [12,A]->turns_left:1
+    [13,A]->turns_left:0
+    [14,A]->turns_left:0
+    [15,A]->turns_left:1
+    [16,A]->turns_left:0
+    [17,A]->turns_left:0
+    [18,A]->turns_left:1
+    [19,A]->turns_left:1
+    [22,A]->turns_left:1
+    [23,A]->turns_left:2
+    [24,A]->turns_left:0
+    [25,A]->turns_left:1
+    [26,A]->turns_left:1
+    [27,A]->turns_left:1
+    [28,A]->turns_left:2
+    [29,A]->turns_left:1
+  Deaths This Turn:
+    [10,A]->turns_left:N/A,
+      Asteroid got devoured by blackhole (id: -1) at Sector:3:3
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    E-Y-   AA--   A*--   ----   ----   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    AAW-   AA--   -Y--   ----   AA--   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    AA--   --AA   O---   AY--   -*--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    -Y--   A---   A---   --Y-   AAA-   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    AA--   -A--   YAA-   ----   -YAA   
+->move(SE)
+  state:10.0, mode:test, ok
+  Movement:
+    [0,E]:[1,1,1]->[2,2,3]
+    [1,A]:[1,2,1]->[1,1,1]
+    [2,A]:[2,1,1]->[2,5,3]
+    [4,A]:[4,3,1]->[5,4,1]
+    [5,A]:[1,3,1]->[5,4,2]
+    [11,A]:[2,2,1]->[2,3,1]
+    [13,A]:[4,2,1]->[3,2,1]
+    [14,A]:[3,1,2]->[2,5,4]
+    [16,A]:[4,5,3]->[4,1,1]
+    [17,A]:[2,5,2]->[2,4,1]
+    [24,A]:[5,2,2]->[5,3,4]
+  Sectors:
+    [1,1]->[1,A],-,[-11,Y],-
+    [1,2]->-,[6,A],-,-
+    [1,3]->-,[-7,*],-,-
+    [1,4]->-,-,-,-
+    [1,5]->-,-,-,-
+    [2,1]->-,[12,A],[-5,W],-
+    [2,2]->-,[15,A],[0,E],-
+    [2,3]->[11,A],[-4,Y],-,-
+    [2,4]->[17,A],-,-,-
+    [2,5]->[7,A],-,[2,A],[14,A]
+    [3,1]->[8,A],-,-,-
+    [3,2]->[13,A],-,[9,A],[19,A]
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[22,A],[-10,Y],-,-
+    [3,5]->-,[-3,*],-,-
+    [4,1]->[16,A],[-6,Y],-,-
+    [4,2]->-,-,-,-
+    [4,3]->-,-,-,-
+    [4,4]->-,-,[-2,Y],-
+    [4,5]->[23,A],[27,A],-,-
+    [5,1]->[18,A],[29,A],-,-
+    [5,2]->-,-,-,-
+    [5,3]->[-8,Y],[28,A],[3,A],[24,A]
+    [5,4]->[4,A],[5,A],-,-
+    [5,5]->-,[-9,Y],[25,A],[26,A]
+  Descriptions:
+    [-11,Y]->Luminosity:2
+    [-10,Y]->Luminosity:2
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,*]->Luminosity:5
+    [-6,Y]->Luminosity:2
+    [-5,W]->
+    [-4,Y]->Luminosity:2
+    [-3,*]->Luminosity:5
+    [-2,Y]->Luminosity:2
+    [-1,O]->
+    [0,E]->fuel:1/3, life:3/3, landed?:F
+    [1,A]->turns_left:2
+    [2,A]->turns_left:0
+    [3,A]->turns_left:0
+    [4,A]->turns_left:1
+    [5,A]->turns_left:1
+    [6,A]->turns_left:0
+    [7,A]->turns_left:0
+    [8,A]->turns_left:0
+    [9,A]->turns_left:0
+    [11,A]->turns_left:2
+    [12,A]->turns_left:0
+    [13,A]->turns_left:1
+    [14,A]->turns_left:0
+    [15,A]->turns_left:0
+    [16,A]->turns_left:2
+    [17,A]->turns_left:2
+    [18,A]->turns_left:0
+    [19,A]->turns_left:0
+    [22,A]->turns_left:0
+    [23,A]->turns_left:1
+    [24,A]->turns_left:0
+    [25,A]->turns_left:0
+    [26,A]->turns_left:0
+    [27,A]->turns_left:0
+    [28,A]->turns_left:1
+    [29,A]->turns_left:0
+  Deaths This Turn:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    A-Y-   -A--   -*--   ----   ----   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    -AW-   -AE-   AY--   A---   A-AA   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    A---   A-AA   O---   AY--   -*--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    AY--   ----   ----   --Y-   AA--   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    AA--   ----   YAAA   AA--   -YAA   
+->move(S)
+  state:11.0, mode:test, ok
+  Explorer got lost in space - out of fuel at Sector:3:2
+  The game has ended. You can start a new game.
+  Movement:
+    [0,E]:[2,2,3]->[3,2,2]
+    [2,A]:[2,5,3]->[1,1,2]
+    [3,A]:[5,3,3]->[5,2,1]
+    [6,A]:[1,2,2]->[1,1,4]
+    [7,A]:[2,5,1]->[3,5,1]
+    [8,A]:[3,1,1]->[4,5,3]
+    [9,A]:[3,2,3]->[4,2,1]
+    [12,A]:[2,1,2]->[1,5,1]
+    [14,A]:[2,5,4]->[1,5,2]
+    [15,A]:[2,2,2]
+    [18,A]:[5,1,1]->[1,5,3]
+    [19,A]:[3,2,4]->[4,1,3]
+    [22,A]:[3,4,1]->[2,5,1]
+    [24,A]:[5,3,4]->[4,4,1]
+    [25,A]:[5,5,3]->[5,1,1]
+    [26,A]:[5,5,4]->[1,5,4]
+    [27,A]:[4,5,2]->[5,5,1]
+    [29,A]:[5,1,2]->[5,5,3]
+  Sectors:
+    [1,1]->[1,A],[2,A],[-11,Y],[6,A]
+    [1,2]->-,-,-,-
+    [1,3]->-,[-7,*],-,-
+    [1,4]->-,-,-,-
+    [1,5]->[12,A],[14,A],[18,A],[26,A]
+    [2,1]->-,-,[-5,W],-
+    [2,2]->-,[15,A],-,-
+    [2,3]->[11,A],[-4,Y],-,-
+    [2,4]->[17,A],-,-,-
+    [2,5]->[22,A],-,-,-
+    [3,1]->-,-,-,-
+    [3,2]->[13,A],-,-,-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->-,[-10,Y],-,-
+    [3,5]->[7,A],[-3,*],-,-
+    [4,1]->[16,A],[-6,Y],[19,A],-
+    [4,2]->[9,A],-,-,-
+    [4,3]->-,-,-,-
+    [4,4]->[24,A],-,[-2,Y],-
+    [4,5]->[23,A],-,[8,A],-
+    [5,1]->[25,A],-,-,-
+    [5,2]->[3,A],-,-,-
+    [5,3]->[-8,Y],[28,A],-,-
+    [5,4]->[4,A],[5,A],-,-
+    [5,5]->[27,A],[-9,Y],[29,A],-
+  Descriptions:
+    [-11,Y]->Luminosity:2
+    [-10,Y]->Luminosity:2
+    [-9,Y]->Luminosity:2
+    [-8,Y]->Luminosity:2
+    [-7,*]->Luminosity:5
+    [-6,Y]->Luminosity:2
+    [-5,W]->
+    [-4,Y]->Luminosity:2
+    [-3,*]->Luminosity:5
+    [-2,Y]->Luminosity:2
+    [-1,O]->
+    [1,A]->turns_left:1
+    [2,A]->turns_left:1
+    [3,A]->turns_left:2
+    [4,A]->turns_left:0
+    [5,A]->turns_left:0
+    [6,A]->turns_left:0
+    [7,A]->turns_left:1
+    [8,A]->turns_left:1
+    [9,A]->turns_left:2
+    [11,A]->turns_left:1
+    [12,A]->turns_left:1
+    [13,A]->turns_left:0
+    [14,A]->turns_left:2
+    [15,A]->turns_left:0
+    [16,A]->turns_left:1
+    [17,A]->turns_left:1
+    [18,A]->turns_left:0
+    [19,A]->turns_left:2
+    [22,A]->turns_left:2
+    [23,A]->turns_left:0
+    [24,A]->turns_left:0
+    [25,A]->turns_left:0
+    [26,A]->turns_left:2
+    [27,A]->turns_left:1
+    [28,A]->turns_left:0
+    [29,A]->turns_left:2
+  Deaths This Turn:
+    [0,E]->fuel:0/3, life:0/3, landed?:F,
+      Explorer got lost in space - out of fuel at Sector:3:2
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    AAYA   ----   -*--   ----   AAAA   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    --W-   -A--   AY--   A---   A---   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    ----   A---   O---   -Y--   A*--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    AYA-   A---   ----   A-Y-   A-A-   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    A---   A---   YA--   AA--   AYA-   
+  Explorer got lost in space - out of fuel at Sector:3:2
+  The game has ended. You can start a new game.
+->move(SE)
+  state:11.1, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:11.2, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:11.3, error
+  Negative on that request:no mission in progress.
+->test(51,91,91,91,91)
+  state:12.0, mode:test, ok
+  Movement:none
+  Sectors:
+    [1,1]->[0,E],[1,A],[2,J],-
+    [1,2]->[3,A],[-8,*],-,-
+    [1,3]->[4,J],[5,J],-,-
+    [1,4]->[6,J],-,-,-
+    [1,5]->[7,A],[-6,W],-,-
+    [2,1]->[8,A],[9,J],[-9,W],-
+    [2,2]->[10,A],[11,A],-,-
+    [2,3]->[12,J],-,-,-
+    [2,4]->[13,J],[14,A],[-10,Y],-
+    [2,5]->[15,J],[16,J],[-3,*],-
+    [3,1]->[17,A],[18,A],-,-
+    [3,2]->[19,J],[20,J],[-5,*],-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[21,J],[-4,W],-,-
+    [3,5]->[22,J],[23,J],-,-
+    [4,1]->[24,A],[25,J],[26,J],[-11,W]
+    [4,2]->[27,J],[28,J],[-7,Y],-
+    [4,3]->[29,J],[30,A],-,-
+    [4,4]->[31,J],-,-,-
+    [4,5]->[32,A],-,-,-
+    [5,1]->[33,A],[34,A],[35,A],-
+    [5,2]->[36,J],[37,J],-,-
+    [5,3]->[38,J],-,-,-
+    [5,4]->[39,J],-,-,-
+    [5,5]->[40,A],[-2,*],-,-
+  Descriptions:
+    [-11,W]->
+    [-10,Y]->Luminosity:2
+    [-9,W]->
+    [-8,*]->Luminosity:5
+    [-7,Y]->Luminosity:2
+    [-6,W]->
+    [-5,*]->Luminosity:5
+    [-4,W]->
+    [-3,*]->Luminosity:5
+    [-2,*]->Luminosity:5
+    [-1,O]->
+    [0,E]->fuel:3/3, life:3/3, landed?:F
+    [1,A]->turns_left:1
+    [2,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [3,A]->turns_left:2
+    [4,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [5,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [6,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [7,A]->turns_left:0
+    [8,A]->turns_left:1
+    [9,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [10,A]->turns_left:1
+    [11,A]->turns_left:0
+    [12,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [13,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [14,A]->turns_left:0
+    [15,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [16,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [17,A]->turns_left:2
+    [18,A]->turns_left:2
+    [19,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [20,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [21,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [22,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [23,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [24,A]->turns_left:1
+    [25,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [26,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [27,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [28,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [29,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [30,A]->turns_left:0
+    [31,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [32,A]->turns_left:2
+    [33,A]->turns_left:1
+    [34,A]->turns_left:2
+    [35,A]->turns_left:2
+    [36,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [37,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [38,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [39,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:2
+    [40,A]->turns_left:2
+  Deaths This Turn:none
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    EAJ-   A*--   JJ--   J---   AW--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    AJW-   AA--   J---   JAY-   JJ*-   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    AA--   JJ*-   O---   JW--   JJ--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    AJJW   JJY-   JA--   J---   A---   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    AAA-   JJ--   J---   J---   A*--   
+->move(W)
+  state:13.0, mode:test, ok
+  Movement:
+    [0,E]:[1,1,1]->[1,5,3]
+    [6,J]:[1,4,1]->[2,4,4]
+      destroyed [14,A] at [2,4,2]
+    [7,A]:[1,5,1]->[2,1,4]
+      destroyed [9,J] at [2,1,2]
+    [11,A]:[2,2,2]->[3,1,3]
+    [26,J]:[4,1,3]->[5,5,3]
+      destroyed [40,A] at [5,5,1]
+    [30,A]:[4,3,2]->[5,2,3]
+      destroyed [36,J] at [5,2,1]
+      destroyed [37,J] at [5,2,2]
+    [31,J]:[4,4,1]->[5,4,2]
+    [38,J]:[5,3,1]->[5,2,1]
+      destroyed [30,A] at [5,2,3]
+  Sectors:
+    [1,1]->-,[1,A],[2,J],-
+    [1,2]->[3,A],[-8,*],-,-
+    [1,3]->[4,J],[5,J],-,-
+    [1,4]->-,-,-,-
+    [1,5]->-,[-6,W],[0,E],-
+    [2,1]->[8,A],-,[-9,W],[7,A]
+    [2,2]->[10,A],-,-,-
+    [2,3]->[12,J],-,-,-
+    [2,4]->[13,J],-,[-10,Y],[6,J]
+    [2,5]->[15,J],[16,J],[-3,*],-
+    [3,1]->[17,A],[18,A],[11,A],-
+    [3,2]->[19,J],[20,J],[-5,*],-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[21,J],[-4,W],-,-
+    [3,5]->[22,J],[23,J],-,-
+    [4,1]->[24,A],[25,J],-,[-11,W]
+    [4,2]->[27,J],[28,J],[-7,Y],-
+    [4,3]->[29,J],-,-,-
+    [4,4]->-,-,-,-
+    [4,5]->[32,A],-,-,-
+    [5,1]->[33,A],[34,A],[35,A],-
+    [5,2]->[38,J],-,-,-
+    [5,3]->-,-,-,-
+    [5,4]->[39,J],[31,J],-,-
+    [5,5]->-,[-2,*],[26,J],-
+  Descriptions:
+    [-11,W]->
+    [-10,Y]->Luminosity:2
+    [-9,W]->
+    [-8,*]->Luminosity:5
+    [-7,Y]->Luminosity:2
+    [-6,W]->
+    [-5,*]->Luminosity:5
+    [-4,W]->
+    [-3,*]->Luminosity:5
+    [-2,*]->Luminosity:5
+    [-1,O]->
+    [0,E]->fuel:2/3, life:3/3, landed?:F
+    [1,A]->turns_left:0
+    [2,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [3,A]->turns_left:1
+    [4,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [5,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [6,J]->fuel:5/5, load:1/2, actions_left_until_reproduction:1/2, turns_left:0
+    [7,A]->turns_left:2
+    [8,A]->turns_left:0
+    [10,A]->turns_left:0
+    [11,A]->turns_left:2
+    [12,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [13,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [15,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [16,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [17,A]->turns_left:1
+    [18,A]->turns_left:1
+    [19,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [20,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [21,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [22,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [23,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [24,A]->turns_left:0
+    [25,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [26,J]->fuel:5/5, load:1/2, actions_left_until_reproduction:1/2, turns_left:2
+    [27,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [28,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [29,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+    [31,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [32,A]->turns_left:1
+    [33,A]->turns_left:0
+    [34,A]->turns_left:1
+    [35,A]->turns_left:1
+    [38,J]->fuel:4/5, load:1/2, actions_left_until_reproduction:1/2, turns_left:2
+    [39,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:1
+  Deaths This Turn:
+    [14,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 6) at Sector:2:4
+    [9,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got destroyed by asteroid (id: 7) at Sector:2:1
+    [40,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 26) at Sector:5:5
+    [36,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got destroyed by asteroid (id: 30) at Sector:5:2
+    [37,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got destroyed by asteroid (id: 30) at Sector:5:2
+    [30,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 38) at Sector:5:2
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    -AJ-   A*--   JJ--   ----   -WE-   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    A-WA   A---   J---   J-YJ   JJ*-   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    AAA-   JJ*-   O---   JW--   JJ--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    AJ-W   JJY-   J---   ----   A---   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    AAA-   J---   ----   JJ--   -*J-   
+->move(SE)
+  state:14.0, mode:test, ok
+  Movement:
+    [0,E]:[1,5,3]->[2,1,2]
+    [1,A]:[1,1,2]->[1,2,3]
+    [6,J]:[2,4,4]->[1,4,1]
+    [8,A]:[2,1,1]->[3,1,4]
+    [10,A]:[2,2,1]->[3,2,4]
+      destroyed [19,J] at [3,2,1]
+      destroyed [20,J] at [3,2,2]
+    [12,J]:[2,3,1]->[3,2,1]
+      destroyed [10,A] at [3,2,4]
+    [13,J]:[2,4,1]->[3,3,2]
+    [15,J]:[2,5,1]->[2,1,1]
+      destroyed [7,A] at [2,1,4]
+    [16,J]:[2,5,2]->[2,4,1]
+    [21,J]:[3,4,1]->[2,3,1]
+    [24,A]:[4,1,1]->[4,5,2]
+    [25,J]:[4,1,2]->[5,2,2]
+    [33,A]:[5,1,1]->[1,1,1]
+      destroyed [2,J] at [1,1,3]
+  Sectors:
+    [1,1]->[33,A],-,-,-
+    [1,2]->[3,A],[-8,*],[1,A],-
+    [1,3]->[4,J],[5,J],-,-
+    [1,4]->[6,J],-,-,-
+    [1,5]->-,[-6,W],-,-
+    [2,1]->[15,J],[0,E],[-9,W],-
+    [2,2]->-,-,-,-
+    [2,3]->[21,J],-,-,-
+    [2,4]->[16,J],-,[-10,Y],-
+    [2,5]->-,-,[-3,*],-
+    [3,1]->[17,A],[18,A],[11,A],[8,A]
+    [3,2]->[12,J],-,[-5,*],-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->-,[-4,W],-,-
+    [3,5]->[22,J],[23,J],-,-
+    [4,1]->-,-,-,[-11,W]
+    [4,2]->[27,J],[28,J],[-7,Y],-
+    [4,3]->[29,J],-,-,-
+    [4,4]->-,-,-,-
+    [4,5]->[32,A],[24,A],-,-
+    [5,1]->-,[34,A],[35,A],-
+    [5,2]->[38,J],[25,J],-,-
+    [5,3]->-,-,-,-
+    [5,4]->[39,J],[31,J],-,-
+    [5,5]->-,[-2,*],[26,J],-
+  Descriptions:
+    [-11,W]->
+    [-10,Y]->Luminosity:2
+    [-9,W]->
+    [-8,*]->Luminosity:5
+    [-7,Y]->Luminosity:2
+    [-6,W]->
+    [-5,*]->Luminosity:5
+    [-4,W]->
+    [-3,*]->Luminosity:5
+    [-2,*]->Luminosity:5
+    [-1,O]->
+    [0,E]->fuel:1/3, life:3/3, landed?:F
+    [1,A]->turns_left:2
+    [3,A]->turns_left:0
+    [4,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [5,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [6,J]->fuel:4/5, load:1/2, actions_left_until_reproduction:0/2, turns_left:2
+    [8,A]->turns_left:0
+    [11,A]->turns_left:1
+    [12,J]->fuel:5/5, load:1/2, actions_left_until_reproduction:1/2, turns_left:0
+    [15,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [16,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [17,A]->turns_left:0
+    [18,A]->turns_left:0
+    [21,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [22,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [23,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [24,A]->turns_left:1
+    [25,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [26,J]->fuel:5/5, load:1/2, actions_left_until_reproduction:1/2, turns_left:1
+    [27,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [28,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [29,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+    [31,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [32,A]->turns_left:0
+    [33,A]->turns_left:2
+    [34,A]->turns_left:0
+    [35,A]->turns_left:0
+    [38,J]->fuel:4/5, load:1/2, actions_left_until_reproduction:1/2, turns_left:1
+    [39,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:0
+  Deaths This Turn:
+    [19,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got destroyed by asteroid (id: 10) at Sector:3:2
+    [20,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got destroyed by asteroid (id: 10) at Sector:3:2
+    [10,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 12) at Sector:3:2
+    [13,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got devoured by blackhole (id: -1) at Sector:3:3
+    [7,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 15) at Sector:2:1
+    [2,J]->fuel:5/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got destroyed by asteroid (id: 33) at Sector:1:1
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    A---   A*A-   JJ--   J---   -W--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    JEW-   ----   J---   J-Y-   --*-   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    AAAA   J-*-   O---   -W--   JJ--   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ---W   JJY-   J---   ----   AA--   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    -AA-   JJ--   ----   JJ--   -*J-   
+->move(W)
+  state:15.0, mode:test, ok
+  Explorer got destroyed by asteroid (id: 17) at Sector:2:5
+  The game has ended. You can start a new game.
+  Movement:
+    [0,E]:[2,1,2]->[2,5,1]
+    [3,A]:[1,2,1]->[5,2,3]
+      destroyed [25,J] at [5,2,2]
+      destroyed [38,J] at [5,2,1]
+    [4,J]:[1,3,1]->[5,4,3]
+    [5,J]:[1,3,2]->[5,2,1]
+      destroyed [3,A] at [5,2,3]
+    [8,A]:[3,1,4]->[2,2,1]
+    [12,J]:[3,2,1]->[4,2,4]
+    [16,J]:[2,4,1]->[1,3,1]
+    [17,A]:[3,1,1]->[2,5,2]
+      destroyed [0,E] at [2,5,1]
+    [18,A]:[3,1,2]->[2,2,2]
+    [21,J]:[2,3,1]->[2,2,3]
+      destroyed [8,A] at [2,2,1]
+      destroyed [18,A] at [2,2,2]
+    [22,J]:[3,5,1]->[3,4,1]
+    [23,J]:[3,5,2]->[4,5,3]
+      destroyed [24,A] at [4,5,2]
+      destroyed [32,A] at [4,5,1]
+    [27,J]:[4,2,1]->[3,3,2]
+    [28,J]:[4,2,2]->[5,2,2]
+    [29,J]:[4,3,1]->[4,4,1]
+    [31,J]:[5,4,2]->[4,4,2]
+    [34,A]:[5,1,2]->[4,2,1]
+      destroyed [12,J] at [4,2,4]
+    [35,A]:[5,1,3]->[4,2,2]
+    [39,J]:[5,4,1]->[1,5,1]
+  Sectors:
+    [1,1]->[33,A],-,-,-
+    [1,2]->-,[-8,*],[1,A],-
+    [1,3]->[16,J],-,-,-
+    [1,4]->[6,J],-,-,-
+    [1,5]->[39,J],[-6,W],-,-
+    [2,1]->[15,J],-,[-9,W],-
+    [2,2]->-,-,[21,J],-
+    [2,3]->-,-,-,-
+    [2,4]->-,-,[-10,Y],-
+    [2,5]->-,[17,A],[-3,*],-
+    [3,1]->-,-,[11,A],-
+    [3,2]->-,-,[-5,*],-
+    [3,3]->[-1,O],-,-,-
+    [3,4]->[22,J],[-4,W],-,-
+    [3,5]->-,-,-,-
+    [4,1]->-,-,-,[-11,W]
+    [4,2]->[34,A],[35,A],[-7,Y],-
+    [4,3]->-,-,-,-
+    [4,4]->[29,J],[31,J],-,-
+    [4,5]->-,-,[23,J],-
+    [5,1]->-,-,-,-
+    [5,2]->[5,J],[28,J],-,-
+    [5,3]->-,-,-,-
+    [5,4]->-,-,[4,J],-
+    [5,5]->-,[-2,*],[26,J],-
+  Descriptions:
+    [-11,W]->
+    [-10,Y]->Luminosity:2
+    [-9,W]->
+    [-8,*]->Luminosity:5
+    [-7,Y]->Luminosity:2
+    [-6,W]->
+    [-5,*]->Luminosity:5
+    [-4,W]->
+    [-3,*]->Luminosity:5
+    [-2,*]->Luminosity:5
+    [-1,O]->
+    [1,A]->turns_left:1
+    [4,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [5,J]->fuel:4/5, load:1/2, actions_left_until_reproduction:1/2, turns_left:0
+    [6,J]->fuel:4/5, load:1/2, actions_left_until_reproduction:0/2, turns_left:1
+    [11,A]->turns_left:0
+    [15,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+    [16,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [17,A]->turns_left:0
+    [21,J]->fuel:3/5, load:2/2, actions_left_until_reproduction:0/2, turns_left:2
+    [22,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:2
+    [23,J]->fuel:4/5, load:2/2, actions_left_until_reproduction:1/2, turns_left:1
+    [26,J]->fuel:5/5, load:1/2, actions_left_until_reproduction:1/2, turns_left:0
+    [28,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [29,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:1
+    [31,J]->fuel:3/5, load:0/2, actions_left_until_reproduction:0/2, turns_left:0
+    [33,A]->turns_left:1
+    [34,A]->turns_left:1
+    [35,A]->turns_left:2
+    [39,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:0
+  Deaths This Turn:
+    [25,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:1/2, turns_left:N/A,
+      Janitaur got destroyed by asteroid (id: 3) at Sector:5:2
+    [38,J]->fuel:4/5, load:1/2, actions_left_until_reproduction:1/2, turns_left:N/A,
+      Janitaur got destroyed by asteroid (id: 3) at Sector:5:2
+    [3,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 5) at Sector:5:2
+    [0,E]->fuel:3/3, life:0/3, landed?:F,
+      Explorer got destroyed by asteroid (id: 17) at Sector:2:5
+    [8,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 21) at Sector:2:2
+    [18,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 21) at Sector:2:2
+    [24,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 23) at Sector:4:5
+    [32,A]->turns_left:N/A,
+      Asteroid got imploded by janitaur (id: 23) at Sector:4:5
+    [27,J]->fuel:4/5, load:0/2, actions_left_until_reproduction:2/2, turns_left:N/A,
+      Janitaur got devoured by blackhole (id: -1) at Sector:3:3
+    [12,J]->fuel:5/5, load:1/2, actions_left_until_reproduction:0/2, turns_left:N/A,
+      Janitaur got destroyed by asteroid (id: 34) at Sector:4:2
+    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)  
+    A---   -*A-   J---   J---   JW--   
+    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)  
+    J-W-   --J-   ----   --Y-   -A*-   
+    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)  
+    --A-   --*-   O---   JW--   ----   
+    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)  
+    ---W   AAY-   ----   JJ--   --J-   
+    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)  
+    ----   JJ--   ----   --J-   -*J-   
+  Explorer got destroyed by asteroid (id: 17) at Sector:2:5
+  The game has ended. You can start a new game.
+->move(SW)
+  state:15.1, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:15.2, error
+  Negative on that request:no mission in progress.
+->liftoff
+  state:15.3, error
+  Negative on that request:no mission in progress.
+->move(NE)
+  state:15.4, error
+  Negative on that request:no mission in progress.
+->pass
+  state:15.5, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:15.6, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:15.7, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:15.8, error
+  Negative on that request:no mission in progress.
+->pass
+  state:15.9, error
+  Negative on that request:no mission in progress.
+->wormhole
+  state:15.10, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:15.11, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:15.12, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:15.13, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:15.14, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:15.15, error
+  Negative on that request:no mission in progress.
+->move(SE)
+  state:15.16, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:15.17, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:15.18, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:15.19, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:15.20, error
+  Negative on that request:no mission in progress.
+->abort
+  state:15.21, error
+  Negative on that request:no mission in progress.
+->pass
+  state:15.22, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:15.23, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:15.24, error
+  Negative on that request:no mission in progress.
+->move(NW)
+  state:15.25, error
+  Negative on that request:no mission in progress.
+->move(W)
+  state:15.26, error
+  Negative on that request:no mission in progress.
+->move(N)
+  state:15.27, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:15.28, error
+  Negative on that request:no mission in progress.
+->move(S)
+  state:15.29, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:15.30, error
+  Negative on that request:no mission in progress.
+->move(E)
+  state:15.31, error
+  Negative on that request:no mission in progress.
+->move(SW)
+  state:15.32, error
+  Negative on that request:no mission in progress.

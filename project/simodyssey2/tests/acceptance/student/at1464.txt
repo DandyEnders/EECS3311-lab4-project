@@ -1,0 +1,10 @@
+move(W)
+move(SE)
+move(SW)
+move(NW)
+move(SW)
+move(S)
+move(S)
+move(E)
+move(SE)
+liftoff

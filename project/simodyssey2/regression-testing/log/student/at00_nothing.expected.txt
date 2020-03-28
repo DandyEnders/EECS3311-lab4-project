@@ -1,2 +1,0 @@
-  state:0.0, ok
-  Welcome! Try test(3,5,7,15,30)

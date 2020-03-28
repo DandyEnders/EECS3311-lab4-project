@@ -1,0 +1,13 @@
+move(W)
+move(NE)
+move(N)
+move(NW)
+move(S)
+move(SW)
+liftoff
+test(14,55,55,55,77)
+land
+move(N)
+move(E)
+move(NW)
+land

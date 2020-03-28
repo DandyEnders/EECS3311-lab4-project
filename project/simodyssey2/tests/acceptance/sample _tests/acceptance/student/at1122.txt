@@ -1,0 +1,14 @@
+move(NW)
+liftoff
+move(E)
+move(S)
+move(E)
+move(S)
+move(SE)
+move(NW)
+liftoff
+liftoff
+move(NW)
+move(N)
+pass
+move(NE)
