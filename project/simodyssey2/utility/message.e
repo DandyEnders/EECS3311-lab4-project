@@ -199,42 +199,42 @@ feature -- game_is_over
 
 feature -- explorer
 
-	explorer_death_out_of_fuel (row, col: INTEGER): STRING
-		do
-			create Result.make_empty
-			Result.append (left_margin)
-			Result.append ("Explorer got lost in space - out of fuel at Sector:")
-			Result.append (row.out)
-			Result.append (":")
-			Result.append (col.out)
-		end
+--	explorer_death_out_of_fuel (row, col: INTEGER): STRING
+--		do
+--			create Result.make_empty
+--			Result.append (left_margin)
+--			Result.append ("Explorer got lost in space - out of fuel at Sector:")
+--			Result.append (row.out)
+--			Result.append (":")
+--			Result.append (col.out)
+--		end
 
-	explorer_death_blackhole (row, col, blackhole_id: INTEGER): STRING
-		do
-			create Result.make_empty
-			Result.append (left_margin)
-			Result.append ("Explorer got devoured by blackhole ")
-			Result.append ("(id: ")
-			Result.append (blackhole_id.out)
-			Result.append (") at Sector:")
-			Result.append (row.out)
-			Result.append (":")
-			Result.append (col.out)
-		end
+--	explorer_death_blackhole (row, col, blackhole_id: INTEGER): STRING
+--		do
+--			create Result.make_empty
+--			Result.append (left_margin)
+--			Result.append ("Explorer got devoured by blackhole ")
+--			Result.append ("(id: ")
+--			Result.append (blackhole_id.out)
+--			Result.append (") at Sector:")
+--			Result.append (row.out)
+--			Result.append (":")
+--			Result.append (col.out)
+--		end
 
 feature -- planet
 
-	planet_death_blackhole (row, col, blackhole_id: INTEGER): STRING
-		do
-			create Result.make_empty
-			Result.append ("Planet got devoured by blackhole ")
-			Result.append ("(id: ")
-			Result.append (blackhole_id.out)
-			Result.append (") at Sector:")
-			Result.append (row.out)
-			Result.append (":")
-			Result.append (col.out)
-		end
+--	planet_death_blackhole (row, col, blackhole_id: INTEGER): STRING
+--		do
+--			create Result.make_empty
+--			Result.append ("Planet got devoured by blackhole ")
+--			Result.append ("(id: ")
+--			Result.append (blackhole_id.out)
+--			Result.append (") at Sector:")
+--			Result.append (row.out)
+--			Result.append (":")
+--			Result.append (col.out)
+--		end
 
 feature {NONE} -- Helper Query
 

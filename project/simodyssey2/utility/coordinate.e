@@ -107,7 +107,7 @@ feature -- Queries
 				Result := Result - create {COORDINATE}.make ([0, upper_bound.col])
 			end
 		ensure
-			cordinate_is_wrapped_and_correct: ((c).row ~ lower_bound.row - 1 implies Result.row ~ upper_bound.row) and ((c).row ~ upper_bound.row + 1 implies Result.row ~ lower_bound.row) and ((c).col ~ lower_bound.col - 1 implies Result.col ~ upper_bound.col) and ((c).col ~ upper_bound.col + 1 implies Result.col ~ lower_bound.col) and (((c).col /~ upper_bound.col + 1 and (c).col /~ lower_bound.col - 1) implies (Result.col ~ (c.col))) and (((c).row /~ upper_bound.row + 1 and (c).row /~ lower_bound.row - 1) implies (Result.row ~ (c.row)))
+			cordinate_is_wrapped_to_correct_value_between_upper_and_lower_bound: ((c).row ~ lower_bound.row - 1 implies Result.row ~ upper_bound.row) and ((c).row ~ upper_bound.row + 1 implies Result.row ~ lower_bound.row) and ((c).col ~ lower_bound.col - 1 implies Result.col ~ upper_bound.col) and ((c).col ~ upper_bound.col + 1 implies Result.col ~ lower_bound.col) and (((c).col /~ upper_bound.col + 1 and (c).col /~ lower_bound.col - 1) implies (Result.col ~ (c.col))) and (((c).row /~ upper_bound.row + 1 and (c).row /~ lower_bound.row - 1) implies (Result.row ~ (c.row)))
 		end
 
 feature -- out

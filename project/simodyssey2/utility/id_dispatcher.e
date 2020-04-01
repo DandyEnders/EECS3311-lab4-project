@@ -34,14 +34,20 @@ feature -- Command
 
 feature -- Queries
 
-	get_id: INTEGER -- command query seperation principle is broken
+	get_id: INTEGER
 		do
 			Result := count
+		end
+	update_id
+		do
 			if count_up then
 				count := count + 1
 			else
 				count := count - 1
 			end
+		ensure
+			count_up implies (count ~ (old count+1))
+			(not count_up) implies (count ~ (old count-1))
 		end
 
 feature -- Attributes

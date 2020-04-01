@@ -34,7 +34,9 @@ feature {NONE} -- Constructor
 			create stationary_id.make (-1, FALSE)
 				--creating unique entities Explorer and Blackhole
 			create explorer.make ([1, 1], moveable_id.get_id)
+			moveable_id.update_id
 			create blackhole.make ([3, 3], stationary_id.get_id)
+			stationary_id.update_id
 				-- creating the board
 			r := shared_info.number_rows
 			c := shared_info.number_columns
@@ -251,6 +253,7 @@ feature {NONE} -- Private Helper Commands
 			sector := galaxy.sector_with (r_n_me)
 			if (not sector.is_full) and r_n_me.ready_to_reproduce then
 				id := moveable_id.get_id
+				moveable_id.update_id
 				r_n_me.reproduce (sector, id)
 					--Pretty Printing Movement: ie reproduced ...
 				movement_output.force (r_n_me.reproduction_message, movement_output.count + 1)
@@ -418,18 +421,23 @@ feature {NONE} -- Private Helper Commands
 						value := rng.rchoose (1, 100)
 						if value < astroid_threshold then
 							create a.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							moveable_id.update_id
 							galaxy.add_at (a, a.coordinate)
 						elseif value < janitaur_threshold then
 							create j.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							moveable_id.update_id
 							galaxy.add_at (j, j.coordinate)
 						elseif value < malevolent_threshold then
 							create m.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							moveable_id.update_id
 							galaxy.add_at (m, m.coordinate)
 						elseif value < benign_threshold then
 							create b.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							moveable_id.update_id
 							galaxy.add_at (b, b.coordinate)
 						elseif value < planet_threshold then
 							create p.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							moveable_id.update_id
 							galaxy.add_at (p, p.coordinate)
 						end
 					end
@@ -455,10 +463,13 @@ feature {NONE} -- Private Helper Commands
 					s_entity_num := rng.rchoose (1, 3)
 					if s_entity_num ~ 1 then
 						galaxy.add_at (create {YELLOW_DWARF}.make ([row, col], stationary_id.get_id),[row,col])
+						stationary_id.update_id
 					elseif s_entity_num ~ 2 then
 						galaxy.add_at (create {BLUE_GIANT}.make ([row, col], stationary_id.get_id),[row,col])
+						stationary_id.update_id
 					elseif s_entity_num ~ 3 then
 						galaxy.add_at (create {WORMHOLE}.make ([row, col], stationary_id.get_id),[row,col])
+						stationary_id.update_id
 					end
 					loop_counter := loop_counter + 1
 				end

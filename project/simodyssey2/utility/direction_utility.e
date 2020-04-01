@@ -72,6 +72,8 @@ feature
 			elseif d ~ 8 then
 				Result := NW
 			end
+		ensure
+			Result.is_direction
 		end
 
 end
