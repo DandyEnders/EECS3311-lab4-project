@@ -3,5 +3,6 @@ test(1,1,1,1,99)
 status
 move(W)
 status
+-- Should also output abstract state message game is over 1.
 wormhole
 status

@@ -18,7 +18,6 @@ pass
 status
 pass
 -- Enter Landed state, should output abstract state land message 1.
--- Should output abstract state message game is over 1.
 land
 status
 -- All actions should seize to work because the game is over.
@@ -29,7 +28,7 @@ status
 wormhole
 status
 pass
-status
+sta
 move(S)
 status
 abort
