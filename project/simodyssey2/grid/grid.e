@@ -35,6 +35,8 @@ feature {NONE} -- Contstructor
 			create sect.make_empty ([1, 1], 0)
 			create sectors.make_filled (sect, r, c)
 			create stationary_entities.make (500)
+			sectors.compare_objects
+			stationary_entities.compare_objects
 			across
 				1 |..| r is i
 			loop
@@ -91,14 +93,18 @@ feature -- commands
 			end
 		ensure
 			at (c).has (ie)
+			entity_count~ (old entity_count+1)
 		end
 
 	remove (me: MOVEABLE_ENTITY) -- Before you were forcing "me" into moveable_entities but I'm guessing you wanted to remove instead.
 			-- Removes moveable entity in me.coordinate.
+		require
+			has(me)
 		do
 			at (me.coordinate).remove (me)
 		ensure
-			not at (me.coordinate).has (me)
+			not has(me)
+			entity_count~(old entity_count -1)
 		end
 
 	move (ie: MOVEABLE_ENTITY; to_c: COORDINATE)
@@ -110,10 +116,21 @@ feature -- commands
 			remove (ie)
 			add_at (ie, to_c)
 		ensure
-			at (to_c).has (ie)
+			ie_is_at_new_coordinate: at (to_c).has (ie)
+			ie_is_not_at_old_coordinate: not at(((old ie).deep_twin).coordinate).has (ie)
+			entity_count ~ entity_count
 		end
 
 feature -- Queries
+	entity_count: INTEGER
+		do
+			Result:=stationary_entities.count + moveable_entities.count
+		end
+
+	has_sector( s:SECTOR): BOOLEAN
+		do
+			Result:= sectors.has (s)
+		end
 
 	all_moveable_entities: ARRAY [MOVEABLE_ENTITY] -- I needed a way to return all movable_entities in accending order of their ids.
 		local
@@ -169,13 +186,19 @@ feature -- Queries
 			valid_coordinate (c)
 		do
 			Result := sectors [c.row, c.col]
+		ensure
+			Result.coordinate ~ c
+			and has_sector(Result)
 		end
 
-	sector_with (ie: ID_ENTITY): SECTOR -- galaxy.sector_with (explorer) <=> galaxy.at(explorer.coordinate)
+	sector_with (ie: ID_ENTITY): SECTOR -- galaxy.sector_with (explorer) <=> grid.at(explorer.coordinate)
 		require
 			has (ie)
 		do
 			Result := at (ie.coordinate)
+		ensure
+			Result.has (ie)
+			has_sector(Result)
 		end
 
 	valid_coordinate (c: COORDINATE): BOOLEAN
@@ -191,7 +214,7 @@ feature -- Queries
 
 feature -- Traversal
 
-	new_cursor: ARRAY_ITERATION_CURSOR [SECTOR]
+	new_cursor: INDEXABLE_ITERATION_CURSOR [SECTOR]
 		do
 			Result := sectors.new_cursor
 		end
@@ -279,8 +302,4 @@ feature -- Out
 				end
 			end
 		end
-invariant
-	--sectors is private so I'm not sure if this is a good invariant to have.
-	sectors.count ~ (row*col)
-
 end

@@ -115,7 +115,7 @@ feature -- tests
 		local
 			s_o:SIMODYSSEY
 		do
-			comment ("t6: Testing Wormhole")
+			comment ("t6: Testing SIMODYSSEY.wormhole")
 			create s_o.make
 --			s_o.wormhole -- doesnt work if you're not in a game
 			s_o.new_game (50, FALSE)
@@ -136,7 +136,7 @@ feature -- tests
 		local
 			s_o: SIMODYSSEY
 		do
-			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move?,Does explorer die after several moves")
+			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move? Does explorer die after several moves")
 --			comment ("does fuel recharge if you move into a sector with a star?")
 --			comment ("does explorer die if he goes into a sector with a blackhole.")
 --			comment ("Do planets move as they do in the oracle?")
@@ -147,14 +147,14 @@ feature -- tests
 			print (s_o.out_descriptions)
 			print ("%N")
 			print (s_o.out_grid)
---			s_o.move_explorer ([1, 1])
---			print ("%N")
+			s_o.move_explorer ([1, 1])
+			print ("%N")
 
---			s_o.move_explorer ([1,0])
---			print ("%N")
---			print ("%N")
---			print (s_o.out_grid)
---			s_o.move_explorer ([1,0])
+			s_o.move_explorer ([1,0])
+			print ("%N")
+			print ("%N")
+			print (s_o.out_grid)
+			s_o.move_explorer ([1,0])
 
 		Result:=TRUE
 		end
@@ -164,17 +164,17 @@ feature -- tests
 			s_o: SIMODYSSEY
 			d: DIRECTION_UTILITY
 		do
-			comment ("t4: Testing SIMODYSSEY make and new_game() and partially move_explorer")
+			comment ("t4: Testing SIMODYSSEY.make and .new_game() and partially .move_explorer")
 			create s_o.make
 				-- testing new_game with multiple threshold values.
 			s_o.new_game (30, FALSE)
-				--			print(s_o.out)
-				--			print("%N")
-				--			print("%N")
+							print(s_o.out)
+							print("%N")
+							print("%N")
 			s_o.new_game (60, FALSE)
-				--			print(s_o.out)
-				--			print("%N")
-				--			print("%N")
+							print(s_o.out)
+							print("%N")
+							print("%N")
 			s_o.new_game (100, FALSE)
 				--			print(s_o.out)
 			s_o.move_explorer (d.n) --moving the explorer S
@@ -214,8 +214,8 @@ feature -- tests
 			s_o.move_explorer (d.s) --moving the explorer S
 			s_o.move_explorer (d.e) --moving the explorer W
 			print (s_o.out)
-				--			s_o.move_explorer (d.e) --moving the explorer W -- add VIOLATION CASE. The premise is that this will cause an error because the sector at such location is full.
-				--			print(s_o.out)
+							s_o.move_explorer (d.e) --moving the explorer W -- add VIOLATION CASE. The premise is that this will cause an error because the sector at such location is full.
+							print(s_o.out)
 			Result := TRUE
 		end
 
@@ -223,49 +223,31 @@ feature -- tests
 		local
 			e: EXPLORER
 			p: PLANET
-				--			c: COORDINATE
-				--			q: QUADRANT
-				--			s: SECTOR
-				--			id: INTEGER
 			g: GRID
---			expected: STRING
 		do
-			comment ("t3: grid make")
+			comment ("t3: Testing grid.make, grid.add, grid.remove, grid.move")
 			create g.make (5, 5, 4)
 			create e.make ([1, 1], 0)
 			create p.make ([1, 1], 1)
+
 			g.add_at (e, [2, 2])
-				--			print(g.out)
-				--			expected :=  "[
-				--    (1:1)  (1:2)  (1:3)  (1:4)  (1:5)
-				--    ----   ----   ----   ----   ----
-				--    (2:1)  (2:2)  (2:3)  (2:4)  (2:5)
-				--    ----   ----   ----   ----   ----
-				--    (3:1)  (3:2)  (3:3)  (3:4)  (3:5)
-				--    ----   ----   E---   ----   ----
-				--    (4:1)  (4:2)  (4:3)  (4:4)  (4:5)
-				--    ----   ----   ----   ----   ----
-				--    (5:1)  (5:2)  (5:3)  (5:4)  (5:5)
-				--    ----   ----   ----   ----   ----
-				--                                       ]"
-				--			Result := expected ~ g.out
-				--			check Result end
+			print(g.out)
+			print("%N")
 
 			g.remove (e)
-				--			print("%N")
-				--			print(g.out)
+			print(g.out)
 
 			g.add_at (e, [1, 1])
 
-				--			print(g.out)
-				--			print("%N%N")
+			print(g.out)
+			print("%N%N")
 			g.add_at (p, [3, 3])
 			g.move (e, [3, 3])
-				--			print(g.out)
-				--			print("%N%N")
+			print(g.out)
+			print("%N%N")
 			g.remove (p) -- PE-- => remove P => -E--
-				--			print(g.out)
-				--			print("%N%N")
+			print(g.out)
+			print("%N%N")
 			Result := true
 		end
 
@@ -278,7 +260,7 @@ feature -- tests
 			id: INTEGER
 		do
 			id := 0
-			comment ("t2: sector remove")
+			comment ("t2: Testing sector.remove")
 			create c.make ([0, 0])
 			Result := c.row = 0 and c.col = 0
 			check
@@ -319,9 +301,14 @@ feature -- tests
 				Result
 			end
 
-				--				s.add (e) TODO: make violation case
-
 		end
+--	t2:BOOLEAN
+--		local
+--		do
+--			comment("t2: Testing Quadrant.make_empty")
+
+--		end
+
 
 	t1: BOOLEAN
 		local
@@ -332,7 +319,7 @@ feature -- tests
 			id: INTEGER
 		do
 			id := 0
-			comment ("t1: test coordinate, explorer, quadrant, sector add")
+			comment ("t1: Testing coordinate.make, explorer.make, quadrant.make and sector.add")
 			create c.make ([0, 0])
 			Result := c.row = 0 and c.col = 0
 			check
@@ -367,8 +354,6 @@ feature -- tests
 			check
 				Result
 			end
-
-				--				s.add (e) TODO: make violation case
 
 		end
 

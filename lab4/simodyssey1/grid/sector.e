@@ -30,20 +30,23 @@ feature {NONE} -- Constructor
 		do
 			coordinate := a_coordinate
 			max_num_quadrants := num_quadrants
-			create quadrants.make (max_num_quadrants)
+			create implementation.make (max_num_quadrants)
+			implementation.compare_objects
 			from
 				i := 1
 			until
 				i > max_num_quadrants
 			loop
-				quadrants.force (create {QUADRANT}.make_empty (coordinate))
+				implementation.force (create {QUADRANT}.make_empty (coordinate))
 				i := i + 1
 			end
 		end
 
-feature -- Attribute
+feature {NONE} -- Attributes
 
-	quadrants: ARRAYED_LIST [QUADRANT] -- SEQ[QUADRANT]
+	implementation: ARRAYED_LIST [QUADRANT]
+
+feature -- Attributes
 
 	coordinate: COORDINATE
 
@@ -60,7 +63,7 @@ feature -- Command
 		do
 			min_id:=min_id.max_value
 			across
-				quadrants is i_q
+				implementation is i_q
 			loop
 				if attached {PLANET} i_q.entity as p then
 					if p.attached_to_star and not p.visited then
@@ -87,7 +90,7 @@ feature -- Command
 		do
 			removed := false
 			across
-				quadrants is i_q
+				implementation is i_q
 			until
 				removed
 			loop
@@ -98,6 +101,9 @@ feature -- Command
 			end
 		ensure
 			not has (me)
+			previous_entities_in_sector_remain: across (old quadrants).deep_twin is i_q all attached {ID_ENTITY} i_q.entity as i_q_e implies ((old current).has (i_q_e)) end
+			count ~ (old count) - 1
+			max_num_quadrants = old max_num_quadrants
 		end
 
 	add (e: ID_ENTITY)
@@ -109,7 +115,7 @@ feature -- Command
 		do
 			added := false
 			across
-				quadrants is i_q
+				implementation is i_q
 			until
 				added
 			loop
@@ -118,18 +124,26 @@ feature -- Command
 					added := true
 				end
 			end
-				--		ensure
-				--			old contents are not affected except one we are adding. TODO
-				--			(old quadrants.deep_twin).
+		ensure
+			previous_entities_in_sector_remain_in_current_sectore: across (old quadrants).deep_twin is i_q all attached {ID_ENTITY} i_q.entity as i_q_e implies (current.has (i_q_e)) end
+			has(e)
+			count ~ (old count) + 1
+			max_num_quadrants = old max_num_quadrants
 		end
 
 feature -- Queries
+
+	quadrants: LIST [QUADRANT]
+		do
+			Result:=implementation
+			Result.compare_objects
+		end
 
 	is_landable: BOOLEAN
 		do
 			if has_planet and has_star then
 				across
-					quadrants is i_q
+					implementation is i_q
 				until
 					Result
 				loop
@@ -146,20 +160,20 @@ feature -- Queries
 
 	has_planet:BOOLEAN
 		do
-			Result:= across quadrants is i_q
+			Result:= across implementation is i_q
 			some
 				 attached {PLANET} i_q.entity
 			end
 
 		end
 
-	new_cursor: ARRAYED_LIST_ITERATION_CURSOR [QUADRANT]
+	new_cursor: INDEXABLE_ITERATION_CURSOR [QUADRANT]
 		do
-			Result := quadrants.new_cursor
+			Result := implementation.new_cursor
 		end
 
 	is_full: BOOLEAN
-			-- Return true if quadrants is full.
+			-- Return true if implementation is full.
 		do
 			Result := count ~ max_num_quadrants
 		end
@@ -168,7 +182,7 @@ feature -- Queries
 		do
 			Result := 0
 			across
-				quadrants is i_q
+				implementation is i_q
 			loop
 				if not i_q.is_empty then
 					Result := Result + 1
@@ -185,7 +199,7 @@ feature -- Queries
 			Result := create {YELLOW_DWARF}.make ([1, 1], 0) --creating random star. Note, this will never get returned
 			found := false
 			across
-				quadrants is i_q
+				implementation is i_q
 			until
 				found
 			loop
@@ -198,7 +212,7 @@ feature -- Queries
 
 	has (me: ID_ENTITY): BOOLEAN
 		do
-			Result := across quadrants is i_q some i_q.has (me) end
+			Result := across implementation is i_q some i_q.has (me) end
 		end
 
 	quadrant_at (me: ID_ENTITY): INTEGER
@@ -207,9 +221,9 @@ feature -- Queries
 		do
 			Result := 1
 			across
-				1 |..| quadrants.count is i
+				1 |..| implementation.count is i
 			loop
-				if attached {ID_ENTITY} quadrants [i].entity as id_entity then
+				if attached {ID_ENTITY} implementation [i].entity as id_entity then
 					if me ~ id_entity then
 						Result := i
 					end
@@ -221,7 +235,7 @@ feature -- Queries
 		do
 			Result := FALSE
 			across
-				quadrants is i_q
+				implementation is i_q
 			loop
 				if attached {STATIONARY_ENTITY} i_q.entity then
 					Result := TRUE
@@ -257,7 +271,7 @@ feature -- Queries
 		do
 			Result := 0
 			across
-				quadrants is i_q
+				implementation is i_q
 			loop
 				if attached {MOVEABLE_ENTITY} i_q.entity then
 					Result := Result + 1
@@ -287,10 +301,10 @@ feature -- Output
 			Result.append (coordinate.out_sqr_bracket_comma)
 			Result.append ("->")
 			across
-				1 |..| quadrants.count is i
+				1 |..| implementation.count is i
 			loop
-				Result.append (quadrants [i].out_abstract)
-				if i < quadrants.count then
+				Result.append (implementation [i].out_abstract)
+				if i < implementation.count then
 					Result.append (",")
 				end
 			end
@@ -305,7 +319,7 @@ feature -- Output
 		do
 			create Result.make_empty
 			across
-				quadrants is i_q
+				implementation is i_q
 			loop
 				Result.append (i_q.out)
 			end
@@ -321,11 +335,4 @@ feature -- Output
 
 invariant
 	min_max_count: 0 <= count and count <= max_num_quadrants
-	--	unique_entities: TODO
-	--		across quadrants is i_q all
-	--			if not i_q.is_empty then
-	--				not has(i_q.entity)
-	--			end -- AA-C
-	--		end
-
 end

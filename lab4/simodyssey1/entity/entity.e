@@ -51,7 +51,7 @@ feature -- Commands
 
 feature -- out
 
-	out: STRING
+	out: STRING -- ie 'E'
 		do
 			create Result.make_empty
 			Result.append (character);

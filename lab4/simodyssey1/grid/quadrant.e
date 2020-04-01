@@ -11,7 +11,8 @@ inherit
 
 	ANY
 		redefine
-			out
+			out,
+			is_equal
 		end
 
 create
@@ -23,7 +24,6 @@ feature {NONE} -- Constructor
 		do
 			coordinate := c
 			remove_entity
-			e_id := 0
 		end
 
 feature -- Attribute
@@ -32,7 +32,7 @@ feature -- Attribute
 
 	coordinate: COORDINATE
 
-feature -- Command
+feature -- Commands
 
 	remove_entity
 			-- "remove" entity by replacing entity with null entity.
@@ -41,24 +41,21 @@ feature -- Command
 		do
 			create ne.make (coordinate)
 			entity := ne
-			e_id := 0
+		ensure
+			is_empty
 		end
 
 	set_entity (e: ID_ENTITY)
+			-- "set" entity by replacing an entity with an id entity.
 		do
 			e.set_coordinate (coordinate)
 			entity := e
-			e_id := e.id
+		ensure
+			not is_empty
+			has(e)
 		end
 
 feature -- Queries
-
-	entity_id: INTEGER
-		require
-			not is_empty
-		do
-			Result := e_id
-		end
 
 	is_empty: BOOLEAN
 			-- Return true if entity in quadrant is null entity.
@@ -74,9 +71,33 @@ feature -- Queries
 			Result := ie ~ entity
 		end
 
-feature {NONE} -- private attributes
-
-	e_id: INTEGER
+	is_equal (other: like Current): BOOLEAN
+			-- is Current equal to other?
+		do
+			if current.coordinate ~ other.coordinate then
+				if not is_empty then
+					if not other.is_empty then
+						check attached {ID_ENTITY} entity as id_entity and then attached {ID_ENTITY} other.entity as o_id_entity then
+							if id_entity ~o_id_entity  then
+								Result := True
+							else
+								Result := False
+							end
+						end
+					else
+						Result:=FALSE
+					end
+				elseif is_empty then
+					if not other.is_empty then
+						Result:=FALSE
+					else
+						Result:=TRUE
+					end
+				end
+			else
+				Result:=FALSE
+			end
+		end
 
 feature -- Out
 

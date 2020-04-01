@@ -11,7 +11,8 @@ inherit
 
 	ANY
 		redefine
-			out
+			out,
+			is_equal
 		end
 
 create
@@ -40,12 +41,17 @@ feature -- Command
 		do
 			create ne.make (coordinate)
 			entity := ne
+		ensure
+			is_empty
 		end
 
 	set_entity (e: ID_ENTITY)
 		do
 			e.set_coordinate (coordinate)
 			entity := e
+		ensure
+			not is_empty
+			has(e)
 		end
 
 feature -- Queries
@@ -62,6 +68,34 @@ feature -- Queries
 			-- Return false otherwise.
 		do
 			Result := ie ~ entity
+		end
+
+	is_equal (other: like Current): BOOLEAN
+			-- is Current equal to other?
+		do
+			if current.coordinate ~ other.coordinate then
+				if not is_empty then
+					if not other.is_empty then
+						check attached {ID_ENTITY} entity as id_entity and then attached {ID_ENTITY} other.entity as o_id_entity then
+							if id_entity ~o_id_entity  then
+								Result := True
+							else
+								Result := False
+							end
+						end
+					else
+						Result:=FALSE
+					end
+				elseif is_empty then
+					if not other.is_empty then
+						Result:=FALSE
+					else
+						Result:=TRUE
+					end
+				end
+			else
+				Result:=FALSE
+			end
 		end
 
 feature -- Out

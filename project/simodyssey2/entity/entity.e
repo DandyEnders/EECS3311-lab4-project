@@ -51,7 +51,7 @@ feature -- Commands
 
 feature -- out
 
-	out: STRING
+	out: STRING -- ie 'E'
 		do
 			Result := character
 		end
