@@ -117,7 +117,6 @@ feature -- commands
 			add_at (ie, to_c)
 		ensure
 			ie_is_at_new_coordinate: at (to_c).has (ie)
-			ie_is_not_at_old_coordinate: not at(((old ie).deep_twin).coordinate).has (ie)
 			entity_count ~ entity_count
 		end
 

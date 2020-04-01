@@ -33,7 +33,7 @@ feature -- Queries
 
 	is_equal (other: like current): BOOLEAN
 		do
-			Result := precursor(other) and id ~ other.id
+			Result := character ~ other.character and coordinate ~ other.coordinate and id ~ other.id
 		end
 
 feature -- out

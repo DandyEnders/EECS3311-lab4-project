@@ -259,7 +259,7 @@ feature -- Queries
 				end
 			end
 		ensure
-			quadrants[Result]~me
+			attached {ID_ENTITY} quadrants[Result].entity as id_e and then id_e~me
 		end
 
 	has_stationary_entity: BOOLEAN --
