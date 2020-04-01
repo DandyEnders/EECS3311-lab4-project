@@ -1,0 +1,17 @@
+test(1,1,1,1,30)
+move(S)
+move(S)
+land
+liftoff
+land
+land
+abort
+test(1,1,1,1,90)
+move(S)
+move(S)
+land
+test(1,1,1,1,90)
+move(E)
+-- The planet has yet to attach so the explorer is unable to land
+land
+

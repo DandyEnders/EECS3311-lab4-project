@@ -1,5 +1,5 @@
 --wormhole is_expoler_in_wormhole and explorer is alive
-play
+test(1,1,1,1,30)
 wormhole
 move(N)
 wormhole

@@ -1,0 +1,4 @@
+test(1,1,1,1,99)
+pass
+pass
+-- Testing abstract death messages Planet 1.

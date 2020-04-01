@@ -17,5 +17,5 @@ wormhole
 -- Testing valid commands while in main_menu_state
 play
 abort
-test(50)
+test(1,1,1,1,50)
 

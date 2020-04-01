@@ -1,4 +1,0 @@
-test(3,5,7,15,30)
-pass
-pass
-pass

@@ -1,8 +1,8 @@
 abort
-play
+test(1,1,1,1,30)
 abort
 abort
-test(30)
+test(1,1,1,1,30)
 move(N)
 move(NE)
 move(E)

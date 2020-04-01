@@ -1,0 +1,3 @@
+test(80,80,80,80,80)
+-- Testing abstract death messages ASTEROID, 1. 
+pass

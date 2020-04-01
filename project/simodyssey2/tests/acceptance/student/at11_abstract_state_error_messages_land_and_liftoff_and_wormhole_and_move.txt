@@ -1,0 +1,30 @@
+test(1,1,1,1,30)
+abort
+test(1,1,1,1,30)
+move(W)
+--Testing Abstract Error Message LAND, 4.
+land
+move(N)
+--Testing Abstract Error Message LIFTOFF, 2.
+liftoff
+move(E)
+move(E)
+land
+--Testing Abstract Error Message WORMHOLE, 2.
+wormhole
+--Testing Abstract Error Message MOVE, 2.
+move(S)
+--Testing Abstract Error Message LAND, 2.
+land
+liftoff
+--Testing Abstract Error Message WORMHOLE, 3.
+wormhole
+--Testing Abstract Error Message LAND, 5.
+land 
+status
+move(E)
+status
+move(E)
+--Testing Abstract Error Message LAND, 3.
+land
+status

@@ -1,0 +1,4 @@
+test(50,80,80,80,80)
+-- Janitaur [4,J] Destroys 2 asteroid and then clears its load.
+pass
+-- Janitaur [8,J] destroys one asteroid and increments its load.

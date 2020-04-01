@@ -1,0 +1,29 @@
+test(1,1,1,1,30)
+-- Succesful Move spends fuel.
+move(N)
+status
+-- wormhole does not spend any fuel
+wormhole
+status
+move(S)
+status
+-- Moving to a star should charge fuel.
+move(S)
+status
+move(N)
+move(N)
+status
+move(SW)
+status
+-- And action while in a sector with a star should charge fuel
+pass
+status
+abort
+test(1,1,1,1,90)
+move(NE)
+status
+move(N)
+status
+move(N)
+status
+

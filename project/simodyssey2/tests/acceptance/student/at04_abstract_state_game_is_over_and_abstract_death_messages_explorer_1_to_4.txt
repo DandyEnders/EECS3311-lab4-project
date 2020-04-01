@@ -1,0 +1,77 @@
+-- Testing Abastract state messgae game is over 2. when dead by blackhole.
+play
+status
+move(SE)
+status
+move(SE)
+status
+-- All actions should seize to work because the game is over.
+land
+status
+liftoff
+status
+wormhole
+status
+pass
+status
+move(S)
+status
+abort
+status
+-- Testing Abastract state messgae game is over 1. when dead by out of fuel.
+play
+status
+move(S)
+status
+move(S)
+status
+move(S)
+status
+-- All actions should seize to work because the game is over.
+land
+liftoff
+status
+wormhole
+pass
+move(S)
+abort
+-- Testing Abastract state messgae game is over 3. when dead by asteroid.
+test(90,90,90,90,90)
+status
+pass
+status
+-- All actions should seize to work because the game is over.
+land
+liftoff
+status
+wormhole
+pass
+move(S)
+abort
+-- Testing Abastract state messgae game is over 4. when dead by malevolent.
+test(1,1,90,90,90)
+status
+pass
+status
+pass
+status
+pass
+status
+pass
+status
+pass
+status
+pass
+status
+pass
+status
+-- All actions should seize to work because the game is over.
+land
+liftoff
+status
+wormhole
+pass
+move(S)
+abort
+-- play should work
+play

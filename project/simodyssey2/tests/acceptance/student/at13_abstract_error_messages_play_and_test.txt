@@ -1,0 +1,12 @@
+play
+-- Testing Abstract error messages TEST, 1.
+test(1,1,1,2,3)
+abort
+test(1,1,1,2,3)
+-- Testing Abstract error messages PLAY, 1.
+play
+abort
+-- Testing Abstract error messages TEST, 2.
+test(5,4,3,2,1)
+test(10,20,30,40,10)
+test(1,2,2,2,30)

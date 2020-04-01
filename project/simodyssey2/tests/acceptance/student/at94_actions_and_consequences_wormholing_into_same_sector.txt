@@ -38,4 +38,5 @@ move(E)
 wormhole
 move(N)
 move(W)
+-- Testing Wormholing into the same sector
 wormhole

@@ -1,0 +1,39 @@
+test(1,1,1,1,30)
+status
+move(S)
+status
+move(S)
+status
+-- Enter Landed state, should output abstract state land message 2.
+land
+status
+-- Entering Play state by typing "liftoff", should output abstract state liffoff message 1.
+liftoff
+status
+pass
+status
+pass
+status
+pass
+status
+pass
+-- Enter Landed state, should output abstract state land message 1.
+-- Should output abstract state message game is over 1.
+land
+status
+-- All actions should seize to work because the game is over.
+land
+status
+liftoff
+status
+wormhole
+status
+pass
+status
+move(S)
+status
+abort
+status
+-- play should work
+play
+status

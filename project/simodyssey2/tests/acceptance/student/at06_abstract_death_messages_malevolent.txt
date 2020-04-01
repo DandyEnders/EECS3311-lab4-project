@@ -1,0 +1,8 @@
+test(10,10,80,80,80)
+-- Testing abstract death messages MALEVOLENT, 2. 
+pass
+-- Testing abstract death messages MALEVOLENT, 3. 
+pass
+pass
+-- Testing abstract death messages MALEVOLENT, 1. 
+pass

@@ -1,0 +1,3 @@
+test(10,80,80,80,80)
+-- Testing abstract death messages JANITAUR 3., ASTEROID 2.
+pass

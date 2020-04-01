@@ -1,0 +1,36 @@
+test(1,1,1,1,30)
+status
+--Aborting while in game, should output abstract state message abort 1.
+abort
+status
+-- All actions should seize to work because the game is over.
+land
+status
+liftoff
+status
+wormhole
+status
+pass
+status
+move(S)
+status
+abort
+status
+-- play should work
+play
+--Testing the same thing but this time using play to enter the game.
+play
+status
+abort
+status
+-- All actions should seize to work because the game is over.
+land
+liftoff
+status
+wormhole
+pass
+move(S)
+abort
+-- test should work
+test(1,2,3,4,5)
+status

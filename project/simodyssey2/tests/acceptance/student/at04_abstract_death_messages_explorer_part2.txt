@@ -1,0 +1,7 @@
+-- Testing Death Messages EXPLORER 2. for the case when the explorer dies by black hole after exiting a wormhole.
+test(1,1,1,1,99)
+status
+move(W)
+status
+wormhole
+status

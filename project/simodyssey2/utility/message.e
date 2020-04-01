@@ -180,7 +180,7 @@ feature -- abort
 	abort: STRING
 		do
 			create Result.make_from_string (left_margin)
-			Result.append ("Mission aborted. Try test(30)")
+			Result.append ("Mission aborted. Try test(3,5,7,15,30)")
 		end
 
 	abort_error_no_mission: STRING

@@ -1,0 +1,8 @@
+test(1,99,99,99,99)
+move(SE)
+pass
+-- Testing Abstract error messages MOVE, 3.
+move(N)
+status
+move(E)
+move(NW)

@@ -1,7 +1,7 @@
 --Not destination sector full and explorer is not alive
-play
+test(1,1,1,1,30)
 move(E)
-test(90)
+test(1,1,1,1,90)
 move(SE)
 move(W)
 move(E)
@@ -10,7 +10,7 @@ move(E)
 move(W)
 --death by fuel occurs here
 move(E) 
-play   
+test(1,1,1,1,30)   
 --death by blackhole starts here
 move(SE)
 move(SE)

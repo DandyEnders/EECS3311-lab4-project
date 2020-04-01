@@ -1,0 +1,14 @@
+-- Testing Abstract state eroor messages ABORT 1.
+abort
+-- Testing Abstract state eroor messages LAND 1.
+land
+-- Testing Abstract state eroor messages LIFTOFF 1.
+liftoff
+-- Testing Abstract state eroor messages MOVE 1.
+move(N)
+-- Testing Abstract state eroor messages PASS 1.
+pass
+-- Testing Abstract state eroor messages STATUS 1.
+status
+-- Testing Abstract state eroor messages WORMHOLE 1.
+wormhole
