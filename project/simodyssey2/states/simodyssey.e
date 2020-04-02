@@ -11,7 +11,8 @@ inherit
 
 	ANY
 		redefine
-			out
+			out,
+			is_equal
 		end
 
 create
@@ -210,7 +211,7 @@ feature -- Explorer Interface Commands
 			default_turn_actions
 		ensure
 			explorer_alive and
-			explorer_landed and 
+			explorer_landed and
 			(explorer_found_life implies (not game_is_in_session))
 		end
 
@@ -690,6 +691,10 @@ feature {NONE} -- Out
 			end
 		end
 
-
+feature -- Comparison
+	is_equal(other:like current): BOOLEAN
+		do
+			Result:= other.out ~ out and other.out_status_explorer ~ out_status_explorer and other.explorer_death_message ~ explorer_death_message and other.game_is_in_session ~ game_is_in_session
+		end
 
 end
