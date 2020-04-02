@@ -58,7 +58,7 @@ feature -- Controller command / queries
 				set_msg_mode (msg_mode)
 				set_msg_command_validity (msg.error)
 				create tmp_str.make_empty
-				if not model.explorer_sector_has_yellow_dwarf then -- TODO refactor it so its short
+				if not model.explorer_sector_has_yellow_dwarf then 
 					tmp_str.append (msg.land_error_no_yellow_dwarf (model.explorer_coordinate.row, model.explorer_coordinate.col))
 				elseif not model.explorer_sector_has_planets then
 					tmp_str.append (msg.land_error_no_planets (model.explorer_coordinate.row, model.explorer_coordinate.col))
