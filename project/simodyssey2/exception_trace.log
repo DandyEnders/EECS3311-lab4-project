@@ -346,3 +346,121 @@ ROOT                make @16
 ROOT                root's creation                                     
 <0000000005E61418>                         Routine failure.              Exit
 -------------------------------------------------------------------------------
+
+simodyssey2: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+MAIN_MENU_STATE     play @8                model_does_not_remain_the_same:
+<0000000005DD4D94>                         Postcondition violated.       Fail
+-------------------------------------------------------------------------------
+MAIN_MENU_STATE     play @8                                             
+<0000000005DD4D94>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+CONTROLLER          play @1                                             
+<0000000005DD4D7C>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_PLAY            play @1                                             
+<0000000005DF03D0>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           fast_call                                           
+<0000000005DF0544>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           call @3                                             
+<0000000005DF0544>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           apply @2                                            
+<0000000005DF0544>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_ABSTRACT_UI     run_input_commands @2                               
+<0000000005DD8694>  (From ETF_ABSTRACT_UI_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_SOFTWARE_OPERATION
+                    execute @9             
+<0000000005DD4D40>  (From ETF_SOFTWARE_OPERATION_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                exec @3                                             
+<0000000005DCC418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                handle_batch_mode @5                                
+<0000000005DCC418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @27                                            
+<0000000005DCC418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @16                                            
+<0000000005DCC418>  (From ETF_ROOT_INTERFACE)
+                                           Routine failure.              Rescue
+-------------------------------------------------------------------------------
+ROOT                root's creation                                     
+<0000000005DCC418>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
+
+simodyssey2: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+MAIN_MENU_STATE     play @8                model_does_not_remain_the_same:
+<0000000005EEDD94>                         Postcondition violated.       Fail
+-------------------------------------------------------------------------------
+MAIN_MENU_STATE     play @8                                             
+<0000000005EEDD94>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+CONTROLLER          play @1                                             
+<0000000005EEDD7C>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_PLAY            play @1                                             
+<0000000005F093D0>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           fast_call                                           
+<0000000005F09544>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           call @3                                             
+<0000000005F09544>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+PROCEDURE           apply @2                                            
+<0000000005F09544>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_ABSTRACT_UI     run_input_commands @2                               
+<0000000005EF1694>  (From ETF_ABSTRACT_UI_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ETF_SOFTWARE_OPERATION
+                    execute @9             
+<0000000005EEDD40>  (From ETF_SOFTWARE_OPERATION_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                exec @3                                             
+<0000000005EE5418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                handle_batch_mode @5                                
+<0000000005EE5418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @27                                            
+<0000000005EE5418>  (From ETF_CMD_LINE_ROOT_INTERFACE)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+ROOT                make @16                                            
+<0000000005EE5418>  (From ETF_ROOT_INTERFACE)
+                                           Routine failure.              Rescue
+-------------------------------------------------------------------------------
+ROOT                root's creation                                     
+<0000000005EE5418>                         Routine failure.              Exit
+-------------------------------------------------------------------------------

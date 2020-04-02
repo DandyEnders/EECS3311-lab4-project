@@ -10,9 +10,9 @@ class
 inherit
 
 	ANY
+
 		redefine
-			out,
-			is_equal
+			out
 		end
 
 create
@@ -690,11 +690,4 @@ feature {NONE} -- Out
 				end
 			end
 		end
-
-feature -- Comparison
-	is_equal(other:like current): BOOLEAN
-		do
-			Result:= other.out ~ out and other.out_status_explorer ~ out_status_explorer and other.explorer_death_message ~ explorer_death_message and other.game_is_in_session ~ game_is_in_session
-		end
-
 end

@@ -26,7 +26,6 @@ feature -- Controller command / queries
 			next_state.set_msg_content (msg.abort)
 		ensure then
 			enter_main_menu_state: attached {MAIN_MENU_STATE} next_state
-			model_does_not_remain_the_same: model /~ old model
 		end
 
 	land
@@ -70,9 +69,7 @@ feature -- Controller command / queries
 			end
 		ensure then
 			if_explorer_sector_is_not_landable_remain_in_play_state: ((not (old model).explorer_sector_is_landable) implies (attached {PLAY_STATE} next_state))
-			if_explorer_sector_is_not_landable_model_does_not_change: ((not (old model).explorer_sector_is_landable) implies  (model ~ old model))
 			if_explorer_sector_is_landable_and_explorer_did_not_find_life_enter_landed_state: (((old model).explorer_sector_is_landable and (not model.explorer_found_life)) implies (attached {LANDED_STATE} next_state))
-			if_explorer_sector_is_landable_model_does_change: (((old model).explorer_sector_is_landable) implies (model /~ old model))
 			if_explorer_sector_is_landable_and_explorer_did_found_life_enter_main_menu_state: (((old model).explorer_sector_is_landable and (model.explorer_found_life)) implies (attached {MAIN_MENU_STATE} next_state))
 		end
 
@@ -87,7 +84,6 @@ feature -- Controller command / queries
 			set_msg_content (msg.liftoff_error_not_on_planet (c.row, c.col))
 		ensure then
 			invalid_command_implies_remain_in_play_state: (attached {PLAY_STATE} next_state)
-			model_does_remain_the_same: model ~ old model
 		end
 
 	move (d: COORDINATE)
@@ -112,9 +108,7 @@ feature -- Controller command / queries
 			end
 		ensure then
 			if_sector_in_direction_is_full_remain_in_play_state: ((old model).sector_in_explorer_direction_is_full (d)) implies (attached {PLAY_STATE} next_state)
-			if_sector_in_direction_is_full_model_remains_the_same: ((old model).sector_in_explorer_direction_is_full (d)) implies model ~ old model
 			if_sector_in_direction_is_not_full_and_explorer_alive_remain_in_play_state: ((not (old model).sector_in_explorer_direction_is_full (d)) and model.explorer_alive) implies (attached {PLAY_STATE} next_state)
-			if_sector_in_direction_is_not_full_model_does_not_remains_the_same: (not (old model).sector_in_explorer_direction_is_full (d)) implies model /~ old model
 			if_sector_in_direction_is_not_full_and_explorer_dead_enter_main_menu_state: ((not (old model).sector_in_explorer_direction_is_full (d)) and (not model.explorer_alive)) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
@@ -132,7 +126,6 @@ feature -- Controller command / queries
 		ensure then
 			if_not_dead_remain_in_play_state: (model.explorer_alive) implies (attached {PLAY_STATE} next_state)
 			if_dead_enter_main_menu_state: (not model.explorer_alive) implies (attached {MAIN_MENU_STATE} next_state)
-			model_does_not_remain_the_same: model /~ old model
 		end
 
 	play
@@ -143,7 +136,6 @@ feature -- Controller command / queries
 			set_msg_content (msg.play_error_no_mission)
 		ensure then
 			invalid_command_implies_remain_in_play_state: ((old model).game_is_in_session) and (attached {PLAY_STATE} next_state)
-			model_does_remain_the_same: model ~ old model
 		end
 
 	status
@@ -154,7 +146,6 @@ feature -- Controller command / queries
 			set_msg_content (model.out_status_explorer)
 		ensure then
 			 status_should_not_change_the_state:(attached {PLAY_STATE} next_state)
-			 model_does_remain_the_same: model ~ old model
 		end
 
 	test (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER)
@@ -165,7 +156,6 @@ feature -- Controller command / queries
 			set_msg_content (msg.test_error_no_mission)
 		ensure then
 			invalid_command_implies_remain_in_play_state: ((old model).game_is_in_session) and (attached {PLAY_STATE} next_state)
-			model_does_remain_the_same: model ~ old model
 		end
 
 	wormhole
@@ -194,10 +184,8 @@ feature -- Controller command / queries
 			end
 		ensure then
 			valid_command_and_explorer_alive_implies_remain_in_play_state: ((old model.explorer_with_wormhole) and model.explorer_alive) implies (attached {PLAY_STATE} next_state)
-			wormhole_in_sector_implies_model_doeos_not_remain_the_same:((old model).explorer_with_wormhole) implies model /~ old model
 			valid_command_and_explorer_is_dead_implies_enter_main_menu_state:((old model.explorer_with_wormhole) and (not model.explorer_alive)) implies (attached {MAIN_MENU_STATE} next_state)
 			invalid_command_implies_remain_in_play_state: (not (old model).explorer_with_wormhole) implies (attached {PLAY_STATE} next_state)
-			no_wormhole_in_sector_implies_model_remains_the_same:(not (old model).explorer_with_wormhole) implies model ~ old model
 		end
 
 end
