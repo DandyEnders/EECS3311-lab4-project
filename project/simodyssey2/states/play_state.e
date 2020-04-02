@@ -68,9 +68,9 @@ feature -- Controller command / queries
 				set_msg_content (tmp_str)
 			end
 		ensure then
-			if_explorer_sector_is_not_landable_remain_in_play_state: ((not (old model).explorer_sector_is_landable) implies (attached {PLAY_STATE} next_state))
-			if_explorer_sector_is_landable_and_explorer_did_not_find_life_enter_landed_state: (((old model).explorer_sector_is_landable and (not model.explorer_found_life)) implies (attached {LANDED_STATE} next_state))
-			if_explorer_sector_is_landable_and_explorer_did_found_life_enter_main_menu_state: (((old model).explorer_sector_is_landable and (model.explorer_found_life)) implies (attached {MAIN_MENU_STATE} next_state))
+			if_explorer_is_not_landed_remain_in_play_state: ((not model.explorer_landed) implies (attached {PLAY_STATE} next_state))
+			if_explorer_is_landed_and_explorer_did_not_find_life_enter_landed_state: (((model.explorer_landed) and (not model.explorer_found_life)) implies (attached {LANDED_STATE} next_state))
+			if_explorer_is_landed_and_explorer_did_found_life_enter_main_menu_state: (((model.explorer_landed) and (model.explorer_found_life)) implies (attached {MAIN_MENU_STATE} next_state))
 		end
 
 	liftoff
