@@ -107,9 +107,8 @@ feature -- Controller command / queries
 				end
 			end
 		ensure then
-			if_sector_in_direction_is_full_remain_in_play_state: ((old model).sector_in_explorer_direction_is_full (d)) implies (attached {PLAY_STATE} next_state)
-			if_sector_in_direction_is_not_full_and_explorer_alive_remain_in_play_state: ((not (old model).sector_in_explorer_direction_is_full (d)) and model.explorer_alive) implies (attached {PLAY_STATE} next_state)
-			if_sector_in_direction_is_not_full_and_explorer_dead_enter_main_menu_state: ((not (old model).sector_in_explorer_direction_is_full (d)) and (not model.explorer_alive)) implies (attached {MAIN_MENU_STATE} next_state)
+			if_explorer_is_alive_after_succesfully_moving_remain_in_play_state: (model.explorer_alive) implies (attached {PLAY_STATE} next_state)
+			if_explorer_is_dead_after_succesfully_moving_enter_in_main_menu_state: (not model.explorer_alive) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 	pass
@@ -135,7 +134,7 @@ feature -- Controller command / queries
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.play_error_no_mission)
 		ensure then
-			invalid_command_implies_remain_in_play_state: ((old model).game_is_in_session) and (attached {PLAY_STATE} next_state)
+			invalid_command_implies_remain_in_play_state: (attached {PLAY_STATE} next_state)
 		end
 
 	status
@@ -155,7 +154,7 @@ feature -- Controller command / queries
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.test_error_no_mission)
 		ensure then
-			invalid_command_implies_remain_in_play_state: ((old model).game_is_in_session) and (attached {PLAY_STATE} next_state)
+			invalid_command_implies_remain_in_play_state: (attached {PLAY_STATE} next_state)
 		end
 
 	wormhole
@@ -183,9 +182,8 @@ feature -- Controller command / queries
 				end
 			end
 		ensure then
-			valid_command_and_explorer_alive_implies_remain_in_play_state: ((old model.explorer_with_wormhole) and model.explorer_alive) implies (attached {PLAY_STATE} next_state)
-			valid_command_and_explorer_is_dead_implies_enter_main_menu_state:((old model.explorer_with_wormhole) and (not model.explorer_alive)) implies (attached {MAIN_MENU_STATE} next_state)
-			invalid_command_implies_remain_in_play_state: (not (old model).explorer_with_wormhole) implies (attached {PLAY_STATE} next_state)
+			Explorer_is_alive_after_successful_wormhole_implies_remain_in_play_state: (model.explorer_alive) implies (attached {PLAY_STATE} next_state)
+			Explorer_is_dead_after_successful_wormhole_implies_enter_main_menu_state:((not model.explorer_alive)) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 end
