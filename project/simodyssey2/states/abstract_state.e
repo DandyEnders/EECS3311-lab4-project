@@ -52,19 +52,26 @@ feature {NONE} -- Private Command
 
 feature -- Command
 
-	executed_turn_command
+	executed_valid_turn_command
 		do
 			increment_first_number
+		ensure
+			first_number ~ (old first_number +1)
+			second_number ~ 0
 		end
 
 	executed_invalid_command
 		do
 			increment_second_number
+		ensure
+			second_number ~ (old second_number +1)
 		end
 
 	executed_no_turn_command
 		do
 			increment_second_number
+		ensure
+			second_number ~ (old second_number +1)
 		end
 
 feature -- Queries

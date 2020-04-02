@@ -66,13 +66,13 @@ feature -- Queries
 			Result := is_dead and then get_death_cause ~ "ASTEROID"
 		end
 
-feature {UNIT_TEST} -- testing Commands Delete after finalized
-
-feature -- Commands
+feature {NONE,UNIT_TEST} -- testing Commands Delete after finalized
 
 	set_landed (b: BOOLEAN)
 		do
 			landed := b
+		ensure
+			landed = b
 		end
 
 	set_found_life_true
@@ -80,7 +80,11 @@ feature -- Commands
 			landed
 		do
 			found_life := TRUE
+		ensure
+			found_life = TRUE
 		end
+
+feature -- Commands
 
 	kill_by_malevolent
 		do
@@ -130,8 +134,8 @@ feature -- Commands
 		require
 			a_p.attached_to_star and not a_p.visited
 		do
-			a_p.set_visited
 			set_landed (TRUE)
+			a_p.set_visited
 			if a_p.support_life then
 				set_found_life_true
 			end
@@ -139,6 +143,15 @@ feature -- Commands
 			a_p.visited
 			and landed
 			and (a_p.support_life implies found_life)
+		end
+
+	liftoff
+		require
+			landed
+		do
+			set_landed(FALSE)
+		ensure
+			not landed
 		end
 
 feature -- Out

@@ -88,6 +88,9 @@ feature -- Command
 		do
 			life.set_life (0)
 			death_cause := a_cause
+		ensure
+			is_dead
+			get_death_cause ~ a_cause
 		end
 
 end

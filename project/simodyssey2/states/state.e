@@ -150,8 +150,8 @@ feature -- Out
 		end
 
 invariant
-	if_next_state_is_main_menu_state_then_game_is_not_in_session: attached {MAIN_MENU_STATE} next_state implies not model.game_in_session
-	if_next_state_is_play_state_then_game_is_in_session: attached {PLAY_STATE} next_state implies (model.game_in_session and not model.is_explorer_landed)
-	if_next_state_is_landed_state_then_game_is_in_session: attached {LANDED_STATE} next_state implies (model.game_in_session and model.is_explorer_landed)
+	if_next_state_is_main_menu_state_then_game_is_not_in_session: attached {MAIN_MENU_STATE} next_state implies not model.game_is_in_session
+	if_next_state_is_play_state_then_game_is_in_session: attached {PLAY_STATE} next_state implies (model.game_is_in_session and not model.explorer_landed)
+	if_next_state_is_landed_state_then_game_is_in_session: attached {LANDED_STATE} next_state implies (model.game_is_in_session and model.explorer_landed)
 
 end

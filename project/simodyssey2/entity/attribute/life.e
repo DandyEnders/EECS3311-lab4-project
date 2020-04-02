@@ -45,6 +45,8 @@ feature -- Commands
 			if value = 0 then
 				is_dead := true
 			end
+		ensure
+			value= a_value
 		end
 
 	add_life (a_value: INTEGER)

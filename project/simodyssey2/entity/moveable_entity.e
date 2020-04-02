@@ -51,6 +51,8 @@ feature -- Commands
 					kill_by_blackhole (b_e.id)
 				end
 			end
+		ensure
+			alive_or_dead_current_remains_in_sector: sector.coordinate ~ coordinate
 		end
 feature	-- Queries
 	is_dead_by_blackhole: BOOLEAN

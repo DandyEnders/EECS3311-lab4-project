@@ -197,45 +197,6 @@ feature -- game_is_over
 			Result.append ("The game has ended. You can start a new game.")
 		end
 
-feature -- explorer
-
---	explorer_death_out_of_fuel (row, col: INTEGER): STRING
---		do
---			create Result.make_empty
---			Result.append (left_margin)
---			Result.append ("Explorer got lost in space - out of fuel at Sector:")
---			Result.append (row.out)
---			Result.append (":")
---			Result.append (col.out)
---		end
-
---	explorer_death_blackhole (row, col, blackhole_id: INTEGER): STRING
---		do
---			create Result.make_empty
---			Result.append (left_margin)
---			Result.append ("Explorer got devoured by blackhole ")
---			Result.append ("(id: ")
---			Result.append (blackhole_id.out)
---			Result.append (") at Sector:")
---			Result.append (row.out)
---			Result.append (":")
---			Result.append (col.out)
---		end
-
-feature -- planet
-
---	planet_death_blackhole (row, col, blackhole_id: INTEGER): STRING
---		do
---			create Result.make_empty
---			Result.append ("Planet got devoured by blackhole ")
---			Result.append ("(id: ")
---			Result.append (blackhole_id.out)
---			Result.append (") at Sector:")
---			Result.append (row.out)
---			Result.append (":")
---			Result.append (col.out)
---		end
-
 feature {NONE} -- Helper Query
 
 	moveable_entity_type (np: MOVEABLE_ENTITY): STRING -- ie "  Benign "
@@ -259,7 +220,11 @@ feature {NONE} -- Helper Query
 
 feature -- MOVEABLE_ENTITY death by BLACKHOLE (effective for explorer,benign,malevolent,janitaur,asteroid and planet)
 
-	death_by_blackhole (np: MOVEABLE_ENTITY; row, col, blackhole_id: INTEGER): STRING
+	death_by_blackhole (np: MOVEABLE_ENTITY; sector_row, sector_col, blackhole_id: INTEGER): STRING
+		require
+			np.is_dead_by_blackhole
+			blackhole_id ~ -1
+			valid_sector_of_death: sector_row ~ 3 and sector_col ~ 3
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (np))
@@ -267,9 +232,9 @@ feature -- MOVEABLE_ENTITY death by BLACKHOLE (effective for explorer,benign,mal
 			Result.append ("(id: ")
 			Result.append (blackhole_id.out)
 			Result.append (") at Sector:")
-			Result.append (row.out)
+			Result.append (sector_row.out)
 			Result.append (":")
-			Result.append (col.out)
+			Result.append (sector_col.out)
 		end
 
 feature -- ASTEROID death by JANITAUR
@@ -277,6 +242,7 @@ feature -- ASTEROID death by JANITAUR
 	death_by_janitaur (a: ASTEROID; sector_row, sector_col, janitaur_id: INTEGER): STRING
 		require
 			a.is_dead_by_janitaur
+			valid_sector_of_death: a.coordinate.row ~ sector_row and a.coordinate.col ~ sector_col
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (a))
@@ -292,6 +258,7 @@ feature -- MOVEABLE_ENTITY death by ASTEROID
 			me_is_not_a_planet: not attached {PLANET} me
 			me_is_not_an_asteroid: not attached {ASTEROID} me
 			me.is_dead
+			valid_sector_of_death: me.coordinate.row ~ sector_row and me.coordinate.col ~ sector_col
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (me))
@@ -304,6 +271,7 @@ feature -- MALEVOLENT death by BENIGN
 	death_by_benign (m: MALEVOLENT; sector_row, sector_col, benign_id: INTEGER): STRING
 		require
 			m.is_dead_by_benign
+			valid_sector_of_death: m.coordinate.row ~ sector_row and m.coordinate.col ~ sector_col
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (m))
@@ -318,6 +286,7 @@ feature -- FUELABLE death by out_of_fuel
 			f_is_fuelable: attached {FUELABLE} f
 			f_is_out_of_fuel: (attached {FUELABLE} f as f_e) implies f_e.is_out_of_fuel
 			f.is_dead
+			valid_sector_of_death: f.coordinate.row ~ sector_row and f.coordinate.col ~ sector_col
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (f))
@@ -330,6 +299,7 @@ feature -- EXPLORER death by MALEVOLENT
 	death_by_malevolent (e: EXPLORER; sector_row, sector_col: INTEGER): STRING
 		require
 			e.is_dead_by_malevolent
+			valid_sector_of_death: e.coordinate.row ~ sector_row and e.coordinate.col ~ sector_col
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (e))

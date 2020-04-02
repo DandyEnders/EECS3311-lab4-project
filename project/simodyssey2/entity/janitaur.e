@@ -17,7 +17,7 @@ inherit
 			is_equal
 		end
 
-	REPRODUCEABLE
+	REPRODUCEABLE_ENTITY
 		rename
 			make as reproduceable_make
 		redefine
@@ -71,12 +71,12 @@ feature -- Commands
 		do
 			load := load + 1
 		ensure
-			0 <= load and load <= max_load
+			load ~ (old load +1)
 		end
 
 	clear_load (w: WORMHOLE)
 		require
-			w.coordinate ~ coordinate
+			wormhole_in_sector: w.coordinate ~ coordinate
 		do
 			load := 0
 		ensure
@@ -138,10 +138,10 @@ feature -- Commands
 			is_dead_by_out_of_fuel
 		end
 
-	kill_by_asteroid (k_id: INTEGER)
+	kill_by_asteroid (killer_id: INTEGER)
 		do
 			kill_by ("ASTEROID")
-			killers_id := k_id
+			killers_id := killer_id
 		ensure
 			is_dead_by_asteroid
 		end

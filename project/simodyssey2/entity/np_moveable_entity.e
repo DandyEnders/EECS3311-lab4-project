@@ -35,6 +35,8 @@ feature -- Attributes
 			valid_value: 0 <= value and value <= 2
 		do
 			turns_left := value
+		ensure
+			turns_left ~ value
 		end
 
 feature -- Commands
@@ -44,6 +46,9 @@ feature -- Commands
 			sector.coordinate ~ coordinate
 			turns_left ~ 0
 		deferred
+		ensure
+			is_alive
+			sector.coordinate ~ coordinate
 		end
 
 invariant

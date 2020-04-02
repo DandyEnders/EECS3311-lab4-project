@@ -47,6 +47,8 @@ feature -- Commands
 	set_coordinate (a_coordinate: COORDINATE)
 		do
 			coordinate := a_coordinate
+		ensure
+			coordinate ~ a_coordinate
 		end
 
 feature -- out

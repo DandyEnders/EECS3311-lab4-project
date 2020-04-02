@@ -86,7 +86,7 @@ feature -- Queries
 			Result := current ~ d.n or current ~ d.s or current ~ d.w or current ~ d.e or current ~ d.nw or current ~ d.ne or current ~ d.sw or current ~ d.se
 		end
 
-	wrap_direction_to_coordinate (c, lower_bound, upper_bound: COORDINATE): COORDINATE
+	wrap_coordinate_to_coordinate (c, lower_bound, upper_bound: COORDINATE): COORDINATE
 			--given a coordinate, returns a coordinate that lies between lower_bound and upper_bound
 		local
 			--			wrap_row, wrap_col: INTEGER

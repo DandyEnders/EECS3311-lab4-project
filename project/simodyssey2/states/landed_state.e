@@ -43,8 +43,8 @@ feature -- Controller command / queries
 			c: COORDINATE
 		do
 			c := model.explorer_coordinate
-			model.liftoff
-			abstract_state.executed_turn_command
+			model.liftoff_explorer
+			abstract_state.executed_valid_turn_command
 			create s_tmp.make_empty
 			if model.explorer_alive then
 				create {PLAY_STATE} next_state.make (model, abstract_state)
@@ -73,7 +73,7 @@ feature -- Controller command / queries
 	pass
 		do
 			model.pass
-			abstract_state.executed_turn_command
+			abstract_state.executed_valid_turn_command
 			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.ok)
 			set_msg_content (model.out)

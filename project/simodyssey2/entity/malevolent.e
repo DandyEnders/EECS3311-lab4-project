@@ -17,7 +17,7 @@ inherit
 			is_equal
 		end
 
-	REPRODUCEABLE
+	REPRODUCEABLE_ENTITY
 		rename
 			make as reproduceable_make
 		redefine
@@ -120,18 +120,18 @@ feature -- Commands
 			is_dead_by_out_of_fuel
 		end
 
-	kill_by_asteroid (k_id: INTEGER)
+	kill_by_asteroid (killer_id: INTEGER)
 		do
 			kill_by ("ASTEROID")
-			killers_id := k_id
+			killers_id := killer_id
 		ensure
 			is_dead_by_asteroid
 		end
 
-	kill_by_benign (k_id: INTEGER)
+	kill_by_benign (killer_id: INTEGER)
 		do
 			kill_by ("BENIGN")
-			killers_id := k_id
+			killers_id := killer_id
 		ensure
 			is_dead_by_benign
 		end

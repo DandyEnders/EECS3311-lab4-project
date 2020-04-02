@@ -38,29 +38,54 @@ feature -- Attributes
 
 feature -- Command
 
-	set_attached_to_star (b: BOOLEAN) --
+	set_attached_to_star (s: STAR)
+		require
+			star_is_in_same_sector: s.coordinate ~ coordinate
+			turns_left ~ 0
+			is_alive
 		do
-			attached_to_star := b
+			attached_to_star := TRUE
+		ensure
+			attached_to_star=TRUE
+			turns_left ~ 0
+			is_alive
 		end
 
-	set_support_life (b: BOOLEAN) --
+	set_support_life (b: BOOLEAN)
+		require
+			attached_to_star
+			turns_left ~ 0
+			is_alive
 		do
 			support_life := b
+		ensure
+			support_life= b
+			is_alive
+			turns_left ~ 0
 		end
 
 	set_visited
+		require
+			attached_to_star
+			is_alive
 		do
 			visited := TRUE
+		ensure
+			visited
+			is_alive
+			attached_to_star
 		end
 
-	behave (sector: SECTOR) -- (2)
+	behave (sector: SECTOR)
 		local
 			rng: RANDOM_GENERATOR_ACCESS
 			sup_life_prob: INTEGER
 		do
 			if sector.has_star and not attached_to_star then
 					-- If there is a star in the sector then set attached for the planet to true.
-				set_attached_to_star (TRUE)
+				check attached {STAR} sector.get_stationary_entity as s_star then
+					set_attached_to_star (s_star)
+				end
 					-- If this star is a yellow dwarf then rchoose if this planet should support life?
 				if attached {YELLOW_DWARF} sector.get_stationary_entity then
 					sup_life_prob := rng.rchoose (1, 2) -- num = 2 means life

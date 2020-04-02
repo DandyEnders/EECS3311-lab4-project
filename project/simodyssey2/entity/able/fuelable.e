@@ -33,6 +33,8 @@ feature -- Commands
 			-- calling this will cause fuel to decrease by 1
 		do
 			fuel := fuel - 1
+		ensure
+			fuel ~ (old fuel - 1)
 		end
 
 	charge_fuel (s: STAR)
@@ -45,6 +47,9 @@ feature -- Commands
 			else
 				fuel := (fuel + s.luminosity)
 			end
+		ensure
+			max_fuel_does_not_change: max_fuel ~ old max_fuel
+			never_charge_above_max_fuel:(((old fuel + s.luminosity) >= max_fuel) implies (fuel ~ max_fuel)) and (((old fuel + s.luminosity) < max_fuel) implies (fuel ~ (old fuel +s.luminosity)))
 		end
 
 feature -- Queries

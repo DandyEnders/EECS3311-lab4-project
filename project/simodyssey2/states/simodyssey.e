@@ -20,8 +20,6 @@ create
 feature {NONE} -- Constructor
 
 	make
-		local
-			r, c, n_quadrant: INTEGER
 		do
 				--setting the threshold of a planet to some default value
 			astroid_threshold := 0
@@ -38,10 +36,11 @@ feature {NONE} -- Constructor
 			create blackhole.make ([3, 3], stationary_id.get_id)
 			stationary_id.update_id
 				-- creating the board
-			r := shared_info.number_rows
-			c := shared_info.number_columns
-			n_quadrant := shared_info.quadrants_per_sector
-			create galaxy.make (r, c, n_quadrant)
+			number_rows:=5
+			number_columns:=5
+			number_stationary_entities:=10
+			number_quadrants_per_sector:=4
+			create galaxy.make (number_rows, number_columns, number_quadrants_per_sector)
 				-- intializing game_in_session = FALSE
 			is_test_game := FALSE
 			is_aborted := FALSE
@@ -50,18 +49,36 @@ feature {NONE} -- Constructor
 			create dead_entity.make_empty
 		end
 
-feature -- Attribute
+feature -- Attributes
 
 	galaxy: GRID
 
-feature -- Queries relevant to play / test / abort
+
+
+feature {NONE} -- GRID Attributes
+
+	number_rows: INTEGER
+        	-- The number of rows in the grid
+
+	number_columns: INTEGER
+        	-- The number of columns in the  grid
+
+	number_stationary_entities: INTEGER
+			-- The number of stationary_items in the grid
+
+	number_quadrants_per_sector: INTEGER
+
+	rng: RANDOM_GENERATOR_ACCESS
+
+		--ID dispatchers
+
+feature -- Game state Queries
 
 	is_test_game: BOOLEAN -- is this a test game?
 
 	is_aborted: BOOLEAN -- has the game been aborted?
 
-	game_in_session: BOOLEAN --TODO, why is galaxy.has(explorer) a requirenment for the game to be in session?
-			-- a game is in session if neither (the explorer's life or his fuel is equal to 0), the game was aborted and the explorer has not found life
+	game_is_in_session: BOOLEAN
 		do
 			Result := explorer.is_alive and not explorer.is_out_of_fuel and not explorer.found_life and galaxy.has (explorer) and not is_aborted
 		end
@@ -71,40 +88,11 @@ feature -- Queries relevant to play / test / abort
 			Result := a_threshold <= j_threshold and j_threshold <= m_threshold and m_threshold <= b_threshold and b_threshold <= p_threshold
 		end
 
-feature -- Queries relevant to move_explorer
-
-	sector_in_direction_is_full (d: COORDINATE): BOOLEAN
-			--Returns true if the sector in the direction specified is full.
-		require
-			is_a_direction: d.is_direction
-		do
-			Result := galaxy.at ((explorer.coordinate + d).wrap_direction_to_coordinate ((explorer.coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).is_full
-		end
-
-	is_explorer_landed: BOOLEAN
-		do
-			Result := explorer.landed
-		end
-
 feature {NONE} -- Main MOVEABLE_ENTITY Attributes
 
 	explorer: EXPLORER
 
 	blackhole: BLACKHOLE
-
-feature {NONE, UNIT_TEST} -- Private Attribute
-
-	info_access: SHARED_INFORMATION_ACCESS
-
-	shared_info: SHARED_INFORMATION
-		attribute
-			Result := info_access.shared_info
-		end
-			--attributes that might be bad design. It works for now so dont change it until you have a solid solution to implement.
-
-	rng: RANDOM_GENERATOR_ACCESS
-
-		--ID dispatchers
 
 	moveable_id: ID_DISPATCHER
 
@@ -135,20 +123,19 @@ feature {NONE} -- private queries
 			Result := galaxy.sector_with (explorer)
 		end
 
-feature -- Command
+feature -- Explorer Interface Commands
 
 	abort
 		require
-			game_in_session
+			game_is_in_session
 		do
 			is_aborted := TRUE
 		end
 
 	new_game (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER; is_test: BOOLEAN)
-			-- TODO - MAKE THRESHOLD REFLECT
 		require
 			valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold)
-			not game_in_session
+			not game_is_in_session
 		do
 			make -- initializing (SYMODYSSEY attribtues to their defualt values)
 				-- initializing the threshold values.
@@ -160,18 +147,20 @@ feature -- Command
 				-- populating the galaxy randomly
 			populate_galaxy
 			is_test_game := is_test
+		ensure
+			game_is_in_session
 		end
 
 	move_explorer (d: COORDINATE)
 		require
-			game_in_session
-			not sector_in_direction_is_full (d)
-			not is_explorer_landed
+			game_is_in_session
+			not sector_in_explorer_direction_is_full (d)
+			not explorer_landed
 		local
 			destination_coord: COORDINATE
 		do
 			destination_coord := explorer.coordinate + d
-			destination_coord := destination_coord.wrap_direction_to_coordinate (destination_coord, [1, 1], [shared_info.number_rows, shared_info.number_columns])
+			destination_coord := destination_coord.wrap_coordinate_to_coordinate (destination_coord, [1, 1], [number_rows, number_columns])
 				-- reset list of "moved" entities and "dead" entities
 			create movement_output.make_empty
 			create dead_entity.make_empty
@@ -181,14 +170,14 @@ feature -- Command
 				-- telling the explorer to behave in its new sector.
 			default_turn_actions
 		ensure
-				-- If the explorer did not move to a black hole, Explorer should now exist in the sector that he wanted to go to
-			If_not_lost_the_explorer_is_in_new_position: (explorer_alive) implies galaxy.at ((old explorer_coordinate + d).wrap_direction_to_coordinate ((old explorer_coordinate + d), [1, 1], [shared_info.number_rows, shared_info.number_columns])).has (explorer) -- change so "explorer" attribute is not reffered to
+			If_not_lost_the_explorer_is_in_new_position: (explorer_alive) implies galaxy.at ((old explorer_coordinate + d).wrap_coordinate_to_coordinate ((old explorer_coordinate + d), [1, 1], [number_rows, number_columns])).has (get_explorer)
+			If_explorer_is_not_at_new_sector_then_is_dead: (not galaxy.at ((old explorer_coordinate + d).wrap_coordinate_to_coordinate ((old explorer_coordinate + d), [1, 1], [number_rows, number_columns])).has (get_explorer) ) implies (not explorer_alive)
 		end
 
-	wormhole
+	wormhole_explorer
 		require
-			game_in_session
-			explorer_is_not_landed: not is_explorer_landed
+			game_is_in_session
+			explorer_is_not_landed: not explorer_landed
 			stationary_entity_is_wormhole: explorer_with_wormhole
 		do
 				-- reset list of "moved" entities and "dead" entities
@@ -198,17 +187,17 @@ feature -- Command
 			wormhole_entity (explorer)
 			default_turn_actions
 		ensure
-			If_not_lost_the_explorer_is_in_new_position: explorer.is_alive implies galaxy.at (explorer_coordinate).has (explorer) -- change so "explorer" attribute is not reffered to
-			if_explorer_goes_blackhole_he_is_dead: galaxy.at (explorer_coordinate).has_blackhole implies explorer.is_dead
+			If_not_lost_the_explorer_is_in_new_position: explorer_alive implies galaxy.at (explorer_coordinate).has (get_explorer)
+			if_explorer_is_not_in_the_galaxy_is_dead: (not galaxy.at (explorer_coordinate).has (get_explorer)) implies ((not explorer_alive) and (not game_is_in_session))
 		end
 
 	land_explorer
 		require
-			game_in_session
-			not is_explorer_landed
-			is_sector_has_yellow_dwarf
-			is_sector_has_planets
-			is_sector_has_unvisted_attached_planets
+			game_is_in_session
+			not explorer_landed
+			explorer_sector_has_yellow_dwarf
+			explorer_sector_has_planets
+			explorer_sector_has_unvisted_attached_planets
 		local
 			p: PLANET
 		do
@@ -219,33 +208,42 @@ feature -- Command
 			p:=galaxy.sector_with (explorer).find_landable_planet_for (explorer)
 			explorer.land_on (p)
 			default_turn_actions
+		ensure
+			explorer_alive and
+			explorer_landed and 
+			(explorer_found_life implies (not game_is_in_session))
 		end
 
-	liftoff
+	liftoff_explorer
 		require
-			game_in_session
-			is_explorer_landed
+			game_is_in_session
+			explorer_landed
 		do
 				-- reset list of "moved" entities and "dead" entities
 			create movement_output.make_empty
 			create dead_entity.make_empty
-			explorer.set_landed (FALSE)
+			explorer.liftoff
 			default_turn_actions
+		ensure
+			(not explorer_landed)
+			((not explorer_alive) implies (not game_is_in_session))
 		end
 
 	pass
 		require
-			game_in_session ---make sure that if the player dies, then this is false.
+			game_is_in_session ---make sure that if the player dies, then this is false.
 		do
 				-- reset list of "moved" entities and "dead" entities
 			create movement_output.make_empty
 			create dead_entity.make_empty
 			default_turn_actions
+		ensure
+			(not explorer_alive) implies (not game_is_in_session)
 		end
 
 feature {NONE} -- Private Helper Commands
 
-	reproduce (r_n_me: REPRODUCEABLE)
+	reproduce (r_n_me: REPRODUCEABLE_ENTITY)
 		local
 			sector: SECTOR
 			id: INTEGER
@@ -331,7 +329,7 @@ feature {NONE} -- Private Helper Commands
 			s: STRING
 		do
 			new_coordinate_of_p := (n_me.coordinate + direction_of_p);
-			new_coordinate_of_p := new_coordinate_of_p.wrap_direction_to_coordinate (new_coordinate_of_p, [1, 1], [shared_info.number_rows, shared_info.number_columns])
+			new_coordinate_of_p := new_coordinate_of_p.wrap_coordinate_to_coordinate (new_coordinate_of_p, [1, 1], [number_rows, number_columns])
 			if not galaxy.at (new_coordinate_of_p).is_full then
 				relocate_moveable_entity (n_me, new_coordinate_of_p)
 				if attached {FUELABLE} n_me as n_me_f then --decrement fue only when a move was successful. If n_me is a planet, then this will be false.
@@ -367,11 +365,11 @@ feature {NONE} -- Private Helper Commands
 							else
 								direction_num := rng.rchoose (1, 8)
 									--move_entity and spend fuel spend fuel for janitaur, malevonent, and benign
-								move_entity (n_me, d.direction_for_number (direction_num))
+								move_entity (n_me, d.number_for_direction (direction_num))
 							end --
 							n_me.check_health (galaxy.sector_with (n_me))
 							if not n_me.is_dead then
-								if attached {REPRODUCEABLE} n_me as r_n_me then
+								if attached {REPRODUCEABLE_ENTITY} n_me as r_n_me then
 									reproduce (r_n_me)
 								end
 								n_me.behave (galaxy.sector_with (n_me))
@@ -414,7 +412,7 @@ feature {NONE} -- Private Helper Commands
 				galaxy is i_g
 			loop
 				if i_g.coordinate /~ [blackhole.coordinate.row, blackhole.coordinate.col] then
-					numb_of_entity_per_sector := rng.rchoose (1, (shared_info.quadrants_per_sector - 1))
+					numb_of_entity_per_sector := rng.rchoose (1, (number_quadrants_per_sector - 1))
 					across
 						1 |..| numb_of_entity_per_sector is i
 					loop
@@ -476,7 +474,7 @@ feature {NONE} -- Private Helper Commands
 			end
 		end
 
-	populate_galaxy --
+	populate_galaxy
 		do
 				-- adding explorer and blackhole
 			galaxy.add_at (explorer, explorer.coordinate) --
@@ -487,35 +485,35 @@ feature {NONE} -- Private Helper Commands
 			populate_galaxy_with_stationary_entities
 		end
 
-feature -- Queries
+feature -- Explorer Interface Boolean Queries
 
-feature -- Interface
+	sector_in_explorer_direction_is_full (d: COORDINATE): BOOLEAN
+			--Returns true if the sector in the direction specified is full.
+		require
+			is_a_direction: d.is_direction
+		do
+			Result := galaxy.at ((explorer.coordinate + d).wrap_coordinate_to_coordinate ((explorer.coordinate + d), [1, 1], [number_rows, number_columns])).is_full
+		end
 
-		--	get_explorer: EXPLORER
-		--		do
-		--			Result := explorer.deep_twin
-		--		end
-		-- export these features to explorer (I decided not to because you're right that it is an interface) If we were to export such features into the explorer, then explorer would need to store its SECTOR as an attribute.
+	explorer_landed: BOOLEAN
+		do
+			Result := explorer.landed
+		end
 
 	explorer_with_wormhole: BOOLEAN
 		do
 			Result := galaxy.sector_with (explorer).has_wormhole
 		end
 
-	is_explorer_found_life: BOOLEAN
+	explorer_found_life: BOOLEAN
 		do
 			Result := explorer.found_life
 		end
 
-	is_landsite_has_life: BOOLEAN
+	planet_in_explorer_sector_supports_life: BOOLEAN
 			-- is leftmost unvisited planet in a sector has a life?
 		do
 			Result := across explorer_sector is i_q some (attached {PLANET} i_q.entity as p) implies (not p.visited and (p.support_life)) end
-		end
-
-	explorer_coordinate: COORDINATE
-		do
-			Result := explorer.coordinate
 		end
 
 	explorer_alive: BOOLEAN
@@ -523,36 +521,36 @@ feature -- Interface
 			Result := explorer.is_alive
 		end
 
-	is_explorer_landable: BOOLEAN
+	explorer_sector_is_landable: BOOLEAN
 			-- Not landable if
 			-- 1. all planets in a sector are visited
 			-- 2. there are no planets
 			-- 3. there is a planet but therre are no stars
 		do
-			Result := is_sector_has_planets and is_sector_has_yellow_dwarf and is_sector_has_unvisted_attached_planets
+			Result := explorer_sector_has_planets and explorer_sector_has_yellow_dwarf and explorer_sector_has_unvisted_attached_planets
 		end
 
-	is_explorer_dead_by_out_of_fuel: BOOLEAN
+	explorer_dead_by_out_of_fuel: BOOLEAN
 		do
 			Result := explorer.is_dead_by_out_of_fuel
 		end
 
-	is_explorer_dead_by_blackhole: BOOLEAN
+	explorer_dead_by_blackhole: BOOLEAN
 		do
 			Result := explorer.is_dead_by_blackhole
 		end
 
-	is_explorer_dead_by_asteroid: BOOLEAN
+	explorer_dead_by_asteroid: BOOLEAN
 		do
 			Result := explorer.is_dead_by_asteroid
 		end
 
-	is_explorer_dead_by_malevolent: BOOLEAN
+	explorer_dead_by_malevolent: BOOLEAN
 		do
 			Result := explorer.is_dead_by_malevolent
 		end
 
-	is_sector_has_yellow_dwarf: BOOLEAN
+	explorer_sector_has_yellow_dwarf: BOOLEAN
 		do
 			if explorer_sector.has_stationary_entity then
 				if attached {YELLOW_DWARF} explorer_sector.get_stationary_entity as y_d then
@@ -565,14 +563,14 @@ feature -- Interface
 			end
 		end
 
-	is_sector_has_planets: BOOLEAN
+	explorer_sector_has_planets: BOOLEAN
 		do
 			Result := galaxy.sector_with (explorer).has_planet
 		end
 
-	is_sector_has_unvisted_attached_planets: BOOLEAN
+	explorer_sector_has_unvisted_attached_planets: BOOLEAN
 		do
-			if is_sector_has_planets and is_sector_has_yellow_dwarf then
+			if explorer_sector_has_planets and explorer_sector_has_yellow_dwarf then
 				across
 					explorer_sector is i_q
 				until
@@ -589,15 +587,19 @@ feature -- Interface
 			end
 		end
 
-	explorer_death_message: STRING
-		require
-			not explorer_alive
+feature -- Explorer Interface non-Boolean Queries
+
+	get_explorer: EXPLORER
 		do
-			Result := explorer.out_death_message
+			Result:= explorer.deep_twin
 		end
 
-feature -- Out
+	explorer_coordinate: COORDINATE
+		do
+			Result := explorer.coordinate
+		end
 
+feature -- Output
 	out: STRING
 		do
 			create Result.make_empty
@@ -617,6 +619,23 @@ feature -- Out
 				--			Result.append (rng.rng_debug_this_round)
 				--			rng.reset_debug
 		end
+	out_status_explorer: STRING
+		local
+			e_q: INTEGER
+		do
+			e_q := galaxy.sector_with (explorer).quadrant_at (explorer)
+			create Result.make_empty
+			Result.append (explorer.out_status (e_q))
+		end
+	explorer_death_message: STRING
+		require
+			not explorer_alive
+		do
+			Result := explorer.out_death_message
+		end
+
+feature {NONE} -- Out
+
 
 	out_grid: STRING
 		do
@@ -671,13 +690,6 @@ feature -- Out
 			end
 		end
 
-	out_status_explorer: STRING
-		local
-			e_q: INTEGER
-		do
-			e_q := galaxy.sector_with (explorer).quadrant_at (explorer)
-			create Result.make_empty
-			Result.append (explorer.out_status (e_q))
-		end
+
 
 end

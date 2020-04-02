@@ -17,7 +17,7 @@ inherit
 			is_equal
 		end
 
-	REPRODUCEABLE
+	REPRODUCEABLE_ENTITY
 		rename
 			make as reproduceable_make
 		redefine
@@ -123,7 +123,7 @@ feature {NONE} -- Implementation
 			Result := m
 		end
 
-feature -- Output [ TODO ] -- Looks good but temporary version for now
+feature -- Output
 
 	out_death_message: STRING -- {Abstract State: Death Message for pg 26-27 relevant to this entity}
 		do

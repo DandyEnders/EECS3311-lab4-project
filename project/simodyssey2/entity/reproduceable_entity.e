@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {REPRODUCEABLE}."
+	description: "Summary description for {REPRODUCEABLE_ENTITY}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 deferred class
-	REPRODUCEABLE
+	REPRODUCEABLE_ENTITY
 
 inherit
 
@@ -49,12 +49,12 @@ feature -- Commands
 		ensure
 			actions_left_until_reproduction = (old actions_left_until_reproduction - 1)
 		end
-
-	reset_actions_left_until_reproduction: INTEGER
+feature -- Commands
+	reset_actions_left_until_reproduction
 		do
 			actions_left_until_reproduction := reproduction_interval
 		ensure
-			reproduction_interval = actions_left_until_reproduction
+			reproduction_interval ~ actions_left_until_reproduction
 		end
 
 	reproduce (sector: SECTOR; moveable_id: INTEGER)
@@ -69,18 +69,20 @@ feature -- Commands
 			n_me := cloner (moveable_id, rng.rchoose (0, 2))
 			sector.add (n_me)
 			reproduction_message.make_from_string (msg.left_margin + "reproduced " + n_me.out_sqr_bracket + " at " + sector.out_abstract_full_coordinate (n_me))
-			actions_left_until_reproduction := reproduction_interval
+			reset_actions_left_until_reproduction
 		ensure
-			not ready_to_reproduce
-			actions_left_until_reproduction ~ reproduction_interval
+			is_alive
+			reproduction_interval_is_reset: (not ready_to_reproduce) and actions_left_until_reproduction ~ reproduction_interval
+			sector_has_both_current_and_new_clone:sector.has (current) and sector.has_id (moveable_id) and (sector.count ~ (old sector.count +1)) and (across ((old sector.deep_twin).quadrants) is i_q all attached {ID_ENTITY} i_q.entity as i_q_e implies (sector.has (i_q_e)) end)
 			not reproduction_message.is_empty
 		end
 
-feature {NONE} -- Implementation
+feature {NONE} -- Private Attributes
 
 	cloner (a_id, t_left: INTEGER): like current
 		deferred
 		ensure
+			Result /= Current
 			Result /~ Current
 			Result.id ~ a_id
 			Result.turns_left ~ t_left
