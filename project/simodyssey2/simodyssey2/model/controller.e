@@ -25,51 +25,42 @@ feature {NONE} -- Initialization
 			msg: MESSAGE
 		do
 				-- initial state = main menu state
-			create {MAIN_MENU_STATE} game_state.make (create {SIMODYSSEY}.make, create {ABSTRACT_STATE}.make)
+			create {MAIN_MENU_STATE} game_state.make (create {SIMODYSSEY}.make, create {ABSTRACT_STATE_NUMBERS}.make)
 			game_state.set_msg_command_validity (msg.ok)
 			game_state.set_msg_content (msg.initial_message)
 		end
 
-feature -- model attributes
+feature -- Attributes
 
 	game_state: STATE
+			-- "game_state" is polymorphic
+			-- provides the STATE (see description in STATE) of the current SIMODYSSEY game. eg PLAY_STATE, MAIN_MENU_STATE...
 
-feature -- state operation
-
-	move_to_next_state
-		do
-			game_state := game_state.next_state
-		end
-
-feature -- model operations
-
-	reset
-			-- Reset model state.
-		do
-			make
-		end
-
-feature -- Model input
+feature -- Commands
 
 	abort
+			--execute "abort" command in "game_state" followed by "move_to_next_state"
 		do
 			game_state.abort
 			move_to_next_state
 		end
 
 	land
+			--execute "land" command in "game_state" followed by "move_to_next_state"
 		do
 			game_state.land
 			move_to_next_state
 		end
 
 	liftoff
+			--execute "liftoff" command in "game_state" followed by "move_to_next_state"
 		do
 			game_state.liftoff
 			move_to_next_state
 		end
 
 	move (d: INTEGER)
+			--execute "move" command in "game_state" followed by "move_to_next_state"
 		local
 			direction: COORDINATE
 			dir_cls: DIRECTION_UTILITY
@@ -97,41 +88,61 @@ feature -- Model input
 		end
 
 	pass
+			--execute "pass" command in "game_state" followed by "move_to_next_state"
 		do
 			game_state.pass
 			move_to_next_state
 		end
 
 	play
+			--execute "play" command in "game_state" followed by "move_to_next_state"
 		do
 			game_state.play
 			move_to_next_state
 		end
 
 	status
+			--execute "status" command in "game_state" followed by "move_to_next_state"
 		do
 			game_state.status
 			move_to_next_state
 		end
 
 	test (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER)
-			-- 1 <= threshold and threshold <= 101
+			--execute "test" command in the current "game_state" followed by "move_to_next_state"
 		do
 			game_state.test (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold) -- TODO
 			move_to_next_state
 		end
 
 	wormhole
+			--execute "wormhole" command in "game_state" followed by "move_to_next_state"
 		do
 			game_state.wormhole
 			move_to_next_state
 		end
 
-feature -- queries
+	reset
+			-- Reset model state.
+		do
+			make
+		end
+
+	move_to_next_state
+			-- transition "game_sate" to the STATE referenced by "game_state.next_state" such that "game_state" = "game_state.next_state".
+			-- Note reference equality.
+		do
+			game_state := game_state.next_state
+		end
+
+feature -- Queries
 
 	out: STRING
+			-- output "game_state"
 		do
 			Result := game_state.out
+		ensure then
+			Result ~ game_state.out
 		end
 
 end

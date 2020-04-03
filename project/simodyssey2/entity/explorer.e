@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {EXPLORER}."
-	author: "Jinho Hwang"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -32,7 +32,7 @@ feature {NONE} -- Constructor
 
 	make (a_coordinate: COORDINATE; a_id: INTEGER)
 		do
-			moveable_make (a_coordinate, a_id, 3)
+			moveable_make (a_coordinate, a_id, 3, 'E')
 			fuelable_make (3)
 			landed := false
 			found_life := FALSE
@@ -44,29 +44,32 @@ feature {NONE} -- Constructor
 feature -- Attributes
 
 	landed: BOOLEAN
+			-- result ~ true if current is "landed" on a PLANET.
 
 	found_life: BOOLEAN
+			-- result ~ true if current "found life" on a PLANET.
 
 feature -- Queries
 
-	character: STRING = "E"
-
 	is_dead_by_out_of_fuel: BOOLEAN
+			-- result ~ true if current was killed by executing "kill_by_out_of_fuel".
 		do
 			Result := is_dead and then get_death_cause ~ "OUT_OF_FUEL"
 		end
 
 	is_dead_by_malevolent: BOOLEAN
+			-- result ~ true if current was killed by executing "kill_by_malevolent".
 		do
 			Result := is_dead and then get_death_cause ~ "MALEVOLENT"
 		end
 
 	is_dead_by_asteroid: BOOLEAN
+			-- result ~ true if current was killed by executing "kill_by_asteroid".
 		do
 			Result := is_dead and then get_death_cause ~ "ASTEROID"
 		end
 
-feature {NONE,UNIT_TEST} -- testing Commands Delete after finalized
+feature {NONE}
 
 	set_landed (b: BOOLEAN)
 		do
@@ -86,22 +89,28 @@ feature {NONE,UNIT_TEST} -- testing Commands Delete after finalized
 
 feature -- Commands
 
-	kill_by_malevolent
+	kill_by_malevolent (killer_id: INTEGER)
+			-- given the id a MALEVOLENT, kill current by MALEVOLENT
 		do
 			kill_by ("MALEVOLENT")
+			killers_id := killer_id
+		ensure
+			is_dead_by_malevolent
 		end
 
-	kill_by_asteroid (k_id: INTEGER)
+	kill_by_asteroid (killer_id: INTEGER)
+			-- given the id a ASTEROID, kill current by ASTEROID
 		do
 			kill_by ("ASTEROID")
-			killers_id := k_id
+			killers_id := killer_id
 		ensure
 			is_dead_by_asteroid
 		end
 
 	kill_by_out_of_fuel
+			-- given fuel ~ 0, kill current by out of fuel
 		require
-			fuel = 0
+			is_out_of_fuel
 		do
 			kill_by ("OUT_OF_FUEL")
 		ensure
@@ -109,6 +118,8 @@ feature -- Commands
 		end
 
 	check_health (sector: SECTOR)
+			-- if sector.has_star ~ true recharge the explorer's fuel cells
+			-- if "is_out_of_fuel" execute "kill_by_out_of_fuel".
 		local
 			are_you_killed_yet: BOOLEAN
 		do
@@ -131,8 +142,9 @@ feature -- Commands
 		end
 
 	land_on (a_p: PLANET)
+			-- given a_p.is_landable and a_p.visited , "land_on" planet a_p.
 		require
-			a_p.attached_to_star and not a_p.visited
+			a_p.is_landable and not a_p.visited
 		do
 			set_landed (TRUE)
 			a_p.set_visited
@@ -140,33 +152,34 @@ feature -- Commands
 				set_found_life_true
 			end
 		ensure
-			a_p.visited
-			and landed
-			and (a_p.support_life implies found_life)
+			a_p.visited and landed and (a_p.support_life implies found_life)
 		end
 
 	liftoff
+			-- given the "landed" ~ true, "liftoff" the explorer from the planet explorer is landed on.
 		require
 			landed
 		do
-			set_landed(FALSE)
+			set_landed (FALSE)
 		ensure
 			not landed
 		end
 
 feature -- Out
 
-	out_status (quadrant: INTEGER): STRING -- {Abstract State: Command-Specific Messages on pg 26}
+	out_status (quadrant: INTEGER): STRING
+			-- result ~ {Abstract State: Command-Specific Messages STATUS on pg 26}
 		do
 			create Result.make_empty
 			if landed then
-				Result.append (msg.status_landed (coordinate.row, coordinate.col, quadrant, life.value, fuel))
+				Result.append (msg.status_landed (coordinate.row, coordinate.col, quadrant, life.point, fuel))
 			else
-				Result.append (msg.status_not_landed (coordinate.row, coordinate.col, quadrant, life.value, fuel))
+				Result.append (msg.status_not_landed (coordinate.row, coordinate.col, quadrant, life.point, fuel))
 			end
 		end
 
-	out_death_message: STRING -- {Abstract State: Death Message for pg 26-27 relevant to this entity}
+	out_death_message: STRING
+			-- result ~ {Abstract State: Death Messages EXPLORER on pg 26-27 }
 		do
 			create Result.make_empty
 			if is_dead_by_out_of_fuel then
@@ -180,8 +193,8 @@ feature -- Out
 			end
 		end
 
-	out_description: STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean"
-			-- "[0,E]->fuel:2/3, life:3/3, landed?:F"
+	out_description: STRING
+			-- result ~ "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean". ie. "[0,E]->fuel:2/3, life:3/3, landed?:F"
 		do
 			Result := precursor
 			Result.append ("fuel:")

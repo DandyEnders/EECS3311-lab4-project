@@ -1,6 +1,6 @@
-note
+﻿note
 	description: "Summary description for {PLAY_STATE}."
-	author: ""
+	author: "Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -14,51 +14,62 @@ inherit
 create
 	make
 
-feature -- Controller command / queries
+feature -- Commands
 
 	abort
+			-- execute abort command in SYMODYSSEY, and append “Mission aborted. Try test(3,5,7,15,30)” to "out"
+		local
+			s: STATE
 		do
 			model.abort
-			create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
+			create {MAIN_MENU_STATE} s.make (model, abstract_state)
 			abstract_state.executed_no_turn_command
-			next_state.set_msg_mode (msg.empty_string)
-			next_state.set_msg_command_validity (msg.ok)
-			next_state.set_msg_content (msg.abort)
+			s.set_msg_mode (msg.empty_string)
+			s.set_msg_command_validity (msg.ok)
+			s.set_msg_content (msg.abort)
+			transition_to(s)
 		ensure then
 			enter_main_menu_state: attached {MAIN_MENU_STATE} next_state
 		end
 
 	land
+			-- if precondition for command "land_explorer" in SIMODYSSEY is not met,
+			-- append one of Abstract State: Error Messages LAND [3 to 5] to "out"
+			-- if land precondition in SIMODYSSEY is met, execute land in SIMODYSSEY.
+			-- after succesfully executing "land_explorer", if "{SIMODYSSEY}.explorer_found_life", append “Tranquility base here - we've got a life!” to "out"
+			-- after succesfully executing "land_explorer", if "not {SIMODYSSEY}.explorer_found_life", append “Explorer found no life as we know it at Sector:X:Y” to "out"
 		local
 			c: COORDINATE
 			tmp_str: STRING
+			s: STATE
 		do
 				--			-- model.explorer is in a sector with planet and yellow dwarf
 			if model.explorer_sector_is_landable then
 				model.land_explorer
 				if model.explorer_found_life then
-					create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
+					create {MAIN_MENU_STATE} s.make (model, abstract_state)
 					abstract_state.executed_valid_turn_command
-					next_state.set_msg_mode (msg_mode)
-					next_state.set_msg_command_validity (msg.ok)
-					next_state.set_msg_content (msg.land_life_found)
+					s.set_msg_mode (msg_mode)
+					s.set_msg_command_validity (msg.ok)
+					s.set_msg_content (msg.land_life_found)
 				else -- landed in no life planet
-					create {LANDED_STATE} next_state.make (model, abstract_state)
+					create {LANDED_STATE} s.make (model, abstract_state)
 					abstract_state.executed_valid_turn_command
-					next_state.set_msg_mode (msg_mode)
-					next_state.set_msg_command_validity (msg.ok)
+					s.set_msg_mode (msg_mode)
+					s.set_msg_command_validity (msg.ok)
 					c := model.explorer_coordinate
 					create tmp_str.make_from_string (msg.land_life_not_found (c.row, c.col))
 					tmp_str.append ("%N")
 					tmp_str.append (model.out)
-					next_state.set_msg_content (tmp_str)
+					s.set_msg_content (tmp_str)
 				end
+				transition_to(s)
 			else
 				abstract_state.executed_invalid_command
 				set_msg_mode (msg_mode)
 				set_msg_command_validity (msg.error)
 				create tmp_str.make_empty
-				if not model.explorer_sector_has_yellow_dwarf then 
+				if not model.explorer_sector_has_yellow_dwarf then
 					tmp_str.append (msg.land_error_no_yellow_dwarf (model.explorer_coordinate.row, model.explorer_coordinate.col))
 				elseif not model.explorer_sector_has_planets then
 					tmp_str.append (msg.land_error_no_planets (model.explorer_coordinate.row, model.explorer_coordinate.col))
@@ -68,12 +79,15 @@ feature -- Controller command / queries
 				set_msg_content (tmp_str)
 			end
 		ensure then
-			if_explorer_is_not_landed_remain_in_play_state: ((not model.explorer_landed) implies (attached {PLAY_STATE} next_state))
-			if_explorer_is_landed_and_explorer_did_not_find_life_enter_landed_state: (((model.explorer_landed) and (not model.explorer_found_life)) implies (attached {LANDED_STATE} next_state))
-			if_explorer_is_landed_and_explorer_did_found_life_enter_main_menu_state: (((model.explorer_landed) and (model.explorer_found_life)) implies (attached {MAIN_MENU_STATE} next_state))
+			if_explorer_is_not_landed_remain_in_play_state: ((not model.explorer_is_landed) implies (attached {PLAY_STATE} next_state))
+			if_explorer_is_landed_and_explorer_did_not_find_life_enter_landed_state: (((model.explorer_is_landed) and (not model.explorer_found_life)) implies (attached {LANDED_STATE} next_state))
+			if_explorer_is_landed_and_explorer_did_found_life_enter_main_menu_state: (((model.explorer_is_landed) and (model.explorer_found_life)) implies (attached {MAIN_MENU_STATE} next_state))
 		end
 
 	liftoff
+			-- attempting to execute "liftoff_explorer" command of SIMODYSSEY while in PLAY_STATE and not LANDED_STATE,
+			-- implies that preconditions of {SIMODYSSEY}.liftoff are not met,
+			-- therefore append "Negative on that request:you are not on a planet at Sector:X:Y" to "out"
 		local
 			c: COORDINATE
 		do
@@ -87,11 +101,15 @@ feature -- Controller command / queries
 		end
 
 	move (d: COORDINATE)
+			-- if precondition for command "move_explorer" in SIMODYSSEY is not met,
+			-- append "Cannot transfer to new location as it is full." to "out"
+			-- if preconditions are met, execute "move_explorer" command in SIMODYSSEY.
+			-- if explorer dies after succesffuly moving, append one of Abstract State: Death Messages EXPLORER [1 to 4] to "out"
 		do
 			if not model.sector_in_explorer_direction_is_full (d) then
 				model.move_explorer (d)
 				abstract_state.executed_valid_turn_command
-				if model.explorer_alive then
+				if model.explorer_is_alive then
 					set_msg_command_validity (msg.ok)
 					set_msg_mode (msg_mode)
 					set_msg_content (model.out)
@@ -107,15 +125,17 @@ feature -- Controller command / queries
 				end
 			end
 		ensure then
-			if_explorer_is_alive_after_succesfully_moving_remain_in_play_state: (model.explorer_alive) implies (attached {PLAY_STATE} next_state)
-			if_explorer_is_dead_after_succesfully_moving_enter_in_main_menu_state: (not model.explorer_alive) implies (attached {MAIN_MENU_STATE} next_state)
+			if_explorer_is_alive_after_succesfully_moving_remain_in_play_state: (model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
+			if_explorer_is_dead_after_succesfully_moving_enter_in_main_menu_state: (not model.explorer_is_alive) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 	pass
+			-- execute "pass" command in SIMODYSSEY
+			-- if explorer dies after succesffuly passing, append one of Abstract State: Death Messages EXPLORER [3 to 4] to "out"
 		do
 			model.pass
 			abstract_state.executed_valid_turn_command
-			if model.explorer_alive then
+			if model.explorer_is_alive then
 				set_msg_command_validity (msg.ok)
 				set_msg_mode (msg_mode)
 				set_msg_content (model.out)
@@ -123,11 +143,14 @@ feature -- Controller command / queries
 				set_explorer_death_message
 			end
 		ensure then
-			if_not_dead_remain_in_play_state: (model.explorer_alive) implies (attached {PLAY_STATE} next_state)
-			if_dead_enter_main_menu_state: (not model.explorer_alive) implies (attached {MAIN_MENU_STATE} next_state)
+			if_not_dead_remain_in_play_state: (model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
+			if_dead_enter_main_menu_state: (not model.explorer_is_alive) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 	play
+			-- attempting to execute "new_game" command of SIMODYSSEY while in PLAY_STATE and not MAIN_MENU_STATE,
+			-- implies that preconditions of {SIMODYSSEY}.new_game are not met,
+			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
 			abstract_state.executed_invalid_command
 			set_msg_mode (msg_mode)
@@ -138,6 +161,7 @@ feature -- Controller command / queries
 		end
 
 	status
+			-- append “Explorer status report:Travelling at cruise speed at [X,Y,Z] Life units left:V, Fuel units left:W” to "out"
 		do
 			abstract_state.executed_no_turn_command
 			set_msg_mode (msg_mode)
@@ -148,6 +172,9 @@ feature -- Controller command / queries
 		end
 
 	test (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER)
+			-- attempting to execute "new_game" command of SIMODYSSEY while in PLAY_STATE and not MAIN_MENU_STATE,
+			-- implies that preconditions of {SIMODYSSEY}.new_game are not met,
+			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
 			abstract_state.executed_invalid_command
 			set_msg_mode (msg_mode)
@@ -158,14 +185,18 @@ feature -- Controller command / queries
 		end
 
 	wormhole
+			-- if precondition for command "wormhole_explorer" in SIMODYSSEY is not met,
+			-- append "Explorer couldn't find wormhole at Sector:X:Y" to "out"
+			-- if preconditions are met, execute "wormhole_explorer" command in SIMODYSSEY.
+			-- if explorer dies after succesffuly wormhole-ing, append one of Abstract State: Death Messages EXPLORER [1 to 4] to "out"
 		local
 			c: COORDINATE
 		do
 			c := model.explorer_coordinate
-			if model.explorer_with_wormhole then
+			if model.explorer_sector_has_wormhole then
 				model.wormhole_explorer
 				abstract_state.executed_valid_turn_command
-				if model.explorer_alive then
+				if model.explorer_is_alive then
 					set_msg_command_validity (msg.ok)
 					set_msg_mode (msg_mode)
 					set_msg_content (model.out)
@@ -173,7 +204,7 @@ feature -- Controller command / queries
 					set_explorer_death_message
 				end
 			else
-				if not model.explorer_with_wormhole then
+				if not model.explorer_sector_has_wormhole then
 					c := model.explorer_coordinate
 					abstract_state.executed_invalid_command
 					set_msg_mode (msg_mode)
@@ -182,8 +213,8 @@ feature -- Controller command / queries
 				end
 			end
 		ensure then
-			Explorer_is_alive_after_successful_wormhole_implies_remain_in_play_state: (model.explorer_alive) implies (attached {PLAY_STATE} next_state)
-			Explorer_is_dead_after_successful_wormhole_implies_enter_main_menu_state:((not model.explorer_alive)) implies (attached {MAIN_MENU_STATE} next_state)
+			Explorer_is_alive_after_successful_wormhole_implies_remain_in_play_state: (model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
+			Explorer_is_dead_after_successful_wormhole_implies_enter_main_menu_state:((not model.explorer_is_alive)) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 end

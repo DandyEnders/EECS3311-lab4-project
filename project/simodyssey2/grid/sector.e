@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {SECTOR}."
-	author: "Jinho Hwang"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -11,13 +11,11 @@ inherit
 
 	ANY
 		redefine
-			out,
 			is_equal
 		end
 
 	ITERABLE [QUADRANT]
 		redefine
-			out,
 			is_equal
 		end
 
@@ -27,6 +25,7 @@ create
 feature {NONE} -- Constructor
 
 	make_empty (a_coordinate: COORDINATE; num_quadrants: INTEGER)
+			-- an instance of SECTOR will be created at coordinate ~ a_coordinate, with max_num_quadrants = num_quadrants
 		local
 			i: INTEGER
 		do
@@ -48,15 +47,18 @@ feature {NONE} --Attributes
 
 	implementation: ARRAYED_LIST [QUADRANT]
 
-feature -- Attribute
+feature -- Attributes
 
 	coordinate: COORDINATE
+		-- the coordinate of SECTOR on GRID
 
 	max_num_quadrants: INTEGER
+		-- the maximum number of quadrants SECTOR can occupy
 
-feature -- Command
+feature -- Commands
 
-	find_landable_planet_for (e: EXPLORER): PLANET
+	find_landable_planet: PLANET
+			-- given that SECTOR is "landable", Result is equal to a PLANET contained in SECTOR that has the lowest id and is "landable".
 		require
 			is_landable
 		local
@@ -79,12 +81,14 @@ feature -- Command
 			end
 				Result:=min_p
 		ensure
-			Result.attached_to_star
-			and (not Result.visited)
-			and has(Result)
+			result_is_landable:Result.attached_to_star and (not Result.visited)
+			result_is_contained_in_sector: has(Result)
 		end
 
 	remove (me: MOVEABLE_ENTITY)
+			--given that SECTOR conatins me, "remove" me from SECTOR. note: only MOVEABLE_ENTITY can be removed once added.
+		require
+			has(me)
 		local
 			removed: BOOLEAN
 		do
@@ -101,12 +105,12 @@ feature -- Command
 			end
 		ensure
 			not has (me)
-			Entities_in_current_sector_are_contained_in_the_old_sector: across (quadrants).deep_twin is i_q all attached {ID_ENTITY} i_q.entity as i_q_e implies ((old current).has (i_q_e)) end
-			count ~ (old count) - 1
-			max_num_quadrants = old max_num_quadrants
+			entities_in_current_sector_are_contained_in_the_old_sector: across (quadrants).deep_twin is i_q all attached {ID_ENTITY} i_q.entity as i_q_e implies ((old current).has (i_q_e)) end
+			count_has_decreased_by_one: count = (old count - 1)
 		end
 
 	add (e: ID_ENTITY)
+			-- given that SECTOR is not full and e is not already contained in SECTOR, "add" e to SECTOR.		
 		require
 			not_full: not is_full
 			not_has_already: not has (e)
@@ -125,15 +129,15 @@ feature -- Command
 				end
 			end
 		ensure
-			Entities_in_old_sector_remain_in_current_sector: across (old quadrants).deep_twin is i_q all attached {ID_ENTITY} i_q.entity as i_q_e implies (current.has (i_q_e)) end
 			has(e)
-			count ~ (old count) + 1
-			max_num_quadrants = old max_num_quadrants
+			entities_in_old_sector_remain_in_current_sector: across (old quadrants).deep_twin is i_q all attached {ID_ENTITY} i_q.entity as i_q_e implies (current.has (i_q_e)) end
+			count_is_incremented_by_one: count ~ (old count) + 1
 		end
 
 feature -- Queries
 
 	is_equal(other: like current): BOOLEAN
+			-- SECTOR is equal to other if other.coordinate ~ coordinate and other.quadrants ~ quadrants
 		do
 			if other.coordinate ~ coordinate and quadrants ~ other.quadrants then
 				Result:=TRUE
@@ -143,6 +147,7 @@ feature -- Queries
 		end
 
 	is_sorted (a: ARRAY [MOVEABLE_ENTITY]): BOOLEAN
+			-- is an array of MOVEABLE_ENTITY sorted in increasing order by id?
 		local
 			i: INTEGER
 		do
@@ -161,12 +166,14 @@ feature -- Queries
 
 
 	quadrants: LIST [QUADRANT]
+			-- return a LIST of QUADRANTS contained in SECTOR
 		do
 			Result:=implementation
 			Result.compare_objects
 		end
 
 	is_landable: BOOLEAN
+			-- SECTOR "is_landable" if it contains a YELLOW_DWARF and attached planets that have yet to be visited.
 		do
 			if has_planet and has_star then
 				across
@@ -175,7 +182,7 @@ feature -- Queries
 					Result
 				loop
 					if attached {PLANET} i_m as p then
-						if (p.attached_to_star and not p.visited) then
+						if p.is_landable and p.attached_to_star and (not p.visited)  then
 							Result := TRUE
 						end
 					end
@@ -186,22 +193,25 @@ feature -- Queries
 		end
 
 	has_planet: BOOLEAN
+			-- does SECTOR contain planet(s)?
 		do
 			Result := across implementation is i_q some attached {PLANET} i_q.entity end
 		end
 
 	new_cursor: INDEXABLE_ITERATION_CURSOR [QUADRANT]
+			-- allow iteration over SECTOR using "across" notation
 		do
 			Result := implementation.new_cursor
 		end
 
 	is_full: BOOLEAN
-			-- Return true if implementation is full.
+			-- Result equals true if SECTOR is full.
 		do
 			Result := count ~ max_num_quadrants
 		end
 
 	count: INTEGER
+			-- result equals the number of ID_ENTITY contained in SECTOR
 		do
 			Result := 0
 			across
@@ -214,12 +224,13 @@ feature -- Queries
 		end
 
 	get_stationary_entity: STATIONARY_ENTITY
+			-- given SECTOR occupies STATIONARY_ENTITY, return STATIONARY_ENTITY
 		require
 			has_stationary_entity
 		local
 			found: BOOLEAN
 		do
-			Result := create {YELLOW_DWARF}.make ([1, 1], 0) --creating random star. Note, this will never get returned
+			Result := create {YELLOW_DWARF}.make ([1, 1], 0)
 			found := false
 			across
 				implementation is i_q
@@ -234,17 +245,20 @@ feature -- Queries
 		end
 
 	has (me: ID_ENTITY): BOOLEAN
+			-- does SECTOR contain me?
 		do
 			Result := across implementation is i_q some i_q.has (me) end
 		end
 
-	has_id (id: INTEGER): BOOLEAN
+	has_id (a_id: INTEGER): BOOLEAN
+			-- does SECTOR conatin ID_ENTITY with id = a_id?
 		do
 			Result :=
-			across implementation is i_q some (attached {ID_ENTITY} i_q.entity as id_e) and then (id_e.id ~ id)	end
+			across implementation is i_q some (attached {ID_ENTITY} i_q.entity as id_e) and then (id_e.id ~ a_id)	end
 		end
 
 	quadrant_at (me: ID_ENTITY): INTEGER
+			-- from left to right, what is the numerical position of me's QUADRANT in SECTOR
 		require
 			has (me)
 		do
@@ -259,10 +273,11 @@ feature -- Queries
 				end
 			end
 		ensure
-			attached {ID_ENTITY} quadrants[Result].entity as id_e and then id_e~me
+			valid_position_in_sector: attached {ID_ENTITY} quadrants[Result].entity as id_e and then id_e~me
 		end
 
-	has_stationary_entity: BOOLEAN --
+	has_stationary_entity: BOOLEAN
+			-- does SECTOR contain STATIONARY_ENTITY?
 		do
 			Result := FALSE
 			across
@@ -275,6 +290,7 @@ feature -- Queries
 		end
 
 	has_star: BOOLEAN
+			-- does SECTOR contain STAR?
 		do
 			Result := False
 			if has_stationary_entity then
@@ -283,6 +299,7 @@ feature -- Queries
 		end
 
 	has_wormhole: BOOLEAN
+			-- does the SECTOR contain WORMHOLE?
 		do
 			Result := False
 			if has_stationary_entity then
@@ -291,6 +308,7 @@ feature -- Queries
 		end
 
 	has_blackhole: BOOLEAN
+			-- does the SECTOR contain BLACKHOLE?
 		do
 			Result := False
 			if has_stationary_entity then
@@ -298,7 +316,8 @@ feature -- Queries
 			end
 		end
 
-	moveable_entity_count: INTEGER --
+	moveable_entity_count: INTEGER
+			-- result is equal to the number of MOVEABLE_ENTITY contained in SECTOR.
 		do
 			Result := 0
 			across
@@ -311,6 +330,7 @@ feature -- Queries
 		end
 
 	moveable_entities_in_increasing_order: ARRAY [MOVEABLE_ENTITY]
+			-- return an array of all MOVEABLE_ENTITY contained in SECTOR, in increasing order id.
 		local
 			i, n: INTEGER
 			temp: MOVEABLE_ENTITY
@@ -345,12 +365,12 @@ feature -- Queries
 			Result.compare_objects
 		ensure
 			all_moveable_entities_in_result_are_in_current_sector: across Result is me all has(me)  end
-			Result.count ~ moveable_entity_count
-			is_sorted (Result)
+			result_has_correct_count:Result.count ~ moveable_entity_count
+			result_is_sorted: is_sorted (Result)
 		end
 feature -- Output
 
-	out_abstract_full_coordinate (me: MOVEABLE_ENTITY): STRING -- "[x,y,q]" -> "[2,2,4]"
+	out_abstract_full_coordinate (me: MOVEABLE_ENTITY): STRING -- output "[x,y,q]" ie "[2,2,4]" where x and y are the respective row and column values of coordinate and q is the "quadrant_at" of me.
 		require
 			has (me)
 		do
@@ -364,7 +384,7 @@ feature -- Output
 			Result.append ("]")
 		end
 
-	out_abstract_sector: STRING -- "[x,y]->[0,E],-,-,[2,P]"
+	out_abstract_sector: STRING -- output "[x,y]->[0,E],-,-,[2,P]" where x and y are the respective row and column values of coordinate and the rest is the "out_abstract" of each QUADRANT in SECTOR
 		do
 			create Result.make_empty
 			Result.append (coordinate.out_sqr_bracket_comma)
@@ -379,27 +399,19 @@ feature -- Output
 			end
 		end
 
-	out_coordinate: STRING -- "(row:column)"
+	out_coordinate: STRING -- output "(row:col)" where row and col are the respective row and column values of coordinate
 		do
 			Result := coordinate.out
 		end
 
-	out_quadrants: STRING -- "E--*", "----"
+	out_quadrants: STRING -- output "E--*", "----" where each character is the "out_character" of each QUADRANT in SECTOR.
 		do
 			create Result.make_empty
 			across
 				implementation is i_q
 			loop
-				Result.append (i_q.out)
+				Result.append (i_q.out_character)
 			end
-		end
-
-	out: STRING -- for debugging "(row:column) ----"
-		do
-			create Result.make_empty
-			Result.append (out_coordinate)
-			Result.append (" ")
-			Result.append (out_quadrants)
 		end
 
 invariant

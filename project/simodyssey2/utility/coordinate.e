@@ -37,13 +37,14 @@ feature {NONE} -- Initialization
 feature -- Attributes
 
 	row: INTEGER
+			-- the row of COORDINATE. ie [row, ]
 
 	col: INTEGER
-
+			-- the column of COORDINATE. ie [ ,column]
 feature -- Queries
 
 	is_less alias "<" (other: like Current): BOOLEAN
-			-- Compare by row first, then by column. Is Current less than other?
+			-- current is "less-than" other iff ((current.row < other.row) OR (current.row = other.row and current.col < other.col)).
 		do
 			if Current.row < other.row then
 				Result := True
@@ -57,7 +58,7 @@ feature -- Queries
 		end
 
 	is_equal (other: like Current): BOOLEAN
-			-- is Current equal to other?
+			-- current equals other iff current.row = other.row and current.col = other.col
 		do
 			if Current.row ~ other.row and Current.col ~ other.col then
 				Result := True
@@ -67,19 +68,19 @@ feature -- Queries
 		end
 
 	add alias "+" (other: like Current): COORDINATE
-			-- coord1 + coord2
+			-- perform current + other, resulting in [row + other.row, col + other.col]
 		do
 			create Result.make ([row + other.row, col + other.col])
 		end
 
 	subtract alias "-" (other: like Current): COORDINATE
-			-- coord1 - coord2
+			-- perform current - other, resulting in [row - other.row, col - other.col]
 		do
 			create Result.make ([row - other.row, col - other.col])
 		end
 
 	is_direction: BOOLEAN
-			--return true if current is a DIRECTION
+			-- result equals true iff current is equivelant to some COORDINATE in DIRECTION_UTILITY
 		local
 			d: DIRECTION_UTILITY
 		do
@@ -87,14 +88,8 @@ feature -- Queries
 		end
 
 	wrap_coordinate_to_coordinate (c, lower_bound, upper_bound: COORDINATE): COORDINATE
-			--given a coordinate, returns a coordinate that lies between lower_bound and upper_bound
-		local
-			--			wrap_row, wrap_col: INTEGER
+			--given COORDINATE c, result equals a COORDINATE that lies between lower_bound and upper_bound
 		do
-				-- // => modulus
-				--			wrap_row := (c.row - lower_bound.row) // upper_bound.row + lower_bound.row
-				--			wrap_col := (c.col - lower_bound.col) // upper_bound.col + lower_bound.col
-				--			create Result.make ([wrap_row, wrap_col])
 			Result := c
 			if c.row ~ (lower_bound.row - 1) then
 				Result := Result + create {COORDINATE}.make ([upper_bound.row, 0])
@@ -106,13 +101,11 @@ feature -- Queries
 			elseif c.col ~ upper_bound.col + 1 then
 				Result := Result - create {COORDINATE}.make ([0, upper_bound.col])
 			end
-		ensure
-			cordinate_is_wrapped_to_correct_value_between_upper_and_lower_bound: ((c).row ~ lower_bound.row - 1 implies Result.row ~ upper_bound.row) and ((c).row ~ upper_bound.row + 1 implies Result.row ~ lower_bound.row) and ((c).col ~ lower_bound.col - 1 implies Result.col ~ upper_bound.col) and ((c).col ~ upper_bound.col + 1 implies Result.col ~ lower_bound.col) and (((c).col /~ upper_bound.col + 1 and (c).col /~ lower_bound.col - 1) implies (Result.col ~ (c.col))) and (((c).row /~ upper_bound.row + 1 and (c).row /~ lower_bound.row - 1) implies (Result.row ~ (c.row)))
 		end
 
 feature -- out
 
-	out: STRING -- "(row:column)"
+	out: STRING -- output current as "(row:column)"
 		do
 			create Result.make_empty
 			Result.append ("(")
@@ -120,7 +113,7 @@ feature -- out
 			Result.append (")")
 		end
 
-	out_sqr_bracket: STRING -- "[row:colum]"
+	out_sqr_bracket: STRING -- output current as "[row:colum]"
 		do
 			create Result.make_empty
 			Result.append ("[")
@@ -128,7 +121,7 @@ feature -- out
 			Result.append ("]")
 		end
 
-	out_colon: STRING -- "row:column"
+	out_colon: STRING -- output current as "row:column"
 		do
 			create Result.make_empty
 			Result.append (row.out)
@@ -136,7 +129,7 @@ feature -- out
 			Result.append (col.out)
 		end
 
-	out_sqr_bracket_comma: STRING
+	out_sqr_bracket_comma: STRING -- output current as "[row,column]"
 		do
 			create Result.make_empty
 			Result.append ("[")

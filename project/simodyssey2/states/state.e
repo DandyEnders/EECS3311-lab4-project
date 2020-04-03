@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {STATE}."
-	author: "Jinho Hwang"
+	description: "a STATE defines valid and invalid user user commands in the current SIMODYSSEY game and the output generated when such commands are executed."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -14,16 +14,16 @@ inherit
 			out
 		end
 
-feature -- Constructor
+feature {NONE} -- Constructor
 
-	make (m: SIMODYSSEY; abs_s: ABSTRACT_STATE)
+	make (m: SIMODYSSEY; abs_s: ABSTRACT_STATE_NUMBERS)
 		do
 			model := m
 			abstract_state := abs_s
 			create msg_mode.make_empty
 			create msg_command_validity.make_empty
 			create msg_content.make_empty
-			next_state := current
+			transition_to (current)
 		end
 
 feature {STATE} -- Attribute
@@ -32,7 +32,7 @@ feature {STATE} -- Attribute
 
 	msg: MESSAGE
 
-	abstract_state: ABSTRACT_STATE
+	abstract_state: ABSTRACT_STATE_NUMBERS
 
 feature {STATE, CONTROLLER} -- Message attribute
 
@@ -64,8 +64,14 @@ feature {STATE, CONTROLLER} -- Message attribute
 feature -- Queries
 
 	next_state: STATE
+			-- after creation next_state = current. Note refference equality
+			-- hence forth, the refference of next_state is modified by execturing commands (eg. abort, land...) in current.
+			-- AFTER executing a command (eg. abort, land...) in current,
+			-- next_state stores a refference to the "resultant STATE" of the system.
+			-- This "resultant STATE" can be "transitioned to" by any client of STATE. "See {CONTROLLER}.move_to_next_state for an example"
+			-- next_state is polymorphic and can occupy an instance of PLAY_STATE, MAIN_MENU_STATE and LANDED_STATE
 
-feature -- Controller command / queries
+feature -- Commands
 
 	abort
 		deferred
@@ -105,12 +111,20 @@ feature -- Controller command / queries
 
 feature {NONE} -- Helper Method (Handling explorer death messages)
 
+	transition_to (s:STATE)
+		do
+			next_state:=s
+		ensure
+			next_state=s
+		end
+
 	set_explorer_death_message
 		require
-			not model.explorer_alive
+			not model.explorer_is_alive
 		local
 			s_explorer_death: STRING
 			s_content: STRING
+			s: STATE
 		do
 			create s_content.make_empty
 			create s_explorer_death.make_from_string (model.explorer_death_message)
@@ -127,15 +141,17 @@ feature {NONE} -- Helper Method (Handling explorer death messages)
 				s_content.append ("%N")
 				s_content.append (model.out)
 			end
-			create {MAIN_MENU_STATE} next_state.make (model, abstract_state)
-			next_state.set_msg_command_validity (msg_command_validity)
-			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_content (s_content)
+			create {MAIN_MENU_STATE} s.make (model, abstract_state)
+			s.set_msg_command_validity (msg_command_validity)
+			s.set_msg_mode (msg_mode)
+			s.set_msg_content (s_content)
+			transition_to(s)
 		end
 
 feature -- Out
 
 	out: STRING
+		-- after a command in current is executed, this is the output the user sees.
 		do
 			create Result.make_from_string (msg.left_margin)
 			Result.append (abstract_state.out)
@@ -151,7 +167,7 @@ feature -- Out
 
 invariant
 	if_next_state_is_main_menu_state_then_game_is_not_in_session: attached {MAIN_MENU_STATE} next_state implies not model.game_is_in_session
-	if_next_state_is_play_state_then_game_is_in_session: attached {PLAY_STATE} next_state implies (model.game_is_in_session and not model.explorer_landed)
-	if_next_state_is_landed_state_then_game_is_in_session: attached {LANDED_STATE} next_state implies (model.game_is_in_session and model.explorer_landed)
+	if_next_state_is_play_state_then_game_is_in_session: attached {PLAY_STATE} next_state implies (model.game_is_in_session and not model.explorer_is_landed)
+	if_next_state_is_landed_state_then_game_is_in_session: attached {LANDED_STATE} next_state implies (model.game_is_in_session and model.explorer_is_landed)
 
 end

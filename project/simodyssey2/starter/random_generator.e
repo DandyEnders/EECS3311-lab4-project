@@ -37,7 +37,7 @@ feature -- queries
 			result := n_seed.item
 		end
 
-feature -- RNG Debug Related properties
+feature {RANDOM_GENERATOR_ACCESS}-- RNG Debug Related properties
 
 	rng_debug_this_round: STRING
 		attribute

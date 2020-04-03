@@ -32,9 +32,9 @@ feature {NONE} -- Constructor
 			create moveable_id.make (0, TRUE)
 			create stationary_id.make (-1, FALSE)
 				--creating unique entities Explorer and Blackhole
-			create explorer.make ([1, 1], moveable_id.get_id)
+			create explorer.make ([1, 1], moveable_id.current_id)
 			moveable_id.update_id
-			create blackhole.make ([3, 3], stationary_id.get_id)
+			create blackhole.make ([3, 3], stationary_id.current_id)
 			stationary_id.update_id
 				-- creating the board
 			number_rows:=5
@@ -53,6 +53,7 @@ feature {NONE} -- Constructor
 feature -- Attributes
 
 	galaxy: GRID
+			-- a GRID containing all live ENTITYs in the game.
 
 
 
@@ -73,18 +74,24 @@ feature {NONE} -- GRID Attributes
 
 		--ID dispatchers
 
-feature -- Game state Queries
+feature -- State of Game Queries
 
-	is_test_game: BOOLEAN -- is this a test game?
+	is_test_game: BOOLEAN
+			-- result is true if query "game_is_in_session" is true AND command "new_game" was previously called with argument TRUE in-place for parameter "is_test". result is false otherwise.
 
-	is_aborted: BOOLEAN -- has the game been aborted?
+	is_aborted: BOOLEAN
+			-- result is true if query "game_is_in_session"is true AND THEN command "abort" is called. false otherwise.
 
 	game_is_in_session: BOOLEAN
+			-- result equals true means that a game_is_in_session.
 		do
-			Result := explorer.is_alive and not explorer.is_out_of_fuel and not explorer.found_life and galaxy.has (explorer) and not is_aborted
+			Result := explorer.is_alive and not explorer.found_life and not is_aborted and galaxy.has (explorer)
+		ensure
+			valid_game_session: Result = (explorer_is_alive and (not explorer_found_life) and (not is_aborted) and galaxy.at (explorer_coordinate).has_id (explorer_id))
 		end
 
 	valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER): BOOLEAN
+			-- result equals true if threshold values from left to right are passed (as arguments) in increasing order
 		do
 			Result := a_threshold <= j_threshold and j_threshold <= m_threshold and m_threshold <= b_threshold and b_threshold <= p_threshold
 		end
@@ -127,13 +134,17 @@ feature {NONE} -- private queries
 feature -- Explorer Interface Commands
 
 	abort
+			-- given that "game_is_in_session", abort the game ensuring the game_is_in_session is false
 		require
 			game_is_in_session
 		do
 			is_aborted := TRUE
+		ensure
+			not game_is_in_session
 		end
 
 	new_game (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER; is_test: BOOLEAN)
+			-- given "valid_thresholds" AND "game_is_in_session" is false, start a "new_game"
 		require
 			valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold)
 			not game_is_in_session
@@ -150,13 +161,16 @@ feature -- Explorer Interface Commands
 			is_test_game := is_test
 		ensure
 			game_is_in_session
+			is_test_game = is_test
 		end
 
 	move_explorer (d: COORDINATE)
+			-- move the explorer away from its current sector in "galaxy" and towards a sector in direction "d".
 		require
 			game_is_in_session
+			d.is_direction
 			not sector_in_explorer_direction_is_full (d)
-			not explorer_landed
+			not explorer_is_landed
 		local
 			destination_coord: COORDINATE
 		do
@@ -171,15 +185,16 @@ feature -- Explorer Interface Commands
 				-- telling the explorer to behave in its new sector.
 			default_turn_actions
 		ensure
-			If_not_lost_the_explorer_is_in_new_position: (explorer_alive) implies galaxy.at ((old explorer_coordinate + d).wrap_coordinate_to_coordinate ((old explorer_coordinate + d), [1, 1], [number_rows, number_columns])).has (get_explorer)
-			If_explorer_is_not_at_new_sector_then_is_dead: (not galaxy.at ((old explorer_coordinate + d).wrap_coordinate_to_coordinate ((old explorer_coordinate + d), [1, 1], [number_rows, number_columns])).has (get_explorer) ) implies (not explorer_alive)
+			If_not_lost_the_explorer_is_in_new_sector: (explorer_is_alive) implies galaxy.at ((old explorer_coordinate + d).wrap_coordinate_to_coordinate ((old explorer_coordinate + d), [1, 1], [number_rows, number_columns])).has_id (explorer_id)
+			If_explorer_is_not_at_new_sector_then_explorer_is_dead: (not galaxy.at ((old explorer_coordinate + d).wrap_coordinate_to_coordinate ((old explorer_coordinate + d), [1, 1], [number_rows, number_columns])).has_id (explorer_id) ) implies (not explorer_is_alive)
 		end
 
 	wormhole_explorer
+			-- given the explorer has a wormhole in its sector, wormhole the explorer away from its current sector in "galaxy" and into a new sector.
 		require
 			game_is_in_session
-			explorer_is_not_landed: not explorer_landed
-			stationary_entity_is_wormhole: explorer_with_wormhole
+			not explorer_is_landed
+			explorer_sector_has_wormhole
 		do
 				-- reset list of "moved" entities and "dead" entities
 			create movement_output.make_empty
@@ -188,17 +203,16 @@ feature -- Explorer Interface Commands
 			wormhole_entity (explorer)
 			default_turn_actions
 		ensure
-			If_not_lost_the_explorer_is_in_new_position: explorer_alive implies galaxy.at (explorer_coordinate).has (get_explorer)
-			if_explorer_is_not_in_the_galaxy_is_dead: (not galaxy.at (explorer_coordinate).has (get_explorer)) implies ((not explorer_alive) and (not game_is_in_session))
+			If_not_lost_the_explorer_is_in_new_position: explorer_is_alive implies galaxy.at (explorer_coordinate).has_id (explorer_id)
+			if_explorer_is_not_in_the_galaxy_is_dead: (not galaxy.at (explorer_coordinate).has_id(explorer_id)) implies ((not explorer_is_alive) and (not game_is_in_session))
 		end
 
 	land_explorer
+			-- given "explorer_sector_is_landable", land the explorer on a landable planet within the sector with the lowest id.
 		require
 			game_is_in_session
-			not explorer_landed
-			explorer_sector_has_yellow_dwarf
-			explorer_sector_has_planets
-			explorer_sector_has_unvisted_attached_planets
+			not explorer_is_landed
+			explorer_sector_is_landable
 		local
 			p: PLANET
 		do
@@ -206,19 +220,20 @@ feature -- Explorer Interface Commands
 			create movement_output.make_empty
 			create dead_entity.make_empty
 				--landing the explorer
-			p:=galaxy.sector_with (explorer).find_landable_planet_for (explorer)
+			p:=galaxy.sector_with (explorer).find_landable_planet
 			explorer.land_on (p)
 			default_turn_actions
 		ensure
-			explorer_alive and
-			explorer_landed and
-			(explorer_found_life implies (not game_is_in_session))
+			explorer_is_alive
+			explorer_is_landed
+			if_found_life_then_game_is_over:(explorer_found_life implies (not game_is_in_session))
 		end
 
 	liftoff_explorer
+			-- given "explorer_is_landed" on a planet, liftoff explorer.
 		require
 			game_is_in_session
-			explorer_landed
+			explorer_is_landed
 		do
 				-- reset list of "moved" entities and "dead" entities
 			create movement_output.make_empty
@@ -226,11 +241,12 @@ feature -- Explorer Interface Commands
 			explorer.liftoff
 			default_turn_actions
 		ensure
-			(not explorer_landed)
-			((not explorer_alive) implies (not game_is_in_session))
+			not explorer_is_landed
+			if_dead_then_game_is_over:((not explorer_is_alive) implies (not game_is_in_session))
 		end
 
 	pass
+			-- pass the explorer's turn in the game.
 		require
 			game_is_in_session ---make sure that if the player dies, then this is false.
 		do
@@ -239,7 +255,7 @@ feature -- Explorer Interface Commands
 			create dead_entity.make_empty
 			default_turn_actions
 		ensure
-			(not explorer_alive) implies (not game_is_in_session)
+			if_dead_game_is_over: (not explorer_is_alive) implies (not game_is_in_session)
 		end
 
 feature {NONE} -- Private Helper Commands
@@ -251,7 +267,7 @@ feature {NONE} -- Private Helper Commands
 		do
 			sector := galaxy.sector_with (r_n_me)
 			if (not sector.is_full) and r_n_me.ready_to_reproduce then
-				id := moveable_id.get_id
+				id := moveable_id.current_id
 				moveable_id.update_id
 				r_n_me.reproduce (sector, id)
 					--Pretty Printing Movement: ie reproduced ...
@@ -419,23 +435,23 @@ feature {NONE} -- Private Helper Commands
 					loop
 						value := rng.rchoose (1, 100)
 						if value < astroid_threshold then
-							create a.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							create a.make (i_g.coordinate, moveable_id.current_id, rng.rchoose (0, 2))
 							moveable_id.update_id
 							galaxy.add_at (a, a.coordinate)
 						elseif value < janitaur_threshold then
-							create j.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							create j.make (i_g.coordinate, moveable_id.current_id, rng.rchoose (0, 2))
 							moveable_id.update_id
 							galaxy.add_at (j, j.coordinate)
 						elseif value < malevolent_threshold then
-							create m.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							create m.make (i_g.coordinate, moveable_id.current_id, rng.rchoose (0, 2))
 							moveable_id.update_id
 							galaxy.add_at (m, m.coordinate)
 						elseif value < benign_threshold then
-							create b.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							create b.make (i_g.coordinate, moveable_id.current_id, rng.rchoose (0, 2))
 							moveable_id.update_id
 							galaxy.add_at (b, b.coordinate)
 						elseif value < planet_threshold then
-							create p.make (i_g.coordinate, moveable_id.get_id, rng.rchoose (0, 2))
+							create p.make (i_g.coordinate, moveable_id.current_id, rng.rchoose (0, 2))
 							moveable_id.update_id
 							galaxy.add_at (p, p.coordinate)
 						end
@@ -461,13 +477,13 @@ feature {NONE} -- Private Helper Commands
 				if not galaxy.at ([row, col]).has_stationary_entity and not galaxy.at ([row, col]).is_full then
 					s_entity_num := rng.rchoose (1, 3)
 					if s_entity_num ~ 1 then
-						galaxy.add_at (create {YELLOW_DWARF}.make ([row, col], stationary_id.get_id),[row,col])
+						galaxy.add_at (create {YELLOW_DWARF}.make ([row, col], stationary_id.current_id),[row,col])
 						stationary_id.update_id
 					elseif s_entity_num ~ 2 then
-						galaxy.add_at (create {BLUE_GIANT}.make ([row, col], stationary_id.get_id),[row,col])
+						galaxy.add_at (create {BLUE_GIANT}.make ([row, col], stationary_id.current_id),[row,col])
 						stationary_id.update_id
 					elseif s_entity_num ~ 3 then
-						galaxy.add_at (create {WORMHOLE}.make ([row, col], stationary_id.get_id),[row,col])
+						galaxy.add_at (create {WORMHOLE}.make ([row, col], stationary_id.current_id),[row,col])
 						stationary_id.update_id
 					end
 					loop_counter := loop_counter + 1
@@ -489,69 +505,90 @@ feature {NONE} -- Private Helper Commands
 feature -- Explorer Interface Boolean Queries
 
 	sector_in_explorer_direction_is_full (d: COORDINATE): BOOLEAN
-			--Returns true if the sector in the direction specified is full.
+			-- result equals true if a sector in "galaxy" in direction d is full. result equals false otherwise.
 		require
-			is_a_direction: d.is_direction
+			d.is_direction
+			explorer_is_alive
 		do
 			Result := galaxy.at ((explorer.coordinate + d).wrap_coordinate_to_coordinate ((explorer.coordinate + d), [1, 1], [number_rows, number_columns])).is_full
 		end
 
-	explorer_landed: BOOLEAN
+	explorer_is_landed: BOOLEAN
+			-- result equals true if explorer is landed on a planet in "galaxy". false otherwise.
+		require
+			explorer_is_alive
 		do
 			Result := explorer.landed
 		end
 
-	explorer_with_wormhole: BOOLEAN
+	explorer_sector_has_wormhole: BOOLEAN
+			-- result equals true if explorer is contained in a SECTOR that also contains a wormhole. false otherwise.
+		require
+			explorer_is_alive
 		do
 			Result := galaxy.sector_with (explorer).has_wormhole
 		end
 
 	explorer_found_life: BOOLEAN
+			-- result equals true if the explorer found life while landed on a planet. false otherwise
 		do
 			Result := explorer.found_life
+		ensure
+			(Result = TRUE) implies (explorer_is_landed and explorer_is_alive)
 		end
 
 	planet_in_explorer_sector_supports_life: BOOLEAN
-			-- is leftmost unvisited planet in a sector has a life?
+			-- result equals true if there exists a planet in the explorer's sector that supports life. false otherwise.
+		require
+			explorer_is_alive
 		do
 			Result := across explorer_sector is i_q some (attached {PLANET} i_q.entity as p) implies (not p.visited and (p.support_life)) end
 		end
 
-	explorer_alive: BOOLEAN
+	explorer_is_alive: BOOLEAN
+			-- result equals true if explorer is alive. false otherwise.
 		do
 			Result := explorer.is_alive
 		end
 
 	explorer_sector_is_landable: BOOLEAN
-			-- Not landable if
-			-- 1. all planets in a sector are visited
-			-- 2. there are no planets
-			-- 3. there is a planet but therre are no stars
+			-- result equals true if there exists (attached and unvisited) planet(s) in the explorer's sector and the explorer's sector contains a YELLOW_DWARF . false otherwise.
+		require
+			explorer_is_alive
 		do
-			Result := explorer_sector_has_planets and explorer_sector_has_yellow_dwarf and explorer_sector_has_unvisted_attached_planets
+			Result := galaxy.sector_with (explorer).is_landable
+		ensure
+			valid_properties_for_life: Result = (explorer_sector_has_planets and explorer_sector_has_yellow_dwarf and explorer_sector_has_unvisted_attached_planets)
 		end
 
 	explorer_dead_by_out_of_fuel: BOOLEAN
+			-- result equals true if the explorer died by out of fuel. false otherwise.
 		do
 			Result := explorer.is_dead_by_out_of_fuel
 		end
 
 	explorer_dead_by_blackhole: BOOLEAN
+			-- result equals true if the explorer died by blackhole. false otherwise.
 		do
 			Result := explorer.is_dead_by_blackhole
 		end
 
 	explorer_dead_by_asteroid: BOOLEAN
+			-- result equals true if the explorer died by asteroid. false otherwise.
 		do
 			Result := explorer.is_dead_by_asteroid
 		end
 
 	explorer_dead_by_malevolent: BOOLEAN
+			-- result equals true if the explorer died by malevolent. false otherwise.
 		do
 			Result := explorer.is_dead_by_malevolent
 		end
 
 	explorer_sector_has_yellow_dwarf: BOOLEAN
+			-- result equals true if the explorer's SECTOR contains a YELLOW_DWARF. false otherwise.
+		require
+			explorer_is_alive
 		do
 			if explorer_sector.has_stationary_entity then
 				if attached {YELLOW_DWARF} explorer_sector.get_stationary_entity as y_d then
@@ -565,11 +602,17 @@ feature -- Explorer Interface Boolean Queries
 		end
 
 	explorer_sector_has_planets: BOOLEAN
+			-- result equals true if the explorer's SECTOR contains PLANETs. false otherwise.
+		require
+			explorer_is_alive
 		do
 			Result := galaxy.sector_with (explorer).has_planet
 		end
 
 	explorer_sector_has_unvisted_attached_planets: BOOLEAN
+			-- result equals true if the explorer's SECTOR contains attached, yet unvisited PLANET's. false otherwise.
+		require
+			explorer_is_alive
 		do
 			if explorer_sector_has_planets and explorer_sector_has_yellow_dwarf then
 				across
@@ -590,18 +633,23 @@ feature -- Explorer Interface Boolean Queries
 
 feature -- Explorer Interface non-Boolean Queries
 
-	get_explorer: EXPLORER
-		do
-			Result:= explorer.deep_twin
-		end
-
 	explorer_coordinate: COORDINATE
+			-- result equals the explorer's coordinate in "galaxy"
+		require
+			explorer_is_alive
 		do
 			Result := explorer.coordinate
 		end
 
-feature -- Output
+	explorer_id: INTEGER
+			-- result equals explorer's id
+		do
+			Result:= explorer.id
+		end
+
+feature -- Out
 	out: STRING
+			-- result equals output messages (Movement: ... Sectors: ... Description: ... Deaths This Turn: ... and galaxy.out) when "is_test_game" is true
 		do
 			create Result.make_empty
 			Result.append (out_movement)
@@ -621,6 +669,9 @@ feature -- Output
 				--			rng.reset_debug
 		end
 	out_status_explorer: STRING
+			-- result equals output message after command "status" is called
+		require
+			explorer_is_alive
 		local
 			e_q: INTEGER
 		do
@@ -629,8 +680,9 @@ feature -- Output
 			Result.append (explorer.out_status (e_q))
 		end
 	explorer_death_message: STRING
+			-- result equals output message when an explorer dies after taking a turn
 		require
-			not explorer_alive
+			not explorer_is_alive
 		do
 			Result := explorer.out_death_message
 		end

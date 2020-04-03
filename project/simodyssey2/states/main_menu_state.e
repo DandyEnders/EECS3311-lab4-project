@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {MAIN_MENU_STATE}."
-	author: "Jinho Hwang"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -17,6 +17,9 @@ create
 feature -- Controller command / queries
 
 	abort, land, liftoff, pass, status, wormhole
+			-- attempting to execute "abort, land, liftoff, pass, status, wormhole" commands of SIMODYSSEY while in MAIN_MENU_STATE and not PLAY_STATE,
+			-- implies that preconditions of such commands in SIMODYSSEY are not met,
+			-- therefore append "Negative on that request:no mission in progress." to "out"
 		do
 			abstract_state.executed_invalid_command
 			set_msg_mode (msg.empty_string)
@@ -27,6 +30,9 @@ feature -- Controller command / queries
 		end
 
 	move (d: COORDINATE)
+			-- attempting to execute "move_explorer" command of SIMODYSSEY while in MAIN_MENU_STATE and not PLAY_STATE,
+			-- implies that preconditions of {SIMODYSSEY}.move_explorer are not met,
+			-- therefore append "Negative on that request:no mission in progress." to "out"
 		do
 			abstract_state.executed_invalid_command
 			set_msg_mode (msg.empty_string)
@@ -37,26 +43,36 @@ feature -- Controller command / queries
 		end
 
 	play
+		--  execute "new_game" command in SIMODYSSEY
+		local
+			s: STATE
 		do
 			model.new_game (3, 5, 7, 15, 30, FALSE)
-			create {PLAY_STATE} next_state.make (model, abstract_state)
+			create {PLAY_STATE} s.make (model, abstract_state)
 			abstract_state.executed_valid_turn_command
-			next_state.set_msg_mode (msg.play)
-			next_state.set_msg_command_validity (msg.ok)
-			next_state.set_msg_content (model.out)
+			s.set_msg_mode (msg.play)
+			s.set_msg_command_validity (msg.ok)
+			s.set_msg_content (model.out)
+			transition_to(s)
 		ensure then
 			enter_play_state: (attached {PLAY_STATE} next_state)
 		end
 
 	test (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER)
+			-- if precondition for command "new_game" in SIMODYSSEY is not met,
+			-- append "Thresholds should be non-decreasing order." to "out"
+			-- if preconditions are met, execute "new_game" command in SIMODYSSEY
+		local
+			s:STATE
 		do
 			if model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold) then
 				model.new_game (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold, TRUE)
-				create {PLAY_STATE} next_state.make (model, abstract_state)
+				create {PLAY_STATE} s.make (model, abstract_state)
 				abstract_state.executed_valid_turn_command
-				next_state.set_msg_mode (msg.test)
-				next_state.set_msg_command_validity (msg.ok)
-				next_state.set_msg_content (model.out)
+				s.set_msg_mode (msg.test)
+				s.set_msg_command_validity (msg.ok)
+				s.set_msg_content (model.out)
+				transition_to(s)
 			else
 				abstract_state.executed_invalid_command
 				set_msg_mode (msg.empty_string)

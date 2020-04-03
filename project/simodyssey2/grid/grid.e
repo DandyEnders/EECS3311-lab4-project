@@ -55,11 +55,15 @@ feature {NONE} -- Attribute
 
 	sectors: ARRAY2 [SECTOR]
 
+	stationary_entities: HASH_TABLE [STATIONARY_ENTITY, INTEGER]
+
+feature -- Attributes
+
 	row: INTEGER
+		-- maximum number of rows in GRID
 
 	col: INTEGER
-
-	stationary_entities: HASH_TABLE [STATIONARY_ENTITY, INTEGER]
+		-- maximum number of columns in GRID
 
 feature {NONE} -- Queries
 
@@ -78,10 +82,10 @@ feature {NONE} -- Queries
 			Result.compare_objects
 		end
 
-feature -- commands
+feature -- Commands
 
 	add_at (ie: ID_ENTITY; c: COORDINATE)
-			-- Add an ID_ENTITY to a sector with specified coordinate c. (c overrides entitie's coordinate)
+			-- given that c is a valid coordinate in GRID, ie is not already contained in GRID and GRID is not full, "add" ie to a SECTOR in GRID with coordinate ~ c.
 		require
 			valid_coordinate (c)
 			not has (ie)
@@ -92,56 +96,57 @@ feature -- commands
 				stationary_entities.force (se, se.id)
 			end
 		ensure
-			at (c).has (ie)
-			entity_count~ (old entity_count+1)
+			me_is_added_at_correct_sector:at (c).has (ie)
+			count_is_incremented_by_one:entity_count~ (old entity_count+1)
 		end
 
-	remove (me: MOVEABLE_ENTITY) -- Before you were forcing "me" into moveable_entities but I'm guessing you wanted to remove instead.
-			-- Removes moveable entity in me.coordinate.
+	remove (me: MOVEABLE_ENTITY)
+			-- given that me is contained in GRID, "remove" me from the SECTOR in GRID that contains me.
 		require
 			has(me)
 		do
 			at (me.coordinate).remove (me)
 		ensure
-			not has(me)
-			entity_count~(old entity_count -1)
+			me_is_removed:not has(me)
+			count_is_decremented_by_one:entity_count~(old entity_count -1)
 		end
 
 	move (ie: MOVEABLE_ENTITY; to_c: COORDINATE)
-			-- Moves entity ie to to_c coordinate.
+			-- given that the precondition of "add_at" is satisfied or (to_c ~ ie.coordinate), "move" ie away from its current SECTOR to SECTOR with (coordinate ~ to_c) in GRID
 		require
 			has (ie)
-			(not at (to_c).is_full or at (to_c).has (ie)) -- changed this to effect the forum post
+			valid_coordinate (to_c)
+			new_sector_is_not_full_or_already_contains_ie:(not at (to_c).is_full or at (to_c).has (ie))
+
 		do
 			remove (ie)
 			add_at (ie, to_c)
 		ensure
 			ie_is_at_new_coordinate: at (to_c).has (ie)
-			entity_count ~ entity_count
+			count_is_incremented_by_one:entity_count ~ entity_count
 		end
 
 feature -- Queries
 	entity_count: INTEGER
+			-- result equals the culmulative sum of STATIONARY_ENTITY and MOVEABLE_ENTITY across all SECTORs within GRID
 		do
 			Result:=stationary_entities.count + moveable_entities.count
 		end
 
 	has_sector( s:SECTOR): BOOLEAN
+			-- result is true if GRID contains SECTOR s.
 		do
 			Result:= sectors.has (s)
 		end
 
-	all_moveable_entities: ARRAY [MOVEABLE_ENTITY] -- I needed a way to return all movable_entities in accending order of their ids.
+	all_moveable_entities: ARRAY [MOVEABLE_ENTITY]
+			-- result is an array of all MOVEABLE_ENTITY contained in GRID oragnized in increasing order ids.
 		local
 			i: INTEGER
 			c: INTEGER
 			temp: HASH_TABLE [MOVEABLE_ENTITY, INTEGER]
 		do
 			create Result.make_empty
-
-				--			across -- stationary, negative id out
-				--					-- counting inversely
-				--				moveable_entities is i_me
 			from
 				i := 0
 				temp := moveable_entities
@@ -158,15 +163,12 @@ feature -- Queries
 			Result.compare_objects
 		end
 
-	all_stationary_entities: ARRAY [STATIONARY_ENTITY] -- I needed a way to return all stationary_entities in accending order of their ids.
+	all_stationary_entities: ARRAY [STATIONARY_ENTITY]
+			-- result is an array of all STATIONARY_ENTITY contained in GRID oragnized in increasing order ids.
 		local
 			i: INTEGER
 		do
 			create Result.make_empty
-
-				--			across -- stationary, negative id out
-				--								-- counting inversely
-				--				stationary_entities is i_se
 			from
 				i := (-1 - stationary_entities.count)
 			until
@@ -181,32 +183,35 @@ feature -- Queries
 		end
 
 	at (c: COORDINATE): SECTOR
+			-- given a "valid_coordinate" in GRID, return the SECTOR with coordinate ~ c
 		require
 			valid_coordinate (c)
 		do
 			Result := sectors [c.row, c.col]
 		ensure
-			Result.coordinate ~ c
-			and has_sector(Result)
+			matching_sector_coordinate:Result.coordinate ~ c
+			result_is_contained_in_grid: has_sector(Result)
 		end
 
-	sector_with (ie: ID_ENTITY): SECTOR -- galaxy.sector_with (explorer) <=> grid.at(explorer.coordinate)
+	sector_with (ie: ID_ENTITY): SECTOR
+			-- given that "ie" is contained in GRID, return the SECTOR that contains "ie".
 		require
 			has (ie)
 		do
 			Result := at (ie.coordinate)
 		ensure
-			Result.has (ie)
-			has_sector(Result)
+			result_has_ie: Result.has (ie)
+			result_is_contained_in_grid: has_sector(Result)
 		end
 
 	valid_coordinate (c: COORDINATE): BOOLEAN
+			-- c is a "valid_quardinate" in GRID if 1 <= c.row <= row and 1 <= c.col <= col
 		do
 			Result := 1 <= c.row and c.row <= row and 1 <= c.col and c.col <= col
 		end
 
 	has (ie: ID_ENTITY): BOOLEAN
-			-- Check if ie is in grid by comparing its unique id.
+			-- result equals true if "ie" is contained in any SECTOR in GRID
 		do
 			Result := across sectors is i_s some i_s.has (ie) end
 		end
@@ -214,14 +219,16 @@ feature -- Queries
 feature -- Traversal
 
 	new_cursor: INDEXABLE_ITERATION_CURSOR [SECTOR]
+			-- allow traversal of GRID using "across" notation
 		do
 			Result := sectors.new_cursor
 		end
 
 feature -- Out
 
-	out_abstract_sectors: STRING -- Abstract Sectors out
-			--   Sectors:
+	out_abstract_sectors: STRING
+			-- output (below) such that each line occupies the "out_abstract_sector" of each sector
+			-- Sectors:
 			-- 		[1,1]->[0,E],[36,P],[40,P],-
 			--		[1,2]->[3,P],-,[4,P],-
 			--		..
@@ -244,8 +251,9 @@ feature -- Out
 			end
 		end
 
-	out_abstract_description: STRING -- Abstract Description out
-			--  Descriptions:
+	out_abstract_description: STRING
+			-- output (below) such that each line occupies the "out_description" of each ID_ENTITY in GRID
+			-- Descriptions:
 			--    [-11,*]->Luminosity:5
 			--		..
 			--    [-1,O]->
@@ -274,6 +282,14 @@ feature -- Out
 		end
 
 	out: STRING
+			-- output each SECTOR in GRID like below
+			--   (1:1) (1:2) (1:3) (1:4) (1:5)
+			--   M---  *---  B---  ----  ----
+			--   (2:1) (2:2) (2:3) (2:4) (2:5)
+			--   ----  ----  W---  W---  ----
+			--   (3:1) (3:2) (3:3) (3:4) 
+			--   PY--  ----  O---
+
 		local
 			msg: MESSAGE
 		do

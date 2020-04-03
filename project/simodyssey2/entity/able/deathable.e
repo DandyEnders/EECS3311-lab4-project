@@ -46,12 +46,13 @@ feature {DEATHABLE} -- Killable Queries
 
 feature -- Attribute
 
-	current_life: INTEGER
+	current_life_point: INTEGER
 		do
-			Result := life.value
+			Result := life.point
 		end
 
 	max_life: INTEGER
+			-- maximum value of "current_life_point"
 		do
 			Result := life.max
 		end
@@ -59,6 +60,7 @@ feature -- Attribute
 feature -- Queries
 
 	is_dead: BOOLEAN
+			-- result ~ true iff "current_life_point" ~ 0
 		do
 			Result := life.is_dead
 		end
@@ -66,6 +68,8 @@ feature -- Queries
 	is_alive: BOOLEAN
 		do
 			Result := not is_dead
+		ensure
+			Result = (not is_dead)
 		end
 
 	is_valid_death_cause (a_death_cause: STRING): BOOLEAN
@@ -74,6 +78,7 @@ feature -- Queries
 		end
 
 	get_death_cause: STRING
+			-- result is a string that describes the cause of death
 		require
 			is_dead
 		do

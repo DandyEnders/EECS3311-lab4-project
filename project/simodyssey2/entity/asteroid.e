@@ -10,8 +10,9 @@ class
 inherit
 
 	NP_MOVEABLE_ENTITY
+		rename
+			make as np_moveable_make
 		redefine
-			make,
 			out_description
 		end
 
@@ -23,15 +24,14 @@ feature {NONE} -- Initialization
 	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER)
 			-- Initialization for `Current'.
 		do
-			precursor (a_coordinate, a_id, t_left)
+			np_moveable_make (a_coordinate, a_id, t_left,'A')
 			add_death_cause_type ("JANITAUR")
 		end
 
 feature -- Queries
 
-	character: STRING = "A"
-
 	is_dead_by_janitaur: BOOLEAN
+			-- result ~ true if current was killed by executing "kill_by_janitaur".
 		do
 			Result := is_dead and then get_death_cause ~ "JANITAUR"
 		end
@@ -39,6 +39,8 @@ feature -- Queries
 feature -- Commands
 
 	behave (sector: SECTOR)
+			-- allow current to interact with ENTITY's in its SECTOR.
+			-- perform behavior algorithm that pertains to ASTEROID as seen on pg 36
 		local
 			rng: RANDOM_GENERATOR_ACCESS
 			destroyed_message: STRING
@@ -70,17 +72,19 @@ feature -- Commands
 			set_turns_left (rng.rchoose (0, 2))
 		end
 
-	kill_by_janitaur (k_id: INTEGER)
+	kill_by_janitaur (killer_id: INTEGER)
+			-- given the id a MALEVOLENT, kill current by MALEVOLENT
 		do
 			kill_by ("JANITAUR")
-			killers_id := k_id
+			killers_id := killer_id
 		ensure
 			is_dead_by_janitaur
 		end
 
 feature -- out
 
-	out_death_message: STRING -- {Abstract State: Death Message for pg 26-27 relevant to this entity}
+	out_death_message: STRING
+			-- result ~ {Abstract State: Death Messages ASTEROID on pg 26-27}
 		do
 			create Result.make_empty
 			if is_dead_by_blackhole then
@@ -90,7 +94,8 @@ feature -- out
 			end
 		end
 
-	out_description: STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, actions_left_until_reproduction: c_value / reproduction_interval, turns_left: N/A or turns_left"
+	out_description: STRING
+			-- result ~ "[id, character]->turns_left: N/A or turns_left"
 		local
 			turns_left_string: STRING
 		do

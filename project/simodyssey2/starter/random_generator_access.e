@@ -33,7 +33,7 @@ feature -- Query
 			gen.rng_debug_this_round.append (" " + Result.out + "->" + "[" + low.out + "/" + high.out + "]")
 		end
 
-feature -- RNG debug Related Operations
+feature {SIMODYSSEY} -- RNG debug Related Operations
 
 	reset_debug
 		do

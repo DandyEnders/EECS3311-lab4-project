@@ -22,12 +22,15 @@ feature {NONE} -- Initialization
 feature -- Attributes
 
 	fuel: INTEGER
+			-- current fuel value
 
 	max_fuel: INTEGER
+			-- maxiumum value of "fuel"
 
 feature -- Commands
 
 	spend_fuel_unit
+			-- decrement "fuel" by one
 		require
 			fuel > 0
 			-- calling this will cause fuel to decrease by 1
@@ -38,7 +41,7 @@ feature -- Commands
 		end
 
 	charge_fuel (s: STAR)
-			--given a star, can recharge fuel.
+			--given STAR, increment fuel by {STAR}.luminosity, up to max_fuel
 		require
 			s.luminosity >= 0
 		do
@@ -57,6 +60,8 @@ feature -- Queries
 	is_out_of_fuel: BOOLEAN
 		do
 			Result := fuel ~ 0
+		ensure
+			Result = (fuel ~ 0)
 		end
 
 invariant

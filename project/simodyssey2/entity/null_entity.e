@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {NULL_ENTITY}."
-	author: "Jinho Hwang"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -10,6 +10,9 @@ class
 inherit
 
 	ENTITY
+		rename
+			make as entity_make
+		end
 
 	ANY
 		undefine
@@ -20,7 +23,10 @@ inherit
 create
 	make
 
-feature -- Attributes
-	character: STRING = "-"
+feature	{NONE}
+	make(a_coordinate: COORDINATE)
+		do
+			entity_make(a_coordinate,'-')
+		end
 
 end

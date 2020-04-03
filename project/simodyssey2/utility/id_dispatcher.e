@@ -12,46 +12,44 @@ create
 
 feature {NONE} -- Constructor
 
-	make (a_start: INTEGER; a_count_up: BOOLEAN)
+	make (a_initial_id: INTEGER; a_id_up: BOOLEAN)
 		do
-			start := a_start
-			count_up := a_count_up
-			count := start
+			initial_id := a_initial_id
+			id_up := a_id_up
+			current_id := initial_id
 		end
 
-feature {NONE} -- Attribute
-
-	start: INTEGER
-
-	count_up: BOOLEAN
-
-feature -- Command
+feature -- Commands
 
 	reset
+			-- initialize "current_id" to "initial_id".
 		do
-			count := start
+			current_id := initial_id
+		ensure
+			current_id ~ initial_id
 		end
 
-feature -- Queries
-
-	get_id: INTEGER
-		do
-			Result := count
-		end
 	update_id
+			-- if "id_up" equals true, current_id will be incremented by 1. current_id will be decremented by 1 otherwise.
 		do
-			if count_up then
-				count := count + 1
+			if id_up then
+				current_id := current_id + 1
 			else
-				count := count - 1
+				current_id := current_id - 1
 			end
 		ensure
-			count_up implies (count ~ (old count+1))
-			(not count_up) implies (count ~ (old count-1))
+			case_where_get_id_is_incremented:id_up implies (current_id ~ (old current_id+1))
+			case_where_get_id_is_decremented:(not id_up) implies (current_id ~ (old current_id-1))
 		end
 
 feature -- Attributes
 
-	count: INTEGER
+	current_id: INTEGER
+			-- the current id in integer value
 
+	id_up: BOOLEAN
+			-- determines the behavior of "update_id". See command "update_id" for more.
+
+	initial_id: INTEGER
+			-- first unique id returned by "current_id".
 end

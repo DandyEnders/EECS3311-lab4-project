@@ -32,7 +32,7 @@ feature {NONE} -- Initialization
 
 	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER)
 		do
-			reproduceable_make (a_coordinate, a_id, t_left, 1)
+			reproduceable_make (a_coordinate, a_id, t_left, 1,'B')
 			fuelable_make (3)
 			add_death_cause_type ("OUT_OF_FUEL")
 			add_death_cause_type ("ASTEROID")
@@ -41,6 +41,9 @@ feature {NONE} -- Initialization
 feature -- Command
 
 	check_health (sector: SECTOR)
+			-- if sector.has_star ~ true recharge the current's fuel cells
+			-- execute "kill_by_blackhole" if sector.has_blachole ~ true.
+			-- execute "kill_by_out_of_fuel" if "is_out_of_fuel" ~ true.
 		local
 			are_you_killed_yet: BOOLEAN
 		do
@@ -63,6 +66,8 @@ feature -- Command
 		end
 
 	behave (sector: SECTOR)
+			-- allow current to interact with ENTITY's in its SECTOR.
+			-- perform behavior algorithm that pertains to BENIGN as seen on pg 36
 		local
 			rng: RANDOM_GENERATOR_ACCESS
 			destroyed_message: STRING
@@ -82,14 +87,14 @@ feature -- Command
 
 feature -- Queries
 
-	character: STRING = "B"
-
 	is_dead_by_out_of_fuel: BOOLEAN
+			-- result ~ true if current was killed by executing "kill_by_out_of_fuel".
 		do
 			Result := is_dead and then get_death_cause ~ "OUT_OF_FUEL"
 		end
 
 	is_dead_by_asteroid: BOOLEAN
+			-- result ~ true if current was killed by executing "kill_by_asteroid".
 		do
 			Result := is_dead and then get_death_cause ~ "ASTEROID"
 		end
@@ -97,6 +102,7 @@ feature -- Queries
 feature -- Commands
 
 	kill_by_out_of_fuel
+			-- given fuel ~ 0, kill current by out of fuel
 		require
 			fuel = 0
 		do
@@ -105,10 +111,11 @@ feature -- Commands
 			is_dead_by_out_of_fuel
 		end
 
-	kill_by_asteroid (k_id: INTEGER)
+	kill_by_asteroid (killer_id: INTEGER)
+			-- given the id a ASTEROID, kill current by ASTEROID
 		do
 			kill_by ("ASTEROID")
-			killers_id := k_id
+			killers_id := killer_id
 		ensure
 			is_dead_by_asteroid
 		end
@@ -125,7 +132,8 @@ feature {NONE} -- Implementation
 
 feature -- Output
 
-	out_death_message: STRING -- {Abstract State: Death Message for pg 26-27 relevant to this entity}
+	out_death_message: STRING
+			-- result ~ {Abstract State: Death Messages BENIGN on pg 26-27}
 		do
 			create Result.make_empty
 			if is_dead_by_out_of_fuel then
@@ -137,7 +145,8 @@ feature -- Output
 			end
 		end
 
-	out_description: STRING -- "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, actions_left_until_reproduction: c_value / reproduction_interval, turns_left: N/A or turns_left"
+	out_description: STRING
+			-- result ~ "[id, character]->fuel:cur_fuel/max_fuel, actions_left_until_reproduction: c_value / reproduction_interval, turns_left: N/A or turns_left"
 		local
 			turns_left_string: STRING
 		do

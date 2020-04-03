@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {ENTITY}."
-	author: "Jinho Hwang"
+	author: "Jinho Hwang, Ato Kooomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -17,19 +17,20 @@ inherit
 
 feature {NONE} -- Initialization
 
-	make (a_coordinate: COORDINATE)
+	make (a_coordinate: COORDINATE; charac: CHARACTER)
 			-- Initialization for `Current'.
 		do
 			coordinate := a_coordinate
+			character:=charac
 		end
 
 feature -- Attributes
 
-	character: STRING
-		deferred
-		end
+	character: CHARACTER
+			-- the character used to represent the ENTITY. ie 'E'
 
 	coordinate: COORDINATE
+			-- the ENTITY's coordinate in GRID
 
 feature {ENTITY} -- Attribute
 
@@ -38,6 +39,7 @@ feature {ENTITY} -- Attribute
 feature -- Queries
 
 	is_equal (other: like current): BOOLEAN
+			-- current "is_equal" to other if other.character ~ character and other.coordinate ~ coordinate
 		do
 			Result := character ~ other.character and coordinate ~ other.coordinate
 		end
@@ -45,6 +47,7 @@ feature -- Queries
 feature -- Commands
 
 	set_coordinate (a_coordinate: COORDINATE)
+			-- intialize "coordinate" to a_coordinate
 		do
 			coordinate := a_coordinate
 		ensure
@@ -53,9 +56,11 @@ feature -- Commands
 
 feature -- out
 
-	out: STRING -- ie 'E'
+	out: STRING
+			-- out ~ ('character' as a STRING).ie "E"
 		do
-			Result := character
+			create Result.make_empty
+			Result.append_character (character)
 		end
 
 end
