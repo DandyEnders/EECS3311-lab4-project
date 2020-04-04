@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {ID_DISPATCHER}."
-	author: ""
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

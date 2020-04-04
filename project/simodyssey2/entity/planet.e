@@ -125,7 +125,7 @@ feature -- Out
 		do
 			create Result.make_empty
 			if is_dead_by_blackhole then
-				Result.append (msg.death_by_blackhole (current, coordinate.row, coordinate.col, killers_id))
+				Result.append (msg.moveable_entity_death_by_blackhole (current, coordinate.row, coordinate.col, killers_id))
 			end
 		end
 

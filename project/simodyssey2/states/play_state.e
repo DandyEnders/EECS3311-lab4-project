@@ -1,6 +1,6 @@
 ﻿note
 	description: "Summary description for {PLAY_STATE}."
-	author: "Ato Koomson"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -21,8 +21,8 @@ feature -- Commands
 		local
 			s: STATE
 		do
-			model.abort
-			create {MAIN_MENU_STATE} s.make (model, abstract_state)
+			game_model.abort
+			create {MAIN_MENU_STATE} s.make (game_model, abstract_state)
 			abstract_state.executed_no_turn_command
 			s.set_msg_mode (msg.empty_string)
 			s.set_msg_command_validity (msg.ok)
@@ -44,23 +44,23 @@ feature -- Commands
 			s: STATE
 		do
 				--			-- model.explorer is in a sector with planet and yellow dwarf
-			if model.explorer_sector_is_landable then
-				model.land_explorer
-				if model.explorer_found_life then
-					create {MAIN_MENU_STATE} s.make (model, abstract_state)
+			if game_model.explorer_sector_is_landable then
+				game_model.land_explorer
+				if game_model.explorer_found_life then
+					create {MAIN_MENU_STATE} s.make (game_model, abstract_state)
 					abstract_state.executed_valid_turn_command
 					s.set_msg_mode (msg_mode)
 					s.set_msg_command_validity (msg.ok)
 					s.set_msg_content (msg.land_life_found)
 				else -- landed in no life planet
-					create {LANDED_STATE} s.make (model, abstract_state)
+					create {LANDED_STATE} s.make (game_model, abstract_state)
 					abstract_state.executed_valid_turn_command
 					s.set_msg_mode (msg_mode)
 					s.set_msg_command_validity (msg.ok)
-					c := model.explorer_coordinate
+					c := game_model.explorer_coordinate
 					create tmp_str.make_from_string (msg.land_life_not_found (c.row, c.col))
 					tmp_str.append ("%N")
-					tmp_str.append (model.out)
+					tmp_str.append (game_model.out)
 					s.set_msg_content (tmp_str)
 				end
 				transition_to(s)
@@ -69,19 +69,19 @@ feature -- Commands
 				set_msg_mode (msg_mode)
 				set_msg_command_validity (msg.error)
 				create tmp_str.make_empty
-				if not model.explorer_sector_has_yellow_dwarf then
-					tmp_str.append (msg.land_error_no_yellow_dwarf (model.explorer_coordinate.row, model.explorer_coordinate.col))
-				elseif not model.explorer_sector_has_planets then
-					tmp_str.append (msg.land_error_no_planets (model.explorer_coordinate.row, model.explorer_coordinate.col))
-				elseif not model.explorer_sector_has_unvisted_attached_planets then
-					tmp_str.append (msg.land_error_no_visited_planets (model.explorer_coordinate.row, model.explorer_coordinate.col))
+				if not game_model.explorer_sector_has_yellow_dwarf then
+					tmp_str.append (msg.land_error_no_yellow_dwarf (game_model.explorer_coordinate.row, game_model.explorer_coordinate.col))
+				elseif not game_model.explorer_sector_has_planets then
+					tmp_str.append (msg.land_error_no_planets (game_model.explorer_coordinate.row, game_model.explorer_coordinate.col))
+				elseif not game_model.explorer_sector_has_unvisted_attached_planets then
+					tmp_str.append (msg.land_error_no_visited_planets (game_model.explorer_coordinate.row, game_model.explorer_coordinate.col))
 				end
 				set_msg_content (tmp_str)
 			end
 		ensure then
-			if_explorer_is_not_landed_remain_in_play_state: ((not model.explorer_is_landed) implies (attached {PLAY_STATE} next_state))
-			if_explorer_is_landed_and_explorer_did_not_find_life_enter_landed_state: (((model.explorer_is_landed) and (not model.explorer_found_life)) implies (attached {LANDED_STATE} next_state))
-			if_explorer_is_landed_and_explorer_did_found_life_enter_main_menu_state: (((model.explorer_is_landed) and (model.explorer_found_life)) implies (attached {MAIN_MENU_STATE} next_state))
+			if_explorer_is_not_landed_remain_in_play_state: ((not game_model.explorer_is_landed) implies (attached {PLAY_STATE} next_state))
+			if_explorer_is_landed_and_explorer_did_not_find_life_enter_landed_state: (((game_model.explorer_is_landed) and (not game_model.explorer_found_life)) implies (attached {LANDED_STATE} next_state))
+			if_explorer_is_landed_and_explorer_did_found_life_enter_main_menu_state: (((game_model.explorer_is_landed) and (game_model.explorer_found_life)) implies (attached {MAIN_MENU_STATE} next_state))
 		end
 
 	liftoff
@@ -91,7 +91,7 @@ feature -- Commands
 		local
 			c: COORDINATE
 		do
-			c := model.explorer_coordinate
+			c := game_model.explorer_coordinate
 			abstract_state.executed_invalid_command
 			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.error)
@@ -106,18 +106,18 @@ feature -- Commands
 			-- if preconditions are met, execute "move_explorer" command in SIMODYSSEY.
 			-- if explorer dies after succesffuly moving, append one of Abstract State: Death Messages EXPLORER [1 to 4] to "out"
 		do
-			if not model.sector_in_explorer_direction_is_full (d) then
-				model.move_explorer (d)
+			if not game_model.sector_in_explorer_direction_is_full (d) then
+				game_model.move_explorer (d)
 				abstract_state.executed_valid_turn_command
-				if model.explorer_is_alive then
+				if game_model.explorer_is_alive then
 					set_msg_command_validity (msg.ok)
 					set_msg_mode (msg_mode)
-					set_msg_content (model.out)
+					set_msg_content (game_model.out)
 				else
 					set_explorer_death_message
 				end
 			else -- model.sector_in_direction_is_full (d) or not model.game_in_session
-				if model.sector_in_explorer_direction_is_full (d) then
+				if game_model.sector_in_explorer_direction_is_full (d) then
 					abstract_state.executed_invalid_command
 					set_msg_mode (msg_mode)
 					set_msg_command_validity (msg.error)
@@ -125,26 +125,26 @@ feature -- Commands
 				end
 			end
 		ensure then
-			if_explorer_is_alive_after_succesfully_moving_remain_in_play_state: (model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
-			if_explorer_is_dead_after_succesfully_moving_enter_in_main_menu_state: (not model.explorer_is_alive) implies (attached {MAIN_MENU_STATE} next_state)
+			if_explorer_is_alive_after_succesfully_moving_remain_in_play_state: (game_model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
+			if_explorer_is_dead_after_succesfully_moving_enter_in_main_menu_state: (not game_model.explorer_is_alive) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 	pass
 			-- execute "pass" command in SIMODYSSEY
 			-- if explorer dies after succesffuly passing, append one of Abstract State: Death Messages EXPLORER [3 to 4] to "out"
 		do
-			model.pass
+			game_model.pass
 			abstract_state.executed_valid_turn_command
-			if model.explorer_is_alive then
+			if game_model.explorer_is_alive then
 				set_msg_command_validity (msg.ok)
 				set_msg_mode (msg_mode)
-				set_msg_content (model.out)
+				set_msg_content (game_model.out)
 			else
 				set_explorer_death_message
 			end
 		ensure then
-			if_not_dead_remain_in_play_state: (model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
-			if_dead_enter_main_menu_state: (not model.explorer_is_alive) implies (attached {MAIN_MENU_STATE} next_state)
+			if_not_dead_remain_in_play_state: (game_model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
+			if_dead_enter_main_menu_state: (not game_model.explorer_is_alive) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 	play
@@ -166,7 +166,7 @@ feature -- Commands
 			abstract_state.executed_no_turn_command
 			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.ok)
-			set_msg_content (model.out_status_explorer)
+			set_msg_content (game_model.out_status_explorer)
 		ensure then
 			 status_should_not_change_the_state:(attached {PLAY_STATE} next_state)
 		end
@@ -192,20 +192,20 @@ feature -- Commands
 		local
 			c: COORDINATE
 		do
-			c := model.explorer_coordinate
-			if model.explorer_sector_has_wormhole then
-				model.wormhole_explorer
+			c := game_model.explorer_coordinate
+			if game_model.explorer_sector_has_wormhole then
+				game_model.wormhole_explorer
 				abstract_state.executed_valid_turn_command
-				if model.explorer_is_alive then
+				if game_model.explorer_is_alive then
 					set_msg_command_validity (msg.ok)
 					set_msg_mode (msg_mode)
-					set_msg_content (model.out)
+					set_msg_content (game_model.out)
 				else
 					set_explorer_death_message
 				end
 			else
-				if not model.explorer_sector_has_wormhole then
-					c := model.explorer_coordinate
+				if not game_model.explorer_sector_has_wormhole then
+					c := game_model.explorer_coordinate
 					abstract_state.executed_invalid_command
 					set_msg_mode (msg_mode)
 					set_msg_command_validity (msg.error)
@@ -213,8 +213,8 @@ feature -- Commands
 				end
 			end
 		ensure then
-			Explorer_is_alive_after_successful_wormhole_implies_remain_in_play_state: (model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
-			Explorer_is_dead_after_successful_wormhole_implies_enter_main_menu_state:((not model.explorer_is_alive)) implies (attached {MAIN_MENU_STATE} next_state)
+			Explorer_is_alive_after_successful_wormhole_implies_remain_in_play_state: (game_model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
+			Explorer_is_dead_after_successful_wormhole_implies_enter_main_menu_state:((not game_model.explorer_is_alive)) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 end

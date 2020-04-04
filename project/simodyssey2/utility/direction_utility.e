@@ -1,6 +1,6 @@
 note
 	description: "Summary description for {DIRECTION_UTILITY}."
-	author: "Jinho Hwang"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

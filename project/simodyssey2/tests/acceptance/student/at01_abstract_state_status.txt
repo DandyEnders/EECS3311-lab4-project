@@ -1,11 +1,11 @@
 test(1,1,1,1,30)
 status
 move(S)
--- Testing status message when the explorer is not landed
+-- Testing Abstract State: Command-Specific Messages: STATUS 1.
 status
 move(S)
 status
 -- Enter Landed state
 land
--- Testing status message when explorer is landed
+-- Testing Abstract State: Command-Specific Messages: STATUS 2.
 status

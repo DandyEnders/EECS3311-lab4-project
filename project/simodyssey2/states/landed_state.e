@@ -1,6 +1,6 @@
 ﻿note
 	description: "Summary description for {LANDED_STATE}."
-	author: "Jinho Hwang"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -21,8 +21,8 @@ feature -- Controller command / queries
 		local
 			s: STATE
 		do
-			model.abort
-			create {MAIN_MENU_STATE} s.make (model, abstract_state)
+			game_model.abort
+			create {MAIN_MENU_STATE} s.make (game_model, abstract_state)
 			abstract_state.executed_no_turn_command
 			s.set_msg_mode (msg.empty_string)
 			s.set_msg_command_validity (msg.ok)
@@ -39,7 +39,7 @@ feature -- Controller command / queries
 		local
 			c: COORDINATE
 		do
-			c := model.explorer_coordinate
+			c := game_model.explorer_coordinate
 			abstract_state.executed_no_turn_command
 			next_state.set_msg_mode (msg_mode)
 			next_state.set_msg_command_validity (msg.error)
@@ -56,25 +56,25 @@ feature -- Controller command / queries
 			c: COORDINATE
 			s: STATE
 		do
-			c := model.explorer_coordinate
-			model.liftoff_explorer
+			c := game_model.explorer_coordinate
+			game_model.liftoff_explorer
 			abstract_state.executed_valid_turn_command
 			create s_tmp.make_empty
-			if model.explorer_is_alive then
-				create {PLAY_STATE} s.make (model, abstract_state)
+			if game_model.explorer_is_alive then
+				create {PLAY_STATE} s.make (game_model, abstract_state)
 				s.set_msg_command_validity (msg.ok)
 				s.set_msg_mode (msg_mode)
 				s_tmp.append (msg.liftoff (c.row, c.col))
 				s_tmp.append ("%N")
-				s_tmp.append (model.out)
+				s_tmp.append (game_model.out)
 				s.set_msg_content (s_tmp)
 				transition_to(s)
 			else
 				set_explorer_death_message
 			end
 		ensure then
-			if_explorer_is_dead_enter_main_menu_state: (not model.explorer_is_alive) implies (attached {MAIN_MENU_STATE} next_state)
-			if_explorer_is_alive_enter_play_state: (model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
+			if_explorer_is_dead_enter_main_menu_state: (not game_model.explorer_is_alive) implies (attached {MAIN_MENU_STATE} next_state)
+			if_explorer_is_alive_enter_play_state: (game_model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
 		end
 
 	move (d: COORDINATE)
@@ -84,7 +84,7 @@ feature -- Controller command / queries
 		local
 			c: COORDINATE
 		do
-			c := model.explorer_coordinate
+			c := game_model.explorer_coordinate
 			abstract_state.executed_no_turn_command
 			next_state.set_msg_mode (msg_mode)
 			next_state.set_msg_command_validity (msg.error)
@@ -96,11 +96,11 @@ feature -- Controller command / queries
 	pass
 			-- execute "pass" command in SIMODYSSEY
 		do
-			model.pass
+			game_model.pass
 			abstract_state.executed_valid_turn_command
 			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.ok)
-			set_msg_content (model.out)
+			set_msg_content (game_model.out)
 		ensure then
 			remain_in_landed_state: (attached {LANDED_STATE} next_state)
 		end
@@ -124,7 +124,7 @@ feature -- Controller command / queries
 			abstract_state.executed_no_turn_command
 			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.ok)
-			set_msg_content (model.out_status_explorer)
+			set_msg_content (game_model.out_status_explorer)
 		ensure then
 			remain_in_landed_state: (attached {LANDED_STATE} next_state)
 		end
@@ -149,7 +149,7 @@ feature -- Controller command / queries
 		local
 			c: COORDINATE
 		do
-			c := model.explorer_coordinate
+			c := game_model.explorer_coordinate
 			abstract_state.executed_no_turn_command
 			next_state.set_msg_mode (msg_mode)
 			next_state.set_msg_command_validity (msg.error)

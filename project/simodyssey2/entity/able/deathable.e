@@ -47,6 +47,7 @@ feature {DEATHABLE} -- Killable Queries
 feature -- Attribute
 
 	current_life_point: INTEGER
+			-- current life in value as an INTEGER
 		do
 			Result := life.point
 		end
@@ -73,6 +74,7 @@ feature -- Queries
 		end
 
 	is_valid_death_cause (a_death_cause: STRING): BOOLEAN
+			-- is a_death_cause a valid death cause to use as an argument to execute "kill_by"
 		do
 			Result := has_death_cause_type (a_death_cause)
 		end
@@ -88,6 +90,7 @@ feature -- Queries
 feature -- Command
 
 	kill_by (a_cause: STRING)
+			-- kill an ENTITY using a valid death cause: defined by the ENTITY.
 		require
 			is_valid_death_cause (a_cause)
 		do

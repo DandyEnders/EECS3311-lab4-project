@@ -1,0 +1,15 @@
+test(1,1,1,1,80)
+-- Succesful Move spends fuel.
+move(S)
+status
+move(S)
+status
+-- Moving to a star should charge fuel.
+move(NE)
+status
+-- Landing in a sector with a star should charge fuel
+land
+status
+-- Lifting off in a sector should charge fuel but never above max fuel.
+liftoff
+status

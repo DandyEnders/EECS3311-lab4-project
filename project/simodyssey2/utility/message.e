@@ -7,7 +7,7 @@ note
 expanded class
 	MESSAGE
 
-feature -- Common message
+feature -- Format related messages
 
 	empty_string: STRING = ""
 
@@ -15,27 +15,28 @@ feature -- Common message
 
 	left_big_margin: STRING = "    "
 
-feature -- Validity
+feature -- First line: Validity
 
 	ok: STRING = "ok"
 
 	error: STRING = "error"
 
-feature -- Mode
+feature -- First line: Mode
 
 	play: STRING = "play"
 
 	test: STRING = "test"
 
-feature -- Initial message
+feature -- Abstract State: Command-Specific Messages INITIAL MESSAGE
 
 	initial_message: STRING
+			-- result ~ "  Welcome! Try test(3,5,7,15,30)"
 		do
 			create Result.make_from_string (left_margin)
 			Result.append ("Welcome! Try test(3,5,7,15,30)")
 		end
 
-feature -- status
+feature -- Abstract State: Command-Specific Messages STATUS
 
 	status_not_landed (row, col, quad, life, fuel: INTEGER): STRING
 		do
@@ -77,13 +78,15 @@ feature -- status
 			Result.append (fuel.out)
 		end
 
+feature -- Abstract State: Error Messages STATUS
+
 	status_error_no_mission: STRING
 		do
 			create Result.make_from_string (left_margin)
 			Result.append ("Negative on that request:no mission in progress.")
 		end
 
-feature -- land
+feature -- Abstract State: Command-Specific Messages LAND
 
 	land_life_found: STRING
 		do
@@ -100,6 +103,8 @@ feature -- land
 			Result.append (":")
 			Result.append (col.out)
 		end
+
+feature -- Abstract State: Error Messages LAND
 
 	land_error_no_mission: STRING
 		do
@@ -147,7 +152,7 @@ feature -- land
 			Result.append (col.out)
 		end
 
-feature -- liftoff
+feature -- Abstract State: Command-Specific Messages LIFTOFF
 
 	liftoff (row, col: INTEGER): STRING
 		do
@@ -158,6 +163,8 @@ feature -- liftoff
 			Result.append (":")
 			Result.append (col.out)
 		end
+
+feature -- Abstract State: Error Messages LIFTOFF
 
 	liftoff_error_no_mission: STRING
 		do
@@ -175,7 +182,7 @@ feature -- liftoff
 			Result.append (col.out)
 		end
 
-feature -- abort
+feature -- Abstract State: Command-Specific Messages ABORT
 
 	abort: STRING
 		do
@@ -183,13 +190,15 @@ feature -- abort
 			Result.append ("Mission aborted. Try test(3,5,7,15,30)")
 		end
 
+feature -- Abstract State: Error Messages ABORT
+
 	abort_error_no_mission: STRING
 		do
 			create Result.make_from_string (left_margin)
 			Result.append ("Negative on that request:no mission in progress.")
 		end
 
-feature -- game_is_over
+feature -- Abstract State: Command-Specific Messages GAME IS OVER
 
 	game_is_over: STRING
 		do
@@ -199,7 +208,8 @@ feature -- game_is_over
 
 feature {NONE} -- Helper Query
 
-	moveable_entity_type (np: MOVEABLE_ENTITY): STRING -- ie "  Benign "
+	moveable_entity_type (np: MOVEABLE_ENTITY): STRING
+			-- result ~ "  Benign "
 		do
 			create Result.make_empty
 			Result.append (left_margin)
@@ -218,9 +228,10 @@ feature {NONE} -- Helper Query
 			end
 		end
 
-feature -- MOVEABLE_ENTITY death by BLACKHOLE (effective for explorer,benign,malevolent,janitaur,asteroid and planet)
+feature -- Abstract State: Death Messages (Death due to blackhole.)
 
-	death_by_blackhole (np: MOVEABLE_ENTITY; sector_row, sector_col, blackhole_id: INTEGER): STRING
+	moveable_entity_death_by_blackhole (np: MOVEABLE_ENTITY; sector_row, sector_col, blackhole_id: INTEGER): STRING
+			-- result ~ "  {MOVEABLE_ENTITY} got devoured by blackhole (id: -1) at Sector:row:col"
 		require
 			np.is_dead_by_blackhole
 			blackhole_id ~ -1
@@ -237,9 +248,10 @@ feature -- MOVEABLE_ENTITY death by BLACKHOLE (effective for explorer,benign,mal
 			Result.append (sector_col.out)
 		end
 
-feature -- ASTEROID death by JANITAUR
+feature -- Abstract State: Death Messages (Death due to janitaur.)
 
-	death_by_janitaur (a: ASTEROID; sector_row, sector_col, janitaur_id: INTEGER): STRING
+	asteroid_death_by_janitaur (a: ASTEROID; sector_row, sector_col, janitaur_id: INTEGER): STRING
+			-- result ~ "  Asteroid got imploded by janitaur (id: id) at Sector:row:col"
 		require
 			a.is_dead_by_janitaur
 			valid_sector_of_death: a.coordinate.row ~ sector_row and a.coordinate.col ~ sector_col
@@ -251,9 +263,10 @@ feature -- ASTEROID death by JANITAUR
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
-feature -- MOVEABLE_ENTITY death by ASTEROID
+feature -- Abstract State: Death Messages (Death due to asteroid.)
 
-	death_by_asteroid (me: MOVEABLE_ENTITY; sector_row, sector_col, asteroid_id: INTEGER): STRING
+	moveable_entity_death_by_asteroid (me: MOVEABLE_ENTITY; sector_row, sector_col, asteroid_id: INTEGER): STRING
+			-- result ~ "  {MOVEABLE_ENTITY} got destroyed by asteroid (id: id) at Sector:row:col"
 		require
 			me_is_not_a_planet: not attached {PLANET} me
 			me_is_not_an_asteroid: not attached {ASTEROID} me
@@ -266,9 +279,10 @@ feature -- MOVEABLE_ENTITY death by ASTEROID
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
-feature -- MALEVOLENT death by BENIGN
+feature -- Abstract State: Death Messages (Death due to benign.)
 
-	death_by_benign (m: MALEVOLENT; sector_row, sector_col, benign_id: INTEGER): STRING
+	malevolent_death_by_benign (m: MALEVOLENT; sector_row, sector_col, benign_id: INTEGER): STRING
+			-- result ~ "  Malevolent got destroyed by benign (id: id) at Sector:row:col"
 		require
 			m.is_dead_by_benign
 			valid_sector_of_death: m.coordinate.row ~ sector_row and m.coordinate.col ~ sector_col
@@ -279,9 +293,10 @@ feature -- MALEVOLENT death by BENIGN
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
-feature -- FUELABLE death by out_of_fuel
+feature -- Abstract State: Death Messages (Out of fuel.)
 
-	death_by_out_of_fuel (f: MOVEABLE_ENTITY; sector_row, sector_col: INTEGER): STRING
+	fuelable_moveable_entity_death_by_out_of_fuel (f: MOVEABLE_ENTITY; sector_row, sector_col: INTEGER): STRING
+			-- result ~ "  {MOVEABLE_ENTITY} got lost in space - out of fuel at Sector:row:col"
 		require
 			f_is_fuelable: attached {FUELABLE} f
 			f_is_out_of_fuel: (attached {FUELABLE} f as f_e) implies f_e.is_out_of_fuel
@@ -294,9 +309,10 @@ feature -- FUELABLE death by out_of_fuel
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
-feature -- EXPLORER death by MALEVOLENT
+feature -- Abstract State: Death Messages (Death due to malevolent.)
 
-	death_by_malevolent (e: EXPLORER; sector_row, sector_col: INTEGER): STRING
+	explorer_death_by_malevolent (e: EXPLORER; sector_row, sector_col: INTEGER): STRING
+			-- result ~ "  Explorer got lost in space - out of life support at Sector:row:col"
 		require
 			e.is_dead_by_malevolent
 			valid_sector_of_death: e.coordinate.row ~ sector_row and e.coordinate.col ~ sector_col
@@ -307,7 +323,7 @@ feature -- EXPLORER death by MALEVOLENT
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
-feature -- move
+feature -- Abstract State: Error Messages MOVE
 
 	move_error_no_mission: STRING
 		do
@@ -331,7 +347,7 @@ feature -- move
 			Result.append ("Cannot transfer to new location as it is full.")
 		end
 
-feature -- pass
+feature -- Abstract State: Error Messages PASS
 
 	pass_error_no_mission: STRING
 		do
@@ -339,7 +355,7 @@ feature -- pass
 			Result.append ("Negative on that request:no mission in progress.")
 		end
 
-feature -- play
+feature -- Abstract State: Error Messages PLAY
 
 	play_error_no_mission: STRING
 		do
@@ -347,7 +363,7 @@ feature -- play
 			Result.append ("To start a new mission, please abort the current one first.")
 		end
 
-feature -- test
+feature -- Abstract State: Error Messages TEST
 
 	test_error_no_mission: STRING
 		do
@@ -361,7 +377,7 @@ feature -- test
 			Result.append ("Thresholds should be non-decreasing order.")
 		end
 
-feature -- wormhole
+feature -- Abstract State: Error Messages WORMHOLE
 
 	wormhole_error_no_mission: STRING
 		do

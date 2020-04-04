@@ -1,4 +1,4 @@
--- Testing Abastract state messgae game is over 2. when dead by blackhole.
+-- Testing Abstract State: Death Messages EXPLORER 2.
 play
 status
 move(SE)
@@ -18,7 +18,7 @@ move(S)
 status
 abort
 status
--- Testing Abastract state messgae game is over 1. when dead by out of fuel.
+-- Testing Abstract State: Death Messages EXPLORER 1.
 play
 status
 move(S)
@@ -35,7 +35,7 @@ wormhole
 pass
 move(S)
 abort
--- Testing Abastract state messgae game is over 3. when dead by asteroid.
+-- Testing Abstract State: Death Messages EXPLORER 3.
 test(90,90,90,90,90)
 status
 pass
@@ -48,7 +48,7 @@ wormhole
 pass
 move(S)
 abort
--- Testing Abastract state messgae game is over 4. when dead by malevolent.
+-- Testing Abstract State: Death Messages EXPLORER 4.
 test(1,1,90,90,90)
 status
 pass

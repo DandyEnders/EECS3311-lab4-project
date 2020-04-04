@@ -47,12 +47,12 @@ feature -- Controller command / queries
 		local
 			s: STATE
 		do
-			model.new_game (3, 5, 7, 15, 30, FALSE)
-			create {PLAY_STATE} s.make (model, abstract_state)
+			game_model.new_game (3, 5, 7, 15, 30, FALSE)
+			create {PLAY_STATE} s.make (game_model, abstract_state)
 			abstract_state.executed_valid_turn_command
 			s.set_msg_mode (msg.play)
 			s.set_msg_command_validity (msg.ok)
-			s.set_msg_content (model.out)
+			s.set_msg_content (game_model.out)
 			transition_to(s)
 		ensure then
 			enter_play_state: (attached {PLAY_STATE} next_state)
@@ -65,13 +65,13 @@ feature -- Controller command / queries
 		local
 			s:STATE
 		do
-			if model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold) then
-				model.new_game (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold, TRUE)
-				create {PLAY_STATE} s.make (model, abstract_state)
+			if game_model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold) then
+				game_model.new_game (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold, TRUE)
+				create {PLAY_STATE} s.make (game_model, abstract_state)
 				abstract_state.executed_valid_turn_command
 				s.set_msg_mode (msg.test)
 				s.set_msg_command_validity (msg.ok)
-				s.set_msg_content (model.out)
+				s.set_msg_content (game_model.out)
 				transition_to(s)
 			else
 				abstract_state.executed_invalid_command
@@ -80,8 +80,8 @@ feature -- Controller command / queries
 				set_msg_content (msg.test_error_threshold)
 			end
 		ensure then
-			valid_thresholds_implies_enter_play_state: model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold) implies (attached {PLAY_STATE} next_state)
-			invalid_thresholds_implies_remain_in_main_menu_state:(not model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold)) implies (attached {MAIN_MENU_STATE} next_state)
+			valid_thresholds_implies_enter_play_state: game_model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold) implies (attached {PLAY_STATE} next_state)
+			invalid_thresholds_implies_remain_in_main_menu_state:(not game_model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold)) implies (attached {MAIN_MENU_STATE} next_state)
 
 		end
 

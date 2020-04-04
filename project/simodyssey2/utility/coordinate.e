@@ -1,6 +1,6 @@
 note
-	description: "A class to represent comparable coordinates in a Maze game."
-	author: "CD"
+	description: "A class to represent comparable coordinates."
+	author: "CD, Jinho Hwang, Ato Koomson"
 	date: "August 2019"
 
 class
@@ -105,7 +105,7 @@ feature -- Queries
 
 feature -- out
 
-	out: STRING -- output current as "(row:column)"
+	out: STRING -- output current as "(row:col)"
 		do
 			create Result.make_empty
 			Result.append ("(")
@@ -113,7 +113,7 @@ feature -- out
 			Result.append (")")
 		end
 
-	out_sqr_bracket: STRING -- output current as "[row:colum]"
+	out_sqr_bracket: STRING -- output current as "[row:col]"
 		do
 			create Result.make_empty
 			Result.append ("[")
@@ -121,7 +121,7 @@ feature -- out
 			Result.append ("]")
 		end
 
-	out_colon: STRING -- output current as "row:column"
+	out_colon: STRING -- output current as "row:col"
 		do
 			create Result.make_empty
 			Result.append (row.out)
@@ -129,7 +129,7 @@ feature -- out
 			Result.append (col.out)
 		end
 
-	out_sqr_bracket_comma: STRING -- output current as "[row,column]"
+	out_sqr_bracket_comma: STRING -- output current as "[row,col]"
 		do
 			create Result.make_empty
 			Result.append ("[")

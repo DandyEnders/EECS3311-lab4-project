@@ -4,10 +4,10 @@ move(S)
 status
 move(S)
 status
--- Enter Landed state, should output abstract state land message 2.
+-- Testing Abstract State: Command-Specific Messages LAND 2.
 land
 status
--- Entering Play state by typing "liftoff", should output abstract state liffoff message 1.
+-- Testing Abstract State: Command-Specific Messages LIFTOFF 1.
 liftoff
 status
 pass
@@ -17,7 +17,7 @@ status
 pass
 status
 pass
--- Enter Landed state, should output abstract state land message 1.
+-- Testing Abstract State: Command-Specific Messages LAND 1.
 land
 status
 -- All actions should seize to work because the game is over.
@@ -28,7 +28,7 @@ status
 wormhole
 status
 pass
-sta
+status
 move(S)
 status
 abort
