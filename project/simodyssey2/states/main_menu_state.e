@@ -48,11 +48,8 @@ feature -- Controller command / queries
 			s: STATE
 		do
 			game_model.new_game (3, 5, 7, 15, 30, FALSE)
-			create {PLAY_STATE} s.make (game_model, abstract_state)
+			create {PLAY_STATE} s.make (game_model, abstract_state,msg.play,game_model.out)
 			abstract_state.executed_valid_turn_command
-			s.set_msg_mode (msg.play)
-			s.set_msg_command_validity (msg.ok)
-			s.set_msg_content (game_model.out)
 			transition_to(s)
 		ensure then
 			enter_play_state: (attached {PLAY_STATE} next_state)
@@ -67,11 +64,8 @@ feature -- Controller command / queries
 		do
 			if game_model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold) then
 				game_model.new_game (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold, TRUE)
-				create {PLAY_STATE} s.make (game_model, abstract_state)
+				create {PLAY_STATE} s.make (game_model, abstract_state,msg.test,game_model.out)
 				abstract_state.executed_valid_turn_command
-				s.set_msg_mode (msg.test)
-				s.set_msg_command_validity (msg.ok)
-				s.set_msg_content (game_model.out)
 				transition_to(s)
 			else
 				abstract_state.executed_invalid_command

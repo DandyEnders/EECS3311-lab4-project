@@ -22,11 +22,8 @@ feature -- Controller command / queries
 			s: STATE
 		do
 			game_model.abort
-			create {MAIN_MENU_STATE} s.make (game_model, abstract_state)
+			create {MAIN_MENU_STATE} s.make (game_model, abstract_state,msg.empty_string,msg.abort)
 			abstract_state.executed_no_turn_command
-			s.set_msg_mode (msg.empty_string)
-			s.set_msg_command_validity (msg.ok)
-			s.set_msg_content (msg.abort)
 			transition_to(s)
 		ensure then
 			enter_main_menu_state: (attached {MAIN_MENU_STATE} next_state)
@@ -41,9 +38,8 @@ feature -- Controller command / queries
 		do
 			c := game_model.explorer_coordinate
 			abstract_state.executed_no_turn_command
-			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity (msg.error)
-			next_state.set_msg_content (msg.land_error_landed_already (c.row, c.col))
+			set_msg_command_validity (msg.error)
+			set_msg_content (msg.land_error_landed_already (c.row, c.col))
 		ensure then
 			invalid_command_implies_remain_in_landed_state: (attached {LANDED_STATE} next_state)
 		end
@@ -61,13 +57,10 @@ feature -- Controller command / queries
 			abstract_state.executed_valid_turn_command
 			create s_tmp.make_empty
 			if game_model.explorer_is_alive then
-				create {PLAY_STATE} s.make (game_model, abstract_state)
-				s.set_msg_command_validity (msg.ok)
-				s.set_msg_mode (msg_mode)
 				s_tmp.append (msg.liftoff (c.row, c.col))
 				s_tmp.append ("%N")
 				s_tmp.append (game_model.out)
-				s.set_msg_content (s_tmp)
+				create {PLAY_STATE} s.make (game_model, abstract_state,msg_mode,s_tmp)
 				transition_to(s)
 			else
 				set_explorer_death_message
@@ -86,9 +79,8 @@ feature -- Controller command / queries
 		do
 			c := game_model.explorer_coordinate
 			abstract_state.executed_no_turn_command
-			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity (msg.error)
-			next_state.set_msg_content (msg.move_error_landed (c.row, c.col))
+			set_msg_command_validity (msg.error)
+			set_msg_content (msg.move_error_landed (c.row, c.col))
 		ensure then
 			invalid_command_implies_remain_in_landed_state: (attached {LANDED_STATE} next_state)
 		end
@@ -98,7 +90,6 @@ feature -- Controller command / queries
 		do
 			game_model.pass
 			abstract_state.executed_valid_turn_command
-			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.ok)
 			set_msg_content (game_model.out)
 		ensure then
@@ -111,9 +102,8 @@ feature -- Controller command / queries
 			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
 			abstract_state.executed_no_turn_command
-			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity (msg.error)
-			next_state.set_msg_content (msg.play_error_no_mission)
+			set_msg_command_validity (msg.error)
+			set_msg_content (msg.play_error_no_mission)
 		ensure then
 			invalid_command_implies_remain_in_landed_state: (attached {LANDED_STATE} next_state)
 		end
@@ -122,7 +112,6 @@ feature -- Controller command / queries
 			-- append "Negative on that request:already landed on a planet at Sector:X:Y" to "out"
 		do
 			abstract_state.executed_no_turn_command
-			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.ok)
 			set_msg_content (game_model.out_status_explorer)
 		ensure then
@@ -135,9 +124,8 @@ feature -- Controller command / queries
 			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
 			abstract_state.executed_no_turn_command
-			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity (msg.error)
-			next_state.set_msg_content (msg.test_error_no_mission)
+			set_msg_command_validity (msg.error)
+			set_msg_content (msg.test_error_no_mission)
 		ensure then
 			invalid_command_implies_remain_in_landed_state: (attached {LANDED_STATE} next_state)
 		end
@@ -151,9 +139,8 @@ feature -- Controller command / queries
 		do
 			c := game_model.explorer_coordinate
 			abstract_state.executed_no_turn_command
-			next_state.set_msg_mode (msg_mode)
-			next_state.set_msg_command_validity (msg.error)
-			next_state.set_msg_content (msg.wormhole_error_landed (c.row, c.col))
+			set_msg_command_validity (msg.error)
+			set_msg_content (msg.wormhole_error_landed (c.row, c.col))
 		ensure then
 			invalid_command_implies_remain_in_landed_state: (attached {LANDED_STATE} next_state)
 		end

@@ -25,9 +25,7 @@ feature {NONE} -- Initialization
 			msg: MESSAGE
 		do
 				-- initial state = main menu state
-			create {MAIN_MENU_STATE} game_state.make (create {SIMODYSSEY}.make, create {ABSTRACT_STATE_NUMBERS}.make)
-			game_state.set_msg_command_validity (msg.ok)
-			game_state.set_msg_content (msg.initial_message)
+			create {MAIN_MENU_STATE} game_state.make (create {SIMODYSSEY}.make, create {ABSTRACT_STATE_NUMBERS}.make,msg.empty_string,msg.initial_message)
 		end
 
 feature -- Attributes

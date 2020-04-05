@@ -22,11 +22,8 @@ feature -- Commands
 			s: STATE
 		do
 			game_model.abort
-			create {MAIN_MENU_STATE} s.make (game_model, abstract_state)
 			abstract_state.executed_no_turn_command
-			s.set_msg_mode (msg.empty_string)
-			s.set_msg_command_validity (msg.ok)
-			s.set_msg_content (msg.abort)
+			create {MAIN_MENU_STATE} s.make (game_model, abstract_state,msg.empty_string,msg.abort)
 			transition_to(s)
 		ensure then
 			enter_main_menu_state: attached {MAIN_MENU_STATE} next_state
@@ -46,27 +43,19 @@ feature -- Commands
 				--			-- model.explorer is in a sector with planet and yellow dwarf
 			if game_model.explorer_sector_is_landable then
 				game_model.land_explorer
+				abstract_state.executed_valid_turn_command
 				if game_model.explorer_found_life then
-					create {MAIN_MENU_STATE} s.make (game_model, abstract_state)
-					abstract_state.executed_valid_turn_command
-					s.set_msg_mode (msg_mode)
-					s.set_msg_command_validity (msg.ok)
-					s.set_msg_content (msg.land_life_found)
+					create {MAIN_MENU_STATE} s.make (game_model, abstract_state,msg_mode,msg.land_life_found)
 				else -- landed in no life planet
-					create {LANDED_STATE} s.make (game_model, abstract_state)
-					abstract_state.executed_valid_turn_command
-					s.set_msg_mode (msg_mode)
-					s.set_msg_command_validity (msg.ok)
 					c := game_model.explorer_coordinate
 					create tmp_str.make_from_string (msg.land_life_not_found (c.row, c.col))
 					tmp_str.append ("%N")
 					tmp_str.append (game_model.out)
-					s.set_msg_content (tmp_str)
+					create {LANDED_STATE} s.make (game_model, abstract_state,msg_mode,tmp_str)
 				end
 				transition_to(s)
 			else
 				abstract_state.executed_invalid_command
-				set_msg_mode (msg_mode)
 				set_msg_command_validity (msg.error)
 				create tmp_str.make_empty
 				if not game_model.explorer_sector_has_yellow_dwarf then
@@ -93,7 +82,6 @@ feature -- Commands
 		do
 			c := game_model.explorer_coordinate
 			abstract_state.executed_invalid_command
-			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.liftoff_error_not_on_planet (c.row, c.col))
 		ensure then
@@ -111,7 +99,6 @@ feature -- Commands
 				abstract_state.executed_valid_turn_command
 				if game_model.explorer_is_alive then
 					set_msg_command_validity (msg.ok)
-					set_msg_mode (msg_mode)
 					set_msg_content (game_model.out)
 				else
 					set_explorer_death_message
@@ -119,7 +106,6 @@ feature -- Commands
 			else -- model.sector_in_direction_is_full (d) or not model.game_in_session
 				if game_model.sector_in_explorer_direction_is_full (d) then
 					abstract_state.executed_invalid_command
-					set_msg_mode (msg_mode)
 					set_msg_command_validity (msg.error)
 					set_msg_content (msg.move_error_sector_full)
 				end
@@ -135,9 +121,8 @@ feature -- Commands
 		do
 			game_model.pass
 			abstract_state.executed_valid_turn_command
+			set_msg_command_validity (msg.ok)
 			if game_model.explorer_is_alive then
-				set_msg_command_validity (msg.ok)
-				set_msg_mode (msg_mode)
 				set_msg_content (game_model.out)
 			else
 				set_explorer_death_message
@@ -153,7 +138,6 @@ feature -- Commands
 			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
 			abstract_state.executed_invalid_command
-			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.play_error_no_mission)
 		ensure then
@@ -164,7 +148,6 @@ feature -- Commands
 			-- append “Explorer status report:Travelling at cruise speed at [X,Y,Z] Life units left:V, Fuel units left:W” to "out"
 		do
 			abstract_state.executed_no_turn_command
-			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.ok)
 			set_msg_content (game_model.out_status_explorer)
 		ensure then
@@ -177,7 +160,6 @@ feature -- Commands
 			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
 			abstract_state.executed_invalid_command
-			set_msg_mode (msg_mode)
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.test_error_no_mission)
 		ensure then
@@ -198,17 +180,15 @@ feature -- Commands
 				abstract_state.executed_valid_turn_command
 				if game_model.explorer_is_alive then
 					set_msg_command_validity (msg.ok)
-					set_msg_mode (msg_mode)
 					set_msg_content (game_model.out)
 				else
 					set_explorer_death_message
 				end
 			else
 				if not game_model.explorer_sector_has_wormhole then
-					c := game_model.explorer_coordinate
 					abstract_state.executed_invalid_command
-					set_msg_mode (msg_mode)
 					set_msg_command_validity (msg.error)
+					c := game_model.explorer_coordinate
 					set_msg_content (msg.wormhole_error_explorer_not_found_wormhole (c.row, c.col))
 				end
 			end
