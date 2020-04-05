@@ -1,5 +1,0 @@
-test(1,1,1,1,1)
-move(SE)
-wormhole
-move(SW)
-wormhole

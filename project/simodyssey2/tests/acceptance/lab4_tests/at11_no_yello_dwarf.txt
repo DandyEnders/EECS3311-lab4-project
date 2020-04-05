@@ -1,6 +1,0 @@
--- No yellow dwarf
-test(1,1,1,1,30)
-move(E)
-pass
-land
-

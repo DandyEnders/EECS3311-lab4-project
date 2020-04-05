@@ -1,5 +1,0 @@
---wormhole is_expoler_in_wormhole and explorer is alive
-test(1,1,1,1,30)
-wormhole
-move(N)
-wormhole
