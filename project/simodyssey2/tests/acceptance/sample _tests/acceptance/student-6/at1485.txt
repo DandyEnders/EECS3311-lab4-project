@@ -1,0 +1,16 @@
+move(N)
+move(SW)
+move(SE)
+move(N)
+abort
+move(NW)
+abort
+test(27,45,60,99,99)
+move(NW)
+pass
+move(SW)
+pass
+move(W)
+move(E)
+move(SE)
+test(46,46,46,46,46)

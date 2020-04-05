@@ -1,0 +1,17 @@
+abort
+move(N)
+move(N)
+move(SE)
+test(95,95,95,95,95)
+test(27,84,84,84,84)
+test(61,61,93,93,93)
+test(33,33,70,70,70)
+move(W)
+move(S)
+test(23,40,71,71,71)
+move(N)
+move(NE)
+move(NE)
+pass
+liftoff
+move(NW)

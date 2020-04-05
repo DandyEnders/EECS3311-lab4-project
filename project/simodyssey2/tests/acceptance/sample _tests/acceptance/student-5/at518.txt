@@ -1,0 +1,17 @@
+move(N)
+move(N)
+move(NW)
+move(N)
+move(NE)
+move(SE)
+move(NE)
+move(E)
+land
+move(NW)
+pass
+move(NW)
+play
+move(S)
+move(NE)
+move(N)
+move(SE)

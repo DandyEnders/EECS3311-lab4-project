@@ -1,0 +1,14 @@
+move(W)
+move(SE)
+move(S)
+move(E)
+move(SW)
+move(N)
+move(E)
+pass
+pass
+wormhole
+pass
+move(NE)
+move(W)
+move(S)

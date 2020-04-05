@@ -1,0 +1,13 @@
+move(N)
+liftoff
+move(NW)
+abort
+move(SE)
+move(SE)
+liftoff
+land
+move(N)
+move(N)
+move(E)
+move(S)
+move(W)

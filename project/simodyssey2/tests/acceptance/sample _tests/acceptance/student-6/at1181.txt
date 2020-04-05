@@ -1,0 +1,12 @@
+wormhole
+move(E)
+move(SW)
+move(S)
+move(E)
+test(26,97,97,97,97)
+test(93,93,93,93,93)
+move(E)
+move(W)
+wormhole
+move(N)
+land

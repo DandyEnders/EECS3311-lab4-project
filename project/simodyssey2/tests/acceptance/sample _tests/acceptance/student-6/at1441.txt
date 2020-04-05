@@ -1,0 +1,14 @@
+move(N)
+move(NE)
+abort
+move(SE)
+test(26,26,26,43,43)
+land
+liftoff
+land
+move(W)
+move(N)
+move(W)
+liftoff
+move(SE)
+move(NW)

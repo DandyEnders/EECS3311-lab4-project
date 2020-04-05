@@ -1,0 +1,12 @@
+wormhole
+move(NE)
+move(NE)
+move(N)
+abort
+move(S)
+move(NE)
+move(SW)
+move(NW)
+abort
+move(NE)
+move(S)

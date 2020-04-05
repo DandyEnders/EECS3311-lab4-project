@@ -1,0 +1,12 @@
+move(SW)
+move(E)
+wormhole
+move(N)
+move(E)
+liftoff
+move(NW)
+move(W)
+move(NW)
+move(SE)
+move(E)
+move(E)

@@ -1,0 +1,12 @@
+wormhole
+abort
+liftoff
+abort
+move(NE)
+land
+test(19,26,33,20,26)
+move(E)
+play
+land
+move(SW)
+move(N)

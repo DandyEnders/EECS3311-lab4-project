@@ -1,0 +1,11 @@
+move(N)
+move(W)
+move(SE)
+move(S)
+liftoff
+move(SE)
+move(S)
+abort
+move(SW)
+test(71,71,71,71,98)
+move(S)

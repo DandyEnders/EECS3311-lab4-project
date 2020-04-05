@@ -1,0 +1,10 @@
+move(W)
+move(N)
+move(NW)
+move(E)
+move(NW)
+pass
+pass
+move(SE)
+move(W)
+move(NE)

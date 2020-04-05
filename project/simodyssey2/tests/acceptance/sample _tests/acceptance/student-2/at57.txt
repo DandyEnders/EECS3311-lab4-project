@@ -1,0 +1,17 @@
+move(NW)
+move(NE)
+move(E)
+move(SE)
+move(NE)
+move(S)
+land
+move(NE)
+move(S)
+move(NE)
+move(W)
+wormhole
+pass
+land
+move(W)
+move(NW)
+move(SW)
