@@ -57,34 +57,6 @@ feature -- Attributes
 
 feature -- Commands
 
-	find_landable_planet: PLANET
-			-- given that SECTOR is "landable", Result is equal to a PLANET contained in SECTOR that has the lowest id and is "landable".
-		require
-			is_landable
-		local
-			min_id: INTEGER
-			min_p: PLANET
-		do
-			min_id := min_id.max_value
-			create min_p.make (coordinate, min_id,0)
-			across
-				moveable_entities_in_increasing_order is i_m
-			loop
-				if attached {PLANET} i_m as p then
-					if p.attached_to_star and not p.visited then
-						if p.id < min_id then
-							min_id := p.id
-							min_p := p
-						end
-					end
-				end
-			end
-				Result:=min_p
-		ensure
-			result_is_landable:Result.attached_to_star and (not Result.visited)
-			result_is_contained_in_sector: has(Result)
-		end
-
 	remove (me: MOVEABLE_ENTITY)
 			--given that SECTOR conatins me, "remove" me from SECTOR. note: only MOVEABLE_ENTITY can be removed once added.
 		require
@@ -135,6 +107,34 @@ feature -- Commands
 		end
 
 feature -- Queries
+
+	find_landable_planet: PLANET
+			-- given that SECTOR is "landable", Result is equal to a PLANET contained in SECTOR that has the lowest id and is "landable".
+		require
+			is_landable
+		local
+			min_id: INTEGER
+			min_p: PLANET
+		do
+			min_id := min_id.max_value
+			create min_p.make (coordinate, min_id,0)
+			across
+				moveable_entities_in_increasing_order is i_m
+			loop
+				if attached {PLANET} i_m as p then
+					if p.attached_to_star and not p.visited then
+						if p.id < min_id then
+							min_id := p.id
+							min_p := p
+						end
+					end
+				end
+			end
+				Result:=min_p
+		ensure
+			result_is_landable:Result.attached_to_star and (not Result.visited)
+			result_is_contained_in_sector: has(Result)
+		end
 
 	is_equal(other: like current): BOOLEAN
 			-- SECTOR is equal to other if other.coordinate ~ coordinate and other.quadrants ~ quadrants

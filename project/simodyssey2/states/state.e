@@ -102,9 +102,7 @@ feature -- Attributes
 
 	game_model: SIMODYSSEY
 			-- the game being controlled in current (ie PLAY_STATE, MAIN_MENU_STATE, LANDED_STATE)
-
-feature -- Queries
-
+			
 	next_state: STATE
 			-- after creation next_state = current. Note refference equality
 			-- hence forth, the refference of next_state is modified by execturing commands (eg. abort, land...) in current.

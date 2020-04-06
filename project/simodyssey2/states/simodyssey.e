@@ -140,6 +140,7 @@ feature -- Explorer Interface Commands
 		do
 			is_aborted := TRUE
 		ensure
+			is_aborted
 			not game_is_in_session
 		end
 
@@ -161,7 +162,7 @@ feature -- Explorer Interface Commands
 			is_test_game := is_test
 		ensure
 			game_is_in_session
-			is_test_game = is_test
+			and (is_test_game = is_test)
 		end
 
 	move_explorer (d: COORDINATE)
@@ -508,15 +509,13 @@ feature -- Explorer Interface Boolean Queries
 			-- result equals true if a sector in "galaxy" in direction d is full. result equals false otherwise.
 		require
 			d.is_direction
-			explorer_is_alive
+			game_is_in_session
 		do
 			Result := galaxy.at ((explorer.coordinate + d).wrap_coordinate_to_coordinate ((explorer.coordinate + d), [1, 1], [number_rows, number_columns])).is_full
 		end
 
 	explorer_is_landed: BOOLEAN
 			-- result equals true if explorer is landed on a planet in "galaxy". false otherwise.
-		require
-			explorer_is_alive
 		do
 			Result := explorer.landed
 		end
@@ -524,7 +523,7 @@ feature -- Explorer Interface Boolean Queries
 	explorer_sector_has_wormhole: BOOLEAN
 			-- result equals true if explorer is contained in a SECTOR that also contains a wormhole. false otherwise.
 		require
-			explorer_is_alive
+			game_is_in_session
 		do
 			Result := galaxy.sector_with (explorer).has_wormhole
 		end
@@ -540,7 +539,7 @@ feature -- Explorer Interface Boolean Queries
 	planet_in_explorer_sector_supports_life: BOOLEAN
 			-- result equals true if there exists a planet in the explorer's sector that supports life. false otherwise.
 		require
-			explorer_is_alive
+			game_is_in_session
 		do
 			Result := across explorer_sector is i_q some (attached {PLANET} i_q.entity as p) implies (not p.visited and (p.support_life)) end
 		end
@@ -554,7 +553,7 @@ feature -- Explorer Interface Boolean Queries
 	explorer_sector_is_landable: BOOLEAN
 			-- result equals true if there exists (attached and unvisited) planet(s) in the explorer's sector and the explorer's sector contains a YELLOW_DWARF . false otherwise.
 		require
-			explorer_is_alive
+			game_is_in_session
 		do
 			Result := galaxy.sector_with (explorer).is_landable
 		ensure
@@ -588,7 +587,7 @@ feature -- Explorer Interface Boolean Queries
 	explorer_sector_has_yellow_dwarf: BOOLEAN
 			-- result equals true if the explorer's SECTOR contains a YELLOW_DWARF. false otherwise.
 		require
-			explorer_is_alive
+			game_is_in_session
 		do
 			if explorer_sector.has_stationary_entity then
 				if attached {YELLOW_DWARF} explorer_sector.get_stationary_entity as y_d then
@@ -604,7 +603,7 @@ feature -- Explorer Interface Boolean Queries
 	explorer_sector_has_planets: BOOLEAN
 			-- result equals true if the explorer's SECTOR contains PLANETs. false otherwise.
 		require
-			explorer_is_alive
+			game_is_in_session
 		do
 			Result := galaxy.sector_with (explorer).has_planet
 		end
@@ -612,7 +611,7 @@ feature -- Explorer Interface Boolean Queries
 	explorer_sector_has_unvisted_attached_planets: BOOLEAN
 			-- result equals true if the explorer's SECTOR contains attached, yet unvisited PLANET's. false otherwise.
 		require
-			explorer_is_alive
+			game_is_in_session
 		do
 			if explorer_sector_has_planets and explorer_sector_has_yellow_dwarf then
 				across
@@ -635,8 +634,6 @@ feature -- Explorer Interface non-Boolean Queries
 
 	explorer_coordinate: COORDINATE
 			-- result equals the explorer's coordinate in "galaxy"
-		require
-			explorer_is_alive
 		do
 			Result := explorer.coordinate
 		end

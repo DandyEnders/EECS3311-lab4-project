@@ -1,6 +1,6 @@
 note
 	description: "Controller"
-	author: "Jinho Hwang"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -34,7 +34,17 @@ feature -- Attributes
 			-- "game_state" is polymorphic
 			-- provides the STATE (see description in STATE) of the current SIMODYSSEY game. eg PLAY_STATE, MAIN_MENU_STATE...
 
-feature -- Commands
+feature -- State Commands
+	move_to_next_state
+			-- transition "game_sate" to the STATE referenced by "game_state.next_state" such that "game_state" = "game_state.next_state".
+			-- Note reference equality.
+		do
+			game_state := game_state.next_state
+		ensure
+			game_state = game_state.next_state
+		end
+
+feature -- User Commands
 
 	abort
 			--execute "abort" command in "game_state" followed by "move_to_next_state"
@@ -124,13 +134,6 @@ feature -- Commands
 			-- Reset model state.
 		do
 			make
-		end
-
-	move_to_next_state
-			-- transition "game_sate" to the STATE referenced by "game_state.next_state" such that "game_state" = "game_state.next_state".
-			-- Note reference equality.
-		do
-			game_state := game_state.next_state
 		end
 
 feature -- Queries

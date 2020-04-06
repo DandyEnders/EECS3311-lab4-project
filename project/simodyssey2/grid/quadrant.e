@@ -32,7 +32,7 @@ feature -- Attribute
 
 	coordinate: COORDINATE -- coordinate of the quadrant
 
-feature -- Command
+feature -- Commands
 
 	remove_entity
 			-- "remove" entity by replacing entity with an instance of NULL_ENTITY.

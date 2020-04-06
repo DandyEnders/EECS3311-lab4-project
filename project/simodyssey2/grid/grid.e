@@ -47,22 +47,22 @@ feature {NONE} -- Contstructor
 					sectors [i, j] := sect
 				end
 			end
-			row := sectors.height
-			col := sectors.width
+			max_row := sectors.height
+			max_col := sectors.width
 		end
 
 feature {NONE} -- Attribute
-
-	sectors: ARRAY2 [SECTOR]
 
 	stationary_entities: HASH_TABLE [STATIONARY_ENTITY, INTEGER]
 
 feature -- Attributes
 
-	row: INTEGER
+	sectors: ARRAY2 [SECTOR]
+
+	max_row: INTEGER
 		-- maximum number of rows in GRID
 
-	col: INTEGER
+	max_col: INTEGER
 		-- maximum number of columns in GRID
 
 feature {NONE} -- Queries
@@ -207,7 +207,7 @@ feature -- Queries
 	valid_coordinate (c: COORDINATE): BOOLEAN
 			-- c is a "valid_quardinate" in GRID if 1 <= c.row <= row and 1 <= c.col <= col
 		do
-			Result := 1 <= c.row and c.row <= row and 1 <= c.col and c.col <= col
+			Result := 1 <= c.row and c.row <= max_row and 1 <= c.col and c.col <= max_col
 		end
 
 	has (ie: ID_ENTITY): BOOLEAN
@@ -239,10 +239,10 @@ feature -- Out
 			create Result.make_from_string (msg.left_margin)
 			Result.append ("Sectors:")
 			across
-				1 |..| row is i
+				1 |..| max_row is i
 			loop
 				across
-					1 |..| col is j
+					1 |..| max_col is j
 				loop
 					Result.append ("%N")
 					Result.append (msg.left_big_margin)
@@ -287,7 +287,7 @@ feature -- Out
 			--   M---  *---  B---  ----  ----
 			--   (2:1) (2:2) (2:3) (2:4) (2:5)
 			--   ----  ----  W---  W---  ----
-			--   (3:1) (3:2) (3:3) (3:4) 
+			--   (3:1) (3:2) (3:3) (3:4)
 			--   PY--  ----  O---
 
 		local
@@ -295,11 +295,11 @@ feature -- Out
 		do
 			create Result.make_empty
 			across
-				1 |..| row is i
+				1 |..| max_row is i
 			loop
 				Result.append (msg.left_big_margin)
 				across
-					1 |..| col is j
+					1 |..| max_col is j
 				loop
 					Result.append (sectors [i, j].out_coordinate)
 					Result.append ("  ")
@@ -307,12 +307,12 @@ feature -- Out
 				Result.append ("%N")
 				Result.append (msg.left_big_margin)
 				across
-					1 |..| col is j
+					1 |..| max_col is j
 				loop
 					Result.append (sectors [i, j].out_quadrants)
 					Result.append ("   ")
 				end
-				if i < row then
+				if i < max_row then
 					Result.append ("%N")
 				end
 			end
