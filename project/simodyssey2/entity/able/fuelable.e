@@ -7,12 +7,9 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
+deferred class
 	FUELABLE
-
-create
-	make
-
+	
 feature {NONE} -- Initialization
 
 	make (max: INTEGER)

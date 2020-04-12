@@ -1,5 +1,5 @@
 ﻿note
-	description: "A class that encapsulates an ENTITY’s life/health."
+	description: "A class that encapsulates an DEATHABLE's life."
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
