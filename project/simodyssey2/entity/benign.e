@@ -120,14 +120,12 @@ feature -- Commands
 			is_dead_by_asteroid
 		end
 
-feature {NONE} -- Implementation
-
-	cloner (a_id, t_left: INTEGER): like current
+	reproduce(moveable_id:INTEGER): like current
 		local
-			m: like current
+			rng: RANDOM_GENERATOR_ACCESS
 		do
-			create m.make (current.coordinate.deep_twin, a_id, t_left)
-			Result := m
+			create Result.make(current.coordinate, moveable_id, rng.rchoose (0,2))
+			reset_actions_left_until_reproduction
 		end
 
 feature -- Output

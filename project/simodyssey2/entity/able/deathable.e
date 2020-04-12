@@ -1,5 +1,8 @@
 note
-	description: "Summary description for {DEATHABLE}."
+	description: "[
+			 A class that encapsulates common queries, attributes, 
+			 and commands for entities capable of death. (e.g. MOVEABLE_ENTITY)
+			 ]"
 	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -13,7 +16,8 @@ feature -- Constructor
 		do
 			create life.make (a_max_life)
 			create death_cause.make_empty
-			create death_cause_type.make (10)
+			create death_cause_type.make_empty
+			death_cause_type.compare_objects
 			killers_id := 0
 		end
 
@@ -25,7 +29,7 @@ feature {DEATHABLE} -- Killable Attribute
 
 	death_cause: STRING
 
-	death_cause_type: HASH_TABLE [INTEGER, STRING]
+	death_cause_type: ARRAY [STRING]
 
 feature {DEATHABLE} -- Killable Commands
 
@@ -33,8 +37,7 @@ feature {DEATHABLE} -- Killable Commands
 		require
 			not is_valid_death_cause (a_death_cause_type)
 		do
-				-- 0 is dummy value. I only use the hash key part to check uniqueness.
-			death_cause_type [a_death_cause_type] := 0
+			death_cause_type.force (a_death_cause_type, death_cause_type.count+1)
 		end
 
 feature {DEATHABLE} -- Killable Queries

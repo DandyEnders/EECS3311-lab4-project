@@ -1,5 +1,8 @@
 note
-	description: "Summary description for {STATIONARY_ENTITY}."
+	description: "[
+				A class to represent an ID_ENTITY that is not also
+				a MOVEABLE_ENTITY.
+				]"
 	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"

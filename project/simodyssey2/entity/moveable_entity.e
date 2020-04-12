@@ -1,5 +1,8 @@
 note
-	description: "Summary description for {MOVEABLE_ENTITY}."
+	description: "[
+				A class to represent an ID_ENTITY that can change 
+				its coordinate and is capable of death.
+				]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -57,6 +60,13 @@ feature -- Commands
 			alive_or_dead_current_remains_in_sector: sector.coordinate ~ coordinate
 		end
 
+	set_coordinate (a_coordinate: COORDINATE)
+			-- intialize "coordinate" to a_coordinate
+		do
+			coordinate := a_coordinate
+		ensure
+			coordinate ~ a_coordinate
+		end
 feature	-- Queries
 	is_dead_by_blackhole: BOOLEAN
 			-- was current killed by executing kill_by_blackhole

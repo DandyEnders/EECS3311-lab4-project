@@ -1,5 +1,9 @@
 note
-	description: "Controller"
+	description: "[
+				A class that provides an interface for executing
+				all nine user commands and updates the user
+				output when commands are executed.
+				]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {GRID}."
-	author: ""
+	description: "A collection of SECTOR objects arranged in a 2-D grid."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

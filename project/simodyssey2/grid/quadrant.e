@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {QUADRANT}."
+	description: "A container for storing an ENTITY in a SECTOR"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -21,9 +21,12 @@ feature {NONE} -- Constructor
 
 	make_empty (c: COORDINATE)
 			-- An instance of QUADRANT will be created with coordinate ~ c and will contain a null entity.
+		local
+			ne: NULL_ENTITY
 		do
 			coordinate := c
-			remove_entity
+			create ne.make (coordinate)
+			entity := ne
 		end
 
 feature -- Attribute
@@ -36,6 +39,8 @@ feature -- Commands
 
 	remove_entity
 			-- "remove" entity by replacing entity with an instance of NULL_ENTITY.
+		require
+			cannot_remove_a_stationary_entity: not (attached {STATIONARY_ENTITY} entity)
 		local
 			ne: NULL_ENTITY
 		do
@@ -47,8 +52,12 @@ feature -- Commands
 
 	set_entity (e: ID_ENTITY)
 			-- "set" entity by replacing entity with an instance of ID_ENTITY.
+		require
+		 	stationary_entities_cannot_change_coordinate: attached {STATIONARY_ENTITY} e implies e.coordinate ~ coordinate
 		do
-			e.set_coordinate (coordinate)
+			if attached {MOVEABLE_ENTITY} e as me then
+				me.set_coordinate (coordinate)
+			end
 			entity := e
 		ensure
 			not is_empty

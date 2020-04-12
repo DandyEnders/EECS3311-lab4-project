@@ -1,5 +1,7 @@
 note
-	description: "Summary description for {REPRODUCEABLE_ENTITY}."
+	description: "[
+	:		 A class to represent an NP_MOVEABLE_ENTITY that can reproduce.
+			]"
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
@@ -21,7 +23,6 @@ feature {NONE} -- Initialization
 			np_moveable_entity_make (a_coordinate, a_id, t_left,charac)
 			reproduction_interval := r_interval
 			actions_left_until_reproduction := reproduction_interval
-			create reproduction_message.make_empty
 		end
 
 feature -- Attributes
@@ -31,9 +32,6 @@ feature -- Attributes
 
 	reproduction_interval: INTEGER
 			-- minimum number of actions ENTITY must execute until it can attempt to reproduce.
-
-feature {SIMODYSSEY} -- Attributes
-	reproduction_message: STRING
 
 feature -- Queries
 
@@ -64,39 +62,17 @@ feature -- Commands
 			reproduction_interval ~ actions_left_until_reproduction
 		end
 
-	reproduce (sector: SECTOR; moveable_id: INTEGER)
-			-- succesfully create another ENTITY with current's type in current's sector
+	reproduce (moveable_id: INTEGER): like current
+			-- succesfully create another ENTITY of type {like current} with the same coordinate as current.
 		require
-			not sector.is_full
 			ready_to_reproduce
-		local
-			rng: RANDOM_GENERATOR_ACCESS
-			n_me: NP_MOVEABLE_ENTITY
-		do
-			reproduction_message.make_empty
-			n_me := cloner (moveable_id, rng.rchoose (0, 2))
-			sector.add (n_me)
-			reproduction_message.make_from_string (msg.left_margin + "reproduced " + n_me.out_sqr_bracket + " at " + sector.out_abstract_full_coordinate (n_me))
-			reset_actions_left_until_reproduction
-		ensure
-			is_alive
-			reproduction_interval_is_reset: (not ready_to_reproduce) and actions_left_until_reproduction ~ reproduction_interval
-			sector_has_both_current_and_new_clone:sector.has (current) and sector.has_id (moveable_id)
-			sector_count_incremented: (sector.count ~ (old sector.count +1))
-			previous_entities_in_sector_have_not_been_removed: (across ((old sector.deep_twin).quadrants) is i_q all attached {ID_ENTITY} i_q.entity as i_q_e implies (sector.has (i_q_e)) end)
-		end
-
-feature {NONE} -- Private Attributes
-
-	cloner (a_id, t_left: INTEGER): like current
 		deferred
 		ensure
-			Result /= Current
-			Result /~ Current
-			Result.id ~ a_id
-			Result.turns_left ~ t_left
+			is_alive
+			reproduction_interval_is_reset: actions_left_until_reproduction ~ reproduction_interval
+			clone_and_current_are_different_entities:(Result /~ Current)
+			clone_and_current_have_same_coordinates: Result.coordinate ~ coordinate
 		end
-
 invariant
 	0 <= actions_left_until_reproduction and actions_left_until_reproduction <= reproduction_interval
 

@@ -1,5 +1,8 @@
 note
-	description: "Summary description for {STAR}."
+	description: "[
+				A class to represent a STATIONARY_ENTITY and its
+				luminosity value.
+				]"
 	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"

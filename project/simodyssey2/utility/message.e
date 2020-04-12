@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {MESSAGE}."
-	author: "Jinho Hwang"
+	description: "A class for generating Abstract State messages."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -239,13 +239,8 @@ feature -- Abstract State: Death Messages (Death due to blackhole.)
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (np))
-			Result.append ("got devoured by blackhole ")
-			Result.append ("(id: ")
-			Result.append (blackhole_id.out)
-			Result.append (") at Sector:")
-			Result.append (sector_row.out)
-			Result.append (":")
-			Result.append (sector_col.out)
+			Result.append ("got devoured by blackhole " + "(id: " + blackhole_id.out + ") ")
+			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
 feature -- Abstract State: Death Messages (Death due to janitaur.)
@@ -258,8 +253,7 @@ feature -- Abstract State: Death Messages (Death due to janitaur.)
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (a))
-			Result.append ("got imploded by janitaur ")
-			Result.append ("(id: " + janitaur_id.out + ") ")
+			Result.append ("got imploded by janitaur " + "(id: " + janitaur_id.out + ") " )
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 

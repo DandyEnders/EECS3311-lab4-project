@@ -1,5 +1,10 @@
 note
-	description: "Summary description for {NP_MOVEABLE_ENTITY}."
+	description: "[
+				A class to represent a MOVEABLE_ENTITY whose actions
+				occur in defined intervals and whose actions cannot 
+				be explicitly controlled via user commands.
+				Note: NP stands for NON_PLAYABLE
+				]"
 	author: "Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -23,9 +28,10 @@ feature {NONE} -- Initialization
 			set_turns_left (t_left)
 			create behavior_messages.make_empty
 		end
-feature {SIMODYSSEY} -- Attributes
+feature -- Attributes
 
 	behavior_messages: ARRAY [STRING]
+		-- messages produced after "behave" executes.
 
 feature -- Attributes	
 

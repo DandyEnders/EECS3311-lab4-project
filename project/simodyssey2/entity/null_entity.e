@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {NULL_ENTITY}."
+	description: "A class to represent the absence of an ENTITY. "
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -20,10 +20,10 @@ inherit
 			is_equal
 		end
 
-create
+create {QUADRANT}
 	make
 
-feature	{NONE}
+feature	{QUADRANT}
 	make(a_coordinate: COORDINATE)
 		do
 			entity_make(a_coordinate,'-')

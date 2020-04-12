@@ -1,5 +1,7 @@
 note
-	description: "Summary description for {ENTITY}."
+	description: "[
+				A class to represent an entity in the game.
+				]"
 	author: "Jinho Hwang, Ato Kooomson"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -42,16 +44,6 @@ feature -- Queries
 			-- current "is_equal" to other if other.character ~ character and other.coordinate ~ coordinate
 		do
 			Result := character ~ other.character and coordinate ~ other.coordinate
-		end
-
-feature -- Commands
-
-	set_coordinate (a_coordinate: COORDINATE)
-			-- intialize "coordinate" to a_coordinate
-		do
-			coordinate := a_coordinate
-		ensure
-			coordinate ~ a_coordinate
 		end
 
 feature -- out

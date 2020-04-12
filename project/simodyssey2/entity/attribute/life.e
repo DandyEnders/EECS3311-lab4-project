@@ -1,5 +1,5 @@
-note
-	description: "Summary description for {LIFE}."
+﻿note
+	description: "A class that encapsulates an ENTITY’s life/health."
 	author: "Jinho Hwang"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -14,10 +14,10 @@ inherit
 			out
 		end
 
-create
+create {DEATHABLE}
 	make
 
-feature {NONE}
+feature {DEATHABLE}
 
 	make (a_max: INTEGER)
 		do

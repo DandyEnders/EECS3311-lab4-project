@@ -1,5 +1,8 @@
 ﻿note
-	description: "Summary description for {PLAY_STATE}."
+	description: "[
+			A class that defines valid, and invalid user commands 
+			for when the user is in a game, and the explorer is not landed.
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -22,8 +25,8 @@ feature -- Commands
 			s: STATE
 		do
 			game_model.abort
-			abstract_state.executed_no_turn_command
-			create {MAIN_MENU_STATE} s.make (game_model, abstract_state,msg.empty_string,msg.abort)
+			abstract_state_numbers.executed_no_turn_command
+			create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers,msg.empty_string,msg.abort)
 			transition_to(s)
 		ensure then
 			enter_main_menu_state: attached {MAIN_MENU_STATE} next_state
@@ -43,19 +46,19 @@ feature -- Commands
 				--			-- model.explorer is in a sector with planet and yellow dwarf
 			if game_model.explorer_sector_is_landable then
 				game_model.land_explorer
-				abstract_state.executed_valid_turn_command
+				abstract_state_numbers.executed_valid_turn_command
 				if game_model.explorer_found_life then
-					create {MAIN_MENU_STATE} s.make (game_model, abstract_state,msg_mode,msg.land_life_found)
+					create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers,msg_mode,msg.land_life_found)
 				else -- landed in no life planet
 					c := game_model.explorer_coordinate
 					create tmp_str.make_from_string (msg.land_life_not_found (c.row, c.col))
 					tmp_str.append ("%N")
 					tmp_str.append (game_model.out)
-					create {LANDED_STATE} s.make (game_model, abstract_state,msg_mode,tmp_str)
+					create {LANDED_STATE} s.make (game_model, abstract_state_numbers,msg_mode,tmp_str)
 				end
 				transition_to(s)
 			else
-				abstract_state.executed_invalid_command
+				abstract_state_numbers.executed_invalid_command
 				set_msg_command_validity (msg.error)
 				create tmp_str.make_empty
 				if not game_model.explorer_sector_has_yellow_dwarf then
@@ -81,7 +84,7 @@ feature -- Commands
 			c: COORDINATE
 		do
 			c := game_model.explorer_coordinate
-			abstract_state.executed_invalid_command
+			abstract_state_numbers.executed_invalid_command
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.liftoff_error_not_on_planet (c.row, c.col))
 		ensure then
@@ -96,7 +99,7 @@ feature -- Commands
 		do
 			if not game_model.sector_in_explorer_direction_is_full (d) then
 				game_model.move_explorer (d)
-				abstract_state.executed_valid_turn_command
+				abstract_state_numbers.executed_valid_turn_command
 				if game_model.explorer_is_alive then
 					set_msg_command_validity (msg.ok)
 					set_msg_content (game_model.out)
@@ -105,7 +108,7 @@ feature -- Commands
 				end
 			else -- model.sector_in_direction_is_full (d) or not model.game_in_session
 				if game_model.sector_in_explorer_direction_is_full (d) then
-					abstract_state.executed_invalid_command
+					abstract_state_numbers.executed_invalid_command
 					set_msg_command_validity (msg.error)
 					set_msg_content (msg.move_error_sector_full)
 				end
@@ -120,7 +123,7 @@ feature -- Commands
 			-- if explorer dies after succesffuly passing, append one of Abstract State: Death Messages EXPLORER [3 to 4] to "out"
 		do
 			game_model.pass
-			abstract_state.executed_valid_turn_command
+			abstract_state_numbers.executed_valid_turn_command
 			set_msg_command_validity (msg.ok)
 			if game_model.explorer_is_alive then
 				set_msg_content (game_model.out)
@@ -137,7 +140,7 @@ feature -- Commands
 			-- implies that preconditions of {SIMODYSSEY}.new_game are not met,
 			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
-			abstract_state.executed_invalid_command
+			abstract_state_numbers.executed_invalid_command
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.play_error_no_mission)
 		ensure then
@@ -147,7 +150,7 @@ feature -- Commands
 	status
 			-- append “Explorer status report:Travelling at cruise speed at [X,Y,Z] Life units left:V, Fuel units left:W” to "out"
 		do
-			abstract_state.executed_no_turn_command
+			abstract_state_numbers.executed_no_turn_command
 			set_msg_command_validity (msg.ok)
 			set_msg_content (game_model.out_status_explorer)
 		ensure then
@@ -159,7 +162,7 @@ feature -- Commands
 			-- implies that preconditions of {SIMODYSSEY}.new_game are not met,
 			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
-			abstract_state.executed_invalid_command
+			abstract_state_numbers.executed_invalid_command
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.test_error_no_mission)
 		ensure then
@@ -177,7 +180,7 @@ feature -- Commands
 			c := game_model.explorer_coordinate
 			if game_model.explorer_sector_has_wormhole then
 				game_model.wormhole_explorer
-				abstract_state.executed_valid_turn_command
+				abstract_state_numbers.executed_valid_turn_command
 				if game_model.explorer_is_alive then
 					set_msg_command_validity (msg.ok)
 					set_msg_content (game_model.out)
@@ -186,7 +189,7 @@ feature -- Commands
 				end
 			else
 				if not game_model.explorer_sector_has_wormhole then
-					abstract_state.executed_invalid_command
+					abstract_state_numbers.executed_invalid_command
 					set_msg_command_validity (msg.error)
 					c := game_model.explorer_coordinate
 					set_msg_content (msg.wormhole_error_explorer_not_found_wormhole (c.row, c.col))

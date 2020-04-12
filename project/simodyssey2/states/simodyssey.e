@@ -1,5 +1,9 @@
-note
-	description: "Summary description for {SIMODYSSEY}."
+﻿note
+	description: "[
+			A class that provides an interface for controlling the explorer’s 
+			actions in the galaxy, as well as controls the addition, removal, 
+			and movement of entities in the galaxy.
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -265,14 +269,19 @@ feature {NONE} -- Private Helper Commands
 		local
 			sector: SECTOR
 			id: INTEGER
+			clone_e: like r_n_me
+			s: STRING
+			msg: MESSAGE
 		do
 			sector := galaxy.sector_with (r_n_me)
 			if (not sector.is_full) and r_n_me.ready_to_reproduce then
 				id := moveable_id.current_id
 				moveable_id.update_id
-				r_n_me.reproduce (sector, id)
+				clone_e:=r_n_me.reproduce (id)
+				sector.add (clone_e)
 					--Pretty Printing Movement: ie reproduced ...
-				movement_output.force (r_n_me.reproduction_message, movement_output.count + 1)
+				create s.make_from_string (msg.left_margin + "reproduced " + clone_e.out_sqr_bracket + " at " + sector.out_abstract_full_coordinate (clone_e))
+				movement_output.force (s, movement_output.count + 1)
 					-- end of pretty printing code.
 			else
 				if not r_n_me.ready_to_reproduce then

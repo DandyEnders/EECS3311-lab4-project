@@ -1,5 +1,8 @@
-note
-	description: "Summary description for {DIRECTION_UTILITY}."
+﻿note
+	description: "[
+				A class that contains common direction COORDINATEs
+	 			(e.g. N -> [-1,0], E -> [0,1] …)
+	 ]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

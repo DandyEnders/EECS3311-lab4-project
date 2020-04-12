@@ -1,5 +1,8 @@
 note
-	description: "Summary description for {FUELABLE}."
+	description: "[
+			A class that encapsulates common queries, attributes, 
+			and commands for entities with fuel.
+			]"
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"

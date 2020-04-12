@@ -69,7 +69,7 @@ feature -- Queries
 			Result := is_dead and then get_death_cause ~ "ASTEROID"
 		end
 
-feature {NONE}
+feature {NONE} -- Commands
 
 	set_landed (b: BOOLEAN)
 		do

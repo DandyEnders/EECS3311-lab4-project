@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {SECTOR}."
+	description: "A collection of QUADRANT objects arranged in a LIST."
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

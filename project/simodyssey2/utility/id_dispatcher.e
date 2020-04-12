@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {ID_DISPATCHER}."
+	description: "A class for generating unique entity ids."
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

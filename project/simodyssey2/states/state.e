@@ -1,9 +1,7 @@
 note
 	description: "[
-		A STATE defines valid and invalid
-		 user commands available in "game_model"
-		 and the output generated when such commands
-		 are executed.
+			A class that defines valid, invalid user commands,
+			and generates the user's output when commands are executed.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
@@ -24,7 +22,7 @@ feature {NONE} -- Constructor
 	make (m: SIMODYSSEY; abs_s: ABSTRACT_STATE_NUMBERS; msg_m, msg_con: STRING)
 		do
 			game_model := m
-			abstract_state := abs_s
+			abstract_state_numbers := abs_s
 			set_msg_mode (msg_m)
 			set_msg_command_validity (msg.ok)
 			set_msg_content (msg_con)
@@ -35,7 +33,7 @@ feature {NONE} -- Attribute
 
 	msg: MESSAGE
 
-	abstract_state: ABSTRACT_STATE_NUMBERS
+	abstract_state_numbers: ABSTRACT_STATE_NUMBERS
 
 	msg_mode: STRING
 
@@ -94,7 +92,7 @@ feature {NONE} -- Commands
 				s_content.append ("%N")
 				s_content.append (game_model.out)
 			end
-			create {MAIN_MENU_STATE} s.make (game_model, abstract_state, msg_mode, s_content)
+			create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers, msg_mode, s_content)
 			transition_to (s)
 		end
 
@@ -102,7 +100,7 @@ feature -- Attributes
 
 	game_model: SIMODYSSEY
 			-- the game being controlled in current (ie PLAY_STATE, MAIN_MENU_STATE, LANDED_STATE)
-			
+
 	next_state: STATE
 			-- after creation next_state = current. Note refference equality
 			-- hence forth, the refference of next_state is modified by execturing commands (eg. abort, land...) in current.
@@ -155,7 +153,7 @@ feature -- Out
 			-- after a command in current is executed, this is the output the user sees.
 		do
 			create Result.make_from_string (msg.left_margin)
-			Result.append (abstract_state.out)
+			Result.append (abstract_state_numbers.out)
 			if not msg_mode.is_empty then
 				Result.append (", mode:")
 				Result.append (msg_mode)

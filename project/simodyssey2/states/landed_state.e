@@ -1,5 +1,9 @@
 ﻿note
-	description: "Summary description for {LANDED_STATE}."
+	description: "[
+			A class that defines valid, and invalid user commands 
+			for when the user is in a game and the explorer 
+			is landed.
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -22,8 +26,8 @@ feature -- Controller command / queries
 			s: STATE
 		do
 			game_model.abort
-			create {MAIN_MENU_STATE} s.make (game_model, abstract_state,msg.empty_string,msg.abort)
-			abstract_state.executed_no_turn_command
+			create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers,msg.empty_string,msg.abort)
+			abstract_state_numbers.executed_no_turn_command
 			transition_to(s)
 		ensure then
 			enter_main_menu_state: (attached {MAIN_MENU_STATE} next_state)
@@ -37,7 +41,7 @@ feature -- Controller command / queries
 			c: COORDINATE
 		do
 			c := game_model.explorer_coordinate
-			abstract_state.executed_no_turn_command
+			abstract_state_numbers.executed_no_turn_command
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.land_error_landed_already (c.row, c.col))
 		ensure then
@@ -54,13 +58,13 @@ feature -- Controller command / queries
 		do
 			c := game_model.explorer_coordinate
 			game_model.liftoff_explorer
-			abstract_state.executed_valid_turn_command
+			abstract_state_numbers.executed_valid_turn_command
 			create s_tmp.make_empty
 			if game_model.explorer_is_alive then
 				s_tmp.append (msg.liftoff (c.row, c.col))
 				s_tmp.append ("%N")
 				s_tmp.append (game_model.out)
-				create {PLAY_STATE} s.make (game_model, abstract_state,msg_mode,s_tmp)
+				create {PLAY_STATE} s.make (game_model, abstract_state_numbers,msg_mode,s_tmp)
 				transition_to(s)
 			else
 				set_explorer_death_message
@@ -78,7 +82,7 @@ feature -- Controller command / queries
 			c: COORDINATE
 		do
 			c := game_model.explorer_coordinate
-			abstract_state.executed_no_turn_command
+			abstract_state_numbers.executed_no_turn_command
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.move_error_landed (c.row, c.col))
 		ensure then
@@ -89,7 +93,7 @@ feature -- Controller command / queries
 			-- execute "pass" command in SIMODYSSEY
 		do
 			game_model.pass
-			abstract_state.executed_valid_turn_command
+			abstract_state_numbers.executed_valid_turn_command
 			set_msg_command_validity (msg.ok)
 			set_msg_content (game_model.out)
 		ensure then
@@ -101,7 +105,7 @@ feature -- Controller command / queries
 			-- implies that preconditions of {SIMODYSSEY}.new_game are not met,
 			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
-			abstract_state.executed_no_turn_command
+			abstract_state_numbers.executed_no_turn_command
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.play_error_no_mission)
 		ensure then
@@ -111,7 +115,7 @@ feature -- Controller command / queries
 	status
 			-- append "Negative on that request:already landed on a planet at Sector:X:Y" to "out"
 		do
-			abstract_state.executed_no_turn_command
+			abstract_state_numbers.executed_no_turn_command
 			set_msg_command_validity (msg.ok)
 			set_msg_content (game_model.out_status_explorer)
 		ensure then
@@ -123,7 +127,7 @@ feature -- Controller command / queries
 			-- implies that preconditions of {SIMODYSSEY}.new_game are not met,
 			-- therefore append "To start a new mission, please abort the current one first." to "out"
 		do
-			abstract_state.executed_no_turn_command
+			abstract_state_numbers.executed_no_turn_command
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.test_error_no_mission)
 		ensure then
@@ -138,7 +142,7 @@ feature -- Controller command / queries
 			c: COORDINATE
 		do
 			c := game_model.explorer_coordinate
-			abstract_state.executed_no_turn_command
+			abstract_state_numbers.executed_no_turn_command
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.wormhole_error_landed (c.row, c.col))
 		ensure then
