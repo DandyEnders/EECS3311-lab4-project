@@ -31,7 +31,7 @@ feature -- Tests
 		do
 			-- add your tests here
 			-- add cluster for tests
---			 add_test (create {UNIT_TEST}.make)
+			 add_test (create {UNIT_TEST}.make)
 		end
 
 invariant

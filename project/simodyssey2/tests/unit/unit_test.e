@@ -18,11 +18,11 @@ feature {NONE} -- Initialization
 
 	make
 		do
---			add_boolean_case (agent t1)
---			add_boolean_case (agent t2)
---			add_boolean_case (agent t3)
-				--			add_boolean_case (agent t4)
-			add_boolean_case (agent t6)
+			add_boolean_case (agent t1)
+			add_boolean_case (agent t2)
+			add_boolean_case (agent t3)
+--			add_boolean_case (agent t4)
+--			add_boolean_case (agent t6)
 --			add_boolean_case (agent t7)
 --			add_boolean_case (agent t8)
 --			add_boolean_case (agent t9)
@@ -132,41 +132,41 @@ feature -- tests
 
 --		end
 
-	t6: BOOLEAN
-		local
-			s_o: SIMODYSSEY
-			sec: SECTOR
-			e: EXPLORER
-			q: QUADRANT
-		do
-			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move? Does explorer die after several moves")
---			comment ("does fuel recharge if you move into a sector with a star?")
---			comment ("does explorer die if he goes into a sector with a blackhole.")
---			comment ("Do planets move as they do in the oracle?")
-			create s_o.make
-			s_o.new_game (1, 1,1,1,59,TRUE)
-			create sec.make_empty ([2,3], 4)
-			create e.make ([2,1], 4)
-			create q.make_empty ([2,1])
-			print ("%N")
-			print(sec.out_quadrants)
-			print(e.out)
-			print(q.out_character);
-			print ("%N")
---			print (s_o.out_descriptions)
-			print ("%N")
-			print (s_o.out)
---			s_o.move_explorer ([1, 1])
+--	t6: BOOLEAN
+--		local
+--			s_o: SIMODYSSEY
+--			sec: SECTOR
+--			e: EXPLORER
+--			q: QUADRANT
+--		do
+--			comment ("t6: Testing SIMODYSSEY move_explorer. Does Fuel get spent every move? Does explorer die after several moves")
+----			comment ("does fuel recharge if you move into a sector with a star?")
+----			comment ("does explorer die if he goes into a sector with a blackhole.")
+----			comment ("Do planets move as they do in the oracle?")
+--			create s_o.make
+--			s_o.new_game (1, 1,1,1,59,TRUE)
+--			create sec.make_empty ([2,3], 4)
+--			create e.make ([2,1], 4)
+--			create q.make_empty ([2,1])
 --			print ("%N")
+--			print(sec.out_quadrants)
+--			print(e.out)
+--			print(q.out_character);
+--			print ("%N")
+----			print (s_o.out_descriptions)
+--			print ("%N")
+--			print (s_o.out)
+----			s_o.move_explorer ([1, 1])
+----			print ("%N")
 
---			s_o.move_explorer ([1,0])
---			print ("%N")
---			print ("%N")
---			print (s_o.out_grid)
---			s_o.move_explorer ([1,0])
+----			s_o.move_explorer ([1,0])
+----			print ("%N")
+----			print ("%N")
+----			print (s_o.out_grid)
+----			s_o.move_explorer ([1,0])
 
-		Result:=TRUE
-		end
+--		Result:=TRUE
+--		end
 
 --	t4: BOOLEAN
 --		local
@@ -228,142 +228,137 @@ feature -- tests
 --			Result := TRUE
 --		end
 
---	t3: BOOLEAN
---		local
---			e: EXPLORER
---			p: PLANET
---			g: GRID
---		do
---			comment ("t3: Testing grid.make, grid.add, grid.remove, grid.move")
---			create g.make (5, 5, 4)
---			create e.make ([1, 1], 0)
---			create p.make ([1, 1], 1)
-
---			g.add_at (e, [2, 2])
---			print(g.out)
---			print("%N")
-
---			g.remove (e)
---			print(g.out)
-
---			g.add_at (e, [1, 1])
-
---			print(g.out)
---			print("%N%N")
---			g.add_at (p, [3, 3])
---			g.move (e, [3, 3])
---			print(g.out)
---			print("%N%N")
---			g.remove (p) -- PE-- => remove P => -E--
---			print(g.out)
---			print("%N%N")
---			Result := true
---		end
-
---	t2: BOOLEAN
---		local
---			e: EXPLORER
---			c: COORDINATE
---			q: QUADRANT
---			s: SECTOR
---			id: INTEGER
---		do
---			id := 0
---			comment ("t2: Testing sector.remove")
---			create c.make ([0, 0])
---			Result := c.row = 0 and c.col = 0
---			check
---				Result
---			end
---			create e.make (c, id)
---			Result := e.current_life = 3
---			check
---				Result
---			end
---			create q.make_empty (c)
---			Result := q.is_empty
---			check
---				Result
---			end
---			q.set_entity (e)
---			Result := not q.is_empty
---			check
---				Result
---			end
---			Result := q.has (e)
---			check
---				Result
---			end
---			create s.make_empty (c, 4)
---			Result := not s.is_full
---			check
---				Result
---			end
---			s.add (e)
---			Result := s.out_quadrants ~ "E---"
---			check
---				Result
---			end
---			s.remove (e)
---			Result := s.out_quadrants ~ "----"
---			check
---				Result
---			end
-
---		end
-----	t2:BOOLEAN
-----		local
-----		do
-----			comment("t2: Testing Quadrant.make_empty")
-
-----		end
 
 
---	t1: BOOLEAN
---		local
---			e: EXPLORER
---			c: COORDINATE
---			q: QUADRANT
---			s: SECTOR
---			id: INTEGER
---		do
---			id := 0
---			comment ("t1: Testing coordinate.make, explorer.make, quadrant.make and sector.add")
---			create c.make ([0, 0])
---			Result := c.row = 0 and c.col = 0
---			check
---				Result
---			end
---			create e.make (c, id)
---			Result := e.current_life = 3
---			check
---				Result
---			end
---			create q.make_empty (c)
---			Result := q.is_empty
---			check
---				Result
---			end
---			q.set_entity (e)
---			Result := not q.is_empty
---			check
---				Result
---			end
---			Result := q.has (e)
---			check
---				Result
---			end
---			create s.make_empty (c, 4)
---			Result := not s.is_full
---			check
---				Result
---			end
---			s.add (e)
---			Result := s.out_quadrants ~ "E---"
---			check
---				Result
---			end
+	t1: BOOLEAN
+		local
+			e: EXPLORER
+			c: COORDINATE
+			q: QUADRANT
+			s: SECTOR
+			id: INTEGER
+		do
+			id := 0
+			comment ("t1: Testing coordinate.make, explorer.make, quadrant.make and sector.add")
+			create c.make ([0, 0])
+			Result := c.row = 0 and c.col = 0
+			check
+				Result
+			end
+			create e.make (c, id)
+			Result := e.current_life_point = 3
+			check
+				Result
+			end
+			create q.make_empty (c)
+			Result := q.is_empty
+			check
+				Result
+			end
+			q.set_entity (e)
+			Result := not q.is_empty
+			check
+				Result
+			end
+			Result := q.has (e)
+			check
+				Result
+			end
+			create s.make_empty (c, 4)
+			Result := not s.is_full
+			check
+				Result
+			end
+			s.add (e)
+			Result := s.out_quadrants ~ "E---"
+			check
+				Result
+			end
 
---		end
+		end
+
+	t2: BOOLEAN
+		local
+			e: EXPLORER
+			c: COORDINATE
+			q: QUADRANT
+			s: SECTOR
+			id: INTEGER
+		do
+			id := 0
+			comment ("t2: Testing sector.remove")
+			create c.make ([0, 0])
+			Result := c.row = 0 and c.col = 0
+			check
+				Result
+			end
+			create e.make (c, id)
+			Result := e.current_life_point = 3
+			check
+				Result
+			end
+			create q.make_empty (c)
+			Result := q.is_empty
+			check
+				Result
+			end
+			q.set_entity (e)
+			Result := not q.is_empty
+			check
+				Result
+			end
+			Result := q.has (e)
+			check
+				Result
+			end
+			create s.make_empty (c, 4)
+			Result := not s.is_full
+			check
+				Result
+			end
+			s.add (e)
+			Result := s.out_quadrants ~ "E---"
+			check
+				Result
+			end
+			s.remove (e)
+			Result := s.out_quadrants ~ "----"
+			check
+				Result
+			end
+
+		end
+
+	t3: BOOLEAN
+		local
+			e: EXPLORER
+			p: PLANET
+			g: GRID
+		do
+			comment ("t3: Testing grid.make, grid.add, grid.remove, grid.move")
+			create g.make (5, 5, 4)
+			create e.make ([1, 1], 0)
+			create p.make ([1, 1], 1, 1)
+
+			g.add_at (e, [2, 2])
+			print(g.out)
+			print("%N")
+
+			g.remove (e)
+			print(g.out)
+
+			g.add_at (e, [1, 1])
+
+			print(g.out)
+			print("%N%N")
+			g.add_at (p, [3, 3])
+			g.move (e, [3, 3])
+			print(g.out)
+			print("%N%N")
+			g.remove (p) -- PE-- => remove P => -E--
+			print(g.out)
+			print("%N%N")
+			Result := true
+		end
 
 end
