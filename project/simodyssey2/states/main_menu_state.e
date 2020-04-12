@@ -20,7 +20,7 @@ create
 feature -- Controller command / queries
 
 	abort, land, liftoff, pass, status, wormhole
-			-- attempting to execute "abort, land, liftoff, pass, status, wormhole" commands of SIMODYSSEY while in MAIN_MENU_STATE and not PLAY_STATE,
+			-- attempt to execute "abort, land, liftoff, pass, status, wormhole" commands of SIMODYSSEY while in MAIN_MENU_STATE and not PLAY_STATE,
 			-- implies that preconditions of such commands in SIMODYSSEY are not met,
 			-- therefore append "Negative on that request:no mission in progress." to "out"
 		do

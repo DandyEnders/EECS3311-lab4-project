@@ -1,8 +1,8 @@
 ﻿note
 	description: "[
-		A class that provides an interface for controlling the explorer’s 
-		actions in the galaxy, as well as controls the addition, removal, 
-		and movement of entities in the galaxy.
+		A class that controls the addition, removal,and movement 
+		of entities in the galaxy and provides an interface for
+		controlling the explorer’s actions in the galaxy.
 		
 		Secret:
 		Post execution of a command, non-user-controlled entities 
@@ -143,8 +143,8 @@ feature {NONE} -- private queries
 
 feature -- Explorer Interface Commands
 
-	abort
-			-- given that "game_is_in_session", abort the game ensuring the game_is_in_session is false
+	abort_game
+			-- abort the game
 		require
 			game_is_in_session
 		do
@@ -155,7 +155,7 @@ feature -- Explorer Interface Commands
 		end
 
 	new_game (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER; is_test: BOOLEAN)
-			-- given "valid_thresholds" AND "game_is_in_session" is false, start a "new_game"
+			-- start a "new_game"
 		require
 			valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold)
 			not game_is_in_session
@@ -176,7 +176,7 @@ feature -- Explorer Interface Commands
 		end
 
 	move_explorer (d: COORDINATE)
-			-- move the explorer away from its current sector in "galaxy" and towards a sector in direction "d".
+			-- move the explorer away from its current sector and towards a sector in direction "d".
 		require
 			game_is_in_session
 			d.is_direction
@@ -201,7 +201,7 @@ feature -- Explorer Interface Commands
 		end
 
 	wormhole_explorer
-			-- given the explorer has a wormhole in its sector, wormhole the explorer away from its current sector in "galaxy" and into a new sector.
+			-- wormhole the explorer into a sector.
 		require
 			game_is_in_session
 			not explorer_is_landed
@@ -219,11 +219,11 @@ feature -- Explorer Interface Commands
 		end
 
 	land_explorer
-			-- given "explorer_sector_is_landable", land the explorer on a landable planet within the sector with the lowest id.
+			-- land the explorer on a landable planet
 		require
 			game_is_in_session
 			not explorer_is_landed
-			explorer_sector_is_landable
+			explorers_sector_is_landable: explorer_sector_has_planets and explorer_sector_has_yellow_dwarf and explorer_sector_has_unvisted_attached_planets
 		local
 			p: PLANET
 		do
@@ -241,7 +241,7 @@ feature -- Explorer Interface Commands
 		end
 
 	liftoff_explorer
-			-- given "explorer_is_landed" on a planet, liftoff explorer.
+			--  liftoff explorer.
 		require
 			game_is_in_session
 			explorer_is_landed
@@ -256,7 +256,7 @@ feature -- Explorer Interface Commands
 			if_dead_then_game_is_over:((not explorer_is_alive) implies (not game_is_in_session))
 		end
 
-	pass
+	pass_explorer_turn
 			-- pass the explorer's turn in the game.
 		require
 			game_is_in_session ---make sure that if the player dies, then this is false.
@@ -267,6 +267,14 @@ feature -- Explorer Interface Commands
 			default_turn_actions
 		ensure
 			if_dead_game_is_over: (not explorer_is_alive) implies (not game_is_in_session)
+		end
+
+	status_of_explorer
+		require
+			game_is_in_session
+		do
+		ensure
+			game_is_in_session
 		end
 
 feature {NONE} -- Private Helper Commands

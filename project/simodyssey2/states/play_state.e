@@ -24,7 +24,7 @@ feature -- Commands
 		local
 			s: STATE
 		do
-			game_model.abort
+			game_model.abort_game
 			abstract_state_numbers.executed_no_turn_command
 			create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers,msg.empty_string,msg.abort)
 			transition_to(s)
@@ -43,7 +43,7 @@ feature -- Commands
 			tmp_str: STRING
 			s: STATE
 		do
-				--			-- model.explorer is in a sector with planet and yellow dwarf
+			-- model.explorer is in a sector with planet and yellow dwarf
 			if game_model.explorer_sector_is_landable then
 				game_model.land_explorer
 				abstract_state_numbers.executed_valid_turn_command
@@ -122,7 +122,7 @@ feature -- Commands
 			-- execute "pass" command in SIMODYSSEY
 			-- if explorer dies after succesffuly passing, append one of Abstract State: Death Messages EXPLORER [3 to 4] to "out"
 		do
-			game_model.pass
+			game_model.pass_explorer_turn
 			abstract_state_numbers.executed_valid_turn_command
 			set_msg_command_validity (msg.ok)
 			if game_model.explorer_is_alive then
@@ -150,6 +150,7 @@ feature -- Commands
 	status
 			-- append “Explorer status report:Travelling at cruise speed at [X,Y,Z] Life units left:V, Fuel units left:W” to "out"
 		do
+			game_model.status_of_explorer
 			abstract_state_numbers.executed_no_turn_command
 			set_msg_command_validity (msg.ok)
 			set_msg_content (game_model.out_status_explorer)

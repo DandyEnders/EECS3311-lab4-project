@@ -25,7 +25,7 @@ feature -- Controller command / queries
 		local
 			s: STATE
 		do
-			game_model.abort
+			game_model.abort_game
 			create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers,msg.empty_string,msg.abort)
 			abstract_state_numbers.executed_no_turn_command
 			transition_to(s)
@@ -41,6 +41,7 @@ feature -- Controller command / queries
 			c: COORDINATE
 		do
 			c := game_model.explorer_coordinate
+			game_model.status_of_explorer
 			abstract_state_numbers.executed_no_turn_command
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.land_error_landed_already (c.row, c.col))
@@ -92,7 +93,7 @@ feature -- Controller command / queries
 	pass
 			-- execute "pass" command in SIMODYSSEY
 		do
-			game_model.pass
+			game_model.pass_explorer_turn
 			abstract_state_numbers.executed_valid_turn_command
 			set_msg_command_validity (msg.ok)
 			set_msg_content (game_model.out)
