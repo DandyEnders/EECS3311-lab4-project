@@ -1,9 +1,18 @@
-note
+﻿note
 	description: "[
-				A class that provides an interface for executing
-				all nine user commands and updates the user
-				output when commands are executed.
-				]"
+		A class that provides an interface for executing
+		all nine user commands and updates the user
+		output when commands are executed.
+		
+		Secret: 
+		Attribute “game_state” is of type STATE which 
+		means CONTROLLER is a client of STATE. 
+		Note: “game_state” is polymorphic. 
+		Post executing a command in CONTROLLER, 
+		“game_state” transitions (changes its reference) 
+		to a subclass of STATE that is appropriate 
+		for the game.
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

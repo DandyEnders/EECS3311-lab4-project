@@ -1,5 +1,10 @@
 note
-	description: "A class to represent the absence of an ENTITY. "
+	description: "[
+		A class to represent the absence of an ENTITY. 
+		
+		Secret: 
+		(see QUADRANT secret).
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

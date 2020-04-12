@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {MALEVOLENT}."
-	author: ""
+	description: "A class to represent a malevolent entity."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

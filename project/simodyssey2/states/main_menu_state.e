@@ -1,7 +1,7 @@
 note
 	description: "[
-			A class that defines valid, and invalid user commands 
-			for when the user is not in a game.
+		A class that defines valid, and invalid user commands 
+		for when the user is not in a game.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"

@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {BLUE_GIANT}."
-	author: "Jinho Hwang"
+	description: "A class to represent a blue_giant entity."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

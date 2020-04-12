@@ -1,9 +1,9 @@
 note
 	description: "[
-			A class that encapsulates common queries, attributes, 
-			and commands for entities with fuel.
-			]"
-	author: ""
+		A class that encapsulates common queries, attributes, 
+		and commands for entities with fuel.
+	]"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

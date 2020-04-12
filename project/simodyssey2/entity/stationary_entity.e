@@ -1,9 +1,9 @@
 note
 	description: "[
-				A class to represent an ID_ENTITY that is not also
-				a MOVEABLE_ENTITY.
-				]"
-	author: "Jinho Hwang"
+		A class to represent an ID_ENTITY that is not also
+		a MOVEABLE_ENTITY.
+	]"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

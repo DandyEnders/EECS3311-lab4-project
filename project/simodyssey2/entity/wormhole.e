@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {WORMHOLE}."
-	author: "Jinho Hwang"
+	description: "A class to represent a wormhole entity."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

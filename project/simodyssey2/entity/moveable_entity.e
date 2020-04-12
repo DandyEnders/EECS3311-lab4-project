@@ -1,8 +1,8 @@
 note
 	description: "[
-				A class to represent an ID_ENTITY that can change 
-				its coordinate and is capable of death.
-				]"
+		A class to represent an ID_ENTITY that can change 
+		its coordinate and is capable of death.
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

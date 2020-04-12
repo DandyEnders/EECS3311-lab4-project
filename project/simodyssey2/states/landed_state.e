@@ -1,8 +1,8 @@
 ﻿note
 	description: "[
-			A class that defines valid, and invalid user commands 
-			for when the user is in a game and the explorer 
-			is landed.
+		A class that defines valid, and invalid user commands 
+		for when the user is in a game and the explorer 
+		is landed.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"

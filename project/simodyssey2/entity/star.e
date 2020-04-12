@@ -1,9 +1,9 @@
 note
 	description: "[
-				A class to represent a STATIONARY_ENTITY and its
-				luminosity value.
-				]"
-	author: "Jinho Hwang"
+		A class to represent a STATIONARY_ENTITY and its
+		luminosity value.
+	]"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

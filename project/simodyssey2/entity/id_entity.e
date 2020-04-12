@@ -1,7 +1,7 @@
 note
 	description: "[
-			A class to represent an ENTITY and its identification number.
-		]"
+		A class to represent an ENTITY and its identification number.
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

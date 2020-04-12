@@ -1,8 +1,14 @@
 ﻿note
 	description: "[
-			A class that provides an interface for controlling the explorer’s 
-			actions in the galaxy, as well as controls the addition, removal, 
-			and movement of entities in the galaxy.
+		A class that provides an interface for controlling the explorer’s 
+		actions in the galaxy, as well as controls the addition, removal, 
+		and movement of entities in the galaxy.
+		
+		Secret:
+		Post execution of a command, non-user-controlled entities 
+		move, reproduce, behave, and check according to the 
+		“turn" command algorithm on page 33 of the project
+		specifications.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"

@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {ASTEROID}."
-	author: ""
+	description: "A class to represent an asteroid entity."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

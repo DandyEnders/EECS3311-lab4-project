@@ -1,9 +1,16 @@
-note
+﻿note
 	description: "[
-			 A class that encapsulates common queries, attributes, 
-			 and commands for entities capable of death. (e.g. MOVEABLE_ENTITY)
-			 ]"
-	author: "Jinho Hwang"
+		 A class that encapsulates common queries, attributes, 
+		 and commands for entities capable of death. 
+		 (e.g. MOVEABLE_ENTITY)
+		 
+		 Secret: 
+		 Private attribute “life” is of type LIFE which means
+		 DEATHABLE is a client of LIFE.
+		 The collection of all valid death causes is stored 
+		 in an ARRAY.
+	]"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

@@ -1,5 +1,11 @@
 note
-	description: "A collection of QUADRANT objects arranged in a LIST."
+	description: "[
+		A collection of QUADRANT objects arranged in a LIST.
+		
+		Secret:
+		The collection of QUADRANT is stored in an 
+		ARRAYED_LIST.
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

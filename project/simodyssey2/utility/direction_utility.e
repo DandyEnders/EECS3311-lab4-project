@@ -1,7 +1,7 @@
 ﻿note
 	description: "[
-				A class that contains common direction COORDINATEs
-	 			(e.g. N -> [-1,0], E -> [0,1] …)
+		A class that contains common direction COORDINATEs
+ 		(e.g. N -> [-1,0], E -> [0,1] …)
 	 ]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"

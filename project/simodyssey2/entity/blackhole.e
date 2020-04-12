@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {BLACKHOLE}."
-	author: "Jinho Hwang"
+	description: "A class to represent a blackhole entity."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

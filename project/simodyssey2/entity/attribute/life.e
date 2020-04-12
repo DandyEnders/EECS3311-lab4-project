@@ -1,6 +1,6 @@
 ﻿note
 	description: "A class that encapsulates an ENTITY’s life/health."
-	author: "Jinho Hwang"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

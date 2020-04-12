@@ -1,5 +1,11 @@
-note
-	description: "A container for storing an ENTITY in a SECTOR"
+﻿note
+	description: "[
+		A container for storing an ENTITY in a SECTOR
+		
+		Secret: 
+		QUADRANT. “is_empty” = true, implies “entity”
+		attribute refers to a NULL_ENTITY.
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

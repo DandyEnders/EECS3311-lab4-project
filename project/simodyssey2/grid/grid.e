@@ -1,5 +1,14 @@
-note
-	description: "A collection of SECTOR objects arranged in a 2-D grid."
+﻿note
+	description: "[
+		A collection of SECTOR objects arranged in a 2-D grid.
+		
+		Secret: 
+		The collection of STATIONARY_ENTITY in the GRID 
+		is stored in a HASH_TABLE, to allow efficient 
+		implementation of “all_stationary_entities” query.
+		A similar approach is used to implement 
+		“all_moveable_entities” query.
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

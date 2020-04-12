@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {JANITAUR}."
-	author: ""
+	description: "A class to represent a janitaur entity."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

@@ -1,11 +1,11 @@
 note
 	description: "[
-				A class to represent a MOVEABLE_ENTITY whose actions
-				occur in defined intervals and whose actions cannot 
-				be explicitly controlled via user commands.
-				Note: NP stands for NON_PLAYABLE
-				]"
-	author: "Ato Koomson"
+		A class to represent a MOVEABLE_ENTITY whose actions
+		occur in defined intervals and whose actions cannot 
+		be explicitly controlled via user commands.
+		Note: NP stands for NON_PLAYABLE
+	]"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

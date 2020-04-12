@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {YELLOW_DWARF}."
+	description: "A class to represent a yellow_dwarf entity."
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

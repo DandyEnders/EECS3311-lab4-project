@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {BENIGN}."
-	author: ""
+	description: "A class to represent a benign entity."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

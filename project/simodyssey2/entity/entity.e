@@ -1,7 +1,7 @@
 note
 	description: "[
-				A class to represent an entity in the game.
-				]"
+		A class to represent an entity in a QUADRANT.
+	]"
 	author: "Jinho Hwang, Ato Kooomson"
 	date: "$Date$"
 	revision: "$Revision$"

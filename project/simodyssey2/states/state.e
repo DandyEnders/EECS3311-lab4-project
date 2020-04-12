@@ -1,7 +1,14 @@
-note
+﻿note
 	description: "[
-			A class that defines valid, invalid user commands,
-			and generates the user's output when commands are executed.
+		A class that defines valid, invalid user commands,
+		and generates the user's output when commands are executed.
+	
+		Secret: 
+		private attribute “abstract_state_numbers” is of type 
+		ABSTRACT_STATE_NUMBERS which means STATE is a client
+		of ABSTRACT_STATE_NUMBERS.
+		“abstract_state_numbers” is updated accordingly after 
+		the execution of a command.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"

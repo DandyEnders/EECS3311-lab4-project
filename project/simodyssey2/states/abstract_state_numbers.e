@@ -1,7 +1,7 @@
 ﻿note
 	description: "[
-					A class to manage the first and second number
-					as seen in the user output “e.g state: 3.1”.
+		A class to manage the first and second number
+		as seen in the user output “e.g state: 3.1”.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"

@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {EXPLORER}."
+	description: "A class to represent the explorer entity."
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"

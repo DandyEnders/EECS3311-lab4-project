@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {PLANET}."
-	author: "Jinho Hwang"
+	description: "A class to represent a planet entity."
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 

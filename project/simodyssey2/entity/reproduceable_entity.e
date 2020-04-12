@@ -1,8 +1,8 @@
 note
 	description: "[
-	:		 A class to represent an NP_MOVEABLE_ENTITY that can reproduce.
-			]"
-	author: ""
+		A class to represent an NP_MOVEABLE_ENTITY that can reproduce.
+	]"
+	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
 
