@@ -15,16 +15,17 @@
 {\b\cf6 convert}{\line}
 {\tab}{\cf5 make} {\cf1 (}{\cf1 \{}{\cf4 TUPLE} {\cf1 [}{\cf4 INTEGER_32}{\cf1 ,} {\cf4 INTEGER_32}{\cf1 ]}{\cf1 \}}{\cf1 )}{\line}
 {\line}
-{\b\cf6 feature} {\cf3 --}{\cf3  Attributes}{\line}
+{\b\cf6 feature} {\line}
 {\line}
 {\tab}{\cf5 {\cf5 row}{\cf1 :} {\cf4 INTEGER_32}}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}}{\line}
 {\tab}{\line}
-{\b\cf6 feature} {\cf3 --}{\cf3  Queries}{\line}
+{\b\cf6 feature} {\line}
 {\line}
 {\tab}{\cf5 {\cf5 is_less} {\b\cf6 alias} {\cf1 "}{\cf1 <}{\cf1 "} {\cf1 (}{\cf5 other}{\cf1 :} {\b\cf6 like} {\b\cf6 Current}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Is current object less than }{\cf5 other}{\cf3 ?}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  the column of a COORDINATE. ie [ ,column]}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Queries}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 is_equal} {\cf1 (}{\cf5 other}{\cf1 :} {\b\cf6 like} {\b\cf6 Current}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  Is }{\cf5 other}{\cf3  attached to an object of the same type}{\line}
@@ -42,9 +43,10 @@
 {\tab}{\cf5 {\cf5 wrap_coordinate_to_coordinate} {\cf1 (}{\cf5 c}{\cf1 ,} {\cf5 lower_bound}{\cf1 ,} {\cf5 upper_bound}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\cf1 :} {\cf4 COORDINATE}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3 result equals a COORDINATE that lies between lower_bound and upper_bound}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\cf3 --}{\cf3  out}{\line}
+{\b\cf6 feature} {\line}
 {\line}
 {\tab}{\cf5 {\cf5 out}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  out}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "(row:col)"}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 out_sqr_bracket}{\cf1 :} {\cf4 STRING_8}{\line}

@@ -34,6 +34,8 @@
 {\tab}{\cf5 {\cf5 is_aborted}{\cf1 :} {\cf4 BOOLEAN}}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3 ID dispatchers}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  State of Game Queries}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result is true if query "game_is_in_session" is true AND command "new_game" was previously called with argument TRUE in-place for parameter "is_test". result is false otherwise.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result is true if query "game_is_in_session"is true AND THEN command "abort" is called. false otherwise.}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 game_is_in_session}{\cf1 :} {\cf4 BOOLEAN}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}

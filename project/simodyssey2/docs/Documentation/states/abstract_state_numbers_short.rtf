@@ -19,15 +19,8 @@
 {\b\cf6 feature} {\cf3 --}{\cf3  Attibute}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 first_number}{\cf1 :} {\cf4 INTEGER_32}}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  first number as seen in ie. state: 3.0}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  signifies the number of valid turn/play/test commands executed during the course of the program.}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  incremented by one after a valid turn command is executed in a subclass of STATE. ie state: 3.0 -> state: 4.0}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 second_number}{\cf1 :} {\cf4 INTEGER_32}}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  second number as seen in ie. state: 3.2}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  signifies the number of valid non-turn commands executed and invalid commands attempted after the last successful turn/play/test command was executed.}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  incremented by one after valid non-turn commands are executed or invalid commands are attempted by a subclass of STATE. ie}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  initialized to zero after a valid turn command is exectured in a subclass of STATE. ie state: 3.4 -> state: 4.0}{\line}
 {\tab}{\line}
 {\b\cf6 feature} {\line}
 {\line}
