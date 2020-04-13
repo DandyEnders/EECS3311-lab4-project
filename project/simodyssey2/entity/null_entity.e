@@ -28,10 +28,11 @@ inherit
 create {QUADRANT}
 	make
 
-feature	{QUADRANT}
-	make(a_coordinate: COORDINATE)
+feature {QUADRANT}
+
+	make (a_coordinate: COORDINATE)
 		do
-			entity_make(a_coordinate,'-')
+			entity_make (a_coordinate, '-')
 		end
 
 end

@@ -26,8 +26,8 @@ feature -- Commands
 		do
 			game_model.abort_game
 			abstract_state_numbers.executed_no_turn_command
-			create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers,msg.empty_string,msg.abort)
-			transition_to(s)
+			create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers, msg.empty_string, msg.abort)
+			transition_to (s)
 		ensure then
 			enter_main_menu_state: attached {MAIN_MENU_STATE} next_state
 		end
@@ -43,20 +43,20 @@ feature -- Commands
 			tmp_str: STRING
 			s: STATE
 		do
-			-- model.explorer is in a sector with planet and yellow dwarf
+				-- model.explorer is in a sector with planet and yellow dwarf
 			if game_model.explorer_sector_is_landable then
 				game_model.land_explorer
 				abstract_state_numbers.executed_valid_turn_command
 				if game_model.explorer_found_life then
-					create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers,msg_mode,msg.land_life_found)
+					create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers, msg_mode, msg.land_life_found)
 				else -- landed in no life planet
 					c := game_model.explorer_coordinate
 					create tmp_str.make_from_string (msg.land_life_not_found (c.row, c.col))
 					tmp_str.append ("%N")
 					tmp_str.append (game_model.out)
-					create {LANDED_STATE} s.make (game_model, abstract_state_numbers,msg_mode,tmp_str)
+					create {LANDED_STATE} s.make (game_model, abstract_state_numbers, msg_mode, tmp_str)
 				end
-				transition_to(s)
+				transition_to (s)
 			else
 				abstract_state_numbers.executed_invalid_command
 				set_msg_command_validity (msg.error)
@@ -155,7 +155,7 @@ feature -- Commands
 			set_msg_command_validity (msg.ok)
 			set_msg_content (game_model.out_status_explorer)
 		ensure then
-			 status_should_not_change_the_state:(attached {PLAY_STATE} next_state)
+			status_should_not_change_the_state: (attached {PLAY_STATE} next_state)
 		end
 
 	test (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold: INTEGER)
@@ -198,7 +198,7 @@ feature -- Commands
 			end
 		ensure then
 			Explorer_is_alive_after_successful_wormhole_implies_remain_in_play_state: (game_model.explorer_is_alive) implies (attached {PLAY_STATE} next_state)
-			Explorer_is_dead_after_successful_wormhole_implies_enter_main_menu_state:((not game_model.explorer_is_alive)) implies (attached {MAIN_MENU_STATE} next_state)
+			Explorer_is_dead_after_successful_wormhole_implies_enter_main_menu_state: ((not game_model.explorer_is_alive)) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 end

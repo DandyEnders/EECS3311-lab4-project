@@ -30,7 +30,7 @@ feature -- First line: Mode
 feature -- Abstract State: Command-Specific Messages INITIAL MESSAGE
 
 	initial_message: STRING
-			-- result ~ "  Welcome! Try test(3,5,7,15,30)"
+			-- result -> "  Welcome! Try test(3,5,7,15,30)"
 		do
 			create Result.make_from_string (left_margin)
 			Result.append ("Welcome! Try test(3,5,7,15,30)")
@@ -209,7 +209,7 @@ feature -- Abstract State: Command-Specific Messages GAME IS OVER
 feature {NONE} -- Helper Query
 
 	moveable_entity_type (np: MOVEABLE_ENTITY): STRING
-			-- result ~ "  Benign "
+			-- result -> "  Benign "
 		do
 			create Result.make_empty
 			Result.append (left_margin)
@@ -231,7 +231,7 @@ feature {NONE} -- Helper Query
 feature -- Abstract State: Death Messages (Death due to blackhole.)
 
 	moveable_entity_death_by_blackhole (np: MOVEABLE_ENTITY; sector_row, sector_col, blackhole_id: INTEGER): STRING
-			-- result ~ "  {MOVEABLE_ENTITY} got devoured by blackhole (id: -1) at Sector:row:col"
+			-- result -> "  {MOVEABLE_ENTITY} got devoured by blackhole (id: -1) at Sector:row:col"
 		require
 			np.is_dead_by_blackhole
 			blackhole_id ~ -1
@@ -246,21 +246,21 @@ feature -- Abstract State: Death Messages (Death due to blackhole.)
 feature -- Abstract State: Death Messages (Death due to janitaur.)
 
 	asteroid_death_by_janitaur (a: ASTEROID; sector_row, sector_col, janitaur_id: INTEGER): STRING
-			-- result ~ "  Asteroid got imploded by janitaur (id: id) at Sector:row:col"
+			-- result -> "  Asteroid got imploded by janitaur (id: id) at Sector:row:col"
 		require
 			a.is_dead_by_janitaur
 			valid_sector_of_death: a.coordinate.row ~ sector_row and a.coordinate.col ~ sector_col
 		do
 			create Result.make_empty
 			Result.append (moveable_entity_type (a))
-			Result.append ("got imploded by janitaur " + "(id: " + janitaur_id.out + ") " )
+			Result.append ("got imploded by janitaur " + "(id: " + janitaur_id.out + ") ")
 			Result.append ("at Sector:" + sector_row.out + ":" + sector_col.out)
 		end
 
 feature -- Abstract State: Death Messages (Death due to asteroid.)
 
 	moveable_entity_death_by_asteroid (me: MOVEABLE_ENTITY; sector_row, sector_col, asteroid_id: INTEGER): STRING
-			-- result ~ "  {MOVEABLE_ENTITY} got destroyed by asteroid (id: id) at Sector:row:col"
+			-- result -> "  {MOVEABLE_ENTITY} got destroyed by asteroid (id: id) at Sector:row:col"
 		require
 			me_is_not_a_planet: not attached {PLANET} me
 			me_is_not_an_asteroid: not attached {ASTEROID} me
@@ -276,7 +276,7 @@ feature -- Abstract State: Death Messages (Death due to asteroid.)
 feature -- Abstract State: Death Messages (Death due to benign.)
 
 	malevolent_death_by_benign (m: MALEVOLENT; sector_row, sector_col, benign_id: INTEGER): STRING
-			-- result ~ "  Malevolent got destroyed by benign (id: id) at Sector:row:col"
+			-- result -> "  Malevolent got destroyed by benign (id: id) at Sector:row:col"
 		require
 			m.is_dead_by_benign
 			valid_sector_of_death: m.coordinate.row ~ sector_row and m.coordinate.col ~ sector_col
@@ -290,7 +290,7 @@ feature -- Abstract State: Death Messages (Death due to benign.)
 feature -- Abstract State: Death Messages (Out of fuel.)
 
 	fuelable_moveable_entity_death_by_out_of_fuel (f: MOVEABLE_ENTITY; sector_row, sector_col: INTEGER): STRING
-			-- result ~ "  {MOVEABLE_ENTITY} got lost in space - out of fuel at Sector:row:col"
+			-- result -> " {MOVEABLE_ENTITY} got lost in space - out of fuel at Sector:row:col"
 		require
 			f_is_fuelable: attached {FUELABLE} f
 			f_is_out_of_fuel: (attached {FUELABLE} f as f_e) implies f_e.is_out_of_fuel
@@ -306,7 +306,7 @@ feature -- Abstract State: Death Messages (Out of fuel.)
 feature -- Abstract State: Death Messages (Death due to malevolent.)
 
 	explorer_death_by_malevolent (e: EXPLORER; sector_row, sector_col: INTEGER): STRING
-			-- result ~ "  Explorer got lost in space - out of life support at Sector:row:col"
+			-- result -> "  Explorer got lost in space - out of life support at Sector:row:col"
 		require
 			e.is_dead_by_malevolent
 			valid_sector_of_death: e.coordinate.row ~ sector_row and e.coordinate.col ~ sector_col

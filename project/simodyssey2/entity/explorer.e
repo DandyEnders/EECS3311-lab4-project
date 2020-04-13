@@ -44,27 +44,27 @@ feature {NONE} -- Constructor
 feature -- Attributes
 
 	landed: BOOLEAN
-			-- result ~ true if current is "landed" on a PLANET.
+			-- is landed on a PLANET?
 
 	found_life: BOOLEAN
-			-- result ~ true if current "found life" on a PLANET.
+			-- has found life on a PLANET?
 
 feature -- Queries
 
 	is_dead_by_out_of_fuel: BOOLEAN
-			-- result ~ true if current was killed by executing "kill_by_out_of_fuel".
+			-- was killed by out of fuel.
 		do
 			Result := is_dead and then get_death_cause ~ "OUT_OF_FUEL"
 		end
 
 	is_dead_by_malevolent: BOOLEAN
-			-- result ~ true if current was killed by executing "kill_by_malevolent".
+			-- was killed by MALEVOLENT?
 		do
 			Result := is_dead and then get_death_cause ~ "MALEVOLENT"
 		end
 
 	is_dead_by_asteroid: BOOLEAN
-			-- result ~ true if current was killed by executing "kill_by_asteroid".
+			-- was killed by ASTEROID?
 		do
 			Result := is_dead and then get_death_cause ~ "ASTEROID"
 		end
@@ -90,7 +90,6 @@ feature {NONE} -- Commands
 feature -- Commands
 
 	kill_by_malevolent (killer_id: INTEGER)
-			-- given the id a MALEVOLENT, kill current by MALEVOLENT
 		do
 			kill_by ("MALEVOLENT")
 			killers_id := killer_id
@@ -99,7 +98,6 @@ feature -- Commands
 		end
 
 	kill_by_asteroid (killer_id: INTEGER)
-			-- given the id a ASTEROID, kill current by ASTEROID
 		do
 			kill_by ("ASTEROID")
 			killers_id := killer_id
@@ -108,7 +106,6 @@ feature -- Commands
 		end
 
 	kill_by_out_of_fuel
-			-- given fuel ~ 0, kill current by out of fuel
 		require
 			is_out_of_fuel
 		do
@@ -142,7 +139,7 @@ feature -- Commands
 		end
 
 	land_on (a_p: PLANET)
-			-- given a_p.is_landable and a_p.visited , "land_on" planet a_p.
+			-- land and visit a_p.
 		require
 			a_p.is_landable and not a_p.visited
 		do
@@ -156,7 +153,7 @@ feature -- Commands
 		end
 
 	liftoff
-			-- given the "landed" ~ true, "liftoff" the explorer from the planet explorer is landed on.
+			-- liftoff the planet explorer is currently landed on.
 		require
 			landed
 		do
@@ -168,7 +165,7 @@ feature -- Commands
 feature -- Out
 
 	out_status (quadrant: INTEGER): STRING
-			-- result ~ {Abstract State: Command-Specific Messages STATUS on pg 26}
+			-- result -> {Abstract State: Command-Specific Messages STATUS on pg 26}
 		do
 			create Result.make_empty
 			if landed then
@@ -179,7 +176,7 @@ feature -- Out
 		end
 
 	out_death_message: STRING
-			-- result ~ {Abstract State: Death Messages EXPLORER on pg 26-27 }
+			-- result -> {Abstract State: Death Messages EXPLORER on pg 26-27 }
 		do
 			create Result.make_empty
 			if is_dead_by_out_of_fuel then
@@ -194,7 +191,7 @@ feature -- Out
 		end
 
 	out_description: STRING
-			-- result ~ "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean". ie. "[0,E]->fuel:2/3, life:3/3, landed?:F"
+			-- result -> "[id, character]->fuel:cur_fuel/max_fuel, life:cur_life/max_life, landed?:boolean". ie. "[0,E]->fuel:2/3, life:3/3, landed?:F"
 		do
 			Result := precursor
 			Result.append ("fuel:")

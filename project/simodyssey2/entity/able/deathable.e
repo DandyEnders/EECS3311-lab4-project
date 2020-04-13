@@ -1,14 +1,14 @@
 ﻿note
 	description: "[
-		 A class that encapsulates common queries, attributes, 
-		 and commands for entities capable of death. 
-		 (e.g. MOVEABLE_ENTITY)
-		 
-		 Secret: 
-		 Private attribute “life” is of type LIFE which means
-		 DEATHABLE is a client of LIFE.
-		 The collection of all valid death causes is stored 
-		 in an ARRAY.
+		A class that encapsulates common queries, attributes, 
+		and commands for entities capable of death. 
+		(e.g. MOVEABLE_ENTITY)
+		
+		Secret: 
+		Private attribute “life” is of type LIFE which means
+		DEATHABLE is a client of LIFE.
+		The collection of all valid death causes is stored 
+		in an ARRAY.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
@@ -44,7 +44,7 @@ feature {DEATHABLE} -- Killable Commands
 		require
 			not is_valid_death_cause (a_death_cause_type)
 		do
-			death_cause_type.force (a_death_cause_type, death_cause_type.count+1)
+			death_cause_type.force (a_death_cause_type, death_cause_type.count + 1)
 		end
 
 feature {DEATHABLE} -- Killable Queries
@@ -57,13 +57,11 @@ feature {DEATHABLE} -- Killable Queries
 feature -- Attribute
 
 	current_life_point: INTEGER
-			-- current life in value as an INTEGER
 		do
 			Result := life.point
 		end
-
-	max_life: INTEGER
-			-- maximum value of "current_life_point"
+	max_life_point: INTEGER
+			-- maximum value of current_life_point
 		do
 			Result := life.max
 		end
@@ -71,7 +69,6 @@ feature -- Attribute
 feature -- Queries
 
 	is_dead: BOOLEAN
-			-- result ~ true iff "current_life_point" ~ 0
 		do
 			Result := life.is_dead
 		end
@@ -84,13 +81,13 @@ feature -- Queries
 		end
 
 	is_valid_death_cause (a_death_cause: STRING): BOOLEAN
-			-- is a_death_cause a valid death cause to use as an argument to execute "kill_by"
+			-- is a_death_cause a valid death cause to use to execute kill_by
 		do
 			Result := has_death_cause_type (a_death_cause)
 		end
 
 	get_death_cause: STRING
-			-- result is a string that describes the cause of death
+			-- a string that describes the cause for death
 		require
 			is_dead
 		do
@@ -100,7 +97,6 @@ feature -- Queries
 feature -- Command
 
 	kill_by (a_cause: STRING)
-			-- kill an ENTITY using a valid death cause: defined by the ENTITY.
 		require
 			is_valid_death_cause (a_cause)
 		do

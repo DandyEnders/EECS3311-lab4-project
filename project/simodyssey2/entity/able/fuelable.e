@@ -9,7 +9,7 @@ note
 
 deferred class
 	FUELABLE
-	
+
 feature {NONE} -- Initialization
 
 	make (max: INTEGER)
@@ -22,18 +22,16 @@ feature {NONE} -- Initialization
 feature -- Attributes
 
 	fuel: INTEGER
-			-- current fuel value
 
 	max_fuel: INTEGER
-			-- maxiumum value of "fuel"
+			-- maxiumum value of fuel
 
 feature -- Commands
 
 	spend_fuel_unit
-			-- decrement "fuel" by one
+			-- decrement fuel by one
 		require
 			fuel > 0
-			-- calling this will cause fuel to decrease by 1
 		do
 			fuel := fuel - 1
 		ensure
@@ -41,7 +39,7 @@ feature -- Commands
 		end
 
 	charge_fuel (s: STAR)
-			--given STAR, increment fuel by {STAR}.luminosity, up to max_fuel
+			--increment fuel by {STAR}.luminosity, up to max_fuel
 		require
 			s.luminosity >= 0
 		do
@@ -52,7 +50,7 @@ feature -- Commands
 			end
 		ensure
 			max_fuel_does_not_change: max_fuel ~ old max_fuel
-			never_charge_above_max_fuel:(((old fuel + s.luminosity) >= max_fuel) implies (fuel ~ max_fuel)) and (((old fuel + s.luminosity) < max_fuel) implies (fuel ~ (old fuel +s.luminosity)))
+			never_charge_above_max_fuel: (((old fuel + s.luminosity) >= max_fuel) implies (fuel ~ max_fuel)) and (((old fuel + s.luminosity) < max_fuel) implies (fuel ~ (old fuel + s.luminosity)))
 		end
 
 feature -- Queries

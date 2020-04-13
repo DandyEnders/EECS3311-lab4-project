@@ -31,31 +31,30 @@ feature -- Attribute
 			-- "life-point" as an INTEGER
 
 	max: INTEGER
-			-- maximum integer value of "point"
+			-- maximum value of point
 
 	is_dead: BOOLEAN
 		do
-			Result:= (point ~ 0)
+			Result := (point ~ 0)
 		ensure
 			Result = (point ~ 0)
 		end
 
-
 feature -- Commands
 
 	set_life (a_value: INTEGER)
-			-- initialize the value of "point" to  a_value
+			-- initialize point to a_value
 		require
 			valid_value (a_value)
 			not is_dead
 		do
 			point := a_value
 		ensure
-			point= a_value
+			point = a_value
 		end
 
 	add_life (a_value: INTEGER)
-			-- increment "point" by "a_value" up to "max"
+			-- increment point by a_value up to max
 		require
 			a_value >= 0
 			not is_dead
@@ -68,7 +67,7 @@ feature -- Commands
 		end
 
 	subtract_life (a_value: INTEGER)
-			-- decrement "point" by "a_value" down to 0.
+			-- decrement point by a_value down to 0.
 		require
 			a_value >= 0
 			not is_dead
@@ -90,7 +89,7 @@ feature -- Queries
 		end
 
 	out: STRING
-			-- result ~ "life:point/max" ie. "life:2/3"
+			-- result -> "life:point/max" 
 		do
 			create Result.make_from_string ("life:")
 			Result.append (point.out)

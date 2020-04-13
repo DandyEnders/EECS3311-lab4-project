@@ -20,7 +20,6 @@ class
 inherit
 
 	ANY
-
 		redefine
 			out
 		end
@@ -47,10 +46,10 @@ feature {NONE} -- Constructor
 			create blackhole.make ([3, 3], stationary_id.current_id)
 			stationary_id.update_id
 				-- creating the board
-			number_rows:=5
-			number_columns:=5
-			number_stationary_entities:=10
-			number_quadrants_per_sector:=4
+			number_rows := 5
+			number_columns := 5
+			number_stationary_entities := 10
+			number_quadrants_per_sector := 4
 			create galaxy.make (number_rows, number_columns, number_quadrants_per_sector)
 				-- intializing game_in_session = FALSE
 			is_test_game := FALSE
@@ -65,15 +64,13 @@ feature -- Attributes
 	galaxy: GRID
 			-- a GRID containing all live ENTITYs in the game.
 
-
-
 feature {NONE} -- GRID Attributes
 
 	number_rows: INTEGER
-        	-- The number of rows in the grid
+			-- The number of rows in the grid
 
 	number_columns: INTEGER
-        	-- The number of columns in the  grid
+			-- The number of columns in the  grid
 
 	number_stationary_entities: INTEGER
 			-- The number of stationary_items in the grid
@@ -171,8 +168,7 @@ feature -- Explorer Interface Commands
 			populate_galaxy
 			is_test_game := is_test
 		ensure
-			game_is_in_session
-			and (is_test_game = is_test)
+			game_is_in_session and (is_test_game = is_test)
 		end
 
 	move_explorer (d: COORDINATE)
@@ -197,7 +193,7 @@ feature -- Explorer Interface Commands
 			default_turn_actions
 		ensure
 			If_not_lost_the_explorer_is_in_new_sector: (explorer_is_alive) implies galaxy.at ((old explorer_coordinate + d).wrap_coordinate_to_coordinate ((old explorer_coordinate + d), [1, 1], [number_rows, number_columns])).has_id (explorer_id)
-			If_explorer_is_not_at_new_sector_then_explorer_is_dead: (not galaxy.at ((old explorer_coordinate + d).wrap_coordinate_to_coordinate ((old explorer_coordinate + d), [1, 1], [number_rows, number_columns])).has_id (explorer_id) ) implies (not explorer_is_alive)
+			If_explorer_is_not_at_new_sector_then_explorer_is_dead: (not galaxy.at ((old explorer_coordinate + d).wrap_coordinate_to_coordinate ((old explorer_coordinate + d), [1, 1], [number_rows, number_columns])).has_id (explorer_id)) implies (not explorer_is_alive)
 		end
 
 	wormhole_explorer
@@ -215,7 +211,7 @@ feature -- Explorer Interface Commands
 			default_turn_actions
 		ensure
 			If_not_lost_the_explorer_is_in_new_position: explorer_is_alive implies galaxy.at (explorer_coordinate).has_id (explorer_id)
-			if_explorer_is_not_in_the_galaxy_is_dead: (not galaxy.at (explorer_coordinate).has_id(explorer_id)) implies ((not explorer_is_alive) and (not game_is_in_session))
+			if_explorer_is_not_in_the_galaxy_is_dead: (not galaxy.at (explorer_coordinate).has_id (explorer_id)) implies ((not explorer_is_alive) and (not game_is_in_session))
 		end
 
 	land_explorer
@@ -231,13 +227,13 @@ feature -- Explorer Interface Commands
 			create movement_output.make_empty
 			create dead_entity.make_empty
 				--landing the explorer
-			p:=galaxy.sector_with (explorer).find_landable_planet
+			p := galaxy.sector_with (explorer).find_landable_planet
 			explorer.land_on (p)
 			default_turn_actions
 		ensure
 			explorer_is_alive
 			explorer_is_landed
-			if_found_life_then_game_is_over:(explorer_found_life implies (not game_is_in_session))
+			if_found_life_then_game_is_over: (explorer_found_life implies (not game_is_in_session))
 		end
 
 	liftoff_explorer
@@ -253,7 +249,7 @@ feature -- Explorer Interface Commands
 			default_turn_actions
 		ensure
 			not explorer_is_landed
-			if_dead_then_game_is_over:((not explorer_is_alive) implies (not game_is_in_session))
+			if_dead_then_game_is_over: ((not explorer_is_alive) implies (not game_is_in_session))
 		end
 
 	pass_explorer_turn
@@ -291,7 +287,7 @@ feature {NONE} -- Private Helper Commands
 			if (not sector.is_full) and r_n_me.ready_to_reproduce then
 				id := moveable_id.current_id
 				moveable_id.update_id
-				clone_e:=r_n_me.reproduce (id)
+				clone_e := r_n_me.reproduce (id)
 				sector.add (clone_e)
 					--Pretty Printing Movement: ie reproduced ...
 				create s.make_from_string (msg.left_margin + "reproduced " + clone_e.out_sqr_bracket + " at " + sector.out_abstract_full_coordinate (clone_e))
@@ -356,7 +352,7 @@ feature {NONE} -- Private Helper Commands
 				temp_col := rng.rchoose (1, 5)
 				create c.make ([temp_row, temp_col])
 				if not galaxy.at (c).is_full then
-					-- forum question suggests oracle change comming up {or (c ~ me.coordinate) }
+						-- forum question suggests oracle change comming up {or (c ~ me.coordinate) }
 					relocate_moveable_entity (me, [temp_row, temp_col])
 					added := TRUE
 				end
@@ -418,7 +414,7 @@ feature {NONE} -- Private Helper Commands
 								across
 									n_me.behavior_messages is i_m
 								loop
-									movement_output.force (i_m, movement_output.count+1)
+									movement_output.force (i_m, movement_output.count + 1)
 								end
 									-- End of Pretty Printing
 							end
@@ -501,13 +497,13 @@ feature {NONE} -- Private Helper Commands
 				if not galaxy.at ([row, col]).has_stationary_entity and not galaxy.at ([row, col]).is_full then
 					s_entity_num := rng.rchoose (1, 3)
 					if s_entity_num ~ 1 then
-						galaxy.add_at (create {YELLOW_DWARF}.make ([row, col], stationary_id.current_id),[row,col])
+						galaxy.add_at (create {YELLOW_DWARF}.make ([row, col], stationary_id.current_id), [row, col])
 						stationary_id.update_id
 					elseif s_entity_num ~ 2 then
-						galaxy.add_at (create {BLUE_GIANT}.make ([row, col], stationary_id.current_id),[row,col])
+						galaxy.add_at (create {BLUE_GIANT}.make ([row, col], stationary_id.current_id), [row, col])
 						stationary_id.update_id
 					elseif s_entity_num ~ 3 then
-						galaxy.add_at (create {WORMHOLE}.make ([row, col], stationary_id.current_id),[row,col])
+						galaxy.add_at (create {WORMHOLE}.make ([row, col], stationary_id.current_id), [row, col])
 						stationary_id.update_id
 					end
 					loop_counter := loop_counter + 1
@@ -664,10 +660,11 @@ feature -- Explorer Interface non-Boolean Queries
 	explorer_id: INTEGER
 			-- result equals explorer's id
 		do
-			Result:= explorer.id
+			Result := explorer.id
 		end
 
 feature -- Out
+
 	out: STRING
 			-- result equals output messages (Movement: ... Sectors: ... Description: ... Deaths This Turn: ... and galaxy.out) when "is_test_game" is true
 		do
@@ -688,8 +685,9 @@ feature -- Out
 				--			Result.append (rng.rng_debug_this_round)
 				--			rng.reset_debug
 		end
+
 	out_status_explorer: STRING
-			-- result equals output message after command "status" is called
+			-- explorer status message
 		require
 			explorer_is_alive
 		local
@@ -699,8 +697,9 @@ feature -- Out
 			create Result.make_empty
 			Result.append (explorer.out_status (e_q))
 		end
+
 	explorer_death_message: STRING
-			-- result equals output message when an explorer dies after taking a turn
+			-- output message generated when the explorer dies
 		require
 			not explorer_is_alive
 		do
@@ -708,7 +707,6 @@ feature -- Out
 		end
 
 feature {NONE} -- Out
-
 
 	out_grid: STRING
 		do
@@ -762,4 +760,5 @@ feature {NONE} -- Out
 				end
 			end
 		end
+
 end

@@ -37,14 +37,16 @@ feature {NONE} -- Constructor
 
 feature -- Attribute
 
-	entity: ENTITY -- entity contained within the quadrant
+	entity: ENTITY
+		-- entity contained
 
-	coordinate: COORDINATE -- coordinate of the quadrant
+	coordinate: COORDINATE
+		-- coordinate of the QUADRANT
 
 feature -- Commands
 
 	remove_entity
-			-- "remove" entity by replacing entity with an instance of NULL_ENTITY.
+			-- remove entity's current refference
 		require
 			cannot_remove_a_stationary_entity: not (attached {STATIONARY_ENTITY} entity)
 		local
@@ -57,9 +59,9 @@ feature -- Commands
 		end
 
 	set_entity (e: ID_ENTITY)
-			-- "set" entity by replacing entity with an instance of ID_ENTITY.
+			-- replace entity's current refference with e.
 		require
-		 	stationary_entities_cannot_change_coordinate: attached {STATIONARY_ENTITY} e implies e.coordinate ~ coordinate
+			stationary_entities_cannot_change_coordinate: attached {STATIONARY_ENTITY} e implies e.coordinate ~ coordinate
 		do
 			if attached {MOVEABLE_ENTITY} e as me then
 				me.set_coordinate (coordinate)
@@ -74,21 +76,18 @@ feature -- Commands
 feature -- Queries
 
 	is_empty: BOOLEAN
-			-- Return true if entity in quadrant is an instance of NULL_ENTITY.
-			-- Return false otherwise.
+			-- does QUADRANT contain an ENTITY?
 		do
 			Result := attached {NULL_ENTITY} entity
 		end
 
 	has (ie: ID_ENTITY): BOOLEAN
-			-- Return true if "ie" is object equivelant to entity.
-			-- Return false otherwise.
+			-- does QUADRANT contain ie?
 		do
 			Result := ie ~ entity
 		end
 
 	is_equal (other: like Current): BOOLEAN
-			-- Current "is equal" to other if current.coordinate ~ other.coordinate and current.entity ~ other.entity
 		do
 			if current.coordinate ~ other.coordinate then
 				if not is_empty then
@@ -118,8 +117,8 @@ feature -- Queries
 feature -- Out
 
 	out_abstract: STRING
-			-- If "is_empty", then Result ~ "-"
-			-- If "not is_empty" Result takes the form of {ID_ENTITY}.out_sqr_bracket which looks like "[id, character]".ie "[2, P]"
+			-- if is_empty, then result -> "-"
+			-- if not is_empty, then result -> "[id, character]"
 		do
 			create Result.make_empty
 			if attached {ID_ENTITY} entity as id_entity then --
@@ -130,13 +129,12 @@ feature -- Out
 		end
 
 	out_character: STRING
-			-- Result ~ "Character" For example, "E" for EXPLORER or "-" for NULL_ENTITY
+			-- Result -> "entity.out"
 		do
 			Result := entity.out
 		end
 
 invariant
-	entity_coordinate_is_equivelant_to_coordinate: entity.coordinate ~ coordinate
-	-- The entity.coordinate must always be equivelant to coordinate.
+	entity_coordinate_is_equivelant_to_quadrant_coordinate: entity.coordinate ~ coordinate
 
 end

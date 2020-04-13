@@ -18,8 +18,10 @@ create
 	make
 
 feature {NONE} -- Initialization
-	make(a_coordinate: COORDINATE; a_id:INTEGER)
+
+	make (a_coordinate: COORDINATE; a_id: INTEGER)
 		do
-			stationary_make(a_coordinate,a_id,'O')
+			stationary_make (a_coordinate, a_id, 'O')
 		end
+
 end

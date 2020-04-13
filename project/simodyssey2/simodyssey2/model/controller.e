@@ -38,16 +38,17 @@ feature {NONE} -- Initialization
 			msg: MESSAGE
 		do
 				-- initial state = main menu state
-			create {MAIN_MENU_STATE} game_state.make (create {SIMODYSSEY}.make, create {ABSTRACT_STATE_NUMBERS}.make,msg.empty_string,msg.initial_message)
+			create {MAIN_MENU_STATE} game_state.make (create {SIMODYSSEY}.make, create {ABSTRACT_STATE_NUMBERS}.make, msg.empty_string, msg.initial_message)
 		end
 
 feature -- Attributes
 
 	game_state: STATE
 			-- "game_state" is polymorphic
-			-- provides the STATE (see description in STATE) of the current SIMODYSSEY game. eg PLAY_STATE, MAIN_MENU_STATE...
+			-- provides the user's STATE (see description in STATE) in the program. eg PLAY_STATE, MAIN_MENU_STATE...
 
 feature -- State Commands
+
 	move_to_next_state
 			-- transition "game_sate" to the STATE referenced by "game_state.next_state" such that "game_state" = "game_state.next_state".
 			-- Note reference equality.

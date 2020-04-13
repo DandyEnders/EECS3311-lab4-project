@@ -29,7 +29,7 @@ feature -- Controller command / queries
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.abort_error_no_mission)
 		ensure then
-			invalid_command_implies_remain_in_main_menu_state:(attached {MAIN_MENU_STATE} next_state)
+			invalid_command_implies_remain_in_main_menu_state: (attached {MAIN_MENU_STATE} next_state)
 		end
 
 	move (d: COORDINATE)
@@ -42,18 +42,18 @@ feature -- Controller command / queries
 			set_msg_command_validity (msg.error)
 			set_msg_content (msg.move_error_no_mission)
 		ensure then
-			invalid_command_implies_remain_in_main_menu_state:(attached {MAIN_MENU_STATE} next_state)
+			invalid_command_implies_remain_in_main_menu_state: (attached {MAIN_MENU_STATE} next_state)
 		end
 
 	play
-		--  execute "new_game" command in SIMODYSSEY
+			--  execute "new_game" command in SIMODYSSEY
 		local
 			s: STATE
 		do
 			game_model.new_game (3, 5, 7, 15, 30, FALSE)
-			create {PLAY_STATE} s.make (game_model, abstract_state_numbers,msg.play,game_model.out)
+			create {PLAY_STATE} s.make (game_model, abstract_state_numbers, msg.play, game_model.out)
 			abstract_state_numbers.executed_valid_turn_command
-			transition_to(s)
+			transition_to (s)
 		ensure then
 			enter_play_state: (attached {PLAY_STATE} next_state)
 		end
@@ -63,13 +63,13 @@ feature -- Controller command / queries
 			-- append "Thresholds should be non-decreasing order." to "out"
 			-- if preconditions are met, execute "new_game" command in SIMODYSSEY
 		local
-			s:STATE
+			s: STATE
 		do
 			if game_model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold) then
 				game_model.new_game (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold, TRUE)
-				create {PLAY_STATE} s.make (game_model, abstract_state_numbers,msg.test,game_model.out)
+				create {PLAY_STATE} s.make (game_model, abstract_state_numbers, msg.test, game_model.out)
 				abstract_state_numbers.executed_valid_turn_command
-				transition_to(s)
+				transition_to (s)
 			else
 				abstract_state_numbers.executed_invalid_command
 				set_msg_mode (msg.empty_string)
@@ -78,8 +78,7 @@ feature -- Controller command / queries
 			end
 		ensure then
 			valid_thresholds_implies_enter_play_state: game_model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold) implies (attached {PLAY_STATE} next_state)
-			invalid_thresholds_implies_remain_in_main_menu_state:(not game_model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold)) implies (attached {MAIN_MENU_STATE} next_state)
-
+			invalid_thresholds_implies_remain_in_main_menu_state: (not game_model.valid_thresholds (a_threshold, j_threshold, m_threshold, b_threshold, p_threshold)) implies (attached {MAIN_MENU_STATE} next_state)
 		end
 
 end

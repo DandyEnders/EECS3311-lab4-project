@@ -23,16 +23,16 @@ feature {NONE} -- Initialization
 			-- Initialization for `Current'.
 		do
 			coordinate := a_coordinate
-			character:=charac
+			character := charac
 		end
 
 feature -- Attributes
 
 	character: CHARACTER
-			-- the character used to represent the ENTITY. ie 'E'
+			-- result -> ie 'E'
 
 	coordinate: COORDINATE
-			-- the ENTITY's coordinate in GRID
+			-- coordinate in GRID
 
 feature {ENTITY} -- Attribute
 
@@ -41,7 +41,6 @@ feature {ENTITY} -- Attribute
 feature -- Queries
 
 	is_equal (other: like current): BOOLEAN
-			-- current "is_equal" to other if other.character ~ character and other.coordinate ~ coordinate
 		do
 			Result := character ~ other.character and coordinate ~ other.coordinate
 		end
@@ -49,7 +48,7 @@ feature -- Queries
 feature -- out
 
 	out: STRING
-			-- out ~ ('character' as a STRING).ie "E"
+			-- result -> ie "E"
 		do
 			create Result.make_empty
 			Result.append_character (character)

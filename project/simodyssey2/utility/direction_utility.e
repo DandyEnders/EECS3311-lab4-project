@@ -1,8 +1,8 @@
 ﻿note
 	description: "[
-		A class that contains common direction COORDINATEs
- 		(e.g. N -> [-1,0], E -> [0,1] …)
-	 ]"
+				A class that contains common direction COORDINATEs
+		 		(e.g. N -> [-1,0], E -> [0,1] …)
+	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -10,58 +10,60 @@
 expanded class
 	DIRECTION_UTILITY
 
-feature
+feature -- Attributes
 
 	N: COORDINATE
-			-- result equals a COORDINATE after taking a unit-step, away from the origin [0,0] in the north direction. ie [-1,0]
+			-- result -> [-1,0]
 		do
 			create Result.make ([-1, 0])
 		end
 
 	E: COORDINATE
-			-- result equals a COORDINATE after taking a unit-step, away from the origin [0,0] in the east direction. ie [0,1]
+			-- result -> [0,1]
 		do
 			create Result.make ([0, 1])
 		end
 
 	S: COORDINATE
-			-- result equals a coordinate after taking a unit-step, away from the origin [0,0] in the south direction. ie [1,0]
+			-- result -> [1,0]
 		do
 			create Result.make ([1, 0])
 		end
 
 	W: COORDINATE
-			-- result equals a COORDINATE after taking a unit-step, away from the origin [0,0] in the west direction. ie [0,-1]
+			-- result -> [0,-1]
 		do
 			create Result.make ([0, -1])
 		end
 
 	NE: COORDINATE
-			-- result equals a COORDINATE after taking a unit-step, away from the origin [0,0] in the north-east direction. ie [-1,1]
+			-- result -> [-1,1]
 		do
 			Result := N + E
 		end
 
 	SE: COORDINATE
-			-- result equals a COORDINATE after taking a unit-step, away from the origin [0,0] in the south-east direction. ie [1,1]
+			-- result -> [1,1]
 		do
 			Result := S + E
 		end
 
 	SW: COORDINATE
-			-- result equals a COORDINATE after taking a unit-step, away from the origin [0,0] in the south-west direction. ie [1,-1]
+			-- result -> [1,-1]
 		do
 			Result := S + W
 		end
 
 	NW: COORDINATE
-			-- result equals a COORDINATE after taking a unit-step, away from the origin [0,0] in the north-west direction. ie [-1,-1]
+			-- result -> [-1,-1]
 		do
 			Result := N + W
 		end
 
+feature -- Queries
+
 	number_for_direction (d: INTEGER): COORDINATE
-			-- result "is_direction" indicated by "d". ie 1 for a value of d returns N, 2 returns NE, 3 returns E, 4 returns SE, ... 8 returns NW
+			-- 1 implies result -> N, 2 implies result -> NE, 3 implies result -> E, 4 implies result -> SE, ... 8 implies result -> NW
 		require
 			d_is_in_range: d <= 8 and d >= 1
 		do

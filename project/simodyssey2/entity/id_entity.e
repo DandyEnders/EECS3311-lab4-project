@@ -20,28 +20,28 @@ inherit
 
 feature {NONE} -- Initialization
 
-	make (a_coordinate: COORDINATE; a_id: INTEGER ; charac: CHARACTER)
+	make (a_coordinate: COORDINATE; a_id: INTEGER; charac: CHARACTER)
 			-- Initialization for `Current'.
 		do
-			make_entity (a_coordinate,charac)
+			make_entity (a_coordinate, charac)
 			id := a_id
 		end
 
 feature -- Attribute
 
 	id: INTEGER
-			-- the id of an ENTITY
+
 feature -- Queries
 
 	is_equal (other: like current): BOOLEAN
-			-- current ~ other iff (character ~ other.character and coordinate ~ other.coordinate and id ~ other.id)
 		do
 			Result := character ~ other.character and coordinate ~ other.coordinate and id ~ other.id
 		end
 
 feature -- out
+
 	out_sqr_bracket: STRING
-			-- result ~ "[id:character]" ie. "[0,E]"
+			-- result -> "[id:character]"
 		do
 			create Result.make_empty
 			Result.append ("[")
@@ -52,7 +52,7 @@ feature -- out
 		end
 
 	out_description: STRING
-			-- result ~ ""out_sqr_bracket"->" ie. "[0,E]->"
+			-- result -> "out_sqr_bracket->"
 		do
 			create Result.make_empty
 			Result.append (out_sqr_bracket)

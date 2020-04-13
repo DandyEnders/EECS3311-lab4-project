@@ -21,25 +21,26 @@ inherit
 
 feature {NONE} -- Initialization
 
-	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER;charac:CHARACTER)
+	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER; charac: CHARACTER)
 			-- Initialization for `Current'.
 		do
-			moveable_make (a_coordinate, a_id, 1,charac)
+			moveable_make (a_coordinate, a_id, 1, charac)
 			set_turns_left (t_left)
 			create behavior_messages.make_empty
 		end
+
 feature -- Attributes
 
 	behavior_messages: ARRAY [STRING]
-		-- messages produced after "behave" executes.
+			-- messages produced after behave executes.
 
-feature -- Attributes	
+feature -- Attributes
 
 	turns_left: INTEGER
-			-- turns_left for the ENTITY to behave
+			-- turns left to behave
 
 	set_turns_left (value: INTEGER)
-			-- initialize "turns_left" to value
+			-- initialize turns_left to value
 		require
 			valid_value: 0 <= value and value <= 2
 		do
@@ -51,8 +52,6 @@ feature -- Attributes
 feature -- Commands
 
 	behave (sector: SECTOR)
-			-- allow current to interact with ENTITY's in its SECTOR.
-			-- perform behavior algorithm that pertains to current's type as seen on pg 36
 		require
 			sector.coordinate ~ coordinate
 			turns_left ~ 0

@@ -43,7 +43,7 @@ feature {NONE} -- Contstructor
 		do
 			create sect.make_empty ([1, 1], 0)
 			create sectors.make_filled (sect, r, c)
-			create stationary_entities.make (500)
+			create stationary_entities.make (125)
 			sectors.compare_objects
 			stationary_entities.compare_objects
 			across
@@ -69,16 +69,16 @@ feature -- Attributes
 	sectors: ARRAY2 [SECTOR]
 
 	max_row: INTEGER
-		-- maximum number of rows in GRID
+			-- maximum number of rows
 
 	max_col: INTEGER
-		-- maximum number of columns in GRID
+			-- maximum number of columns
 
 feature {NONE} -- Queries
 
 	moveable_entities: HASH_TABLE [MOVEABLE_ENTITY, INTEGER]
 		do
-			create Result.make (500)
+			create Result.make (125)
 			across
 				sectors is i_s
 			loop
@@ -94,7 +94,7 @@ feature {NONE} -- Queries
 feature -- Commands
 
 	add_at (ie: ID_ENTITY; c: COORDINATE)
-			-- given that c is a valid coordinate in GRID, ie is not already contained in GRID and GRID is not full, "add" ie to a SECTOR in GRID with coordinate ~ c.
+			-- add ie to a SECTOR with coordinate ~ c.
 		require
 			valid_coordinate (c)
 			not has (ie)
@@ -105,51 +105,51 @@ feature -- Commands
 				stationary_entities.force (se, se.id)
 			end
 		ensure
-			me_is_added_at_correct_sector:at (c).has (ie)
-			count_is_incremented_by_one:entity_count~ (old entity_count+1)
+			me_is_added_at_correct_sector: at (c).has (ie)
+			count_is_incremented_by_one: entity_count ~ (old entity_count + 1)
 		end
 
 	remove (me: MOVEABLE_ENTITY)
-			-- given that me is contained in GRID, "remove" me from the SECTOR in GRID that contains me.
+			-- remove me.
 		require
-			has(me)
+			has (me)
 		do
 			at (me.coordinate).remove (me)
 		ensure
-			me_is_removed:not has(me)
-			count_is_decremented_by_one:entity_count~(old entity_count -1)
+			me_is_removed: not has (me)
+			count_is_decremented_by_one: entity_count ~ (old entity_count - 1)
 		end
 
 	move (ie: MOVEABLE_ENTITY; to_c: COORDINATE)
-			-- given that the precondition of "add_at" is satisfied or (to_c ~ ie.coordinate), "move" ie away from its current SECTOR to SECTOR with (coordinate ~ to_c) in GRID
+			-- move ie away from its SECTOR to a SECTOR in GRID with (coordinate ~ to_c)
 		require
 			has (ie)
 			valid_coordinate (to_c)
-			new_sector_is_not_full_or_already_contains_ie:(not at (to_c).is_full or at (to_c).has (ie))
-
+			new_sector_is_not_full_or_already_contains_ie: (not at (to_c).is_full or at (to_c).has (ie))
 		do
 			remove (ie)
 			add_at (ie, to_c)
 		ensure
 			ie_is_at_new_coordinate: at (to_c).has (ie)
-			count_is_incremented_by_one:entity_count ~ entity_count
+			count_is_incremented_by_one: entity_count ~ entity_count
 		end
 
 feature -- Queries
+
 	entity_count: INTEGER
-			-- result equals the culmulative sum of STATIONARY_ENTITY and MOVEABLE_ENTITY across all SECTORs within GRID
+			-- the culmulative sum of all STATIONARY_ENTITY and MOVEABLE_ENTITY contained
 		do
-			Result:=stationary_entities.count + moveable_entities.count
+			Result := stationary_entities.count + moveable_entities.count
 		end
 
-	has_sector( s:SECTOR): BOOLEAN
+	has_sector (s: SECTOR): BOOLEAN
 			-- result is true if GRID contains SECTOR s.
 		do
-			Result:= sectors.has (s)
+			Result := sectors.has (s)
 		end
 
 	all_moveable_entities: ARRAY [MOVEABLE_ENTITY]
-			-- result is an array of all MOVEABLE_ENTITY contained in GRID oragnized in increasing order ids.
+			-- The collection of all MOVEABLE_ENTITY contained; arranged in increasing order ids.
 		local
 			i: INTEGER
 			c: INTEGER
@@ -173,7 +173,7 @@ feature -- Queries
 		end
 
 	all_stationary_entities: ARRAY [STATIONARY_ENTITY]
-			-- result is an array of all STATIONARY_ENTITY contained in GRID oragnized in increasing order ids.
+			-- The collection of all STATIONARY_ENTITY contained; arranged in increasing order ids.
 		local
 			i: INTEGER
 		do
@@ -192,29 +192,29 @@ feature -- Queries
 		end
 
 	at (c: COORDINATE): SECTOR
-			-- given a "valid_coordinate" in GRID, return the SECTOR with coordinate ~ c
+			-- the SECTOR in grid with coordinate ~ c
 		require
 			valid_coordinate (c)
 		do
 			Result := sectors [c.row, c.col]
 		ensure
-			matching_sector_coordinate:Result.coordinate ~ c
-			result_is_contained_in_grid: has_sector(Result)
+			matching_sector_coordinate: Result.coordinate ~ c
+			result_is_contained_in_grid: has_sector (Result)
 		end
 
 	sector_with (ie: ID_ENTITY): SECTOR
-			-- given that "ie" is contained in GRID, return the SECTOR that contains "ie".
+			-- the SECTOR in GRID that contains ie.
 		require
 			has (ie)
 		do
 			Result := at (ie.coordinate)
 		ensure
 			result_has_ie: Result.has (ie)
-			result_is_contained_in_grid: has_sector(Result)
+			result_is_contained_in_grid: has_sector (Result)
 		end
 
 	valid_coordinate (c: COORDINATE): BOOLEAN
-			-- c is a "valid_quardinate" in GRID if 1 <= c.row <= row and 1 <= c.col <= col
+			-- true if c lies between [0,0] and [max_row,max_col]
 		do
 			Result := 1 <= c.row and c.row <= max_row and 1 <= c.col and c.col <= max_col
 		end
@@ -228,7 +228,7 @@ feature -- Queries
 feature -- Traversal
 
 	new_cursor: INDEXABLE_ITERATION_CURSOR [SECTOR]
-			-- allow traversal of GRID using "across" notation
+			-- facilitate traversal of GRID using across notation
 		do
 			Result := sectors.new_cursor
 		end
@@ -236,7 +236,7 @@ feature -- Traversal
 feature -- Out
 
 	out_abstract_sectors: STRING
-			-- output (below) such that each line occupies the "out_abstract_sector" of each sector
+			-- result -> (below)
 			-- Sectors:
 			-- 		[1,1]->[0,E],[36,P],[40,P],-
 			--		[1,2]->[3,P],-,[4,P],-
@@ -261,7 +261,7 @@ feature -- Out
 		end
 
 	out_abstract_description: STRING
-			-- output (below) such that each line occupies the "out_description" of each ID_ENTITY in GRID
+			-- result -> (below)
 			-- Descriptions:
 			--    [-11,*]->Luminosity:5
 			--		..
@@ -291,7 +291,7 @@ feature -- Out
 		end
 
 	out: STRING
-			-- output each SECTOR in GRID like below
+			-- result -> (below)
 			--   (1:1) (1:2) (1:3) (1:4) (1:5)
 			--   M---  *---  B---  ----  ----
 			--   (2:1) (2:2) (2:3) (2:4) (2:5)
@@ -326,4 +326,5 @@ feature -- Out
 				end
 			end
 		end
+
 end

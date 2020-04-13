@@ -32,7 +32,7 @@ feature {NONE} -- Initialization
 
 	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER)
 		do
-			reproduceable_make (a_coordinate, a_id, t_left, 1,'B')
+			reproduceable_make (a_coordinate, a_id, t_left, 1, 'B')
 			fuelable_make (3)
 			add_death_cause_type ("OUT_OF_FUEL")
 			add_death_cause_type ("ASTEROID")
@@ -41,9 +41,9 @@ feature {NONE} -- Initialization
 feature -- Command
 
 	check_health (sector: SECTOR)
-			-- if sector.has_star ~ true recharge the current's fuel cells
-			-- execute "kill_by_blackhole" if sector.has_blachole ~ true.
-			-- execute "kill_by_out_of_fuel" if "is_out_of_fuel" ~ true.
+			-- if sector.has_star ~ true recharge the benign's fuel cells
+			-- execute kill_by_blackhole if sector.has_blachole ~ true.
+			-- execute kill_by_out_of_fuel if "is_out_of_fuel" ~ true.
 		local
 			are_you_killed_yet: BOOLEAN
 		do
@@ -66,7 +66,6 @@ feature -- Command
 		end
 
 	behave (sector: SECTOR)
-			-- allow current to interact with ENTITY's in its SECTOR.
 			-- perform behavior algorithm that pertains to BENIGN as seen on pg 36
 		local
 			rng: RANDOM_GENERATOR_ACCESS
@@ -88,13 +87,13 @@ feature -- Command
 feature -- Queries
 
 	is_dead_by_out_of_fuel: BOOLEAN
-			-- result ~ true if current was killed by executing "kill_by_out_of_fuel".
+			-- was killed by out of fuel?.
 		do
 			Result := is_dead and then get_death_cause ~ "OUT_OF_FUEL"
 		end
 
 	is_dead_by_asteroid: BOOLEAN
-			-- result ~ true if current was killed by executing "kill_by_asteroid".
+			-- was killed by ASTEROID?
 		do
 			Result := is_dead and then get_death_cause ~ "ASTEROID"
 		end
@@ -102,7 +101,6 @@ feature -- Queries
 feature -- Commands
 
 	kill_by_out_of_fuel
-			-- given fuel ~ 0, kill current by out of fuel
 		require
 			fuel = 0
 		do
@@ -112,7 +110,6 @@ feature -- Commands
 		end
 
 	kill_by_asteroid (killer_id: INTEGER)
-			-- given the id a ASTEROID, kill current by ASTEROID
 		do
 			kill_by ("ASTEROID")
 			killers_id := killer_id
@@ -120,18 +117,18 @@ feature -- Commands
 			is_dead_by_asteroid
 		end
 
-	reproduce(moveable_id:INTEGER): like current
+	reproduce (moveable_id: INTEGER): like current
 		local
 			rng: RANDOM_GENERATOR_ACCESS
 		do
-			create Result.make(current.coordinate, moveable_id, rng.rchoose (0,2))
+			create Result.make (current.coordinate, moveable_id, rng.rchoose (0, 2))
 			reset_actions_left_until_reproduction
 		end
 
 feature -- Output
 
 	out_death_message: STRING
-			-- result ~ {Abstract State: Death Messages BENIGN on pg 26-27}
+			-- result -> {Abstract State: Death Messages BENIGN on pg 26-27}
 		do
 			create Result.make_empty
 			if is_dead_by_out_of_fuel then
@@ -144,7 +141,7 @@ feature -- Output
 		end
 
 	out_description: STRING
-			-- result ~ "[id, character]->fuel:cur_fuel/max_fuel, actions_left_until_reproduction: c_value / reproduction_interval, turns_left: N/A or turns_left"
+			-- result -> "[id, character]->fuel:cur_fuel/max_fuel, actions_left_until_reproduction: c_value / reproduction_interval, turns_left: N/A or turns_left"
 		local
 			turns_left_string: STRING
 		do

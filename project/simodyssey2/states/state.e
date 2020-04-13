@@ -1,14 +1,15 @@
 ﻿note
 	description: "[
-		A class that defines valid, invalid user commands,
-		and generates the user's output when commands are executed.
-	
-		Secret: 
-		private attribute “abstract_state_numbers” is of type 
-		ABSTRACT_STATE_NUMBERS which means STATE is a client
-		of ABSTRACT_STATE_NUMBERS.
-		“abstract_state_numbers” is updated accordingly after 
-		the execution of a command.
+			A class that defines the set of valid, invalid user 
+			commands, and generates the user's output when 
+			commands are executed.
+		
+			Secret: 
+			private attribute “abstract_state_numbers” is of type 
+			ABSTRACT_STATE_NUMBERS which means STATE is a client
+			of ABSTRACT_STATE_NUMBERS.
+			“abstract_state_numbers” is updated accordingly after 
+			the execution of a command.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
 	date: "$Date$"
@@ -106,7 +107,7 @@ feature {NONE} -- Commands
 feature -- Attributes
 
 	game_model: SIMODYSSEY
-			-- the game being controlled in current (ie PLAY_STATE, MAIN_MENU_STATE, LANDED_STATE)
+			-- the game whose output is being defined in STATE
 
 	next_state: STATE
 			-- after creation next_state = current. Note refference equality
@@ -157,7 +158,7 @@ feature -- Commands
 feature -- Out
 
 	out: STRING
-			-- after a command in current is executed, this is the output the user sees.
+			-- output generated after executing a commnad.
 		do
 			create Result.make_from_string (msg.left_margin)
 			Result.append (abstract_state_numbers.out)

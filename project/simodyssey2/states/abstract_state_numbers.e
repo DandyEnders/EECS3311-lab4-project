@@ -62,7 +62,7 @@ feature {STATE} -- Command
 		do
 			increment_first_number
 		ensure
-			first_number ~ (old first_number +1)
+			first_number ~ (old first_number + 1)
 			second_number ~ 0
 		end
 
@@ -72,14 +72,14 @@ feature {STATE} -- Command
 		do
 			increment_second_number
 		ensure
-			second_number ~ (old second_number +1)
+			second_number ~ (old second_number + 1)
 		end
 
 	executed_no_turn_command
 		do
 			increment_second_number
 		ensure
-			second_number ~ (old second_number +1)
+			second_number ~ (old second_number + 1)
 		end
 
 feature -- Queries

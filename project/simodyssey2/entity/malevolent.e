@@ -33,7 +33,7 @@ feature {NONE} -- Initialization
 	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER)
 			-- Initialization for `Current'.
 		do
-			reproduceable_make (a_coordinate, a_id, t_left, 1,'M')
+			reproduceable_make (a_coordinate, a_id, t_left, 1, 'M')
 			fuelable_make (3)
 			add_death_cause_type ("OUT_OF_FUEL")
 			add_death_cause_type ("ASTEROID")
@@ -43,19 +43,19 @@ feature {NONE} -- Initialization
 feature -- Queries
 
 	is_dead_by_out_of_fuel: BOOLEAN
-			-- result ~ true if current was killed by executing "kill_by_out_of_fuel".
+			-- was killed by out of fuel?
 		do
 			Result := is_dead and then get_death_cause ~ "OUT_OF_FUEL"
 		end
 
 	is_dead_by_asteroid: BOOLEAN
-			-- result ~ true if current was killed by executing "kill_by_asteroid".
+			-- was killed by ASTEROID?
 		do
 			Result := is_dead and then get_death_cause ~ "ASTEROID"
 		end
 
 	is_dead_by_benign: BOOLEAN
-			-- result ~ true if current was killed by executing "kill_by_benign".
+			-- was killed by out of BENIGN?
 		do
 			Result := is_dead and then get_death_cause ~ "BENIGN"
 		end
@@ -63,9 +63,9 @@ feature -- Queries
 feature -- Commands
 
 	check_health (sector: SECTOR)
-			-- if sector.has_star ~ true recharge the current's fuel cells
-			-- execute "kill_by_blackhole" if sector.has_blachole ~ true.
-			-- execute "kill_by_out_of_fuel" if "is_out_of_fuel" ~ true.
+			-- if sector.has_star ~ true recharge the malevolent's fuel cells
+			-- execute kill_by_blackhole if sector.has_blachole ~ true.
+			-- execute kill_by_out_of_fuel if "is_out_of_fuel" ~ true.
 		local
 			are_you_killed_yet: BOOLEAN
 		do
@@ -88,7 +88,6 @@ feature -- Commands
 		end
 
 	behave (sector: SECTOR)
-			-- allow current to interact with ENTITY's in its SECTOR.
 			-- perform behavior algorithm that pertains to MALEVOLENT as seen on pg 36
 		local
 			rng: RANDOM_GENERATOR_ACCESS
@@ -104,7 +103,7 @@ feature -- Commands
 					if attached {EXPLORER} me as e_me then -- if there is an explorer and he is not landed then proceed
 						if not e_me.landed then
 							if e_me.life.point ~ 1 then -- if there is an explorer and he is almost dead
-								e_me.kill_by_malevolent(id)
+								e_me.kill_by_malevolent (id)
 							else
 								e_me.life.subtract_life (1)
 							end
@@ -118,7 +117,6 @@ feature -- Commands
 		end
 
 	kill_by_out_of_fuel
-			-- given fuel ~ 0, kill current by out of fuel
 		require
 			fuel = 0
 		do
@@ -128,7 +126,6 @@ feature -- Commands
 		end
 
 	kill_by_asteroid (killer_id: INTEGER)
-			-- given the id a ASTEROID, kill current by ASTEROID
 		do
 			kill_by ("ASTEROID")
 			killers_id := killer_id
@@ -137,7 +134,6 @@ feature -- Commands
 		end
 
 	kill_by_benign (killer_id: INTEGER)
-			-- given the id a BENIGN, kill current by BENGIN
 		do
 			kill_by ("BENIGN")
 			killers_id := killer_id
@@ -145,18 +141,18 @@ feature -- Commands
 			is_dead_by_benign
 		end
 
-	reproduce(moveable_id:INTEGER): like current
+	reproduce (moveable_id: INTEGER): like current
 		local
 			rng: RANDOM_GENERATOR_ACCESS
 		do
-			create Result.make(current.coordinate, moveable_id, rng.rchoose (0,2))
+			create Result.make (current.coordinate, moveable_id, rng.rchoose (0, 2))
 			reset_actions_left_until_reproduction
 		end
 
 feature -- out
 
 	out_death_message: STRING
-			-- result ~ {Abstract State: Death Messages MALEVOLENT on pg 26-27}
+			-- result -> {Abstract State: Death Messages MALEVOLENT on pg 26-27}
 		do
 			create Result.make_empty
 			if is_dead_by_out_of_fuel then
@@ -171,7 +167,7 @@ feature -- out
 		end
 
 	out_description: STRING
-			-- result ~ "[id, character]->fuel:cur_fuel/max_fuel, actions_left_until_reproduction: c_value / reproduction_interval, turns_left: N/A or turns_left"
+			-- result -> "[id, character]->fuel:cur_fuel/max_fuel, actions_left_until_reproduction: c_value / reproduction_interval, turns_left: N/A or turns_left"
 		local
 			turns_left_string: STRING
 		do

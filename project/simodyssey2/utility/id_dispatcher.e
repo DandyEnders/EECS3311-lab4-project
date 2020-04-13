@@ -22,7 +22,7 @@ feature {NONE} -- Constructor
 feature -- Commands
 
 	reset
-			-- initialize "current_id" to "initial_id".
+			-- initialize current_id to initial_id.
 		do
 			current_id := initial_id
 		ensure
@@ -30,7 +30,8 @@ feature -- Commands
 		end
 
 	update_id
-			-- if "id_up" equals true, current_id will be incremented by 1. current_id will be decremented by 1 otherwise.
+			-- if id_up is true, increment current_id by 1.
+			-- decrement current_id by 1 otherwise.
 		do
 			if id_up then
 				current_id := current_id + 1
@@ -38,18 +39,19 @@ feature -- Commands
 				current_id := current_id - 1
 			end
 		ensure
-			case_where_get_id_is_incremented:id_up implies (current_id ~ (old current_id+1))
-			case_where_get_id_is_decremented:(not id_up) implies (current_id ~ (old current_id-1))
+			case_where_get_id_is_incremented: id_up implies (current_id ~ (old current_id + 1))
+			case_where_get_id_is_decremented: (not id_up) implies (current_id ~ (old current_id - 1))
 		end
 
 feature -- Attributes
 
 	current_id: INTEGER
-			-- the current id in integer value
+			-- the current id
 
 	id_up: BOOLEAN
-			-- determines the behavior of "update_id". See command "update_id" for more.
+			--see update_id.
 
 	initial_id: INTEGER
-			-- first unique id returned by "current_id".
+			-- first id returned by current_id.
+
 end

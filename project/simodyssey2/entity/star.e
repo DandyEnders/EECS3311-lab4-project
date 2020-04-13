@@ -21,25 +21,25 @@ inherit
 
 feature {NONE} -- Initialization
 
-	make(a_coordinate: COORDINATE; a_id,lumin:INTEGER; charac: CHARACTER)
+	make (a_coordinate: COORDINATE; a_id, lumin: INTEGER; charac: CHARACTER)
 		do
-			stationary_entity_make(a_coordinate,a_id,charac)
-			luminosity:=lumin
+			stationary_entity_make (a_coordinate, a_id, charac)
+			luminosity := lumin
 		end
 
 feature -- Attribute
 
 	luminosity: INTEGER
-			-- luminosity value of a STAR.
+			-- luminosity value
 
 feature -- Out
 
-	out_description:STRING
-			-- result ~ "[id, character]->Luminosity: luminosity". ie. "[0, E]->Luminosity:2"
+	out_description: STRING
+			-- result -> "[id, character]->Luminosity: luminosity".
 		do
 			Result := Precursor
-			Result.append("Luminosity:")
-			Result.append(luminosity.out)
+			Result.append ("Luminosity:")
+			Result.append (luminosity.out)
 		end
 
 end

@@ -37,14 +37,14 @@ feature {NONE} -- Initialization
 feature -- Attributes
 
 	row: INTEGER
-			-- the row of COORDINATE. ie [row, ]
+			-- the row of a COORDINATE. ie [row, ]
 
 	col: INTEGER
-			-- the column of COORDINATE. ie [ ,column]
+			-- the column of a COORDINATE. ie [ ,column]
+
 feature -- Queries
 
 	is_less alias "<" (other: like Current): BOOLEAN
-			-- current is "less-than" other iff ((current.row < other.row) OR (current.row = other.row and current.col < other.col)).
 		do
 			if Current.row < other.row then
 				Result := True
@@ -58,7 +58,6 @@ feature -- Queries
 		end
 
 	is_equal (other: like Current): BOOLEAN
-			-- current equals other iff current.row = other.row and current.col = other.col
 		do
 			if Current.row ~ other.row and Current.col ~ other.col then
 				Result := True
@@ -68,19 +67,19 @@ feature -- Queries
 		end
 
 	add alias "+" (other: like Current): COORDINATE
-			-- perform current + other, resulting in [row + other.row, col + other.col]
+			-- result -> [row + other.row, col + other.col]
 		do
 			create Result.make ([row + other.row, col + other.col])
 		end
 
 	subtract alias "-" (other: like Current): COORDINATE
-			-- perform current - other, resulting in [row - other.row, col - other.col]
+			-- result -> [row - other.row, col - other.col]
 		do
 			create Result.make ([row - other.row, col - other.col])
 		end
 
 	is_direction: BOOLEAN
-			-- result equals true iff current is equivelant to some COORDINATE in DIRECTION_UTILITY
+			-- is current object equal to an attribute in DIRECTION_UTILITY?
 		local
 			d: DIRECTION_UTILITY
 		do
@@ -88,7 +87,7 @@ feature -- Queries
 		end
 
 	wrap_coordinate_to_coordinate (c, lower_bound, upper_bound: COORDINATE): COORDINATE
-			--given COORDINATE c, result equals a COORDINATE that lies between lower_bound and upper_bound
+			--result equals a COORDINATE that lies between lower_bound and upper_bound
 		do
 			Result := c
 			if c.row ~ (lower_bound.row - 1) then
@@ -105,7 +104,8 @@ feature -- Queries
 
 feature -- out
 
-	out: STRING -- output current as "(row:col)"
+	out: STRING
+			-- result -> "(row:col)"
 		do
 			create Result.make_empty
 			Result.append ("(")
@@ -113,7 +113,8 @@ feature -- out
 			Result.append (")")
 		end
 
-	out_sqr_bracket: STRING -- output current as "[row:col]"
+	out_sqr_bracket: STRING
+			-- result -> "[row:col]"
 		do
 			create Result.make_empty
 			Result.append ("[")
@@ -121,7 +122,8 @@ feature -- out
 			Result.append ("]")
 		end
 
-	out_colon: STRING -- output current as "row:col"
+	out_colon: STRING
+			-- result -> "row:col"
 		do
 			create Result.make_empty
 			Result.append (row.out)
@@ -129,7 +131,8 @@ feature -- out
 			Result.append (col.out)
 		end
 
-	out_sqr_bracket_comma: STRING -- output current as "[row,col]"
+	out_sqr_bracket_comma: STRING
+			-- result -> "[row,col]"
 		do
 			create Result.make_empty
 			Result.append ("[")

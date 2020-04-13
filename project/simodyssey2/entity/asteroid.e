@@ -24,14 +24,14 @@ feature {NONE} -- Initialization
 	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER)
 			-- Initialization for `Current'.
 		do
-			np_moveable_make (a_coordinate, a_id, t_left,'A')
+			np_moveable_make (a_coordinate, a_id, t_left, 'A')
 			add_death_cause_type ("JANITAUR")
 		end
 
 feature -- Queries
 
 	is_dead_by_janitaur: BOOLEAN
-			-- result ~ true if current was killed by executing "kill_by_janitaur".
+			-- was killed by JANITAUR?
 		do
 			Result := is_dead and then get_death_cause ~ "JANITAUR"
 		end
@@ -39,8 +39,7 @@ feature -- Queries
 feature -- Commands
 
 	behave (sector: SECTOR)
-			-- allow current to interact with ENTITY's in its SECTOR.
-			-- perform behavior algorithm that pertains to ASTEROID as seen on pg 36
+			-- perform behavior algorithm that pertains to ASTEROID as seen on pg 36 of Project Specification
 		local
 			rng: RANDOM_GENERATOR_ACCESS
 			destroyed_message: STRING
@@ -73,7 +72,6 @@ feature -- Commands
 		end
 
 	kill_by_janitaur (killer_id: INTEGER)
-			-- given the id a MALEVOLENT, kill current by MALEVOLENT
 		do
 			kill_by ("JANITAUR")
 			killers_id := killer_id
@@ -84,7 +82,7 @@ feature -- Commands
 feature -- out
 
 	out_death_message: STRING
-			-- result ~ {Abstract State: Death Messages ASTEROID on pg 26-27}
+			-- result -> {Abstract State: Death Messages ASTEROID on pg 26-27}
 		do
 			create Result.make_empty
 			if is_dead_by_blackhole then
@@ -95,7 +93,7 @@ feature -- out
 		end
 
 	out_description: STRING
-			-- result ~ "[id, character]->turns_left: N/A or turns_left"
+			-- result -> "[id, character]->turns_left: N/A or turns_left"
 		local
 			turns_left_string: STRING
 		do

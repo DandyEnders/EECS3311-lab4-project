@@ -23,31 +23,31 @@ feature {NONE} -- Constructor
 
 	make (a_coordinate: COORDINATE; a_id, t_left: INTEGER)
 		do
-			np_moveable_make (a_coordinate, a_id, t_left,'P')
+			np_moveable_make (a_coordinate, a_id, t_left, 'P')
 			visited := FALSE
 			attached_to_star := FALSE
 			support_life := FALSE
-			is_landable:=FALSE
+			is_landable := FALSE
 		end
 
 feature -- Attributes
 
 	visited: BOOLEAN
-			-- result ~ true if current was visited by EXPLORER
+			-- was visited by EXPLORER?
 
 	attached_to_star: BOOLEAN
-			-- result ~ true if current is attached to a STAR
+			-- is attached to a STAR?
 
 	support_life: BOOLEAN
-			-- result ~ true if current "supports life"
+			-- supports life?
 
 	is_landable: BOOLEAN
-			-- result ~ true if current is attached to a YELLOW_DWARF
+			-- is landable?
 
 feature -- Command
 
 	set_attached_to_star (s: STAR)
-			-- given STAR in current's sector, attach current to STAR.
+			-- attach to STAR.
 		require
 			star_is_in_same_sector: s.coordinate ~ coordinate
 			turns_left ~ 0
@@ -55,12 +55,12 @@ feature -- Command
 		do
 			attached_to_star := TRUE
 			if attached {YELLOW_DWARF} s then
-				is_landable:= TRUE
+				is_landable := TRUE
 			else
-				is_landable:= FALSE
+				is_landable := FALSE
 			end
 		ensure
-			attached_to_star=TRUE
+			attached_to_star = TRUE
 			turns_left ~ 0
 			is_alive
 			if_attached_to_yellow_star_then_current_is_landable: (attached {YELLOW_DWARF} s) implies is_landable
@@ -68,7 +68,7 @@ feature -- Command
 		end
 
 	set_support_life (b: BOOLEAN)
-			-- initialize "support_life" to b
+			-- initialize support_life to b
 		require
 			attached_to_star
 			turns_left ~ 0
@@ -76,26 +76,28 @@ feature -- Command
 		do
 			support_life := b
 		ensure
-			support_life= b
+			support_life = b
 			is_alive
 			turns_left ~ 0
 		end
 
 	set_visited
-			-- initialize "visited" to true
+			-- initialize visited to true
 		require
 			attached_to_star
 			is_alive
+			is_landable
 		do
 			visited := TRUE
+			is_landable:=FALSE
 		ensure
 			visited
 			is_alive
 			attached_to_star
+			not is_landable
 		end
 
 	behave (sector: SECTOR)
-			-- allow current to interact with ENTITY's in its SECTOR.
 			-- perform behavior algorithm that pertains to PLANET as seen on pg 36
 		local
 			rng: RANDOM_GENERATOR_ACCESS
@@ -121,7 +123,7 @@ feature -- Command
 feature -- Out
 
 	out_death_message: STRING
-			-- result ~ {Abstract State: Death Messages PLANET on pg 26-27}
+			-- result -> {Abstract State: Death Messages PLANET on pg 26-27}
 		do
 			create Result.make_empty
 			if is_dead_by_blackhole then
@@ -130,7 +132,7 @@ feature -- Out
 		end
 
 	out_description: STRING
-			--result ~ "[id, character]->attached?:T or F, support_life?:T or F, visited:T or F, turns_left: N/A or turns_left"
+			--result -> "[id, character]->attached?:T or F, support_life?:T or F, visited:T or F, turns_left: N/A or turns_left"
 		do
 			Result := precursor
 			Result.append ("attached?:")

@@ -26,9 +26,9 @@ feature -- Controller command / queries
 			s: STATE
 		do
 			game_model.abort_game
-			create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers,msg.empty_string,msg.abort)
+			create {MAIN_MENU_STATE} s.make (game_model, abstract_state_numbers, msg.empty_string, msg.abort)
 			abstract_state_numbers.executed_no_turn_command
-			transition_to(s)
+			transition_to (s)
 		ensure then
 			enter_main_menu_state: (attached {MAIN_MENU_STATE} next_state)
 		end
@@ -65,8 +65,8 @@ feature -- Controller command / queries
 				s_tmp.append (msg.liftoff (c.row, c.col))
 				s_tmp.append ("%N")
 				s_tmp.append (game_model.out)
-				create {PLAY_STATE} s.make (game_model, abstract_state_numbers,msg_mode,s_tmp)
-				transition_to(s)
+				create {PLAY_STATE} s.make (game_model, abstract_state_numbers, msg_mode, s_tmp)
+				transition_to (s)
 			else
 				set_explorer_death_message
 			end

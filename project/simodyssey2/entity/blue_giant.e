@@ -19,9 +19,9 @@ create
 
 feature {NONE} -- Initialization
 
-	make(a_coordinate: COORDINATE;a_id:INTEGER)
+	make (a_coordinate: COORDINATE; a_id: INTEGER)
 		do
-			star_make(a_coordinate,a_id,5,'*')
+			star_make (a_coordinate, a_id, 5, '*')
 		end
 
 end
