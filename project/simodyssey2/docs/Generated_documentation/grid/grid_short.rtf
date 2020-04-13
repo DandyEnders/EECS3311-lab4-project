@@ -1,0 +1,139 @@
+{\rtf1\ansi\ansicpg1252\deflang1033{\fonttbl{\f0\fscript\fcharset0 Courier;}}{\colortbl ;\red0\green0\blue0;\red255\green255\blue255;\red128\green0\blue0;\red0\green0\blue255;\red0\green128\blue0;\red0\green0\blue128;}
+{\cf3\f0\fs16 {\tab}{\tab}{\tab}-- Automatic generation produced by ISE Eiffel --
+{\line}
+{{\b\cf6 note}{\line}
+{\tab}{\cf1 description}{\cf1 :} "[{\line}
+{\tab}{\tab}A collection of SECTOR objects arranged in a 2-D grid.{\line}
+{\tab}{\tab}{\line}
+{\tab}{\tab}Secret: {\line}
+{\tab}{\tab}The collection of STATIONARY_ENTITY in the GRID {\line}
+{\tab}{\tab}is stored in a HASH_TABLE, to allow efficient {\line}
+{\tab}{\tab}implementation of “all_stationary_entities” query.{\line}
+{\tab}{\tab}A similar approach is used to implement {\line}
+{\tab}{\tab}“all_moveable_entities” query.{\line}
+{\tab}]"{\line}
+{\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
+{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\line}
+{\b\cf6 class} {\b\cf6 interface}{\line}
+{\tab}{\cf4 GRID}{\line}
+{\line}
+{\b\cf6 create} {\line}
+{\tab}{\cf5 make}{\line}
+{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Attributes}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 sectors}{\cf1 :} {\cf4 ARRAY2} {\cf1 [}{\cf4 SECTOR}{\cf1 ]}}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 max_row}{\cf1 :} {\cf4 INTEGER_32}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  maximum number of rows}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 max_col}{\cf1 :} {\cf4 INTEGER_32}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  maximum number of columns}{\line}
+{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Commands}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 add_at} {\cf1 (}{\cf5 ie}{\cf1 :} {\cf4 ID_ENTITY}{\cf1 ;} {\cf5 c}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  add ie to a SECTOR with coordinate ~ c.}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 valid_coordinate}{\cf1  }{\cf1 (}{\cf5 c}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 at}{\cf1  }{\cf1 (}{\cf5 c}{\cf1 )}{\b\cf1 .}{\cf5 is_full}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 me_is_added_at_correct_sector}{\cf1 :} {\cf5 at}{\cf1  }{\cf1 (}{\cf5 c}{\cf1 )}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 count_is_incremented_by_one}{\cf1 :} {\cf5 entity_count} {\cf1 ~} {\cf1 (}{\b\cf6 old} {\cf5 entity_count} {\cf1 +} 1{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 remove} {\cf1 (}{\cf5 me}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 me}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 me_is_removed}{\cf1 :} {\b\cf6 not} {\cf5 has}{\cf1  }{\cf1 (}{\cf5 me}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 count_is_decremented_by_one}{\cf1 :} {\cf5 entity_count} {\cf1 ~} {\cf1 (}{\b\cf6 old} {\cf5 entity_count} {\cf1 -} 1{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 move} {\cf1 (}{\cf5 ie}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 ;} {\cf5 to_c}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 valid_coordinate}{\cf1  }{\cf1 (}{\cf5 to_c}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 new_sector_is_not_full_or_already_contains_ie}{\cf1 :} {\cf1 (}{\b\cf6 not} {\cf5 at}{\cf1  }{\cf1 (}{\cf5 to_c}{\cf1 )}{\b\cf1 .}{\cf5 is_full} {\b\cf6 or} {\cf5 at}{\cf1  }{\cf1 (}{\cf5 to_c}{\cf1 )}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 ie_is_at_new_coordinate}{\cf1 :} {\cf5 at}{\cf1  }{\cf1 (}{\cf5 to_c}{\cf1 )}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 count_is_incremented_by_one}{\cf1 :} {\cf5 entity_count} {\cf1 ~} {\cf5 entity_count}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 entity_count}{\cf1 :} {\cf4 INTEGER_32}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Queries}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  the culmulative sum of all STATIONARY_ENTITY and MOVEABLE_ENTITY contained}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 has_sector} {\cf1 (}{\cf5 s}{\cf1 :} {\cf4 SECTOR}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 all_moveable_entities}{\cf1 :} {\cf4 ARRAY} {\cf1 [}{\cf4 MOVEABLE_ENTITY}{\cf1 ]}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result is true if GRID contains SECTOR s.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  The collection of all MOVEABLE_ENTITY contained; arranged in increasing order ids.}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 all_stationary_entities}{\cf1 :} {\cf4 ARRAY} {\cf1 [}{\cf4 STATIONARY_ENTITY}{\cf1 ]}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 at} {\cf1 (}{\cf5 c}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\cf1 :} {\cf4 SECTOR}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 valid_coordinate}{\cf1  }{\cf1 (}{\cf5 c}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 matching_sector_coordinate}{\cf1 :} {\b\cf6 Result}{\b\cf1 .}{\cf5 coordinate} {\cf1 ~} {\cf5 c}{\line}
+{\tab}{\tab}{\tab}{\cf1 result_is_contained_in_grid}{\cf1 :} {\cf5 has_sector}{\cf1  }{\cf1 (}{\b\cf6 Result}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 sector_with} {\cf1 (}{\cf5 ie}{\cf1 :} {\cf4 ID_ENTITY}{\cf1 )}{\cf1 :} {\cf4 SECTOR}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 result_has_ie}{\cf1 :} {\b\cf6 Result}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 result_is_contained_in_grid}{\cf1 :} {\cf5 has_sector}{\cf1  }{\cf1 (}{\b\cf6 Result}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 valid_coordinate} {\cf1 (}{\cf5 c}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  true if c lies between }{\cf3 [0,0]}{\cf3  and }{\cf3 [max_row,max_col]}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 has} {\cf1 (}{\cf5 ie}{\cf1 :} {\cf4 ID_ENTITY}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if "ie" is contained in any SECTOR in GRID}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 new_cursor}{\cf1 :} {\cf4 INDEXABLE_ITERATION_CURSOR} {\cf1 [}{\cf4 SECTOR}{\cf1 ]}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Fresh cursor associated with current structure}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 out_abstract_sectors}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  facilitate traversal of GRID using across notation}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Out}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> (below)}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Sectors:}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  		}{\cf3 [1,1]->[0,E],[36,P],[40,P]}{\cf3 ,-}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3 		}{\cf3 [1,2]->[3,P],-,[4,P]}{\cf3 ,-}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3 		..}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  		}{\cf3 [5,5]->[48,P],[32,P],[47,P],[15,P]}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 out_abstract_description}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> (below)}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Descriptions:}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3     }{\cf3 [-11,*]}{\cf3 ->Luminosity:5}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3 		..}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3     }{\cf3 [-1,O]}{\cf3 ->}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3     }{\cf3 [0,E]}{\cf3 ->fuel:3/3, life:3/3, landed?:F}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3     }{\cf3 [1,P]}{\cf3 ->attached?:F, support_life?:F, visited?:F, turns_left:0}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  		..}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 out}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> (below)}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3    (1:1) (1:2) (1:3) (1:4) (1:5)}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3    M---  *---  B---  ----  ----}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3    (2:1) (2:2) (2:3) (2:4) (2:5)}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3    ----  ----  W---  W---  ----}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3    (3:1) (3:2) (3:3) (3:4)}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3    PY--  ----  O---}{\line}
+}{\tab}{\line}
+{\b\cf6 end} {\cf3 --} {\cf3 class }{\cf4 GRID}}
+{\line}
+{\cf3 {\tab}{\tab}{\tab}-- Generated by ISE Eiffel --}
+{\line}
+{\cf3{\tab}{\tab}{\tab}-- For more details: http://www.eiffel.com --}
+}}
+{\line}

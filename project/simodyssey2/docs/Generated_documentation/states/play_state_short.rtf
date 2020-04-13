@@ -1,0 +1,69 @@
+{\rtf1\ansi\ansicpg1252\deflang1033{\fonttbl{\f0\fscript\fcharset0 Courier;}}{\colortbl ;\red0\green0\blue0;\red255\green255\blue255;\red128\green0\blue0;\red0\green0\blue255;\red0\green128\blue0;\red0\green0\blue128;}
+{\cf3\f0\fs16 {\tab}{\tab}{\tab}-- Automatic generation produced by ISE Eiffel --
+{\line}
+{{\b\cf6 note}{\line}
+{\tab}{\cf1 description}{\cf1 :} "[{\line}
+{\tab}{\tab}A class that defines valid, and invalid user commands {\line}
+{\tab}{\tab}for when the user is in a game, and the explorer is not landed.{\line}
+{\tab}]"{\line}
+{\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
+{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\line}
+{\b\cf6 class} {\b\cf6 interface}{\line}
+{\tab}{\cf4 PLAY_STATE}{\line}
+{\line}
+{\b\cf6 create} {\line}
+{\tab}{\cf5 make}{\line}
+{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Commands}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 abort}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  execute abort command in SYMODYSSEY, and append “Mission aborted. Try test(3,5,7,15,30)” to "out"}{\line}
+{\tab}{\tab}{\b\cf6 ensure then}{\line}
+{\tab}{\tab}{\tab}{\cf1 enter_main_menu_state}{\cf1 :} {\b\cf6 attached} {\cf1 \{}{\cf4 MAIN_MENU_STATE}{\cf1 \}} {\cf5 next_state}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 land}{\line}
+{\tab}{\tab}{\b\cf6 ensure then}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_explorer_is_not_landed_remain_in_play_state}{\cf1 :} {\cf1 (}{\cf1 (}{\b\cf6 not} {\cf5 game_model}{\b\cf1 .}{\cf5 explorer_is_landed}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_explorer_is_landed_and_explorer_did_not_find_life_enter_landed_state}{\cf1 :} {\cf1 (}{\cf1 (}{\cf1 (}{\cf5 game_model}{\b\cf1 .}{\cf5 explorer_is_landed}{\cf1 )} {\b\cf6 and} {\cf1 (}{\b\cf6 not} {\cf5 game_model}{\b\cf1 .}{\cf5 explorer_found_life}{\cf1 )}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 LANDED_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_explorer_is_landed_and_explorer_did_found_life_enter_main_menu_state}{\cf1 :} {\cf1 (}{\cf1 (}{\cf1 (}{\cf5 game_model}{\b\cf1 .}{\cf5 explorer_is_landed}{\cf1 )} {\b\cf6 and} {\cf1 (}{\cf5 game_model}{\b\cf1 .}{\cf5 explorer_found_life}{\cf1 )}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 MAIN_MENU_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 liftoff}{\line}
+{\tab}{\tab}{\b\cf6 ensure then}{\line}
+{\tab}{\tab}{\tab}{\cf1 invalid_command_implies_remain_in_play_state}{\cf1 :} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 move} {\cf1 (}{\cf5 d}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 ensure then}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_explorer_is_alive_after_succesfully_moving_remain_in_play_state}{\cf1 :} {\cf1 (}{\cf5 game_model}{\b\cf1 .}{\cf5 explorer_is_alive}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_explorer_is_dead_after_succesfully_moving_enter_in_main_menu_state}{\cf1 :} {\cf1 (}{\b\cf6 not} {\cf5 game_model}{\b\cf1 .}{\cf5 explorer_is_alive}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 MAIN_MENU_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 pass}{\line}
+{\tab}{\tab}{\b\cf6 ensure then}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_not_dead_remain_in_play_state}{\cf1 :} {\cf1 (}{\cf5 game_model}{\b\cf1 .}{\cf5 explorer_is_alive}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_dead_enter_main_menu_state}{\cf1 :} {\cf1 (}{\b\cf6 not} {\cf5 game_model}{\b\cf1 .}{\cf5 explorer_is_alive}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 MAIN_MENU_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 play}{\line}
+{\tab}{\tab}{\b\cf6 ensure then}{\line}
+{\tab}{\tab}{\tab}{\cf1 invalid_command_implies_remain_in_play_state}{\cf1 :} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 status}{\line}
+{\tab}{\tab}{\b\cf6 ensure then}{\line}
+{\tab}{\tab}{\tab}{\cf1 status_should_not_change_the_state}{\cf1 :} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 test} {\cf1 (}{\cf5 a_threshold}{\cf1 ,} {\cf5 j_threshold}{\cf1 ,} {\cf5 m_threshold}{\cf1 ,} {\cf5 b_threshold}{\cf1 ,} {\cf5 p_threshold}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 ensure then}{\line}
+{\tab}{\tab}{\tab}{\cf1 invalid_command_implies_remain_in_play_state}{\cf1 :} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 wormhole}{\line}
+{\tab}{\tab}{\b\cf6 ensure then}{\line}
+{\tab}{\tab}{\tab}{\cf1 explorer_is_alive_after_successful_wormhole_implies_remain_in_play_state}{\cf1 :} {\cf1 (}{\cf5 game_model}{\b\cf1 .}{\cf5 explorer_is_alive}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 explorer_is_dead_after_successful_wormhole_implies_enter_main_menu_state}{\cf1 :} {\cf1 (}{\cf1 (}{\b\cf6 not} {\cf5 game_model}{\b\cf1 .}{\cf5 explorer_is_alive}{\cf1 )}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 MAIN_MENU_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
+}{\tab}{\line}
+{\b\cf6 end} {\cf3 --} {\cf3 class }{\cf4 PLAY_STATE}}
+{\line}
+{\cf3 {\tab}{\tab}{\tab}-- Generated by ISE Eiffel --}
+{\line}
+{\cf3{\tab}{\tab}{\tab}-- For more details: http://www.eiffel.com --}
+}}
+{\line}

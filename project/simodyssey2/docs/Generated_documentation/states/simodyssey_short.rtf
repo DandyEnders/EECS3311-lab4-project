@@ -1,0 +1,204 @@
+{\rtf1\ansi\ansicpg1252\deflang1033{\fonttbl{\f0\fscript\fcharset0 Courier;}}{\colortbl ;\red0\green0\blue0;\red255\green255\blue255;\red128\green0\blue0;\red0\green0\blue255;\red0\green128\blue0;\red0\green0\blue128;}
+{\cf3\f0\fs16 {\tab}{\tab}{\tab}-- Automatic generation produced by ISE Eiffel --
+{\line}
+{{\b\cf6 note}{\line}
+{\tab}{\cf1 description}{\cf1 :} "[{\line}
+{\tab}{\tab}A class that provides an interface for controlling the explorer’s {\line}
+{\tab}{\tab}actions in the galaxy, as well as controls the addition, removal, {\line}
+{\tab}{\tab}and movement of entities in the galaxy.{\line}
+{\tab}{\tab}{\line}
+{\tab}{\tab}Secret:{\line}
+{\tab}{\tab}Post execution of a command, non-user-controlled entities {\line}
+{\tab}{\tab}move, reproduce, behave, and check according to the {\line}
+{\tab}{\tab}“turn" command algorithm on page 33 of the project{\line}
+{\tab}{\tab}specifications.{\line}
+{\tab}]"{\line}
+{\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
+{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\line}
+{\b\cf6 class} {\b\cf6 interface}{\line}
+{\tab}{\cf4 SIMODYSSEY}{\line}
+{\line}
+{\b\cf6 create} {\line}
+{\tab}{\cf5 make}{\line}
+{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 galaxy}{\cf1 :} {\cf4 GRID}}{\line}
+{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 is_test_game}{\cf1 :} {\cf4 BOOLEAN}}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 is_aborted}{\cf1 :} {\cf4 BOOLEAN}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3 ID dispatchers}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  State of Game Queries}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 game_is_in_session}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 valid_game_session}{\cf1 :} {\b\cf6 Result} {\cf1 =} {\cf1 (}{\cf5 explorer_is_alive} {\b\cf6 and} {\cf1 (}{\b\cf6 not} {\cf5 explorer_found_life}{\cf1 )} {\b\cf6 and} {\cf1 (}{\b\cf6 not} {\cf5 is_aborted}{\cf1 )} {\b\cf6 and} {\cf5 galaxy}{\b\cf1 .}{\cf5 at}{\cf1  }{\cf1 (}{\cf5 explorer_coordinate}{\cf1 )}{\b\cf1 .}{\cf5 has_id}{\cf1  }{\cf1 (}{\cf5 explorer_id}{\cf1 )}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 valid_thresholds} {\cf1 (}{\cf5 a_threshold}{\cf1 ,} {\cf5 j_threshold}{\cf1 ,} {\cf5 m_threshold}{\cf1 ,} {\cf5 b_threshold}{\cf1 ,} {\cf5 p_threshold}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if threshold values from left to right are passed (as arguments) in increasing order}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 abort}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 is_aborted}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 game_is_in_session}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 new_game} {\cf1 (}{\cf5 a_threshold}{\cf1 ,} {\cf5 j_threshold}{\cf1 ,} {\cf5 m_threshold}{\cf1 ,} {\cf5 b_threshold}{\cf1 ,} {\cf5 p_threshold}{\cf1 :} {\cf4 INTEGER_32}{\cf1 ;} {\cf5 is_test}{\cf1 :} {\cf4 BOOLEAN}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 valid_thresholds}{\cf1  }{\cf1 (}{\cf5 a_threshold}{\cf1 ,} {\cf5 j_threshold}{\cf1 ,} {\cf5 m_threshold}{\cf1 ,} {\cf5 b_threshold}{\cf1 ,} {\cf5 p_threshold}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 game_is_in_session}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session} {\b\cf6 and} {\cf1 (}{\cf5 is_test_game} {\cf1 =} {\cf5 is_test}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 move_explorer} {\cf1 (}{\cf5 d}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 d}{\b\cf1 .}{\cf5 is_direction}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 sector_in_explorer_direction_is_full}{\cf1  }{\cf1 (}{\cf5 d}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 explorer_is_landed}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_not_lost_the_explorer_is_in_new_sector}{\cf1 :} {\cf1 (}{\cf5 explorer_is_alive}{\cf1 )} {\b\cf6 implies} {\cf5 galaxy}{\b\cf1 .}{\cf5 at}{\cf1  }{\cf1 (}{\cf1 (}{\b\cf6 old} {\cf5 explorer_coordinate} {\cf1 +} {\cf5 d}{\cf1 )}{\b\cf1 .}{\cf5 wrap_coordinate_to_coordinate}{\cf1  }{\cf1 (}{\cf1 (}{\b\cf6 old} {\cf5 explorer_coordinate} {\cf1 +} {\cf5 d}{\cf1 )}{\cf1 ,} {\b\cf6 create} {\cf1 \{}{\cf4 COORDINATE}{\cf1 \}}{\b\cf1 .}{\cf5 make}{\cf1  }{\cf1 (}{\cf1 [}1{\cf1 ,} 1{\cf1 ]}{\cf1 )}{\cf1 ,} {\b\cf6 create} {\cf1 \{}{\cf4 COORDINATE}{\cf1 \}}{\b\cf1 .}{\cf5 make}{\cf1  }{\cf1 (}{\cf1 [}{\cf5 number_rows}{\cf1 ,} {\cf5 number_columns}{\cf1 ]}{\cf1 )}{\cf1 )}{\cf1 )}{\b\cf1 .}{\cf5 has_id}{\cf1  }{\cf1 (}{\cf5 explorer_id}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_explorer_is_not_at_new_sector_then_explorer_is_dead}{\cf1 :} {\cf1 (}{\b\cf6 not} {\cf5 galaxy}{\b\cf1 .}{\cf5 at}{\cf1  }{\cf1 (}{\cf1 (}{\b\cf6 old} {\cf5 explorer_coordinate} {\cf1 +} {\cf5 d}{\cf1 )}{\b\cf1 .}{\cf5 wrap_coordinate_to_coordinate}{\cf1  }{\cf1 (}{\cf1 (}{\b\cf6 old} {\cf5 explorer_coordinate} {\cf1 +} {\cf5 d}{\cf1 )}{\cf1 ,} {\b\cf6 create} {\cf1 \{}{\cf4 COORDINATE}{\cf1 \}}{\b\cf1 .}{\cf5 make}{\cf1  }{\cf1 (}{\cf1 [}1{\cf1 ,} 1{\cf1 ]}{\cf1 )}{\cf1 ,} {\b\cf6 create} {\cf1 \{}{\cf4 COORDINATE}{\cf1 \}}{\b\cf1 .}{\cf5 make}{\cf1  }{\cf1 (}{\cf1 [}{\cf5 number_rows}{\cf1 ,} {\cf5 number_columns}{\cf1 ]}{\cf1 )}{\cf1 )}{\cf1 )}{\b\cf1 .}{\cf5 has_id}{\cf1  }{\cf1 (}{\cf5 explorer_id}{\cf1 )}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 not} {\cf5 explorer_is_alive}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 wormhole_explorer}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 explorer_is_landed}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 explorer_sector_has_wormhole}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_not_lost_the_explorer_is_in_new_position}{\cf1 :} {\cf5 explorer_is_alive} {\b\cf6 implies} {\cf5 galaxy}{\b\cf1 .}{\cf5 at}{\cf1  }{\cf1 (}{\cf5 explorer_coordinate}{\cf1 )}{\b\cf1 .}{\cf5 has_id}{\cf1  }{\cf1 (}{\cf5 explorer_id}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_explorer_is_not_in_the_galaxy_is_dead}{\cf1 :} {\cf1 (}{\b\cf6 not} {\cf5 galaxy}{\b\cf1 .}{\cf5 at}{\cf1  }{\cf1 (}{\cf5 explorer_coordinate}{\cf1 )}{\b\cf1 .}{\cf5 has_id}{\cf1  }{\cf1 (}{\cf5 explorer_id}{\cf1 )}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\cf1 (}{\b\cf6 not} {\cf5 explorer_is_alive}{\cf1 )} {\b\cf6 and} {\cf1 (}{\b\cf6 not} {\cf5 game_is_in_session}{\cf1 )}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 land_explorer}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 explorer_is_landed}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 explorer_sector_is_landable}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 explorer_is_alive}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 explorer_is_landed}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_found_life_then_game_is_over}{\cf1 :} {\cf1 (}{\cf5 explorer_found_life} {\b\cf6 implies} {\cf1 (}{\b\cf6 not} {\cf5 game_is_in_session}{\cf1 )}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 liftoff_explorer}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 explorer_is_landed}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 explorer_is_landed}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_dead_then_game_is_over}{\cf1 :} {\cf1 (}{\cf1 (}{\b\cf6 not} {\cf5 explorer_is_alive}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 not} {\cf5 game_is_in_session}{\cf1 )}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 pass}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 if_dead_game_is_over}{\cf1 :} {\cf1 (}{\b\cf6 not} {\cf5 explorer_is_alive}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 not} {\cf5 game_is_in_session}{\cf1 )}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 sector_in_explorer_direction_is_full} {\cf1 (}{\cf5 d}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  adding explorer and blackhole}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  populating galaxy based on threshold values}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  populating stationary objects}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Explorer Interface Boolean Queries}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if a sector in "galaxy" in direction d is full. result equals false otherwise.}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 d}{\b\cf1 .}{\cf5 is_direction}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_is_landed}{\cf1 :} {\cf4 BOOLEAN}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_sector_has_wormhole}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_found_life}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf1 (}{\b\cf6 Result} {\cf1 =} {\b\cf6 True}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\cf5 explorer_is_landed} {\b\cf6 and} {\cf5 explorer_is_alive}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 planet_in_explorer_sector_supports_life}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if the explorer found life while landed on a planet. false otherwise}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if there exists a planet in the explorer's sector that supports life. false otherwise.}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_is_alive}{\cf1 :} {\cf4 BOOLEAN}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_sector_is_landable}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 valid_properties_for_life}{\cf1 :} {\b\cf6 Result} {\cf1 =} {\cf1 (}{\cf5 explorer_sector_has_planets} {\b\cf6 and} {\cf5 explorer_sector_has_yellow_dwarf} {\b\cf6 and} {\cf5 explorer_sector_has_unvisted_attached_planets}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_dead_by_out_of_fuel}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if there exists (attached and unvisited) planet(s) in the explorer's sector and the explorer's sector contains a YELLOW_DWARF . false otherwise.}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_dead_by_blackhole}{\cf1 :} {\cf4 BOOLEAN}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_dead_by_asteroid}{\cf1 :} {\cf4 BOOLEAN}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_dead_by_malevolent}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if the explorer died by out of fuel. false otherwise.}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_sector_has_yellow_dwarf}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if the explorer died by blackhole. false otherwise.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if the explorer died by asteroid. false otherwise.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if the explorer died by malevolent. false otherwise.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if the explorer's SECTOR contains a YELLOW_DWARF. false otherwise.}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_sector_has_planets}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_sector_has_unvisted_attached_planets}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if the explorer's SECTOR contains PLANETs. false otherwise.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if the explorer's SECTOR contains attached, yet unvisited PLANET's. false otherwise.}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 game_is_in_session}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 explorer_coordinate}{\cf1 :} {\cf4 COORDINATE}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_id}{\cf1 :} {\cf4 INTEGER_32}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 out}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Explorer Interface non-Boolean Queries}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals the explorer's coordinate in "galaxy"}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals explorer's id}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Out}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals output messages (Movement: ... Sectors: ... Description: ... Deaths This Turn: ... and galaxy.out) when "is_test_game" is true}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 out_status_explorer}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3 				--RNG debug (Uncomment everything below to unleash The numbers)}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3 			Result.append ("%N")}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3 			Result.append (rng.rng_debug_this_round)}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3 			rng.reset_debug}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  explorer status message}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 explorer_is_alive}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 explorer_death_message}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 not} {\cf5 explorer_is_alive}{\line}
+}{\tab}{\line}
+{\b\cf6 end} {\cf3 --} {\cf3 class }{\cf4 SIMODYSSEY}}
+{\line}
+{\cf3 {\tab}{\tab}{\tab}-- Generated by ISE Eiffel --}
+{\line}
+{\cf3{\tab}{\tab}{\tab}-- For more details: http://www.eiffel.com --}
+}}
+{\line}

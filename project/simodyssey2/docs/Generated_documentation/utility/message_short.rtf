@@ -1,0 +1,180 @@
+{\rtf1\ansi\ansicpg1252\deflang1033{\fonttbl{\f0\fscript\fcharset0 Courier;}}{\colortbl ;\red0\green0\blue0;\red255\green255\blue255;\red128\green0\blue0;\red0\green0\blue255;\red0\green128\blue0;\red0\green0\blue128;}
+{\cf3\f0\fs16 {\tab}{\tab}{\tab}-- Automatic generation produced by ISE Eiffel --
+{\line}
+{{\b\cf6 note}{\line}
+{\tab}{\cf1 description}{\cf1 :} "A class for generating Abstract State messages."{\line}
+{\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
+{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\line}
+{\b\cf6 expanded} {\b\cf6 class} {\b\cf6 interface}{\line}
+{\tab}{\cf4 MESSAGE}{\line}
+{\line}
+{\b\cf6 create} {\line}
+{\tab}{\cf5 default_create}{\line}
+{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Format related messages}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 Empty_string}{\cf1 :} {\cf4 STRING_8} {\cf1 =} ""}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 Left_margin}{\cf1 :} {\cf4 STRING_8} {\cf1 =} "  "}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 Left_big_margin}{\cf1 :} {\cf4 STRING_8} {\cf1 =} "    "}{\line}
+{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  First line: Validity}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 Ok}{\cf1 :} {\cf4 STRING_8} {\cf1 =} "ok"}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 Error}{\cf1 :} {\cf4 STRING_8} {\cf1 =} "error"}{\line}
+{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  First line: Mode}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 Play}{\cf1 :} {\cf4 STRING_8} {\cf1 =} "play"}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 Test}{\cf1 :} {\cf4 STRING_8} {\cf1 =} "test"}{\line}
+{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Command-Specific Messages INITIAL MESSAGE}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 initial_message}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "  Welcome! Try test(3,5,7,15,30)"}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Command-Specific Messages STATUS}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 status_not_landed} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 ,} {\cf5 quad}{\cf1 ,} {\cf5 life}{\cf1 ,} {\cf5 fuel}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 status_landed} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 ,} {\cf5 quad}{\cf1 ,} {\cf5 life}{\cf1 ,} {\cf5 fuel}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Error Messages STATUS}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 status_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Command-Specific Messages LAND}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 land_life_found}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 land_life_not_found} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Error Messages LAND}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 land_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 land_error_landed_already} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 land_error_no_yellow_dwarf} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 land_error_no_planets} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 land_error_no_visited_planets} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Command-Specific Messages LIFTOFF}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 liftoff} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Error Messages LIFTOFF}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 liftoff_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 liftoff_error_not_on_planet} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Command-Specific Messages ABORT}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 abort}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Error Messages ABORT}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 abort_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Command-Specific Messages GAME IS OVER}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 game_is_over}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Death Messages (Death due to blackhole.)}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 moveable_entity_death_by_blackhole} {\cf1 (}{\cf5 np}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 ,} {\cf5 blackhole_id}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "  }{\cf4 MOVEABLE_ENTITY}{\cf3  got devoured by blackhole (id: -1) at Sector:row:col"}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 np}{\b\cf1 .}{\cf5 is_dead_by_blackhole}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 blackhole_id} {\cf1 ~} -1{\line}
+{\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 sector_row} {\cf1 ~} 3 {\b\cf6 and} {\cf5 sector_col} {\cf1 ~} 3{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Death Messages (Death due to janitaur.)}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 asteroid_death_by_janitaur} {\cf1 (}{\cf5 a}{\cf1 :} {\cf4 ASTEROID}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 ,} {\cf5 janitaur_id}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "  Asteroid got imploded by janitaur (id: id) at Sector:row:col"}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 a}{\b\cf1 .}{\cf5 is_dead_by_janitaur}{\line}
+{\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 a}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 a}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 moveable_entity_death_by_asteroid} {\cf1 (}{\cf5 me}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 ,} {\cf5 asteroid_id}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "  }{\cf4 MOVEABLE_ENTITY}{\cf3  got destroyed by asteroid (id: id) at Sector:row:col"}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\cf1 me_is_not_a_planet}{\cf1 :} {\b\cf6 not} {\b\cf6 attached} {\cf1 \{}{\cf4 PLANET}{\cf1 \}} {\cf5 me}{\line}
+{\tab}{\tab}{\tab}{\cf1 me_is_not_an_asteroid}{\cf1 :} {\b\cf6 not} {\b\cf6 attached} {\cf1 \{}{\cf4 ASTEROID}{\cf1 \}} {\cf5 me}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 me}{\b\cf1 .}{\cf5 is_dead}{\line}
+{\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 me}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 me}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 malevolent_death_by_benign} {\cf1 (}{\cf5 m}{\cf1 :} {\cf4 MALEVOLENT}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 ,} {\cf5 benign_id}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "  Malevolent got destroyed by benign (id: id) at Sector:row:col"}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 m}{\b\cf1 .}{\cf5 is_dead_by_benign}{\line}
+{\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 m}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 m}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 fuelable_moveable_entity_death_by_out_of_fuel} {\cf1 (}{\cf5 f}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> " }{\cf4 MOVEABLE_ENTITY}{\cf3  got lost in space - out of fuel at Sector:row:col"}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\cf1 f_is_fuelable}{\cf1 :} {\b\cf6 attached} {\cf1 \{}{\cf4 FUELABLE}{\cf1 \}} {\cf5 f}{\line}
+{\tab}{\tab}{\tab}{\cf1 f_is_out_of_fuel}{\cf1 :} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 FUELABLE}{\cf1 \}} {\cf5 f} {\b\cf6 as} f_e{\cf1 )} {\b\cf6 implies} {\cf5 f_e}{\b\cf1 .}{\cf5 is_out_of_fuel}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 f}{\b\cf1 .}{\cf5 is_dead}{\line}
+{\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 f}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 f}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 explorer_death_by_malevolent} {\cf1 (}{\cf5 e}{\cf1 :} {\cf4 EXPLORER}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "  Explorer got lost in space - out of life support at Sector:row:col"}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 e}{\b\cf1 .}{\cf5 is_dead_by_malevolent}{\line}
+{\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 e}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 e}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 move_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 move_error_landed} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 move_error_sector_full}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 pass_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 play_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 test_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 test_error_threshold}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\line}
+{\line}
+{\tab}{\cf5 {\cf5 wormhole_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 wormhole_error_landed} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 wormhole_error_explorer_not_found_wormhole} {\cf1 (}{\cf5 row}{\cf1 ,} {\cf5 col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 end} {\cf3 --} {\cf3 class }{\cf4 MESSAGE}}
+{\line}
+{\cf3 {\tab}{\tab}{\tab}-- Generated by ISE Eiffel --}
+{\line}
+{\cf3{\tab}{\tab}{\tab}-- For more details: http://www.eiffel.com --}
+}}
+{\line}
