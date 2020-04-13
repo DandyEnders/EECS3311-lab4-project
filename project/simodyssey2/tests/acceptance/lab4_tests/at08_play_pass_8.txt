@@ -1,9 +1,0 @@
-test(1,1,1,1,30)
-pass
-pass
-pass
-pass
-pass
-pass
-pass
-pass
