@@ -18,6 +18,23 @@
 {\tab}{\cf4 BLUE_GIANT}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  A class to represent a blue_giant entity.}{\line}
 {\line}
+{\tab}{\cf4 CONTROLLER}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  A class that provides an interface for executing}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  all nine user commands and updates the user}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  output when commands are executed.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Secret: }{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Attribute ⥯128/%/156/game_state⥯128/%/157/ is of type STATE which }{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  means CONTROLLER is a client of STATE. }{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Note: ⥯128/%/156/game_state⥯128/%/157/ is polymorphic. }{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Post executing a command in CONTROLLER, }{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  ⥯128/%/156/game_state⥯128/%/157/ transitions (changes its reference) }{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  to a subclass of STATE that is appropriate }{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  for the game.}{\line}
+{\line}
+{\tab}{\cf4 CONTROLLER_ACCESS}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Singleton access to the default business model.}{\line}
+{\line}
 {\tab}{\cf4 COORDINATE}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  A class to represent comparable coordinates.}{\line}
 {\line}
@@ -38,6 +55,53 @@
 {\line}
 {\tab}{\cf4 ENTITY}*{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  A class to represent an entity in a QUADRANT.}{\line}
+{\line}
+{\tab}{\cf4 ETF_ABORT}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
+{\line}
+{\tab}{\cf4 ETF_CMD_LINE_OUTPUT_HANDLER}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  An output handler for the command-line mode of ETF.}{\line}
+{\line}
+{\tab}{\cf4 ETF_COMMAND}*{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  The interface for an input COMMAND}{\line}
+{\line}
+{\tab}{\cf4 ETF_GUI}{\line}
+{\line}
+{\tab}{\cf4 ETF_GUI_OUTPUT_HANDLER}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  An output handler for the GUI mode of ETF.}{\line}
+{\line}
+{\tab}{\cf4 ETF_LAND}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
+{\line}
+{\tab}{\cf4 ETF_LIFTOFF}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
+{\line}
+{\tab}{\cf4 ETF_MAIN_WINDOW}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Main window of ETF project.}{\line}
+{\line}
+{\tab}{\cf4 ETF_MAIN_WINDOW_IMP}*{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Objects that represent an EV_TITLED_WINDOW.}{\line}
+{\line}
+{\tab}{\cf4 ETF_MODEL_FACADE}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  A facade class for easy manipulation of the business objects.}{\line}
+{\line}
+{\tab}{\cf4 ETF_MOVE}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
+{\line}
+{\tab}{\cf4 ETF_PASS}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
+{\line}
+{\tab}{\cf4 ETF_PLAY}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
+{\line}
+{\tab}{\cf4 ETF_STATUS}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
+{\line}
+{\tab}{\cf4 ETF_TEST}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
+{\line}
+{\tab}{\cf4 ETF_WORMHOLE}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  }{\line}
 {\line}
 {\tab}{\cf4 EXPLORER}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  A class to represent the explorer entity.}{\line}
