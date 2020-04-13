@@ -4,8 +4,8 @@
 {{\b\cf6 note}{\line}
 {\tab}{\cf1 description}{\cf1 :} "A class for generating Abstract State messages."{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 expanded} {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 MESSAGE}{\line}
@@ -105,7 +105,7 @@
 {\tab}{\tab}{\tab}{\tab}{\cf5 a}{\b\cf1 .}{\cf5 is_dead_by_janitaur}{\line}
 {\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 a}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 a}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Death Messages (Death due to asteroid.)}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 moveable_entity_death_by_asteroid} {\cf1 (}{\cf5 me}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 ,} {\cf5 asteroid_id}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "  }{\cf4 MOVEABLE_ENTITY}{\cf3  got destroyed by asteroid (id: id) at Sector:row:col"}{\line}
@@ -115,7 +115,7 @@
 {\tab}{\tab}{\tab}{\tab}{\cf5 me}{\b\cf1 .}{\cf5 is_dead}{\line}
 {\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 me}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 me}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Death Messages (Death due to benign.)}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 malevolent_death_by_benign} {\cf1 (}{\cf5 m}{\cf1 :} {\cf4 MALEVOLENT}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 ,} {\cf5 benign_id}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "  Malevolent got destroyed by benign (id: id) at Sector:row:col"}{\line}
@@ -123,7 +123,7 @@
 {\tab}{\tab}{\tab}{\tab}{\cf5 m}{\b\cf1 .}{\cf5 is_dead_by_benign}{\line}
 {\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 m}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 m}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Death Messages (Out of fuel.)}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 fuelable_moveable_entity_death_by_out_of_fuel} {\cf1 (}{\cf5 f}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> " }{\cf4 MOVEABLE_ENTITY}{\cf3  got lost in space - out of fuel at Sector:row:col"}{\line}
@@ -133,7 +133,7 @@
 {\tab}{\tab}{\tab}{\tab}{\cf5 f}{\b\cf1 .}{\cf5 is_dead}{\line}
 {\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 f}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 f}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Death Messages (Death due to malevolent.)}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 explorer_death_by_malevolent} {\cf1 (}{\cf5 e}{\cf1 :} {\cf4 EXPLORER}{\cf1 ;} {\cf5 sector_row}{\cf1 ,} {\cf5 sector_col}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "  Explorer got lost in space - out of life support at Sector:row:col"}{\line}
@@ -141,7 +141,7 @@
 {\tab}{\tab}{\tab}{\tab}{\cf5 e}{\b\cf1 .}{\cf5 is_dead_by_malevolent}{\line}
 {\tab}{\tab}{\tab}{\cf1 valid_sector_of_death}{\cf1 :} {\cf5 e}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 row} {\cf1 ~} {\cf5 sector_row} {\b\cf6 and} {\cf5 e}{\b\cf1 .}{\cf5 coordinate}{\b\cf1 .}{\cf5 col} {\cf1 ~} {\cf5 sector_col}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Error Messages MOVE}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 move_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
 }{\line}
@@ -149,21 +149,21 @@
 }{\line}
 {\tab}{\cf5 {\cf5 move_error_sector_full}{\cf1 :} {\cf4 STRING_8}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Error Messages PASS}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 pass_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Error Messages PLAY}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 play_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Error Messages TEST}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 test_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 test_error_threshold}{\cf1 :} {\cf4 STRING_8}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Abstract State: Error Messages WORMHOLE}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 wormhole_error_no_mission}{\cf1 :} {\cf4 STRING_8}{\line}
 }{\line}

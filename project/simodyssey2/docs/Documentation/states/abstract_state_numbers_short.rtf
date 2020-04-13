@@ -4,11 +4,11 @@
 {{\b\cf6 note}{\line}
 {\tab}{\cf1 description}{\cf1 :} "[{\line}
 {\tab}{\tab}A class to manage the first and second number{\line}
-{\tab}{\tab}as seen in the user output â€œe.g state: 3.1â€.{\line}
+{\tab}{\tab}as seen in the user output “e.g state: 3.1”.{\line}
 {\tab}]"{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 ABSTRACT_STATE_NUMBERS}{\line}
@@ -19,13 +19,19 @@
 {\b\cf6 feature} {\cf3 --}{\cf3  Attibute}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 first_number}{\cf1 :} {\cf4 INTEGER_32}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  first number as seen in ie. state: 3.0}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  signifies the number of valid turn/play/test commands executed during the course of the program.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  incremented by one after a valid turn command is executed in a subclass of STATE. ie state: 3.0 -> state: 4.0}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 second_number}{\cf1 :} {\cf4 INTEGER_32}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  second number as seen in ie. state: 3.2}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  signifies the number of valid non-turn commands executed and invalid commands attempted after the last successful turn/play/test command was executed.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  incremented by one after valid non-turn commands are executed or invalid commands are attempted by a subclass of STATE. ie}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  initialized to zero after a valid turn command is exectured in a subclass of STATE. ie state: 3.4 -> state: 4.0}{\line}
 {\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Queries}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 out}{\cf1 :} {\cf4 STRING_8}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Queries}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  output first_number and second_number into a form like "state:12.3"}{\line}
 }{\tab}{\line}
 {\b\cf6 end} {\cf3 --} {\cf3 class }{\cf4 ABSTRACT_STATE_NUMBERS}}

@@ -8,13 +8,13 @@
 {\tab}{\tab}Secret: {\line}
 {\tab}{\tab}The collection of STATIONARY_ENTITY in the GRID {\line}
 {\tab}{\tab}is stored in a HASH_TABLE, to allow efficient {\line}
-{\tab}{\tab}implementation of â€œall_stationary_entitiesâ€ query.{\line}
+{\tab}{\tab}implementation of “all_stationary_entities” query.{\line}
 {\tab}{\tab}A similar approach is used to implement {\line}
-{\tab}{\tab}â€œall_moveable_entitiesâ€ query.{\line}
+{\tab}{\tab}“all_moveable_entities” query.{\line}
 {\tab}]"{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 GRID}{\line}
@@ -30,6 +30,7 @@
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  maximum number of rows}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 max_col}{\cf1 :} {\cf4 INTEGER_32}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  maximum number of columns}{\line}
 {\tab}{\line}
 {\b\cf6 feature} {\cf3 --}{\cf3  Commands}{\line}
 {\line}
@@ -44,6 +45,7 @@
 {\tab}{\tab}{\tab}{\cf1 count_is_incremented_by_one}{\cf1 :} {\cf5 entity_count} {\cf1 ~} {\cf1 (}{\b\cf6 old} {\cf5 entity_count} {\cf1 +} 1{\cf1 )}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 remove} {\cf1 (}{\cf5 me}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  remove me.}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 me}{\cf1 )}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
@@ -51,6 +53,7 @@
 {\tab}{\tab}{\tab}{\cf1 count_is_decremented_by_one}{\cf1 :} {\cf5 entity_count} {\cf1 ~} {\cf1 (}{\b\cf6 old} {\cf5 entity_count} {\cf1 -} 1{\cf1 )}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 move} {\cf1 (}{\cf5 ie}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 ;} {\cf5 to_c}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  move ie away from its SECTOR to a SECTOR in GRID with (coordinate ~ to_c)}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 valid_coordinate}{\cf1  }{\cf1 (}{\cf5 to_c}{\cf1 )}{\line}
@@ -59,21 +62,22 @@
 {\tab}{\tab}{\tab}{\cf1 ie_is_at_new_coordinate}{\cf1 :} {\cf5 at}{\cf1  }{\cf1 (}{\cf5 to_c}{\cf1 )}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\line}
 {\tab}{\tab}{\tab}{\cf1 count_is_incremented_by_one}{\cf1 :} {\cf5 entity_count} {\cf1 ~} {\cf5 entity_count}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Queries}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 entity_count}{\cf1 :} {\cf4 INTEGER_32}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Queries}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  the culmulative sum of all STATIONARY_ENTITY and MOVEABLE_ENTITY contained}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 has_sector} {\cf1 (}{\cf5 s}{\cf1 :} {\cf4 SECTOR}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result is true if GRID contains SECTOR s.}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 all_moveable_entities}{\cf1 :} {\cf4 ARRAY} {\cf1 [}{\cf4 MOVEABLE_ENTITY}{\cf1 ]}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result is true if GRID contains SECTOR s.}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  The collection of all MOVEABLE_ENTITY contained; arranged in increasing order ids.}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 all_stationary_entities}{\cf1 :} {\cf4 ARRAY} {\cf1 [}{\cf4 STATIONARY_ENTITY}{\cf1 ]}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  The collection of all STATIONARY_ENTITY contained; arranged in increasing order ids.}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 at} {\cf1 (}{\cf5 c}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\cf1 :} {\cf4 SECTOR}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  the SECTOR in grid with coordinate ~ c}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 valid_coordinate}{\cf1  }{\cf1 (}{\cf5 c}{\cf1 )}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
@@ -81,6 +85,7 @@
 {\tab}{\tab}{\tab}{\cf1 result_is_contained_in_grid}{\cf1 :} {\cf5 has_sector}{\cf1  }{\cf1 (}{\b\cf6 Result}{\cf1 )}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 sector_with} {\cf1 (}{\cf5 ie}{\cf1 :} {\cf4 ID_ENTITY}{\cf1 )}{\cf1 :} {\cf4 SECTOR}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  the SECTOR in GRID that contains ie.}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 ie}{\cf1 )}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
@@ -93,16 +98,14 @@
 {\tab}{\cf5 {\cf5 has} {\cf1 (}{\cf5 ie}{\cf1 :} {\cf4 ID_ENTITY}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result equals true if "ie" is contained in any SECTOR in GRID}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Traversal}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 new_cursor}{\cf1 :} {\cf4 INDEXABLE_ITERATION_CURSOR} {\cf1 [}{\cf4 SECTOR}{\cf1 ]}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Fresh cursor associated with current structure}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  facilitate traversal of GRID using across notation}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Out}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 out_abstract_sectors}{\cf1 :} {\cf4 STRING_8}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  facilitate traversal of GRID using across notation}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Out}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> (below)}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  Sectors:}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  		}{\cf3 [1,1]->[0,E],[36,P],[40,P]}{\cf3 ,-}{\line}

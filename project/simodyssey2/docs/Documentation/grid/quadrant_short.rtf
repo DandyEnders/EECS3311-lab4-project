@@ -6,12 +6,12 @@
 {\tab}{\tab}A container for storing an ENTITY in a SECTOR{\line}
 {\tab}{\tab}{\line}
 {\tab}{\tab}Secret: {\line}
-{\tab}{\tab}QUADRANT. â€œis_emptyâ€ = true, implies â€œentityâ€{\line}
+{\tab}{\tab}QUADRANT. “is_empty” = true, implies “entity”{\line}
 {\tab}{\tab}attribute refers to a NULL_ENTITY.{\line}
 {\tab}]"{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 QUADRANT}{\line}
@@ -22,8 +22,10 @@
 {\b\cf6 feature} {\cf3 --}{\cf3  Attribute}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 entity}{\cf1 :} {\cf4 ENTITY}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  entity contained in the QUADRANT}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 coordinate}{\cf1 :} {\cf4 COORDINATE}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  coordinate of the QUADRANT}{\line}
 {\tab}{\line}
 {\b\cf6 feature} {\cf3 --}{\cf3  Commands}{\line}
 {\line}
@@ -65,7 +67,7 @@
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  Result -> "entity.out"}{\line}
 }{\tab}{\line}
 {\b\cf6 invariant}{\line}
-{\tab}{\cf1 entity_coordinate_is_equivelant_to_coordinate}{\cf1 :} {\cf5 entity}{\b\cf1 .}{\cf5 coordinate} {\cf1 ~} {\cf5 coordinate}{\line}
+{\tab}{\cf1 entity_coordinate_is_equivelant_to_quadrant_coordinate}{\cf1 :} {\cf5 entity}{\b\cf1 .}{\cf5 coordinate} {\cf1 ~} {\cf5 coordinate}{\line}
 {\line}
 {\b\cf6 end} {\cf3 --} {\cf3 class }{\cf4 QUADRANT}}
 {\line}

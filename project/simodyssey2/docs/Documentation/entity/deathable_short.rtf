@@ -8,14 +8,14 @@
 {\tab}{\tab}(e.g. MOVEABLE_ENTITY){\line}
 {\tab}{\tab}{\line}
 {\tab}{\tab}Secret: {\line}
-{\tab}{\tab}Private attribute ‚Äúlife‚Äù is of type LIFE which means{\line}
+{\tab}{\tab}Private attribute ìlifeî is of type LIFE which means{\line}
 {\tab}{\tab}DEATHABLE is a client of LIFE.{\line}
 {\tab}{\tab}The collection of all valid death causes is stored {\line}
 {\tab}{\tab}in an ARRAY.{\line}
 {\tab}]"{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 deferred} {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 DEATHABLE}{\line}
@@ -24,18 +24,16 @@
 {\line}
 {\tab}{\cf5 {\cf5 make} {\cf1 (}{\cf5 a_max_life}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Attribute}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 current_life_point}{\cf1 :} {\cf4 INTEGER_32}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Attribute}{\line}
 }{\line}
-{\tab}{\cf5 {\cf5 max_life}{\cf1 :} {\cf4 INTEGER_32}{\line}
+{\tab}{\cf5 {\cf5 max_life_point}{\cf1 :} {\cf4 INTEGER_32}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  maximum value of current_life_point}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Queries}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 is_dead}{\cf1 :} {\cf4 BOOLEAN}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Queries}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 is_alive}{\cf1 :} {\cf4 BOOLEAN}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
@@ -49,7 +47,7 @@
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 is_dead}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Command}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 kill_by} {\cf1 (}{\cf5 a_cause}{\cf1 :} {\cf4 STRING_8}{\cf1 )}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}

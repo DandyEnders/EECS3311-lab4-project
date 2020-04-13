@@ -4,11 +4,11 @@
 {{\b\cf6 note}{\line}
 {\tab}{\cf1 description}{\cf1 :} "[{\line}
 {\tab}{\tab}		A class that contains common direction COORDINATEs{\line}
-{\tab}{\tab} 		(e.g. N -> [-1,0], E -> [0,1] â€¦){\line}
+{\tab}{\tab} 		(e.g. N -> [-1,0], E -> [0,1] …){\line}
 {\tab}]"{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 expanded} {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 DIRECTION_UTILITY}{\line}
@@ -41,9 +41,10 @@
 }{\line}
 {\tab}{\cf5 {\cf5 nw}{\cf1 :} {\cf4 COORDINATE}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> }{\cf3 [-1,-1]}{\line}
-}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Queries}{\line}
+{\line}
 {\tab}{\cf5 {\cf5 number_for_direction} {\cf1 (}{\cf5 d}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 COORDINATE}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Queries}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  1 implies result -> N, 2 implies result -> NE, 3 implies result -> E, 4 implies result -> SE, ... 8 implies result -> NW}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\cf1 d_is_in_range}{\cf1 :} {\cf5 d} {\cf1 <=} 8 {\b\cf6 and} {\cf5 d} {\cf1 >=} 1{\line}

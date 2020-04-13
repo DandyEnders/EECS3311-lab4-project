@@ -7,8 +7,8 @@
 {\tab}{\tab}for when the user is not in a game.{\line}
 {\tab}]"{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 MAIN_MENU_STATE}{\line}
@@ -67,14 +67,21 @@
 {\tab}{\tab}{\tab}{\cf1 invalid_command_implies_remain_in_main_menu_state}{\cf1 :} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 MAIN_MENU_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 move} {\cf1 (}{\cf5 d}{\cf1 :} {\cf4 COORDINATE}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  attempting to execute "move_explorer" command of SIMODYSSEY while in MAIN_MENU_STATE and not PLAY_STATE,}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  implies that preconditions of }{\cf1 \{}{\cf4 SIMODYSSEY}{\cf1 \}}{\b\cf1 .}{\cf5 move_explorer}{\cf3  are not met,}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  therefore append "Negative on that request:no mission in progress." to "out"}{\line}
 {\tab}{\tab}{\b\cf6 ensure then}{\line}
 {\tab}{\tab}{\tab}{\cf1 invalid_command_implies_remain_in_main_menu_state}{\cf1 :} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 MAIN_MENU_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 play}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3   execute "new_game" command in SIMODYSSEY}{\line}
 {\tab}{\tab}{\b\cf6 ensure then}{\line}
 {\tab}{\tab}{\tab}{\cf1 enter_play_state}{\cf1 :} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 test} {\cf1 (}{\cf5 a_threshold}{\cf1 ,} {\cf5 j_threshold}{\cf1 ,} {\cf5 m_threshold}{\cf1 ,} {\cf5 b_threshold}{\cf1 ,} {\cf5 p_threshold}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  if precondition for command "new_game" in SIMODYSSEY is not met,}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  append "Thresholds should be non-decreasing order." to "out"}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  if preconditions are met, execute "new_game" command in SIMODYSSEY}{\line}
 {\tab}{\tab}{\b\cf6 ensure then}{\line}
 {\tab}{\tab}{\tab}{\cf1 valid_thresholds_implies_enter_play_state}{\cf1 :} {\cf5 game_model}{\b\cf1 .}{\cf5 valid_thresholds}{\cf1  }{\cf1 (}{\cf5 a_threshold}{\cf1 ,} {\cf5 j_threshold}{\cf1 ,} {\cf5 m_threshold}{\cf1 ,} {\cf5 b_threshold}{\cf1 ,} {\cf5 p_threshold}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 PLAY_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}
 {\tab}{\tab}{\tab}{\cf1 invalid_thresholds_implies_remain_in_main_menu_state}{\cf1 :} {\cf1 (}{\b\cf6 not} {\cf5 game_model}{\b\cf1 .}{\cf5 valid_thresholds}{\cf1  }{\cf1 (}{\cf5 a_threshold}{\cf1 ,} {\cf5 j_threshold}{\cf1 ,} {\cf5 m_threshold}{\cf1 ,} {\cf5 b_threshold}{\cf1 ,} {\cf5 p_threshold}{\cf1 )}{\cf1 )} {\b\cf6 implies} {\cf1 (}{\b\cf6 attached} {\cf1 \{}{\cf4 MAIN_MENU_STATE}{\cf1 \}} {\cf5 next_state}{\cf1 )}{\line}

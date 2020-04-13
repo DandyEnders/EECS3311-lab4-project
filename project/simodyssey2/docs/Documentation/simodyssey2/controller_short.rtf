@@ -8,17 +8,17 @@
 {\tab}{\tab}output when commands are executed.{\line}
 {\tab}{\tab}{\line}
 {\tab}{\tab}Secret: {\line}
-{\tab}{\tab}Attribute ‚Äúgame_state‚Äù is of type STATE which {\line}
+{\tab}{\tab}Attribute ìgame_stateî is of type STATE which {\line}
 {\tab}{\tab}means CONTROLLER is a client of STATE. {\line}
-{\tab}{\tab}Note: ‚Äúgame_state‚Äù is polymorphic. {\line}
+{\tab}{\tab}Note: ìgame_stateî is polymorphic. {\line}
 {\tab}{\tab}Post executing a command in CONTROLLER, {\line}
-{\tab}{\tab}‚Äúgame_state‚Äù transitions (changes its reference) {\line}
+{\tab}{\tab}ìgame_stateî transitions (changes its reference) {\line}
 {\tab}{\tab}to a subclass of STATE that is appropriate {\line}
 {\tab}{\tab}for the game.{\line}
 {\tab}]"{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 CONTROLLER}{\line}
@@ -26,22 +26,23 @@
 {\b\cf6 create} {\cf1 \{}{\cf4 CONTROLLER_ACCESS}{\cf1 \}}{\line}
 {\tab}{\cf5 make}{\line}
 {\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Attributes}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 game_state}{\cf1 :} {\cf4 STATE}}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Attributes}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  "game_state" is polymorphic}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  provides the user's STATE (see description in STATE) in the program. eg PLAY_STATE, MAIN_MENU_STATE...}{\line}
 {\tab}{\line}
-{\b\cf6 feature} {\cf3 --}{\cf3  "game_state" is polymorphic}{\line}
-{\cf3 --}{\cf3  provides the user's STATE (see description in STATE) in the program. eg PLAY_STATE, MAIN_MENU_STATE...}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  State Commands}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 move_to_next_state}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  transition "game_sate" to the STATE referenced by "game_state.next_state" such that "game_state" = "game_state.next_state".}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Note reference equality.}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 game_state} {\cf1 =} {\cf5 game_state}{\b\cf1 .}{\cf5 next_state}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  User Commands}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 abort}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  User Commands}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3 execute "abort" command in "game_state" followed by "move_to_next_state"}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 land}{\line}
@@ -52,7 +53,6 @@
 }{\line}
 {\tab}{\cf5 {\cf5 move} {\cf1 (}{\cf5 d}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3 execute "move" command in "game_state" followed by "move_to_next_state"}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  when }{\cf1 \{}{\cf4 ETF_TYPE_CONSTRAINTS}{\cf1 \}}{\b\cf1 .}{\cf5 nw}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 pass}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3 execute "pass" command in "game_state" followed by "move_to_next_state"}{\line}
@@ -65,7 +65,6 @@
 }{\line}
 {\tab}{\cf5 {\cf5 test} {\cf1 (}{\cf5 a_threshold}{\cf1 ,} {\cf5 j_threshold}{\cf1 ,} {\cf5 m_threshold}{\cf1 ,} {\cf5 b_threshold}{\cf1 ,} {\cf5 p_threshold}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3 execute "test" command in the current "game_state" followed by "move_to_next_state"}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  TODO}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 wormhole}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3 execute "wormhole" command in "game_state" followed by "move_to_next_state"}{\line}
@@ -73,11 +72,10 @@
 {\tab}{\cf5 {\cf5 reset}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  Reset model state.}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Queries}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 out}{\cf1 :} {\cf4 STRING_8}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  New string containing terse printable representation}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  of current object}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  output "game_state"}{\line}
 {\tab}{\tab}{\b\cf6 ensure then}{\line}
 {\tab}{\tab}{\tab}{\tab}{\b\cf6 Result} {\cf1 ~} {\cf5 game_state}{\b\cf1 .}{\cf5 out}{\line}
 }{\tab}{\line}

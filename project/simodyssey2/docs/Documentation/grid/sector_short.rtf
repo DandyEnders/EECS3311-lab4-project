@@ -10,8 +10,8 @@
 {\tab}{\tab}ARRAYED_LIST.{\line}
 {\tab}]"{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 SECTOR}{\line}
@@ -22,6 +22,7 @@
 {\b\cf6 feature} {\cf3 --}{\cf3  Attributes}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 coordinate}{\cf1 :} {\cf4 COORDINATE}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  coordinate of the SECTOR}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 max_num_quadrants}{\cf1 :} {\cf4 INTEGER_32}}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  maximum number of quadrants the SECTOR can occupy}{\line}
@@ -42,6 +43,7 @@
 {\tab}{\tab}{\tab}{\cf1 count_has_decreased_by_one}{\cf1 :} {\cf5 count} {\cf1 =} {\cf1 (}{\b\cf6 old} {\cf5 count} - 1{\cf1 )}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 add} {\cf1 (}{\cf5 e}{\cf1 :} {\cf4 ID_ENTITY}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  add e to the SECTOR}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\cf1 not_full}{\cf1 :} {\b\cf6 not} {\cf5 is_full}{\line}
 {\tab}{\tab}{\tab}{\cf1 not_has_already}{\cf1 :} {\b\cf6 not} {\cf5 has}{\cf1  }{\cf1 (}{\cf5 e}{\cf1 )}{\line}
@@ -54,9 +56,10 @@
 {\tab}{\tab}{\tab}{\tab}{\b\cf6 end}{\line}
 {\tab}{\tab}{\tab}{\cf1 count_is_incremented_by_one}{\cf1 :} {\cf5 count} {\cf1 ~} {\cf1 (}{\b\cf6 old} {\cf5 count}{\cf1 )} + 1{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Queries}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 find_landable_planet}{\cf1 :} {\cf4 PLANET}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  the PLANET contained in the SECTOR with the lowest id and is_landable.}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 is_landable}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
@@ -71,6 +74,7 @@
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  is the collection of MOVEABLE_ENTITY contained in a, arranged in increasing order id?}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 quadrants}{\cf1 :} {\cf4 LIST} {\cf1 [}{\cf4 QUADRANT}{\cf1 ]}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  the collection of QUADRANTS contained in the SECTOR}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 is_landable}{\cf1 :} {\cf4 BOOLEAN}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  does the SECTOR contain landable PLANET(s)?}{\line}
@@ -79,10 +83,10 @@
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  does the SECTOR contain PLANET(s)?}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 new_cursor}{\cf1 :} {\cf4 INDEXABLE_ITERATION_CURSOR} {\cf1 [}{\cf4 QUADRANT}{\cf1 ]}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Fresh cursor associated with current structure}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  facilitate the traversal over the SECTOR using "across" notation}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 is_full}{\cf1 :} {\cf4 BOOLEAN}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  facilitate the traversal over the SECTOR using "across" notation}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  are all QUADRANTs in the SECTOR occupied with ID_ENTITYs?}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 count}{\cf1 :} {\cf4 INTEGER_32}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  the number of ID_ENTITY contained in the SECTOR}{\line}
@@ -93,26 +97,35 @@
 {\tab}{\tab}{\tab}{\tab}{\cf5 has_stationary_entity}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 has} {\cf1 (}{\cf5 me}{\cf1 :} {\cf4 ID_ENTITY}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  does the SECTOR contain me?}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 has_id} {\cf1 (}{\cf5 a_id}{\cf1 :} {\cf4 INTEGER_32}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  does the SECTOR contain an ID_ENTITY with id = a_id?}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 quadrant_at} {\cf1 (}{\cf5 me}{\cf1 :} {\cf4 ID_ENTITY}{\cf1 )}{\cf1 :} {\cf4 INTEGER_32}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> the numerical position of me's QUADRANT when looking from left to right in the SECTOR}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 me}{\cf1 )}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
 {\tab}{\tab}{\tab}{\cf1 valid_position_in_sector}{\cf1 :} {\b\cf6 attached} {\cf1 \{}{\cf4 ID_ENTITY}{\cf1 \}} {\cf5 quadrants} {\cf1 [}{\b\cf6 Result}{\cf1 ]}{\b\cf1 .}{\cf5 entity} {\b\cf6 as} id_e {\b\cf6 and then} {\cf5 id_e} {\cf1 ~} {\cf5 me}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 has_stationary_entity}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  does the SECTOR contain a STATIONARY_ENTITY?}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 has_star}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  does the SECTOR contain a STAR?}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 has_wormhole}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  does the SECTOR contain a WORMHOLE?}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 has_blackhole}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  does the SECTOR contain a BLACKHOLE?}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 moveable_entity_count}{\cf1 :} {\cf4 INTEGER_32}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  the number of all MOVEABLE_ENTITY contained in the SECTOR.}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 moveable_entities_in_increasing_order}{\cf1 :} {\cf4 ARRAY} {\cf1 [}{\cf4 MOVEABLE_ENTITY}{\cf1 ]}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  the collection of all MOVEABLE_ENTITY contained in the SECTOR; arranged in increasing order id.}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
 {\tab}{\tab}{\tab}{\cf1 all_moveable_entities_in_result_are_in_current_sector}{\cf1 :} {\b\cf6 across}{\line}
 {\tab}{\tab}{\tab}{\tab}{\tab}{\b\cf6 Result} {\b\cf6 is} me{\line}
@@ -122,9 +135,10 @@
 {\tab}{\tab}{\tab}{\cf1 result_has_correct_count}{\cf1 :} {\b\cf6 Result}{\b\cf1 .}{\cf5 count} {\cf1 ~} {\cf5 moveable_entity_count}{\line}
 {\tab}{\tab}{\tab}{\cf1 result_is_sorted}{\cf1 :} {\cf5 is_sorted}{\cf1  }{\cf1 (}{\b\cf6 Result}{\cf1 )}{\line}
 }{\tab}{\line}
-{\b\cf6 feature} {\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  Output}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 out_abstract_full_coordinate} {\cf1 (}{\cf5 me}{\cf1 :} {\cf4 MOVEABLE_ENTITY}{\cf1 )}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "}{\cf3 [x,y,q]}{\cf3 " ie "}{\cf3 [2,2,4]}{\cf3 " where x and y are coordinate.row/coordinate.col respectively, and q is quadrant_at(me).}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\tab}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 me}{\cf1 )}{\line}
 }{\line}
@@ -132,9 +146,9 @@
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "}{\cf3 [x,y]->[0,E],-,-,[2,P]}{\cf3 " where x and y are are coordinate.row/coordinate.col respectively, and the remaining text is the out_abstract of each QUADRANT in the SECTOR}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 out_coordinate}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "(row:col)" where row and col are coordinate.row and coordinate.col respectively}{\line}
 }{\line}
 {\tab}{\cf5 {\cf5 out_quadrants}{\cf1 :} {\cf4 STRING_8}{\line}
-{\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "(row:col)" where row and col are coordinate.row and coordinate.col respectively}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  result -> "E--*" or "----" where each character represents an ENTITY in the SECTOR.}{\line}
 }{\tab}{\line}
 {\b\cf6 invariant}{\line}

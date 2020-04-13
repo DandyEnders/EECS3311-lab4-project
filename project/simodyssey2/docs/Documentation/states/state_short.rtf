@@ -3,19 +3,20 @@
 {\line}
 {{\b\cf6 note}{\line}
 {\tab}{\cf1 description}{\cf1 :} "[{\line}
-{\tab}{\tab}	A class that defines valid, invalid user commands,{\line}
-{\tab}{\tab}	and generates the user's output when commands are executed.{\line}
+{\tab}{\tab}	A class that defines the set of valid, invalid user {\line}
+{\tab}{\tab}	commands, and generates the user's output when {\line}
+{\tab}{\tab}	commands are executed.{\line}
 {\tab}{\tab}{\line}
 {\tab}{\tab}	Secret: {\line}
-{\tab}{\tab}	private attribute ‚Äúabstract_state_numbers‚Äù is of type {\line}
+{\tab}{\tab}	private attribute ìabstract_state_numbersî is of type {\line}
 {\tab}{\tab}	ABSTRACT_STATE_NUMBERS which means STATE is a client{\line}
 {\tab}{\tab}	of ABSTRACT_STATE_NUMBERS.{\line}
-{\tab}{\tab}	‚Äúabstract_state_numbers‚Äù is updated accordingly after {\line}
+{\tab}{\tab}	ìabstract_state_numbersî is updated accordingly after {\line}
 {\tab}{\tab}	the execution of a command.{\line}
 {\tab}]"{\line}
 {\tab}{\cf1 author}{\cf1 :} "Jinho Hwang, Ato Koomson"{\line}
-{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
-{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\tab}{\cf1 date}{\cf1 :} "April 13, 2020"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "1"{\line}
 {\line}
 {\b\cf6 deferred} {\b\cf6 class} {\b\cf6 interface}{\line}
 {\tab}{\cf4 STATE}{\line}
@@ -26,6 +27,12 @@
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  the game whose output is being defined in STATE}{\line}
 {\line}
 {\tab}{\cf5 {\cf5 next_state}{\cf1 :} {\cf4 STATE}}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  after creation next_state = current. Note refference equality}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  hence forth, the refference of next_state is modified by execturing commands (eg. abort, land...) in current.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  AFTER executing a command (eg. abort, land...) in current,}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  next_state stores a refference to the "resultant STATE" of the system.}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  This "resultant STATE" can be "transitioned to" by any client of STATE. "See }{\cf1 \{}{\cf4 CONTROLLER}{\cf1 \}}{\b\cf1 .}{\cf5 move_to_next_state}{\cf3  for an example"}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  next_state is polymorphic and can occupy an instance of PLAY_STATE, MAIN_MENU_STATE and LANDED_STATE}{\line}
 {\tab}{\line}
 {\b\cf6 feature} {\cf3 --}{\cf3  Commands}{\line}
 {\line}
