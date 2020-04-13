@@ -4,8 +4,8 @@
 		as seen in the user output “e.g state: 3.1”.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 class
 	ABSTRACT_STATE_NUMBERS

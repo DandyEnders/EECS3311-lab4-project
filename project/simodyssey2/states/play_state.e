@@ -4,8 +4,8 @@
 		for when the user is in a game, and the explorer is not landed.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 class
 	PLAY_STATE

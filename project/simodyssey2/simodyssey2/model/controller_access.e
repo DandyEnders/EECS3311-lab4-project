@@ -1,8 +1,8 @@
 note
 	description: "Singleton access to the default business model."
 	author: "Jackie Wang"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 expanded class
 	CONTROLLER_ACCESS

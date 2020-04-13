@@ -5,8 +5,8 @@
 		is landed.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 class
 	LANDED_STATE

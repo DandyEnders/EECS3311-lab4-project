@@ -4,8 +4,8 @@ note
 		for when the user is not in a game.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 class
 	MAIN_MENU_STATE

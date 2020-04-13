@@ -3,8 +3,8 @@ note
 		A class to represent an entity in a QUADRANT.
 	]"
 	author: "Jinho Hwang, Ato Kooomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 deferred class
 	ENTITY

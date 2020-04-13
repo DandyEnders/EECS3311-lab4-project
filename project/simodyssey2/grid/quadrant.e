@@ -7,8 +7,8 @@
 		attribute refers to a NULL_ENTITY.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 class
 	QUADRANT
@@ -38,7 +38,7 @@ feature {NONE} -- Constructor
 feature -- Attribute
 
 	entity: ENTITY
-		-- entity contained
+		-- entity contained in the QUADRANT
 
 	coordinate: COORDINATE
 		-- coordinate of the QUADRANT

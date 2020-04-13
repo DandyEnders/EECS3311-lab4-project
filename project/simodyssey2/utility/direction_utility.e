@@ -4,8 +4,8 @@
 		 		(e.g. N -> [-1,0], E -> [0,1] …)
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 expanded class
 	DIRECTION_UTILITY

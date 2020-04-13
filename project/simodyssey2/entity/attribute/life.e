@@ -1,8 +1,8 @@
 ﻿note
 	description: "A class that encapsulates an DEATHABLE's life."
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 class
 	LIFE
@@ -89,7 +89,7 @@ feature -- Queries
 		end
 
 	out: STRING
-			-- result -> "life:point/max" 
+			-- result -> "life:point/max"
 		do
 			create Result.make_from_string ("life:")
 			Result.append (point.out)

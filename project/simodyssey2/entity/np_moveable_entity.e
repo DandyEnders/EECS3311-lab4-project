@@ -6,8 +6,8 @@ note
 		Note: NP stands for NON_PLAYABLE
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 deferred class
 	NP_MOVEABLE_ENTITY --(2)

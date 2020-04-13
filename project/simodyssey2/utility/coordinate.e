@@ -1,7 +1,8 @@
 note
 	description: "A class to represent comparable coordinates."
 	author: "CD, Jinho Hwang, Ato Koomson"
-	date: "August 2019"
+	date: "April 13, 2020"
+	revision: "1"
 
 class
 	COORDINATE

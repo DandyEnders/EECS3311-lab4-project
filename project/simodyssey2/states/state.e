@@ -12,8 +12,8 @@
 			the execution of a command.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 deferred class
 	STATE

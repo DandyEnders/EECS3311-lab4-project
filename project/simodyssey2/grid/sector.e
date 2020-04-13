@@ -7,8 +7,8 @@ note
 		ARRAYED_LIST.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 class
 	SECTOR

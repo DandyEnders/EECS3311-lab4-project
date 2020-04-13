@@ -3,8 +3,8 @@ note
 		A class to represent an NP_MOVEABLE_ENTITY that can reproduce.
 	]"
 	author: "Jinho Hwang, Ato Koomson"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "April 13, 2020"
+	revision: "1"
 
 deferred class
 	REPRODUCEABLE_ENTITY
